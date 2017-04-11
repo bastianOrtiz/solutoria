@@ -24,10 +24,20 @@ $sql = "
     OR cargoPadreId IN 
         (SELECT id FROM `m_cargo` WHERE cargoPadreId = $cargo_id
     )";
-    
+
+$sql_hijos = "SELECT * FROM `m_cargo` WHERE `cargoPadreId` = $cargo_id ORDER BY `activo` DESC";
 $childs = $db->rawQuery( $sql );
+$str_IN = "(";
+foreach($childs as $ch){
+    $str_IN .= $ch['id'].",";
+}
+$str_IN = trim($str_IN,",");
+$str_IN .= ")";
+
 
 // Todos los trabajadores que pertenecen a cualquiera de los cargos hijos
+
+/* OLD
 $db->where('empresa_id', $_SESSION[PREFIX.'login_eid']);
 $db->where('cargo_id',$cargos_hijo[0]['id']);
 array_shift($cargos_hijo);
@@ -35,6 +45,11 @@ foreach( $childs as $hijo ){
     $db->orWhere('cargo_id',$hijo['id']);
 }
 $trabajadores_x_cargo = $db->get('m_trabajador',null,array( 'id','nombres','apellidoPaterno','apellidoMaterno' ));
+show_array( $db->getLastQuery() );
+*/
+
+$sql_trabajadores_x_cargo = "SELECT * from m_trabajador T WHERE T.cargo_id IN " . $str_IN . "  AND T.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
+$trabajadores_x_cargo = $db->rawQuery( $sql_trabajadores_x_cargo );
 
 
 if( $_POST ){        
