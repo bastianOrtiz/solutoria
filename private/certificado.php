@@ -21,7 +21,7 @@ if( $_SESSION && isAdmin() ){
 
         
         $content = '<style type="text/css">';
-        $content .= 'table{ font-size: 16px; width: 100%; }';
+        $content .= 'table{ font-size: 16px; width: 100%; font-family: "Times New Roman", sans-serif; }';
         $content .= '</style>';
         $content .= '<page backtop="1mm" backbottom="0mm" backleft="10mm" backright="10mm" style="font-size: 10pt">';
         $content .= html_entity_decode($doc['texto']);
