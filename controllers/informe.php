@@ -238,22 +238,27 @@ if( $_POST ){
         $array_cols = array();
         array_shift($cols_perso);
             
-        $db->setTrace(1);                
+        $str_depa = "";
         if( @!$depaTodos ){
             foreach( $filtroDepartamento as $key => $depa ){
-                $db->orWhere('departamento_id',$key);
+                $str_depa .= $key . ",";
             }    
+            $str_depa = trim($str_depa,",");
+            $include_depa = "AND departamento_id IN ($str_depa) ";
+        } else {
+            $include_depa = "";
         }
         
+
+
         if( $filtroCols ){
             foreach( $filtroCols as $key => $col ){
                 $array_cols[] = $key;
             }
         } else {
             $array_cols[] = '*';
-        }    
+        }
 
-        $array_cols[] = 'empresa_id';
 
         /*
         $db->where('tipocontrato_id',3,'!=');
@@ -261,17 +266,23 @@ if( $_POST ){
         $db->orderBy($ordernarPor,'ASC');
         $trabajadores = $db->get('m_trabajador',999999,$array_cols);
         */
+        $str_cols = "";
+        foreach( $array_cols as $col ){
+            $str_cols .= $col.",";
+        }
+        $str_cols = trim($str_cols,",");
+
 
         $sql = "
-        SELECT  apellidoPaterno, apellidoMaterno, nombres, empresa_id 
-        FROM m_trabajador 
+        SELECT  $str_cols
+        FROM m_trabajador T
         WHERE  tipocontrato_id NOT IN (3,4)  
-        HAVING  empresa_id = '2'  
-        ORDER BY apellidoPaterno 
+        AND empresa_id = '". $_SESSION[ PREFIX . 'login_eid' ] ."'
+        $include_depa
+        ORDER BY ". $_POST['ordernarPor'] ."
         ASC  LIMIT 999999
         ";
         $trabajadores = $db->rawQuery($sql);
-
 
 
         $html = '<style type="text/css">';
