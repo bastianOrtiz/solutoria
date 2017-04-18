@@ -61,13 +61,14 @@ function fnNombreDepartamento($id_departamento){
 
 
 $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
+$db->where ("tipocontrato_id", array(3,4), 'NOT IN');
 $db->orderBy('apellidoPaterno','ASC');
 $registros = $db->get("m_trabajador");
 $trabajadors = $registros;
 
+
 $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
 $sucursales = $db->get("m_sucursal");
-
 
 
 if( getComparte('Horario') ){

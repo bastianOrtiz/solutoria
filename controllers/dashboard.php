@@ -37,6 +37,7 @@ $sql_sexo = "SELECT   sexo,
              COUNT(*) total
              FROM     m_trabajador
              WHERE empresa_id = $empresa_logged
+             AND tipocontrato_id NOT IN (3,4)
              GROUP BY sexo";
 $sexos = $db->rawQuery( $sql_sexo );
 $arr_sexos = array( 'Mujeres','Hombres' );
