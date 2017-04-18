@@ -347,7 +347,7 @@ if( isset($parametros[1]) ){
             
     
     if( ( empresaUsaRelojControl() ) && ( relojControlSync() ) && ( marcaTarjeta($trabajador_id) ) ){        
-        $atrasos_entrada = obtenerAtrasosAusenciasTrabajador($trabajador_id,'I');                                               
+        $atrasos_entrada = obtenerAtrasosAusenciasTrabajador($trabajador_id,'I');
         $atrasos_salida = obtenerAtrasosAusenciasTrabajador($trabajador_id,'O');
     } else {
         
