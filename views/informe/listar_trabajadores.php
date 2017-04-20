@@ -94,23 +94,34 @@
                         
                         <div class="col-md-2">
                             <label>Ordenar por</label>
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="nombres" data-placeholder="Nombres" />Nombres</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="apellidoPaterno" data-placeholder="Apellido Paterno" checked />Apellido Paterno</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="apellidoMaterno" data-placeholder="Apellido Materno" />Apellido Materno</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="email" data-placeholder="Email" />Email</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="rut" data-placeholder="Rut" />Rut</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="sexo" data-placeholder="Sexo" />Sexo</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="fechaNacimiento" data-placeholder="Fecha Nacimiento" />Fecha Nacimiento</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="idNacionalidad" data-placeholder="Nacionalidad" />Nacionalidad</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="telefono" data-placeholder="Teléfono" />Teléfono</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="direccion" data-placeholder="Dirección" />Dirección</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="marcaTarjeta" data-placeholder="Marca Tarjeta" />Marca Tarjeta</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="gratificacion" data-placeholder="Gratificacion" />Gratificacion</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="sueldoBase" data-placeholder="Sueldo Base" />Sueldo Base</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="cargo_id" data-placeholder="Cargo" />Cargo</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="departamento_id" data-placeholder="Departamento" />Departamento</label></div> 
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="comuna_id" data-placeholder="Comuna" />Comuna</label></div>                                      
-                            <div class="checkbox"><label><input type="radio" name="ordernarPor" value="fechaContratoInicio" data-placeholder="Fecha Contrato" />Fecha Contrato</label></div>
+                            <select id="cboOrderBy">
+                                <option value="">Selecione una opcion</option>
+                                <option value="nombres"> Nombres </option>
+                                <option value="apellidoPaterno"> Apellido Paterno </option>
+                                <option value="apellidoMaterno"> Apellido Materno </option>
+                                <option value="email"> Email </option>
+                                <option value="rut"> Rut </option>
+                                <option value="sexo"> Sexo </option>
+                                <option value="fechaNacimiento"> Fecha Nacimiento </option>
+                                <option value="idNacionalidad"> Nacionalidad </option>
+                                <option value="telefono"> Teléfono </option>
+                                <option value="direccion"> Dirección </option>
+                                <option value="marcaTarjeta"> Marca Tarjeta </option>
+                                <option value="gratificacion"> Gratificacion </option>
+                                <option value="sueldoBase"> Sueldo Base </option>
+                                <option value="cargo_id"> Cargo </option>
+                                <option value="departamento_id"> Departamento </option>
+                                <option value="comuna_id"> Comuna </option>
+                                <option value="fechaContratoInicio">Fecha Contrato </option>
+                            </select>
+
+                            <div class="orderBySelectedList">
+
+                            </div>
+                            <div class="orderByHiddensList">
+
+                            </div>
+
                         </div>
                         
                         <div class="col-md-2">
@@ -171,6 +182,18 @@
 
 $(document).ready(function(){
     
+    $("#cboOrderBy").change(function(){
+        $(".orderBySelectedList").append( "<div>" + $(this).children('option:selected').text() + '<a href="#hdnOrderby_'+$(this).val()+'" class="btn btn-xs btn-default btn_remove_order"><i class="fa fa-trash-o"></i></a></div>' );
+        $(".orderByHiddensList").append( '<input type="hidden" name="hdnOrderBy[]" value="'+$(this).val()+'" id="hdnOrderby_'+$(this).val()+'" />' );
+    })
+
+    $(document).on('click', '.btn_remove_order', function(e){
+        e.preventDefault();
+        input_id = $(this).attr('href');
+        $(input_id).remove();
+        $(this).parent('div').remove();
+    })
+
     $(".orientation").click(function(){
         $(".orientation").removeClass('btn-primary').addClass('btn-default');
         $(".orientation").find('.fa-check').remove();
@@ -272,4 +295,3 @@ $("#frmCrear").submit(function(e){
 
 })            
 </script>
-      

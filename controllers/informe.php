@@ -273,14 +273,27 @@ if( $_POST ){
         $str_cols = trim($str_cols,",");
 
 
+        $str_order = "";
+        foreach( $_POST['hdnOrderBy'] as $ord ){
+            $str_order .= $ord.",";
+        }
+        $str_order = trim($str_order,",");
+
+        if( $str_order ){
+            $include_order = "ORDER BY ". $str_order;
+        } else {
+            $include_order = "";
+        }
+
+
+
         $sql = "
         SELECT  $str_cols
         FROM m_trabajador T
         WHERE  tipocontrato_id NOT IN (3,4)  
         AND empresa_id = '". $_SESSION[ PREFIX . 'login_eid' ] ."'
         $include_depa
-        ORDER BY ". $_POST['ordernarPor'] ."
-        ASC  LIMIT 999999
+        $include_order
         ";
         $trabajadores = $db->rawQuery($sql);
 
