@@ -22,8 +22,8 @@ if( $_POST ){
         extract($_SESSION[PREFIX.'totales_liquidar']);                
                         
         $mes = getMesMostrarCorte();
-        $sueldo_maestro = $db->getValue('m_trabajador','sueldoBase');    
-        
+        $sueldo_maestro = $db->getValue('m_trabajador','sueldoBase');
+
         $array_data = array
         (
             "trabajador_id" => $trabajador_id,
@@ -68,14 +68,19 @@ if( $_POST ){
             'empresa_id' => $empresa_id,
             'departamento_id' => $departamento_id,
             'centrocosto_id' => $centrocosto_id
-        );                                        
-        
-        $db->setTrace(1); 
+        );
+
+
         $db->where("trabajador_id",$trabajador_id);
         $db->where("mes",$mes);
         $db->where("ano",$year);
-        $liq = $db->getOne('liquidacion');                        
-        
+        $liq = $db->getOne('liquidacion');
+
+        $sis = calcularSis($totalImponible,1.41,$trabajador_id);
+        $sces = calcularSCes($totalImponible,1.41,$trabajador_id);
+
+        show_array($sces);
+
         if( $db->count > 0 ){            
             $liquidacion_id = $liq['id'];
             $db->where('id',$liquidacion_id);
@@ -433,8 +438,7 @@ if( isset($parametros[1]) ){
         }
     } else {         
         $total_imponible = $remuneracion_tributable;
-    }       
-    
+    }
     
         
     $db->where('trabajador_id',$trabajador_id);
@@ -528,9 +532,8 @@ if( isset($parametros[1]) ){
     $db->where("trabajador_id",$trabajador_id);
     $db->where("mes",$mes);
     $db->where("ano",$year);
-    $liq = $db->getOne('liquidacion');                
-        
-    
+    $liq = $db->getOne('liquidacion');
+
     if( $db->count > 0 ){
         $puede_exportar = true;
         $liquidacion_id = $liq['id'];

@@ -1,39 +1,68 @@
 <?php
 
-function calcularSis($rentaImponible, $porcentajeSisAfpvalor, $trabajador_id = 0){
-    // Calcular Tope imponible    
-  
-    /**
-     * Caso normal renta menor al tope imponible
-    1,41%
-    100.000 1.410 =100000*1,41%
-    
-    Caso normal renta mayor al tope imponible
-    1,41% 2.500.000 27.567 = tope 74,3 uf * 1,41%
 
-    En caso de licencia
-    Renta menor al tope imponible
-    .=(renta imponible del mes dias trabajados)*1,41%
-    .=((renta imponible mes / dias trabajados)* días trabajados + licencia - dias ausencia) * 1,41%
-    
-    Renta mayor al tope imponible:
-    .=(renta imponible del mes dias trabajados)*1,41%
-    .=((renta tope del mes / 30) * días de licencia) *1,41%
-    **/
-    
-    $tieneLicencias = obtenerLicencias($trabajador_id);
-    
-    if($tieneLicencias){
-	    $porcentajeSisAfpvalor2 = 1.41;
-    }
-    $porcentajeSisAfpvalor = ( $porcentajeSisAfpvalor / 100 );
-    $sis = ($rentaImponible * $porcentajeSisAfpvalor );
-    
+/**
+ * Calcula el Costo empresa SIS
+ * @param (int) $rentaImponible Total imponible del mes
+ * @param (int) $trabajador_id ID del trabajador a calcular
+ * @return (floar) $sis Total SIS calculado
+ */
+function calcularSis($rentaImponible, $trabajador_id = 0){
+    $porcentajeCostoEmpresa = 1.41;
+    //Renta imponible del mes anterior, por ahora se usa la misma del mes actual
+    $rentaImponibleMesAnterior = $rentaImponible;
+
+    $porcentajeSis = ( $porcentajeCostoEmpresa / 100 );
+
+    $diasLicencias = obtenerLicencias($trabajador_id);
+
+    $costo_empresa_dias_trabajados = ( $rentaImponible * $porcentajeSis );
+
+    $costo_empresa_dias_licencia = ( ( $rentaImponibleMesAnterior / 30 ) *  $diasLicencias );
+
+    $sis = ($costo_empresa_dias_trabajados + $costo_empresa_dias_licencia);
+
+
     return $sis;
 }
 
+
+
 /**
- * Calcula el impuesto y devuelve un array con la info  
+ * Calcula el Costo empresa Seguro Cesantia
+ * @param (int) $rentaImponible Total imponible del mes
+ * @param (int) $trabajador_id ID del trabajador a calcular
+ * @return (floar) Total SIS calculado
+ */
+function calcularSCes($rentaImponible, $trabajador_id = 0){
+    $porcentajeCostoEmpresa = 2.4;
+
+    $plazoFijo = false;
+    if($plazoFijo){
+        $porcentajeCostoEmpresa = 3;
+    }
+
+    //Renta imponible del mes anterior, por ahora se usa la misma del mes actual
+    $rentaImponibleMesAnterior = $rentaImponible;
+
+    $porcentajeSCes = ( $porcentajeCostoEmpresa / 100 );
+
+    $diasLicencias = obtenerLicencias($trabajador_id);
+
+    $costo_empresa_dias_trabajados = ( $rentaImponible * $porcentajeSCes );
+
+    $costo_empresa_dias_licencia = ( ( $rentaImponibleMesAnterior / 30 ) *  $diasLicencias );
+
+    $sces = ($costo_empresa_dias_trabajados + $costo_empresa_dias_licencia);
+
+
+    return $sces;
+}
+
+
+
+/**
+ * Calcula el impuesto y devuelve un array con la info  $trabajador_id
  * @param (int) $total_tributable
  * @return (array) Arreglo con el total de impuesto, la rebaja y el impuesto total a pagar
  */
