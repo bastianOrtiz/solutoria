@@ -79,7 +79,6 @@ if( $_POST ){
         $sis = calcularSis($totalImponible,1.41,$trabajador_id);
         $sces = calcularSCes($totalImponible,1.41,$trabajador_id);
 
-        show_array($sces);
 
         if( $db->count > 0 ){            
             $liquidacion_id = $liq['id'];
