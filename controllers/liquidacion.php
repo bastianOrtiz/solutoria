@@ -76,10 +76,6 @@ if( $_POST ){
         $db->where("ano",$year);
         $liq = $db->getOne('liquidacion');
 
-        $sis = calcularSis($totalImponible,1.41,$trabajador_id);
-        $sces = calcularSCes($totalImponible,1.41,$trabajador_id);
-
-
         if( $db->count > 0 ){            
             $liquidacion_id = $liq['id'];
             $db->where('id',$liquidacion_id);
