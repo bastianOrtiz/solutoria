@@ -8,8 +8,16 @@
  * @return (floar) $sis Total SIS calculado
  */
 function calcularSis($rentaImponible, $trabajador_id = 0){
-    $porcentajeCostoEmpresa = 1.41;
-    //Renta imponible del mes anterior, por ahora se usa la misma del mes actual
+    global $db;
+
+    $db->where ("costoempresa_id", 1);
+    $db->orderBy('ano',"desc");
+    $db->orderBy('mes',"desc");
+    $valores = $db->getOne("m_costoempresa");
+
+    $porcentajeCostoEmpresa = $valores['valor'];
+
+    //Renta imponible del mes anterior, por ahaaora se usa la misma del mes actual
     $rentaImponibleMesAnterior = $rentaImponible;
 
     $porcentajeSis = ( $porcentajeCostoEmpresa / 100 );
@@ -21,7 +29,6 @@ function calcularSis($rentaImponible, $trabajador_id = 0){
     $costo_empresa_dias_licencia = ( ( $rentaImponibleMesAnterior / 30 ) *  $diasLicencias );
 
     $sis = ($costo_empresa_dias_trabajados + $costo_empresa_dias_licencia);
-
 
     return $sis;
 }
@@ -1035,7 +1042,6 @@ function obtenerLicencias($trabajador_id){
     ";
     $res_licencias = $db->rawQuery($sql_licencia,'',false);
 
-
     foreach($res_licencias as $aus){
         $ausencias = 0;
         $date_fin_mes = new DateTime( $hasta_licencia . ' 23:59:59' );
@@ -1089,6 +1095,7 @@ function obtenerLicencias($trabajador_id){
             //echo "4<br />";
         }
     }
+
     if( $dias_licencia > 30 ){
         $dias_licencia = 30;
     }
