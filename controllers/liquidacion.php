@@ -76,7 +76,6 @@ if( $_POST ){
         $db->where("ano",$year);
         $liq = $db->getOne('liquidacion');
 
-
         if( $db->count > 0 ){            
             $liquidacion_id = $liq['id'];
             $db->where('id',$liquidacion_id);
