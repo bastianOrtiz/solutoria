@@ -101,6 +101,12 @@ if( $_SESSION && isAdmin() ){
         $db->where('id',$_SESSION[PREFIX.'login_eid']);
         $tope_atrasos = $db->getValue('m_empresa','minutoGracia');
         
+        /** Obtener el horario de entrada del trabajador **/
+        $horario_id = $trabajador['horario_id'];
+        $db->where('id',$horario_id);
+        $horario_entrada = $db->getValue('m_horario','entradaTrabajo');
+        $horario_str = strtotime('01-01-1990 ' . $horario_entrada);
+        $horario_entrada = date('H:i',$horario_str);
         
         
         /** PROCESO PARA REEMPLAZAR TAGS **/
@@ -110,6 +116,7 @@ if( $_SESSION && isAdmin() ){
             '#CARTA_SEXO#',
             '#CARTA_NOMBRE#',
             '#CARTA_DEPARTAMENTO#',
+            '#CARTA_HORARIO_ENTRADA#',
             '#CARTA_NUMERO_ATRASO_PALABRAS#',
             '#CARTA_NUMERO_ATRASO#',
             '#CARTA_FECHA_ATRASO#',
@@ -123,6 +130,7 @@ if( $_SESSION && isAdmin() ){
             $sexo,
             $trabajador['nombres'].' '.$trabajador['apellidoPaterno'].' '.$trabajador['apellidoMaterno'],
             strtoupper(getNombre($trabajador['departamento_id'],'m_departamento')),
+            $horario_entrada,
             ordinalEnPalabras( $atraso_numero ),
             $atraso_numero,
             getNombreDia($numero_dia) . ', ' . date('d') . ' de ' . getNombreMes(date('n')) . ' de ' . date('Y'),
