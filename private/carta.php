@@ -141,9 +141,6 @@ if( $_SESSION && isAdmin() ){
          
         $content = str_replace( $array_search,$array_replace,$content );
 
-        echo $content;
-        die();
-
         require_once('../libs/html2pdf/html2pdf.class.php');
         $html2pdf = new HTML2PDF('P','LETTER','es');
         $html2pdf->WriteHTML($content);    
