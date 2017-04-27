@@ -42,12 +42,23 @@ function calcularSis($rentaImponible, $trabajador_id = 0){
  * @return (floar) Total SIS calculado
  */
 function calcularSCes($rentaImponible, $trabajador_id = 0){
-    $porcentajeCostoEmpresa = 2.4;
+    global $db;
 
-    $plazoFijo = false;
-    if($plazoFijo){
-        $porcentajeCostoEmpresa = 3;
+    $db->where('id',$trabajador_id);
+    $tipocontratoId = $db->getValue('m_trabajador','tipocontrato_id');
+
+    $idCostoEmpresa = 4;
+    if($tipocontratoId==1){
+        $idCostoEmpresa = 3;
     }
+
+    $db->where ("costoempresa_id", $idCostoEmpresa);
+    $db->orderBy('ano',"desc");
+    $db->orderBy('mes',"desc");
+    $valores = $db->getOne("m_costoempresa");
+
+    $porcentajeCostoEmpresa = $valores['valor'];
+
 
     //Renta imponible del mes anterior, por ahora se usa la misma del mes actual
     $rentaImponibleMesAnterior = $rentaImponible;
@@ -61,7 +72,6 @@ function calcularSCes($rentaImponible, $trabajador_id = 0){
     $costo_empresa_dias_licencia = ( ( $rentaImponibleMesAnterior / 30 ) *  $diasLicencias );
 
     $sces = ($costo_empresa_dias_trabajados + $costo_empresa_dias_licencia);
-
 
     return $sces;
 }

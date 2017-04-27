@@ -76,6 +76,7 @@ if( $_POST ){
         $db->where("ano",$year);
         $liq = $db->getOne('liquidacion');
 
+
         if( $db->count > 0 ){            
             $liquidacion_id = $liq['id'];
             $db->where('id',$liquidacion_id);
@@ -93,6 +94,18 @@ if( $_POST ){
             }
         } 
         
+        //Guardar SIS y SCes
+        $sces = calcularSCes($totalImponible,$trabajador_id);
+        $sis = calcularSis($totalImponible,$trabajador_id);
+
+        $data_seguros = array(
+            'sis' => $sis,
+            'sces' => $sces
+        );
+        $db->where('id',$liquidacion_id);
+        $db->update('liquidacion',$data_seguros);
+
+
         
         // Descuentos
         $db->where('liquidacion_id',$liquidacion_id);

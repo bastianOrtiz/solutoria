@@ -9,7 +9,7 @@ td.total{
 </style>
       <div class="content-wrapper">        
         <section class="content-header">
-          <h1>  <?php echo strtolower($entity) ?> </h1>
+          <h1> <strong>Previsualizar liquidacion <i class="fa fa-eye"></i> </strong> </h1>
           <?php include ROOT . '/views/comun/breadcrumbs.php';  ?>
         </section>
         
@@ -640,4 +640,4 @@ $(document).ready(function(){
         //$(this).find('td:last').css('text-align','right');
     })
 })
-</script>      
+</script>
