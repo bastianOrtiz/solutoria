@@ -12,8 +12,7 @@ if( $_SESSION && isAdmin() ){
         
         unset($_SESSION[PREFIX.'carta_amonestacion']);
         $trabajador_id = base64_decode( base64_decode( $id ) );
-        
-        
+
         /** Proceso para guardar las amonestaciones **/
         $mes = date('m');
         $ano = date('Y');
@@ -23,14 +22,18 @@ if( $_SESSION && isAdmin() ){
         AND MONTH( fecha ) = '$mes'
         AND YEAR( fecha ) =  '$ano' 
         ";
+
         $result_amonestacion = $db->rawQuery( $sql );        
-        $total_avisos = $db->count;        
+        $total_avisos = $db->count;
+
         if( $total_avisos <= 2 ){
             
+            // Cartas generadas HOY, para determinar si INSERTAR o solo MOSTRAR
             $sql2 = "
             SELECT * FROM t_amonestacion
             WHERE trabajador_id = $trabajador_id
             AND fecha = '" . date('Y-m-d')."'";
+
             $result2 = $db->rawQuery( $sql2 );                        
             if( $db->count == 0 ){
                 $data_insert = array(
@@ -47,12 +50,17 @@ if( $_SESSION && isAdmin() ){
             $aviso_numero = $_GET['aviso'];
         else            
             $aviso_numero = $total_avisos; 
-         
+
+
+        $numeroAviso = $aviso_numero;
+        if( $aviso_numero > 3 ){
+            $numeroAviso = 3;
+        }
         
         /** Obtener el ID del documento a usar, segun el Nro. de aviso **/
-        $db->where('numeroAviso',$aviso_numero);
+        $db->where('numeroAviso',$numeroAviso);
         $doc_id = $db->getValue('cartaaviso','documento_id');        
-        
+
         
         /** Obtener el HTML del documento obtenido anteriormente **/        
         $db->where('id',$doc_id);
@@ -122,8 +130,7 @@ if( $_SESSION && isAdmin() ){
         );
          
         $content = str_replace( $array_search,$array_replace,$content );
-        
-        
+
         require_once('../libs/html2pdf/html2pdf.class.php');
         $html2pdf = new HTML2PDF('P','LETTER','es');
         $html2pdf->WriteHTML($content);    
