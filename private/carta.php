@@ -26,7 +26,8 @@ if( $_SESSION && isAdmin() ){
         $result_amonestacion = $db->rawQuery( $sql );        
         $total_avisos = $db->count;
 
-        if( $total_avisos <= 2 ){
+
+        //if( $total_avisos <= 2 ){
             
             // Cartas generadas HOY, para determinar si INSERTAR o solo MOSTRAR
             $sql2 = "
@@ -35,6 +36,7 @@ if( $_SESSION && isAdmin() ){
             AND fecha = '" . date('Y-m-d')."'";
 
             $result2 = $db->rawQuery( $sql2 );                        
+
             if( $db->count == 0 ){
                 $data_insert = array(
                     'trabajador_id' => $trabajador_id,
@@ -45,7 +47,7 @@ if( $_SESSION && isAdmin() ){
                 $total_avisos++;          
             }
             
-        }
+        //}
         if( @$_GET['aviso'] )
             $aviso_numero = $_GET['aviso'];
         else            
@@ -130,6 +132,9 @@ if( $_SESSION && isAdmin() ){
         );
          
         $content = str_replace( $array_search,$array_replace,$content );
+
+        echo $content;
+        die();
 
         require_once('../libs/html2pdf/html2pdf.class.php');
         $html2pdf = new HTML2PDF('P','LETTER','es');
