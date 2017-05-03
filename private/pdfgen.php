@@ -12,7 +12,6 @@ if(!$_SESSION){
 
 $liquidacion_id = decrypt($_GET['id']);
 
-
 $db->where('id',$_SESSION[PREFIX.'login_eid']);
 $empresa = $db->getOne('m_empresa');
 
@@ -55,7 +54,6 @@ WHERE liquidacion_id = $liquidacion_id
 AND D.id = LD.descuento_id  
 ORDER BY LD.id ASC ";
 $debes_trabajador = $db->rawQuery( $query_desc );
-
 
 //nombre trabajador
 $db->where('id',$trabajador_id);
@@ -423,9 +421,14 @@ $content .= '</td>
                                                             
                     foreach( $debes_trabajador as $dt ){ 
                         if( $dt['descuento_id'] != ID_ANTICIPO ){
+                            if( $dt['cuotaTotal'] != 0 ){
+                                $cuotaActual = ( $dt['cuotaActual'] + 1 );
+                            } else {
+                                $cuotaActual = $dt['cuotaActual'];
+                            }
                     
             $content .= '<tr>  
-                            <td> ' . $dt['cuotaActual'] . ' </td>
+                            <td> ' . $cuotaActual . ' </td>
                             <td> '.$dt['cuotaTotal'].' </td>
                             <td> ';
                                 

@@ -114,8 +114,6 @@ if( $_POST ){
         //$query_desc = "SELECT * FROM t_descuento WHERE activo = 1 OR ( activo = 0 AND fechaFinalizacion = '$mes-$year' ) ORDER BY mesInicio DESC";
         $query_desc = "SELECT * FROM t_descuento WHERE (activo = 1 OR ( activo = 0 AND fechaFinalizacion = '".leadZero($mes)."-$year' )) and trabajador_id = $trabajador_id ORDER BY mesInicio DESC";        
         $debes_trabajador = $db->rawQuery( $query_desc );
-              
-              
 
         
         foreach( $debes_trabajador as $d ){
@@ -126,7 +124,7 @@ if( $_POST ){
                     
                     if( ( $d['cuotaActual'] < $d['cuotaTotal'] ) && ( $d['cuotaTotal'] != 0 ) ){
                         $db->where('id',$d['id']);
-                        $db->update( 't_descuento', array( 'cuotaActual' => ( $cuotaActual + 1 ), 'procesado' => '1' )  );                    
+                        //$db->update( 't_descuento', array( 'cuotaActual' => ( $cuotaActual + 1 ), 'procesado' => '1' )  );
                     } elseif( $d['cuotaTotal'] != 0 ) {
                         
                         // Actualizar campo FINALIZACION con mes y año de periodo y Activo = 0
@@ -145,10 +143,14 @@ if( $_POST ){
                             // Actualizar campo FINALIZACION con mes y año de periodo y Activo = 0
                             $db->where('id',$d['id']); 
                             $db->update( 't_descuento', array( 'activo' => 0, 'fechaFinalizacion' => leadZero($mes)."-".$year, 'procesado' => '1' )  ); 
-                        } 
+                        } else {
+                            $cuotaActual = 0;
+                        }
                     }                                                    
                 }
                 
+
+
                 $valor_tipo_moneda = getValorMoneda(getMesMostrarCorte(),getAnoMostrarCorte(),$d['tipomoneda_id']);
                 $valor_subtotal = ( $valor_tipo_moneda * $d['valor'] );
                 
@@ -162,13 +164,11 @@ if( $_POST ){
                     'cuotaActual' => $cuotaActual,
                     'cuotaTotal' => $d['cuotaTotal']
                 );
-                                                    
                 $db->insert('l_descuento',$arr_l_debe);            
             }
         }
         
-        
-        
+
         
         // Haberes
         $db->where('liquidacion_id',$liquidacion_id);
