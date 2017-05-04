@@ -174,7 +174,12 @@ $content .= '</td>
                         foreach( $haberes_imponibles as $dt ){ 
                             $content .= '
                             <tr>  
-                                <td> ' . $dt['nombre'] . ' </td>
+                                <td> ' . $dt['nombre'];
+                                if( $dt['glosa'] ){
+                                    $content .= " <BR>(" . $dt['glosa'] . ")";
+                                }
+                            $content .=  '
+                                </td>
                                 <td> $ ';                                 
                                 $valor_subtotal = $dt['monto'] ;                                                
                                 $content .= number_format($valor_subtotal,0,',','.') . ' </td>                                                                                        
@@ -530,6 +535,9 @@ liquidación y no tengo ni cargo ni cobro alguno posterior que hacer por ninguno
     </tr>
 </table>
 
+<div style="text-align:center; position:absolute; bottom: 0; width: 100%">
+    Te invitamos a reutilizar y reciclar &nbsp; <img src="'. ROOT .'/public/img/recycle-icon.jpg" />
+</div>
 </page>';
 
 
