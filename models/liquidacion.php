@@ -1129,14 +1129,17 @@ function obtenerAusencias($trabajador_id){
     $mes = getMesMostrarCorte();
     $year = getAnoMostrarCorte();
 
+
+    //Proceso para obtener el
     $sql_fecha_fin = "
     SELECT * FROM `m_trabajador` WHERE id = $trabajador_id
     AND month(fechaContratoFin) = $mes
     AND year(fechaContratoFin) = $year
     ";
     $finiquito_este_mes = $db->rawQueryOne($sql_fecha_fin);
+
     if( $finiquito_este_mes ){
-        $hasta = $year."-".$mes."-30  23:59:59";
+        $hasta = $finiquito_este_mes['fechaContratoFin'] . "  23:59:59";
     } else {
         $hasta = $periodo['hasta'].' 23:59:59';
     }
@@ -1367,23 +1370,26 @@ function obtenerAusencias($trabajador_id){
     $fecha_inicio_contrato_plano = $db->getValue('m_trabajador','fechaContratoInicio');
     $fecha_inicio_contrato_plano .= ' 00:00:00';    
     $fecha_inicio_contrato = strtotime($fecha_inicio_contrato_plano);        
-    
-    
+
     $mes_enrolado = date('m',$fecha_inicio_contrato);
     $ano_enrolado = date('Y',$fecha_inicio_contrato);
+    $mes_enrolado = (int)$mes_enrolado;
+
     
     if( ($mes_enrolado == $mes) && ( $ano_enrolado == $year ) ){
-        
+        /*
         $db->where('trabajador_id',$trabajador_id);
         $db->where('activo',1);
         $db->get('t_contrato');
         if( $db->count <= 2 ){
+        */
             $datetime1 = new DateTime( $year.'-'.$mes.'-01 00:00:00' );
             $datetime2 = new DateTime( $fecha_inicio_contrato_plano );
             $interval = $datetime1->diff($datetime2);                    
+
             $diasNoEnrolado = $interval->days;
-        }             
-    }    
+        //}
+    }
     /** END **/
     
     
