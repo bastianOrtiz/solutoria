@@ -6,22 +6,18 @@ $comparte_cargo['compartirCargo'];
 
 if( $comparte_cargo['compartirCargo'] == 1 ){
     $sql = "
-    SELECT C.id, C.nombre, C.descripcion, C.cargoPadreId, C.empresa_id, COUNT( T.cargo_id ) as total
-    FROM m_cargo C, m_trabajador T
+    SELECT C.id, C.nombre, C.descripcion, C.cargoPadreId, C.empresa_id
+    FROM m_cargo C
     WHERE C.empresa_id IN ( SELECT id FROM m_empresa WHERE cuenta_id = " . $_SESSION[PREFIX.'login_cid'] . ")
-    AND C.id = T.cargo_id
-    AND T.tipocontrato_id NOT IN (3,4)
     AND C.activo = 1
     GROUP BY C.id, C.nombre, C.descripcion, C.cargoPadreId
     ORDER BY C.nombre ASC
     ";
 } else {
     $sql = "
-    SELECT C.id, C.nombre, C.descripcion, C.cargoPadreId, C.empresa_id, COUNT( T.cargo_id ) as total
-    FROM m_cargo C, m_trabajador T
+    SELECT C.id, C.nombre, C.descripcion, C.cargoPadreId, C.empresa_id
+    FROM m_cargo C
     WHERE C.empresa_id = " . $_SESSION[PREFIX.'login_eid'] . "
-    AND C.id = T.cargo_id
-    AND T.tipocontrato_id NOT IN (3,4)
     AND C.activo = 1
     GROUP BY C.id, C.nombre, C.descripcion, C.cargoPadreId
     ORDER BY C.nombre ASC
@@ -95,9 +91,8 @@ if( $_POST ){
         exit();
     }
     
-    if( @$_POST['action'] == 'new' ){        
-        $activo = $cargoActivo[0];        
-        
+    if( @$_POST['action'] == 'new' ){
+        $activo = $cargoActivo[0];
         $data = Array (
             "nombre" => $nombreCargo,
             "descripcion" => $descipcionCargo,
@@ -114,7 +109,7 @@ if( $_POST ){
             redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
             exit();
         } else {
-            $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$id);
+            $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$create_id);
             redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
             exit();                
         }

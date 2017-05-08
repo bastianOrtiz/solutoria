@@ -1,5 +1,14 @@
 <?php
 
+function getTotalTrabajadoresById($cargo_id){
+    global $db;
+    $sql = "select COUNT(*) as total from m_trabajador T WHERE T.cargo_id = $cargo_id";
+    $db->where('cargo_id', $cargo_id);
+    $count = $db->getValue ("m_trabajador", "count(*)");
+
+    return $count;
+}
+
 function crearCargo($data_array){
     global $db;
     $id = $db->insert('m_cargo', $data_array);

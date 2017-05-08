@@ -48,7 +48,7 @@
                                 <td> <?php echo $reg['id']?> </td>
                                 <td> <?php echo $reg['nombre']?> </td>
                                 <td> <?php echo $reg['descripcion']?> </td>
-                                <td> <?php echo $reg['total']?> </td>
+                                <td> <?php echo getTotalTrabajadoresById($reg['id']) ?> </td>
                                 <td> <?php echo $cargo ?> </td>                                
                                 <td> <?php echo fnNombreEmpresa($reg['empresa_id']) ?> </td>                                
                                 <td>
