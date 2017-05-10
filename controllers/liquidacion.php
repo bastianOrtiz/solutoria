@@ -437,18 +437,35 @@ if( isset($parametros[1]) ){
         redirect( BASE_URL.'/trabajador/listar','',true,'No ha definido el valor de Renta Tope Imponible');
         exit();   
     }   
-    
-    if( $remuneracion_tributable > $tope ){        
+
+
+    $licencias = obtenerLicencias($trabajador_id);
+
+    if( $remuneracion_tributable > $tope ){
         if( ( $ausencias > 0 ) && ( $ausencias != 30 ) ){
             $total_imponible = ($tope / 30) * ( 30 - $ausencias );
         } else {
             $total_imponible = $tope;            
         }
-    } else {         
+    } else {
         $total_imponible = $remuneracion_tributable;
     }
-    
-        
+
+    if($licencias){
+        if( ($remuneracion_tributable / ( 30 - $licencias ) * 30 ) > $tope ){
+            $total_imponible_proporcional = ( ( $tope / 30  ) * ( 30 - $licencias ) );
+            $total_imponible = $total_imponible_proporcional;
+        }
+    }
+
+
+
+
+    //$total_imponible = ($tope / 30) * ( 30 - $ausencias );
+
+
+
+
     $db->where('trabajador_id',$trabajador_id);
     $prevision_trabajador = $db->getOne('t_prevision');
             
