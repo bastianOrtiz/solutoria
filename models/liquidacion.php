@@ -1005,6 +1005,8 @@ function isLicencia($ausencia_id){
 }
 
 
+
+
 function obtenerLicencias($trabajador_id){
     global $db;
 
@@ -1112,6 +1114,9 @@ function obtenerLicencias($trabajador_id){
 
     return $dias_licencia;
 }
+
+
+
 
 
 /**
