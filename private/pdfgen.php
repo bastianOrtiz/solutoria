@@ -423,11 +423,11 @@ $content .= '</td>
         				</tr>
                     </thead>
                     <tbody>';
-                                                            
+
                     foreach( $debes_trabajador as $dt ){ 
                         if( $dt['descuento_id'] != ID_ANTICIPO ){
                             if( $dt['cuotaTotal'] != 0 ){
-                                $cuotaActual = ( $dt['cuotaActual'] + 1 );
+                                $cuotaActual = ( $dt['cuotaActual'] );
                             } else {
                                 $cuotaActual = $dt['cuotaActual'];
                             }
