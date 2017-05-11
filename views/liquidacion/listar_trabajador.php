@@ -1,3 +1,12 @@
+<style>
+    .modal-body{
+        text-align: center;
+    }
+    .fa-pagelines{
+        color: green;
+        font-size: 28px;
+    }
+</style>
 <!-- Content Wrapper. Contains page content -->
    
       <div class="content-wrapper">
@@ -45,7 +54,7 @@
                                 <td> <?php echo $reg['ano']?> </td>
                                 <td> <?php echo  getNombreMes($reg['mes']) ?> </td>
                                 <td class="btn-group-md">                                                                        
-                                    <a href="<?php echo BASE_URL . '/private/pdfgen.php?id=' . encrypt($reg['id']) ?>" target="_blank" class="btn btn-info" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Ver Liquidación"> <i class="fa fa-search"></i> </a>                                                                        
+                                    <a href="<?php echo BASE_URL . '/private/pdfgen.php?id=' . encrypt($reg['id']) ?>" class="btn btn-info btn_ver_liq" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Ver Liquidación"> <i class="fa fa-search"></i> </a>
                                 </td>                                                                                                                                                                                                
                             </tr>
                         <?php 
@@ -70,4 +79,33 @@
                 </div><!-- /.box-body -->
               </div><!-- /.box -->                  
         </section>        
-      </div><!-- /.content-wrapper -->                        
+      </div><!-- /.content-wrapper -->
+
+<div class="modal print_modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p><i class="fa fa-pagelines"></i> &nbsp; No me imprimas si no es necesario. Protejamos el medio ambiente. &nbsp; <i class="fa fa-pagelines"></i> </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left btn_close_print">Cerrar</button>
+        <a href="" target="_blank" class="btn btn-primary btn_print">Imprimir de todas formas</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
+<script>
+$(".btn_ver_liq").click(function(e){
+    e.preventDefault();
+    href = $(this).attr('href');
+    $(".print_modal").fadeIn(300);
+    $(".btn_print").attr('href',href);
+})
+$(".btn_print, .btn_close_print").click(function(){
+    $(".print_modal").fadeOut(300);
+})
+</script>
