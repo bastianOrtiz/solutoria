@@ -89,7 +89,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left btn_close_print">Cerrar</button>
-        <a href="" target="_blank" class="btn btn-primary btn_print">Imprimir de todas formas</a>
+        <a href="" target="_blank" class="btn btn-primary btn_print">Ver Liquidación</a>
       </div>
     </div>
     <!-- /.modal-content -->
