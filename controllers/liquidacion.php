@@ -265,7 +265,7 @@ if( $_POST ){
         $liq_id = $db->getValue('liquidacion','id');
         
         if( $liq_id ){ 
-            redirect(BASE_URL.'/private/pdfgen_dev.php?id='.encrypt($liq_id));    
+            redirect(BASE_URL.'/private/pdfgen.php?id='.encrypt($liq_id));
         } else {
             goBack('No existen liquidaciones con los datos ingresados');
         }
