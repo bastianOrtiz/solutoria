@@ -1260,8 +1260,7 @@ function obtenerAusencias($trabajador_id){
                 //echo "4<br />";
             }        
         }
-    }          
-
+    }
     
     
     /** Ahora Se Recorren Las LICENCIAS **/
