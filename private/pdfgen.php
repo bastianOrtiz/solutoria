@@ -535,8 +535,8 @@ liquidación y no tengo ni cargo ni cobro alguno posterior que hacer por ninguno
     </tr>
 </table>
 
-<div style="text-align:center; position:absolute; bottom: 0; width: 100%">
-    TE INVITAMOS A REUTILIZAR Y RECICLAR &nbsp; <img src="'. ROOT .'/public/img/recycle-icon.jpg" />
+<div style="text-align:center; position:absolute; bottom: 0; width: 100%;">
+    NO ME BOTES A LA BASURA, RECÍCLAME &nbsp; <img src="'. ROOT .'/public/img/recycle-icon.jpg" />
 </div>
 </page>';
 
