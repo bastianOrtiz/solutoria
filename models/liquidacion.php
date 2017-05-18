@@ -1418,10 +1418,13 @@ function obtenerAusencias($trabajador_id){
             $diasAlcanzoATrabajar++;
             $diasNoTrabajados = ( 30 - $diasAlcanzoATrabajar );            
         }
-    }        
+    }
     /** END **/
          
     
+    $arr_ausencias['dias_finiquito'] = $diasNoTrabajados;
+    $arr_ausencias['dias_no_enrolado'] = $diasNoEnrolado;
+    $arr_ausencias['dias_ausentismo'] = $total_ausencias;
     $arr_ausencias['dias_licencia'] = $dias_licencia;
     $arr_ausencias['total'] = ($total_ausencias + $dias_licencia + $diasNoEnrolado + $diasNoTrabajados );        
              
