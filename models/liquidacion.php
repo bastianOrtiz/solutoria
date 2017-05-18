@@ -1363,8 +1363,7 @@ function obtenerAusencias($trabajador_id){
     if( $dias_licencia > 30 ){
         $dias_licencia = 30;
     }            
-    
-        
+
     
     
     /** Proceso para determinar dias de NO enrolado **/
@@ -1396,8 +1395,7 @@ function obtenerAusencias($trabajador_id){
     }
     /** END **/
     
-    
-    
+
     /** Proceso para determinar dias que no trabajo por Finiquito **/
     $diasNoTrabajados = 0;
     

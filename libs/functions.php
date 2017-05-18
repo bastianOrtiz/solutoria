@@ -1882,8 +1882,7 @@ function getPeriodoCorte(){
     $db->orderBy("ano","Desc");
     $db->orderBy("mes","Desc");
     $fechas_limites = $db->get('m_corte',2);
-    
-    
+
     if( count($fechas_limites) < 2 ){
         $nuevafecha_plus1 = '';
         $fecha_limite = '';        

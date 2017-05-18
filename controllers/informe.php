@@ -361,6 +361,8 @@ if( $_POST ){
         AND L.ano = $ano
         AND T.empresa_id = $empresa_id";
         
+        show_array($sql_impuesto);
+
         if( !@$mostrarZero )
             $sql_impuesto .= " AND L.$tipoImpuesto > 0 ";
                 

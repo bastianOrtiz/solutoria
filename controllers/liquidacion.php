@@ -3,6 +3,8 @@
 $year = getAnoMostrarCorte();
 $mes = getMesMostrarCorte();
 
+$corte = getPeriodoCorte();
+
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $registros = $db->get("m_trabajador");
 
