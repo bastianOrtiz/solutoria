@@ -2,7 +2,7 @@
 
 function obtenerContenidoDirectorio($directorio, $is_dir){    
     $ficheros = scandir($directorio);    
-    $dirs = array_diff($ficheros, array('.', '..','comun'));
+    $dirs = array_diff($ficheros, array('.', '..','comun','.DS_Store'));
     
     $arr_ficheros = array();
     if( $is_dir ){

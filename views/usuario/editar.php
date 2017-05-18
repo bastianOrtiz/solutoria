@@ -1,5 +1,4 @@
-
-<!-- Content Wrapper. Contains page content -->    
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     
     <section class="content-header">
@@ -329,4 +328,3 @@ $(document).ready(function() {
 });
            
 </script>
-      

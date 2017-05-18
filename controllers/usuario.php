@@ -52,10 +52,9 @@ if( $_POST ){
                 'menuItem' => $json_menuitems
             );
         }
-        
+
         $json_roles = json_encode($roles);        
         $data['roles'] = $json_roles;
-        
         
         $updateUser = editarUsuario($usuario_id, $data);
         if( $updateUser ){
@@ -211,12 +210,15 @@ if( $parametros ){
     if( isset($parametros[1]) ){
                 
         $db->where ("id", $parametros[1]);
-        $usuario = $db->getOne("m_usuario");                        
+        $usuario = $db->getOne("m_usuario");
+
         
         $db->where ("usuario_id", $parametros[1]);
         $usuarioempresa = $db->get("m_usuarioempresa");
         
         $menu = mainMenu();
+        $roles = json_decode($usuario['roles']);
+
     }
     
     if( @$parametros[0] == 'perfil' ){
