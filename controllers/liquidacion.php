@@ -5,6 +5,7 @@ $mes = getMesMostrarCorte();
 
 $corte = getPeriodoCorte();
 
+
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $registros = $db->get("m_trabajador");
 
@@ -216,6 +217,8 @@ if( $_POST ){
             } else {
                 $monto = $d['valor']; 
             }
+            
+            
             $arr_l_haber = array(
                 'liquidacion_id' => $liquidacion_id,
                 'haber_id' => $d['haber_id'],
@@ -280,8 +283,7 @@ if( $_POST ){
 if( isset($parametros[1]) ){
             
     $trabajador_id = $parametros[1];
-    $total_descuento_atrasos = obtenerTotalDescuentoXAtrasos($trabajador_id);        
-          
+    $total_descuento_atrasos = obtenerTotalDescuentoXAtrasos($trabajador_id);
                 
     $db->where('trabajador_id',$trabajador_id);
     $db->orderBy('id', 'DESC');
