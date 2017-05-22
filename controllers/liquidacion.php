@@ -477,8 +477,9 @@ if( isset($parametros[1]) ){
     $afp_trabajador['nombre'] = fnGetNombre($afp_id,'m_afp',0);
     
     $db->where('afp_id',$afp_id);
-    $db->orderBy('id','DESC');
-    $afp_trabajador['valor'] = $db->getValue('m_afpvalores','porCientoPension');      
+    $db->orderBy('ano','DESC');
+    $db->orderBy('mes','DESC');
+    $afp_trabajador['valor'] = $db->getValue('m_afpvalores','porCientoPension');
     
    
     if( trabajadorEstaEnFonasa($trabajador_id) ){
