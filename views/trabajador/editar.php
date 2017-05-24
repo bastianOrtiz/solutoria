@@ -181,7 +181,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="emailTrabajador">Email</label>
-                                                    <input type="email" class="form-control" value="<?php echo $trabajador['email'] ?>" name="emailTrabajador" id="emailTrabajador" />                                
+                                                    <input type="text" class="form-control" value="<?php echo $trabajador['email'] ?>" name="emailTrabajador" id="emailTrabajador" />
                                                 </div>
                                                 
                                                 <div class="form-group">
