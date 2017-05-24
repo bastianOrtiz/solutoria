@@ -221,7 +221,7 @@ function generateToken($mailto){
  * @param (int) $mes Mes a consultar
  * @param (int) $ano Año a consultar 
  * @param (int) $trabajador_id ID del trabajador
- * @return (int) $int_minutos Total de minutos  
+ * @return (array) $array_return Arreglo con 2 valores: Total de minutos  y dias que tiene atrasos
  */
 function getMinutosAtrasoMes( $mes, $ano, $trabajador_id){
     global $db;
@@ -263,9 +263,7 @@ function getMinutosAtrasoMes( $mes, $ano, $trabajador_id){
             $interval = $date1->diff($date2);        
             $minutos = $interval->i;
             $horas_en_minutos = ( $interval->h * 60 );
-            $total_minutos += $minutos + $horas_en_minutos;            
-                    
-            
+            $total_minutos += $minutos + $horas_en_minutos;
         }
         $int_minutos = $total_minutos;        
                                 

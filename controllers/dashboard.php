@@ -56,7 +56,19 @@ $js_var_sexos = trim($js_var_sexos,',');
 
 
 
+$atraso_acumulado['total_atrasos'] = count($entradas);
+$atraso_acumulado = getMinutosAtrasoMes(date('m'), date('Y'), $_SESSION[PREFIX.'login_uid']);
 
+$ausencias = obtenerAusencias( $_SESSION[PREFIX . 'login_uid'] );
+$ausencias_total = ( $ausencias['dias_ausentismo'] + $ausencias['dias_licencia'] );
+
+
+if( $_SESSION[PREFIX.'is_trabajador'] ){
+    $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
+    $db->orderBy('ano','DESC');
+    $db->orderBy('mes','DESC');
+    $ultima_liquidacion = $db->getOne('liquidacion');
+}
 
 include ROOT . '/views/comun/header.php';
 include ROOT . '/views/comun/menu_top.php';
