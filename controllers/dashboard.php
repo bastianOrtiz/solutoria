@@ -55,12 +55,32 @@ foreach( $sexos as $s ){
 $js_var_sexos = trim($js_var_sexos,',');
 
 
-
+// Atrasos
 $atraso_acumulado['total_atrasos'] = count($entradas);
 $atraso_acumulado = getMinutosAtrasoMes(date('m'), date('Y'), $_SESSION[PREFIX.'login_uid']);
 
+// Ausencias
 $ausencias = obtenerAusencias( $_SESSION[PREFIX . 'login_uid'] );
 $ausencias_total = ( $ausencias['dias_ausentismo'] + $ausencias['dias_licencia'] );
+
+
+// Vacaciones
+$sql_v = "SELECT * FROM t_ausencia TA
+WHERE TA.ausencia_id IN ( select ausenciaVacaciones from m_empresa E WHERE E.id = ".$_SESSION[PREFIX . 'login_eid']." )
+AND TA.trabajador_id = ".$_SESSION[PREFIX . 'login_uid']."
+AND year(TA.fecha_inicio) = " . date('Y');
+$resul_vacaciones = $db->rawQuery($sql_v);
+
+$dias_vac = 0;
+foreach($resul_vacaciones as $rango){
+    $fechaInicio = strtotime($rango['fecha_inicio'].' 00:00:00');
+    $fechaFin = strtotime($rango['fecha_fin'].' 23:59:59');
+    for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+        if ( date("N",$i) < 6 ){
+            $dias_vac++;
+        }
+    }
+}
 
 
 if( $_SESSION[PREFIX.'is_trabajador'] ){

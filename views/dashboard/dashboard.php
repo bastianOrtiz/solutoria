@@ -47,6 +47,7 @@
         <div class="row">
             <div class="col-md-6">
                 <!-- DONUT CHART -->
+            <?php if( ! $_SESSION[PREFIX.'is_trabajador'] ){  ?>
               <div class="box box-danger">
                 <div class="box-header with-border">
                   <h3 class="box-title">Empleados x Departamento</h3>                  
@@ -65,8 +66,14 @@
                     <canvas id="pieChart" height="250"></canvas>                  
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
+            <?php } else { ?>
+                <div class="box box-danger">
+                    <div class="box-body">
+                      <img src="<?php echo BASE_URL ?>/private/imagen.php?f=<?php echo base64_encode(base64_encode(date('Ymd')) . $_SESSION[PREFIX . 'login_uid']) ?>&t=<?php echo base64_encode('m_trabajador') ?>" style="display:block; margin: 79px auto" />
+                    </div>
+                </div>
 
-
+            <?php } ?>
             </div><!-- /.col (LEFT) -->
             <div class="col-md-6">
                 <?php if( $_SESSION[PREFIX.'is_trabajador'] ){  ?>
@@ -91,7 +98,7 @@
                           </div>
 
                         <div class="info-box bg-red">
-                            <span class="info-box-icon"><i class="ion ion-android-calendar"></i></span>
+                            <span class="info-box-icon"><i class="ion ion-calendar"></i></span>
 
                             <div class="info-box-content">
                               <span class="info-box-text">Ausencias</span>
@@ -118,10 +125,24 @@
                             </div>
                             <!-- /.info-box-content -->
                           </div>
+
+                        <div class="info-box bg-blue">
+                            <span class="info-box-icon"><i class="ion ion-android-calendar"></i></span>
+
+                            <div class="info-box-content">
+                              <span class="info-box-text">Días de vacaciones tomadas este año</span>
+                              <span class="info-box-number">
+                                <?php echo $dias_vac ?>
+                              </span>
+
+                            </div>
+                            <!-- /.info-box-content -->
+                          </div>
                     </div>
                 </div><!-- /.box -->
                 <?php } ?>
               <!-- LINE CHART -->
+                <?php if( ! $_SESSION[PREFIX.'is_trabajador'] ){  ?>
               <div class="box box-info">
                 <div class="box-header with-border">
                   <h3 class="box-title">Grafico Hombres v/s Mujeres</h3>
@@ -134,7 +155,7 @@
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-
+                <?php } ?>
 
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->                                        
@@ -147,16 +168,7 @@
 
  $(function () {           
     
-        /* ChartJS
-         * -------
-         * Here we will create a few charts using ChartJS
-         */
-
-        //--------------
-        //- AREA CHART -
-        //--------------
-
-
+        <?php if( ! $_SESSION[PREFIX.'is_trabajador'] ){  ?>
         var areaChartData = {
           labels: ["January", "February", "March", "April", "May", "June", "July"],
           datasets: [
@@ -232,15 +244,10 @@
           responsive: true
         };
 
-        //Create the line chart
-        //areaChart.Line(areaChartData, areaChartOptions);
 
-        
-        
-        //-------------
-        //- PIE CHART -
-        //-------------
-        // Get context with jQuery - using jQuery's .get() method.
+
+
+
         var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
         var pieChart = new Chart(pieChartCanvas);
         var PieData = [        
@@ -274,8 +281,7 @@
         // You can switch between pie and douhnut using the method below.
         pieChart.Doughnut(PieData, pieOptions);
         
-        
-        
+
         var sexChartCanvas = $("#sexChart").get(0).getContext("2d");
         var sexChart = new Chart(sexChartCanvas);
         var sexData = [        
@@ -284,7 +290,12 @@
         sexChart.Doughnut(sexData,pieOptions);
         
 
+        <?php } ?>
 
 
       });
+
+
+
+
 </script>
