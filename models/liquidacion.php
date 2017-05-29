@@ -302,7 +302,7 @@ function obtenerTotalDescuentoXAtrasos($trabajador_id, $aplica_gracia = true){
     
     $hh = calcularValorHH($trabajador_id);
     $minuto_hh = ( $hh / 60 );
-        
+
     if( marcaTarjeta($trabajador_id) ){                              
 
         $atrasos_entrada = obtenerAtrasosAusenciasTrabajador($trabajador_id,'I');        
@@ -650,8 +650,8 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
     } else {
         return false;
         exit();
-    }            
-        
+    }
+
     $array_dias_temp = array($m_horarios['lun'],$m_horarios['mar'],$m_horarios['mie'],$m_horarios['jue'],$m_horarios['vie'],$m_horarios['sab'],$m_horarios['dom']);
     
     $dias_laborales_horario = array();
@@ -662,7 +662,7 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
         }
     }
     
-    $periodo = getPeriodoCorte();           
+    $periodo = getPeriodoCorte();
        
     $desde = $periodo['desde'].' 00:00:00';        
     $hasta = $periodo['hasta'].' 23:59:59';        
@@ -786,7 +786,8 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
             }
         }                 
                         
-    }      
+    }
+
     
     if( $tipoMarcadoTarjeta == 'I' ){
         $registrosTargetas = $entradas;
@@ -827,7 +828,7 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
                             /** SI es un dia laboral **/
                             if( in_array($dia_semana,$dias_laborales_horario) ){
                                 if( !esAusencia($id_trabajador,$fecha_comparar) ){
-                                    if( !isDiaFeriado($fecha_comparar) ){                                        
+                                    if( !isDiaFeriado($fecha_comparar) ){
                                         if( $tipoMarcadoTarjeta == 'I' ){
                                             if( $str_hora_registro > strtotime( $m_horario_definido ) ) {
                                                 $diff_horas = RestarHoras($m_horario_definido,$hora_registro,$fecha_comparar);
@@ -835,10 +836,10 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
                                                     $total_horas_atraso = ($total_horas_atraso + $diff_horas['minutos']);
                                                 }
                                             }
-                                        } else {                                    
+                                        } else {
                                             if( $str_hora_registro < strtotime( $m_horario_definido ) ) {
-                                                $diff_horas = RestarHoras($hora_registro,$m_horario_definido,$fecha_comparar);                                                
-                                                if( !checkIfAutorized(null,$id_trabajador,'A',$tipoMarcadoTarjeta,$fecha_iterar) ){              
+                                                $diff_horas = RestarHoras($hora_registro,$m_horario_definido,$fecha_comparar);
+                                                if( !checkIfAutorized(null,$id_trabajador,'A',$tipoMarcadoTarjeta,$fecha_iterar) ){
                                                     $total_horas_atraso = ($total_horas_atraso + $diff_horas['minutos']);
                                                 }                                        
                                             }                                                                                                            
@@ -1362,7 +1363,7 @@ function obtenerAusencias($trabajador_id){
     }
     if( $dias_licencia > 30 ){
         $dias_licencia = 30;
-    }            
+    }
 
     
     
@@ -1394,7 +1395,7 @@ function obtenerAusencias($trabajador_id){
         //}
     }
     /** END **/
-    
+
 
     /** Proceso para determinar dias que no trabajo por Finiquito **/
     $diasNoTrabajados = 0;
@@ -1410,24 +1411,29 @@ function obtenerAusencias($trabajador_id){
         if( $mes == 2 ){
             $fechaFin=strtotime( $ano.'-'.$mes.'-28' );    
         }
+
         if($fecha_fin_contrato < $fechaFin){
             $datetime1 = new DateTime( $year.'-'.$mes.'-01' );
             $datetime2 = new DateTime( $fecha_fin_contrato_plano );
-            $interval = $datetime1->diff($datetime2);                        
+            $interval = $datetime1->diff($datetime2);
+
             $diasAlcanzoATrabajar = $interval->days;
             $diasAlcanzoATrabajar++;
+            if($diasAlcanzoATrabajar > 30){
+                $diasAlcanzoATrabajar = 0;
+            }
             $diasNoTrabajados = ( 30 - $diasAlcanzoATrabajar );            
         }
     }
     /** END **/
-         
+
     
     $arr_ausencias['dias_finiquito'] = $diasNoTrabajados;
     $arr_ausencias['dias_no_enrolado'] = $diasNoEnrolado;
     $arr_ausencias['dias_ausentismo'] = $total_ausencias;
     $arr_ausencias['dias_licencia'] = $dias_licencia;
-    $arr_ausencias['total'] = ($total_ausencias + $dias_licencia + $diasNoEnrolado + $diasNoTrabajados );        
-             
+    $arr_ausencias['total'] = ($total_ausencias + $dias_licencia + $diasNoEnrolado + $diasNoTrabajados );
+
     return $arr_ausencias;
 }
 

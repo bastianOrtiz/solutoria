@@ -284,7 +284,7 @@ if( isset($parametros[1]) ){
             
     $trabajador_id = $parametros[1];
     $total_descuento_atrasos = obtenerTotalDescuentoXAtrasos($trabajador_id);
-                
+
     $db->where('trabajador_id',$trabajador_id);
     $db->orderBy('id', 'DESC');
     $ultima_liquidacion = $db->getOne('liquidacion');

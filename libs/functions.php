@@ -1781,14 +1781,16 @@ function empresaUsaRelojControl(){
 function checkIfAutorized($logid=null, $trabajador_id, $tipoHora,$io="",$fecha=""){
     global $db;
     $count=0;
+
+    //show_array($trabajador." - ".$tipoHora." - ".$io." - ".$fecha,0);
+
     if( $logid ){
         $db->where('logid',$logid);
         $db->where('trabajador_id',$trabajador_id);
         $db->where('tipo',$tipoHora);
         $res = $db->getOne('t_atrasohoraextra');
         $count = $db->count;
-    } else {  
-        $db->setTrace(true);
+    } else {
         $db->where('fecha',$fecha);
         $db->where('io',$io);
         $db->where('trabajador_id',$trabajador_id);        
