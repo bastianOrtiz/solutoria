@@ -57,7 +57,9 @@ if( ( $_POST ) || $parametros ){
                                     
             enviarMailExterno($arr_query_post);
 
-            goBack('Hemos enviado instrucciones a su correo para reestablecer su contrase\u00f1a\n');
+            //goBack('Hemos enviado instrucciones a su correo para reestablecer su contrase\u00f1a\n');
+            redirect(BASE_URL.'/login_trabajador', '', true, $msg = 'Hemos enviado instrucciones a su correo para reestablecer su contrase\u00f1a\n');
+
             exit();        
         }
     }
