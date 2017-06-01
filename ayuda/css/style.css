@@ -57,6 +57,13 @@ header h2{
     font-weight: 300;
 }
 
+h3{
+    font-size: 28px;
+    font-weight: 400;
+    text-align: center;
+    display: block;
+}
+
 .list ul{
     width: 480px;
     list-style: none;
