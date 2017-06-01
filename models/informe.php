@@ -134,8 +134,9 @@ function marcoAtrasado( $trabajador_id, $horario_id, $checktime ){
         
     $entrada = strtotime( $horario_entrada_db );
     $marcado = strtotime( $horario_entrada_marcado );
+    $entrada_mas_5min = strtotime ( '+' . MINUTOS_GRACIA_CARTA_AMONESTACION . ' minute' , $entrada ) ;
     
-    if( $marcado > $entrada ) {
+    if( $marcado > $entrada_mas_5min ) {
         return true;
     } else {
         return false;
