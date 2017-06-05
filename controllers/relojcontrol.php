@@ -238,14 +238,28 @@ if( $parametros ){
 
 
         $limites_periodo = getPeriodoCorte();
-
+        
+        // Si viene una fecha pasada por parametro en la URL se usa ese tramo
         if( $parametros[2] && $parametros[3] ){
             $limites_periodo = array(
                 'desde' => $parametros[2],
                 'hasta' => $parametros[3]
             );
         }
-
+        
+        // Si esta logueado un trabajador... se usa el periodo del mes actual hasta la fecha actual
+        if( $_SESSION[PREFIX . 'is_trabajador'] ){
+            $fechaInicio=strtotime(date('Y-m-') . '01' . ' 00:00:00');
+            $fechaFin=strtotime(date('Y-m-d') . ' 23:59:59');
+            $limites_periodo = array(
+                'desde' => date('Y-m-') . '01',
+                'hasta' => date('Y-m-d')
+            );
+        } else {
+            $fechaInicio=strtotime($fecha_desde.' 00:00:00');
+            $fechaFin=strtotime($fecha_limite.' 23:59:59');
+        }
+    
         $fecha_desde = $limites_periodo['desde'];
         $fecha_limite = $limites_periodo['hasta'];
 
@@ -265,7 +279,8 @@ if( $parametros ){
         ORDER BY checktime ASC
         ";
         $entradas = $db->rawQuery($sql);
-
+        
+        
         $sql = "
         SELECT  * FROM m_relojcontrol
         WHERE  userid = '$relojcontrol_id'
@@ -275,15 +290,6 @@ if( $parametros ){
         ORDER BY checktime ASC
         ";
         $salidas = $db->rawQuery($sql);
-
-        if( $_SESSION[PREFIX . 'is_trabajador'] ){
-            $fechaInicio=strtotime(date('Y-m-') . '01' . ' 00:00:00');
-            $fechaFin=strtotime(date('Y-m-d') . ' 23:59:59');
-        } else {
-            $fechaInicio=strtotime($fecha_desde.' 00:00:00');
-            $fechaFin=strtotime($fecha_limite.' 23:59:59');
-        }
-
 
 
         $db->where('id',$trabajador['horario_id']);
