@@ -120,7 +120,7 @@
                                 <a href="<?php echo BASE_URL . '/private/pdfgen.php?id=' . encrypt($ultima_liquidacion['id']) ?>" target="_blank" class="btn btn-default">Descargar</a>
                               </span>
                               <span class="progress-description">
-                              (Correspondiente al mes de Abril)
+                              (Correspondiente al mes de <?php echo $ultima_liquidacion; ?>)
                               </span>
                             </div>
                             <!-- /.info-box-content -->
