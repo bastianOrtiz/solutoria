@@ -247,18 +247,24 @@ if( $parametros ){
             );
         }
         
+
         // Si esta logueado un trabajador... se usa el periodo del mes actual hasta la fecha actual
         if( $_SESSION[PREFIX . 'is_trabajador'] ){
-            $fechaInicio=strtotime(date('Y-m-') . '01' . ' 00:00:00');
-            $fechaFin=strtotime(date('Y-m-d') . ' 23:59:59');
-            $limites_periodo = array(
-                'desde' => date('Y-m-') . '01',
-                'hasta' => date('Y-m-d')
-            );
+            if(!$_SESSION[PREFIX . 'is_jefe']){
+                $limites_periodo = getPeriodoCorte();
+                $fechaInicio=strtotime(date('Y-m-') . '01' . ' 00:00:00');
+                $fechaInicio=strtotime($limites_periodo['desde'].' 00:00:00');
+                $fechaFin=strtotime($limites_periodo['hasta'].' 23:59:59');
+            } else {
+                $fechaInicio=strtotime($limites_periodo['desde'].' 00:00:00');
+                $fechaFin=strtotime($limites_periodo['hasta'].' 23:59:59');
+            }
         } else {
             $fechaInicio=strtotime($fecha_desde.' 00:00:00');
             $fechaFin=strtotime($fecha_limite.' 23:59:59');
         }
+
+        //show_array($fechaInicio);
     
         $fecha_desde = $limites_periodo['desde'];
         $fecha_limite = $limites_periodo['hasta'];
