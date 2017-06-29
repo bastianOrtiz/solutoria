@@ -29,15 +29,17 @@
                         <th> ID </th>
                         <th>Nombre</th>
                         <th>Fecha</th>
+                        <th> Repetir Anualmente </th>
                         <th> Opciones </th>
                       </tr>
                     </thead>
                     <tbody>
-                        <?php foreach( $registros as $reg ){ ?>
+                        <?php  foreach( $registros as $reg ){ ?>
                             <tr>
                                 <td> <?php echo $reg['id']?> </td>
                                 <td> <?php echo $reg['nombre']?> </td>
                                 <td> <?php echo $reg['fecha']?> </td>
+                                 <td> <?php echo booleano($reg['anual']) ?> </td>
                                 <td>                                                                        
                                     <button class="btn btn-flat btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
                                     <button class="btn btn-flat btn-danger" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>                                    
@@ -96,7 +98,7 @@
     <script>
     $(function () {        
         $('#tabla_diaferiado').dataTable({
-          "bPaginate": true,
+          "bPaginate": false,
           "bLengthChange": false,
           "bFilter": true,
           "bSort": true,

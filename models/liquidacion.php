@@ -1400,34 +1400,39 @@ function obtenerAusencias($trabajador_id){
     $diasNoTrabajados = 0;
     
     $db->where('id',$trabajador_id);
-    $fecha_fin_contrato_plano = $db->getValue('m_trabajador','fechaContratoFin');        
+    $fecha_fin_contrato_plano = $db->getValue('m_trabajador','fechaContratoFin');
+
     if($fecha_fin_contrato_plano != "0000-00-00"){                
         $fecha_fin_contrato = strtotime($fecha_fin_contrato_plano);
         $mes = getMesMostrarCorte();
         $mes = leadZero($mes);
         $ano = getAnoMostrarCorte();
-        $fechaFin=strtotime( $ano.'-'.$mes.'-30' );
+        $fechaFinCorte=strtotime( $ano.'-'.$mes.'-30' );
         if( $mes == 2 ){
-            $fechaFin=strtotime( $ano.'-'.$mes.'-28' );    
+            $fechaFinCorte=strtotime( $ano.'-'.$mes.'-28' );
         }
 
-        if($fecha_fin_contrato < $fechaFin){
-            $datetime1 = new DateTime( $year.'-'.$mes.'-01' );
-            $datetime2 = new DateTime( $fecha_fin_contrato_plano );
-            $interval = $datetime1->diff($datetime2);
+        if( $fecha_fin_contrato < $fechaFinCorte ){
+            if( ( date('m',$fechaFinCorte) == date('m',$fecha_fin_contrato) ) ){
+                $datetime1 = new DateTime( $ano.'-'.$mes.'-01' );
+                $datetime2 = new DateTime( $fecha_fin_contrato_plano );
+                $interval = $datetime1->diff($datetime2);
 
-            $diasAlcanzoATrabajar = $interval->days;
-            $diasAlcanzoATrabajar++;
-            if($diasAlcanzoATrabajar > 30){
+
+                $diasAlcanzoATrabajar = $interval->days;
+                $diasAlcanzoATrabajar++;
+                if($diasAlcanzoATrabajar > 30){
+                    $diasAlcanzoATrabajar = 0;
+                }
+            } else {
                 $diasAlcanzoATrabajar = 0;
             }
+
             $diasNoTrabajados = ( 30 - $diasAlcanzoATrabajar );            
         }
     }
     /** END **/
-    if( $trabajador_id == 81 ){
-        $diasNoTrabajados = 30;
-    }
+
     
     $arr_ausencias['dias_finiquito'] = $diasNoTrabajados;
     $arr_ausencias['dias_no_enrolado'] = $diasNoEnrolado;
