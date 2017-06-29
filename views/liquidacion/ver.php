@@ -101,7 +101,7 @@ td.total{
                                             $total_haberes_imponibles += $valor_subtotal;
                                             } 
                                             ?>
-                                            <?php if( $semana_corrida > 0 ){ ?>
+                                            <?php if( $semana_corrida != 0 ){ ?>
                                             <tr>
                                                 <td> <strong>Semana Corrida</strong> </td>
                                                 <td> $ <?php echo number_format($semana_corrida,0,',','.'); ?> </td>                                

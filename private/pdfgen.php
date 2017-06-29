@@ -186,7 +186,7 @@ $content .= '</td>
                             </tr>';                         
                             $total_haberes_imponibles += $valor_subtotal;
                         } 
-                        if( $semanaCorrida > 0 ){
+                        if( $semanaCorrida != 0 ){
                             $total_haberes_imponibles += $semanaCorrida;
             $content .= '
                         <tr>

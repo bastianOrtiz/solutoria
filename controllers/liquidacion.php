@@ -330,7 +330,6 @@ if( isset($parametros[1]) ){
     )              
     ORDER BY mesInicio DESC ";                            
     $haberes_imponibles = $db->rawQuery($sql_haberes);
-                        
                     
     $total_haberes_comision = 0;
     $total_haberes_imponibles = 0;
@@ -345,6 +344,7 @@ if( isset($parametros[1]) ){
         $total_haberes_imponibles += $valor_subtotal;
     }                    
     
+
     $sql_haberes_no_imp = "
     SELECT H.nombre, TH.valor, H.comision AS es_comision, TH.glosa        
     FROM m_haber H, t_haber TH 
@@ -510,12 +510,15 @@ if( isset($parametros[1]) ){
             if($arr_ausencias['dias_finiquito'] > 0){
                 $prop = ($total_pactado_isapre / 30 ) * ( ( 30 - $arr_ausencias['dias_finiquito'] ) - $arr_ausencias['dias_licencia'] );
                 $diferencia_isapre = (( $total_salud_legal - $prop ) * -1);
+
             }
 
         } else {
             $diferencia_isapre = 0;
         }
         
+
+
     }
      
      /*   
