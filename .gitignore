@@ -4,3 +4,7 @@ libs/config\.php
 logs/
 
 \.idea/workspace\.xml
+
+views/\.DS_Store
+
+libs/\.DS_Store
