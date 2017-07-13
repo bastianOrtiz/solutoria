@@ -502,7 +502,7 @@ if( isset($parametros[1]) ){
 
         
         $total_salud_legal = round($total_imponible * 0.07, 0);
-
+        
         $proporcional_pactado_licencia_en_pesos = round($proporcional_pactado_licencia * $uf, 0);
 
         if( $proporcional_pactado_licencia_en_pesos > $total_salud_legal ){
@@ -517,7 +517,9 @@ if( isset($parametros[1]) ){
             $diferencia_isapre = 0;
         }
         
-
+        
+        if( $trabajador_id == 81 )
+            $diferencia_isapre = 0;
 
     }
      
