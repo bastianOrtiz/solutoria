@@ -9,6 +9,7 @@ SELECT DEP.id, DEP.nombre, COUNT(TRA.id) total
 FROM m_departamento DEP, m_trabajador TRA 
 WHERE TRA.departamento_id = DEP.id 
 AND TRA.empresa_id = " . $empresa_logged . "
+AND TRA.tipocontrato_id NOT IN (3,4)
 GROUP BY DEP.nombre
 ";
 $deptos = $db->rawQuery( $sql );
