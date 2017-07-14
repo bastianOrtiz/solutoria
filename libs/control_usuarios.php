@@ -24,6 +24,7 @@ if( $_SESSION[ PREFIX . 'is_jefe' ] ){
     $permisos_trabajador['relojcontrol']['listar_trabajadores'] = 1;
     $permisos_trabajador['vacaciones']['ver_solicitudes'] = 1;
     $permisos_trabajador['vacaciones']['calendario'] = 1;
+    $permisos_trabajador['informe']['reporte_atrasos'] = 1;
 }
 
 if( $_SESSION[ PREFIX . 'login_admin'] != 1 ){

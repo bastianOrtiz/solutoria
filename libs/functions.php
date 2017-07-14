@@ -874,6 +874,18 @@ function menuJefe(){
         )
     );
     
+    $menu['informes'] = array(
+        'label' => 'Informes',
+        'icon_class' => 'fa fa-flag',
+        'childs' => array(
+            array(
+                'entidad' => 'informe',
+                'accion' => 'reporte_atrasos',
+                'label' => 'Reporte de atrasos'
+            )
+        )
+    );
+    
     /*
     $menu['vacaciones_aprovar'] = array(
         'label' => 'Vacaciones',
