@@ -31,7 +31,7 @@ foreach( $deptos as $d ){
 }
 $js_var_PieData = trim($js_var_PieData,',');
 
-
+ 
 
 /** Sexo de los trabajadores **/
 $sql_sexo = "SELECT   sexo, 

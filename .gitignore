@@ -8,3 +8,5 @@ logs/
 views/\.DS_Store
 
 libs/\.DS_Store
+
+\.phpintel/
