@@ -1,6 +1,7 @@
 <?php
 $ids_relojcontrol = $db->rawQuery('SELECT distinct `userid` from m_relojcontrol');
 
+
 /*
 if( !$_SESSION[ PREFIX . 'login_admin'] ){
     if( !$_SESSION[ PREFIX . 'is_jefe'] ){
@@ -48,10 +49,10 @@ $trabajadores_x_cargo = $db->get('m_trabajador',null,array( 'id','nombres','apel
 show_array( $db->getLastQuery() );
 */
 
-$sql_trabajadores_x_cargo = "SELECT * from m_trabajador T WHERE T.cargo_id IN " . $str_IN . "  AND T.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
-$trabajadores_x_cargo = $db->rawQuery( $sql_trabajadores_x_cargo );
-
-
+if($_SESSION[PREFIX.'is_jefe']){ 
+    $sql_trabajadores_x_cargo = "SELECT * from m_trabajador T WHERE T.cargo_id IN " . $str_IN . "  AND T.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
+    $trabajadores_x_cargo = $db->rawQuery( $sql_trabajadores_x_cargo );
+}
 if( $_POST ){
 
     extract($_POST);
@@ -174,7 +175,7 @@ if( $_POST ){
 }
 
 if( $parametros ){
-
+    
     /** Consultar datos de trabajador **/
     if( ( $parametros[0] == 'me' ) && ( $parametros[1] != $_SESSION[ PREFIX . 'login_uid'] ) ){
         redirect(BASE_URL . '/' . $entity . '/me' );
@@ -251,7 +252,14 @@ if( $parametros ){
         // Si esta logueado un trabajador... se usa el periodo del mes actual hasta la fecha actual
         if( $_SESSION[PREFIX . 'is_trabajador'] ){
             if(!$_SESSION[PREFIX . 'is_jefe']){
-                $limites_periodo = getPeriodoCorte();
+                if( $parametros[2] && $parametros[3] ){
+                    $limites_periodo = array(
+                        'desde' => $parametros[2],
+                        'hasta' => $parametros[3]
+                    );
+                } else {
+                    $limites_periodo = getPeriodoCorte();
+                }
                 $fechaInicio=strtotime(date('Y-m-') . '01' . ' 00:00:00');
                 $fechaInicio=strtotime($limites_periodo['desde'].' 00:00:00');
                 $fechaFin=strtotime($limites_periodo['hasta'].' 23:59:59');
@@ -264,8 +272,7 @@ if( $parametros ){
             $fechaFin=strtotime($fecha_limite.' 23:59:59');
         }
 
-        //show_array($fechaInicio);
-    
+        
         $fecha_desde = $limites_periodo['desde'];
         $fecha_limite = $limites_periodo['hasta'];
 

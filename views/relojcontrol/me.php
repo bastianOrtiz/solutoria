@@ -56,6 +56,29 @@
                                         <h3 class="box-title"> Ausencias, Atrasos y Horas Extras </h3>
                                     </div>
                                     <div class="box-body">
+                                        
+
+                                        <div class="box box-solid box_datos_reloj">
+                                                <div class="box-header">                                                    
+                                                    <h3 class="box-title"> Seleccione rango de fechas </h3>
+                                                </div>
+                                                <div class="box-body">
+                                                    <div class="col-md-6">
+                                                        <label for="fechaInicioRevision"> Fecha inicio </label>
+                                                        <input type="text" class="form-control required datepicker" value="" id="fechaInicioRevision" name="fechaInicioRevision" placeholder="YYYY-mm-dd" readonly="">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="fechaFinRevision">Fecha Fin</label>
+                                                        <input type="text" class="form-control required datepicker" value="" id="fechaFinRevision" name="fechaFinRevision" placeholder="YYYY-mm-dd" readonly="">
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <button type="button" class="btn btn-sm btn-primary" id="btn_revisar_reloj"> Revisar </button>
+                                                    </div>                                                
+                                                </div>                                                                                                                            
+                                            </div>
+
+
+
                                         <div class="col-md-12">
                                             <div class="table-responsive">                                                            
                                                 <table class="table table-bordered" style="background: #fff;" id="table_reloj_control">
@@ -325,4 +348,22 @@
         </div>
     </section>
 </div>
+
+<script>
+$(document).ready(function(){
+    
+    $(".datepicker").datepicker({
+        startView : 'year',
+        autoclose : true,
+        format : 'yyyy-mm-dd'
+    });
+
+    $("#btn_revisar_reloj").click(function(){
+        inicio = $("#fechaInicioRevision").val();
+        fin = $("#fechaFinRevision").val();
+        location.href = '<?php echo BASE_URL . '/' . $entity . '/' . $parametros[0]. '/' . $parametros[1] . '/' ?>' + inicio + '/' + fin;
+    })
+})
+</script>
+
     
