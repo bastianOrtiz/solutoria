@@ -429,6 +429,7 @@ td.total{
                                                 <th> Valor </th>                                                
                             				</tr>
                                         </thead>
+                                        
                                         <tbody>
                                             <?php                                             
                                             foreach( $debes_trabajador as $dt ){ 
@@ -489,7 +490,9 @@ td.total{
                                                 <td> $ <?php echo number_format($total_apv_A,0,',','.') ?> </td>                                            
                                             </tr>
                                             <?php } ?>
-                            			</tbody>
+                                        </tbody>
+
+
                             		</table>
                                     <?php } ?>
                                 </td>

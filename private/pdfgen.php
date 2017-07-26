@@ -426,14 +426,9 @@ $content .= '</td>
 
                     foreach( $debes_trabajador as $dt ){ 
                         if( $dt['descuento_id'] != ID_ANTICIPO ){
-                            if( $dt['cuotaTotal'] != 0 ){
-                                $cuotaActual = ( $dt['cuotaActual'] );
-                            } else {
-                                $cuotaActual = $dt['cuotaActual'];
-                            }
                     
             $content .= '<tr>  
-                            <td> ' . $cuotaActual . ' </td>
+                            <td> ' . $dt['cuotaActual'] . ' </td>
                             <td> '.$dt['cuotaTotal'].' </td>
                             <td> ';
                                 
