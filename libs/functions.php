@@ -638,7 +638,7 @@ function finPeriodo($fecha_fin,$trabajador_id){
 }
 
 /**
- * Calcula el impuesto y devuelve un array con la info  
+ * Verifica que exista la liquidacion en el mes y año que se esta liquidando
  * @param (int) $trabajador_id ID del trabajador
  * @return (boolean) True si existe en la BD, False si NO existe en la BD
  */

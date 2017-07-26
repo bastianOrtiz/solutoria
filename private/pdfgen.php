@@ -55,6 +55,7 @@ AND D.id = LD.descuento_id
 ORDER BY LD.id ASC ";
 $debes_trabajador = $db->rawQuery( $query_desc );
 
+
 //nombre trabajador
 $db->where('id',$trabajador_id);
 $trabajador = $db->getOne('m_trabajador');

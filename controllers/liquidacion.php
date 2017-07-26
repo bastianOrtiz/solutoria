@@ -122,6 +122,8 @@ if( $_POST ){
         foreach( $debes_trabajador as $d ){
             if( $d['trabajador_id'] == $trabajador_id ){
                 
+
+                
                 if( $liquidacion_action == 'INSERT' ){ // Liquidacion Nueva
                     $cuotaActual = $d['cuotaActual']; 
                     
@@ -150,11 +152,24 @@ if( $_POST ){
                     }                                                    
                 }
                 
+                
+                
                 $valor_tipo_moneda = getValorMoneda(getMesMostrarCorte(),getAnoMostrarCorte(),$d['tipomoneda_id']);
                 $valor_subtotal = ( $valor_tipo_moneda * $d['valor'] );
                 
                 $monto = $valor_subtotal;
                 
+
+                if( existeLiquidacion($trabajador_id) ){
+                    if( ( $d['procesado'] == 1 )&& ( $d['activo'] == 1 ) ){
+                        $cuotaActual = ( $d['cuotaActual'] - 1 ); 
+                    }else {
+                        $cuotaActual = $d['cuotaActual'];
+                    }                                                                    
+                } else {
+                    $cuotaActual = $d['cuotaActual'];    
+                }
+
                 $arr_l_debe = array(
                     'liquidacion_id' => $liquidacion_id,
                     'descuento_id' => $d['descuento_id'],
@@ -163,10 +178,11 @@ if( $_POST ){
                     'cuotaActual' => $cuotaActual,
                     'cuotaTotal' => $d['cuotaTotal']
                 );
-                                                    
                 $db->insert('l_descuento',$arr_l_debe);            
             }
         }
+        
+
 
 
         
@@ -535,7 +551,6 @@ if( isset($parametros[1]) ){
     WHERE trabajador_id=$trabajador_id and activo =1 AND descuento_id != " . ID_ANTICIPO . " or
      (activo = 0 and fechaFinalizacion = '". leadZero($mes) ."-$year' and trabajador_id=$trabajador_id AND trabajador_id=$trabajador_id AND descuento_id != " . ID_ANTICIPO . ")  ORDER BY mesInicio DESC ";         
     $debes_trabajador = $db->rawQuery( $query_desc );
-    
     
     
     
