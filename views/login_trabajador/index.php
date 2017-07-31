@@ -40,7 +40,7 @@
           </div>
           <div class="form-group has-feedback login_email">
             <input name="login_rut" id="login_rut" type="text" class="form-control required" placeholder="Rut"/>
-            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            <span class="glyphicon glyphicon-credit-card form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback login_password">
             <input name="login_password" type="password" class="form-control required" placeholder="Password"/>
