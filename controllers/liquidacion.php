@@ -512,20 +512,22 @@ if( isset($parametros[1]) ){
             $proporcional_pactado_licencia = $prevision_trabajador['montoPlan'];
         }
 
-
-        
         $total_salud_legal = round($total_imponible * 0.07, 0);
         
         $proporcional_pactado_licencia_en_pesos = round($proporcional_pactado_licencia * $uf, 0);
         
+
         if( $proporcional_pactado_licencia_en_pesos > $total_salud_legal ){
             $diferencia_isapre = ( $proporcional_pactado_licencia_en_pesos - $total_salud_legal ); 
             if($arr_ausencias['dias_finiquito'] > 0){
                 $prop = ($total_pactado_isapre / 30 ) * ( ( 30 - $arr_ausencias['dias_finiquito'] ) - $arr_ausencias['dias_licencia'] );
+                
+                if( $prop < $total_salud_legal ){
+                    $prop = $total_salud_legal;
+                }
+
                 $diferencia_isapre = (( $total_salud_legal - $prop ) * -1);
-
             }
-
         } else {
             $diferencia_isapre = 0;
         }
@@ -536,8 +538,6 @@ if( isset($parametros[1]) ){
             
             $diferencia_isapre = $propor;
         }
-            
-
     }
      
      /*   
