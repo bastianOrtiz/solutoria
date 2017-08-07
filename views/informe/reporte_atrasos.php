@@ -13,6 +13,11 @@
     font-weight: normal;
     cursor: pointer;
 }
+.atraso{
+    background: #ff5252; 
+    color: #fff;
+    font-weight: bold;
+}
 
 </style>    
 <div class="content-wrapper">
@@ -33,31 +38,43 @@
                 
     <section class="content">
         <form role="form" id="frmVerAtrasos" method="post">
-            <input type="hidden" name="action" id="action" value="atrasos_view" />
+            <input type="hidden" name="action" id="action" value="reporte_atrasos" />
             <div class="row">
-                <div class="col-md-12">                                      
+                <div class="col-md-12">  
+                    <a href="<?php echo BASE_URL ?>/informe/reporte_atrasos" class="btn btn-primary"> <i class="fa fa-chevron-left"></i> <strong>volver</strong></a>
+                    <br><br>
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title"> Informe de Atrasos </h3>
                         </div>
                         <div class="box-body">
                             <?php 
-                            if( $_POST['html'] ){                                 
-                            $_SESSION[PREFIX.'informe_atrasos_action'] = 'atrasos';
-                            $_SESSION[PREFIX.'informe_atrasos_trabajadorAtraso'] = $_POST['trabajadorAtraso'];
-                            $_SESSION[PREFIX.'informe_atrasos_fechaTrabajadorAtraso'] = $_POST['fechaTrabajadorAtraso'];
-                            $_SESSION[PREFIX.'informe_atrasos_html'] = $_POST['html'];
-                            ?> 
-                            
-                            <div class="col-md-12">
-                                <?php echo $_POST['html']; ?>
-                                <div class="row">
-                                <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/atrasos" class="btn btn-primary pull-left"> <i class="fa fa-chevron-left"></i> Volver</a>
-                                <a href="javascript: void(0)" class="btnImprimir btn btn-primary pull-right" style="margin-left: 15px;"> <i class="fa fa-print"></i> &nbsp; PDF </a>
-                                <a href="javascript: void(0)" class="btnExcel btn btn-primary pull-right"> <i class="fa fa-file-excel-o"></i> &nbsp; EXCEL </a>
-                                </div>
-                            </div>         
-                                                   
+                            if( $_POST['action'] == 'reporte_atrasos' ){                                 
+                            ?>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre Trabajador</th>
+                                            <?php foreach( $arr_fechas as $f ){ ?>
+                                            <th style="white-space: nowrap;"> <?php echo $f; ?> </th>
+                                            <?php } ?>
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+                                        <?php foreach ($arr_fechas_x_trab as $trab_id => $this_info) { ?>
+                                        <tr>
+                                            <td style="white-space: nowrap;"> <?php echo $this_info['nombre'] ?> </td>
+                                            <?php foreach ($this_info['fechas'] as $date => $time) { ?>
+                                            <td class="<?php if($time['atraso']){ echo "atraso"; } ?>"> <?php echo $time['hora_marcada'] ?> </td>
+                                            <?php } ?>
+                                        </tr>                                       
+                                        <?php } ?>                                       
+                                    </tbody>
+                                </table>
+                            </div>
+
                             <?php } else { ?>                        
                             <div class="col-md-6">
                                 
@@ -72,7 +89,7 @@
                                     <thead>
                                         <tr>
                                             <th>Nombre Trabajador</th>
-                                            <th></th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -89,11 +106,6 @@
                                                 </span>
                                               </label>
                                             </td>
-                                            <td>
-                                                <button type="button" class="btn btn-xs btn-default" onclick="location.href='<?php echo BASE_URL ?>/private/informe.php?trabajador_id=<?php echo $trabajador['id'] ?>'" >
-                                                    Reporte Anual
-                                                </button>                                                                                                                                                                                               
-                                            </td>
                                         </tr>
                                         <?php } ?>                                                                                                                                        
                                     </tbody>
@@ -107,11 +119,14 @@
                             
                             <div class="col-md-6">
                                 <div class="box-header">
-                                    <h3 class="box-title"> Seleccione Fecha </h3>
+                                    <h3 class="box-title"> Seleccione rango de Fechas </h3>
                                 </div>
                                 <div class="box-body">
                                     <div class="form-group">                                                        
                                         <input type="text" class="form-control required datepicker" name="fechaTrabajadorAtraso" readonly id="fechaTrabajadorAtraso" value="<?php echo date('Y-m-d'); ?>" />                                        
+                                    </div>
+                                    <div class="form-group">                                                        
+                                        <input type="text" class="form-control required datepicker" name="fechaTrabajadorAtrasoFin" readonly id="fechaTrabajadorAtrasoFin" value="<?php echo date('Y-m-d'); ?>" />                                        
                                     </div>
                                     
                                     <div class="form-group">
@@ -122,7 +137,9 @@
                             <?php } ?> 
                         </div>                                            
                     </div>                      
-                
+                    
+                    <a href="<?php echo BASE_URL ?>/informe/reporte_atrasos" class="btn btn-primary"> <i class="fa fa-chevron-left"></i> <strong>volver</strong></a>
+                    
                 </div>
             </div>
         </form>
