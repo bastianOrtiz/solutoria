@@ -303,7 +303,6 @@ if( $_POST ){
 
 
     if( @$action == 'listado_trabajadores' ){
-        
         $array_cols = array();
         array_shift($cols_perso);
             
@@ -365,7 +364,6 @@ if( $_POST ){
         $include_order
         ";
         $trabajadores = $db->rawQuery($sql);
-
 
         $html = '<style type="text/css">';
         $html .= 'td{ border: 1px solid #000; padding: 2px; }';

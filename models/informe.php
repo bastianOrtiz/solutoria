@@ -155,7 +155,9 @@ function value($col_name,$col_value){
     $ret = '';
     switch( $col_name ){
         case 'sexo': $ret = fnSexo($col_value); break;        
-        case 'idNacionalidad': $ret = fnGetNombre($col_value,'m_pais',0); break;
+        case 'idNacionalidad': 
+            if($col_value == 1) { $col_value = 46; } 
+            $ret = fnGetNombre($col_value,'m_pais',0); break;
         case 'marcaTarjeta': 
         case 'gratificacion':
             $ret = booleano($col_value); break;

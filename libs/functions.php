@@ -2257,7 +2257,6 @@ function fnGetNombre($id,$tabla,$valida_empresa = true){
     if( $valida_empresa )
         $db->where('empresa_id',$_SESSION[ PREFIX . 'login_eid']);
     $dpto = $db->getOne($tabla,'nombre');
-    
     return $dpto['nombre']; 
 }
 
