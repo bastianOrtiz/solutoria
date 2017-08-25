@@ -89,7 +89,7 @@ if( $_SESSION[PREFIX.'is_trabajador'] ){
     $db->orderBy('ano','DESC');
     $db->orderBy('mes','DESC');
     $ultima_liquidacion = $db->getOne('liquidacion');
-    $ultima_liquidacion = getNombreMes($ultima_liquidacion['mes']);
+    $mes_ultima_liquidacion = getNombreMes($ultima_liquidacion['mes']);
 }
 
 include ROOT . '/views/comun/header.php';
