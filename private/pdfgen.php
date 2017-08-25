@@ -5,6 +5,7 @@ include '../libs/constantes.php';
 include ROOT . '/libs/functions.php';
 include ROOT . '/models/common.php';
 
+
 if(!$_SESSION){
     redirect(BASE_URL);
     exit();
@@ -18,6 +19,14 @@ $empresa = $db->getOne('m_empresa');
 $db->where('id',$liquidacion_id);
 $liquidacion = $db->getOne('liquidacion');
 
+
+//Valida que la liquidacion pertenezca al trabajador logueado, cuando es portal de trabajador
+if( $_SESSION[PREFIX . 'is_trabajador'] ){
+    if( $liquidacion['trabajador_id'] != $_SESSION[PREFIX . 'login_uid'] ){
+        goBack('Esta liquidación pertenece a otro trabajador');
+        exit(0);
+    }
+}
 
 extract($empresa);
 extract($liquidacion);
