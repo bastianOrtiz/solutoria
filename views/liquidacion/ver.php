@@ -439,7 +439,7 @@ td.total{
                                                 <td> 
                                                     <?php 
                                                     if( existeLiquidacion($trabajador_id) ){
-                                                        if( ( $dt['procesado'] == 1 ) && ( $dt['activo'] == 1 ) ){
+                                                        if( ( $dt['fechaFinalizacion'] == leadZero($mes)."-".$year ) && ( $dt['activo'] == 1 ) ){
                                                             echo ( $dt['cuotaActual'] - 1 < 0 ) ? 0 : $dt['cuotaActual'] - 1; ;    
                                                         } else {
                                                             echo $dt['cuotaActual'];    

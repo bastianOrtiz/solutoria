@@ -108,8 +108,6 @@ if( $_POST ){
         $db->where('id',$liquidacion_id);
         $db->update('liquidacion',$data_seguros);
 
-
-        
         // Descuentos
         $db->where('liquidacion_id',$liquidacion_id);
         $db->delete('l_descuento');     
@@ -122,14 +120,13 @@ if( $_POST ){
         foreach( $debes_trabajador as $d ){
             if( $d['trabajador_id'] == $trabajador_id ){
                 
-
-                
                 if( $liquidacion_action == 'INSERT' ){ // Liquidacion Nueva
                     $cuotaActual = $d['cuotaActual']; 
                     
-                    if( ( $d['cuotaActual'] < $d['cuotaTotal'] ) && ( $d['cuotaTotal'] != 0 ) ){
+                    // Campo "FechaFinalizacion" es equivalente a la fecha de Proceso del dscto.    
+                    if( ( $d['cuotaActual'] < $d['cuotaTotal'] ) && ( $d['fechaFinalizacion'] != leadZero($mes)."-".$year ) ){
                         $db->where('id',$d['id']);
-                        $db->update( 't_descuento', array( 'cuotaActual' => ( $cuotaActual + 1 ), 'procesado' => '1' )  );                    
+                        $db->update( 't_descuento', array( 'cuotaActual' => ( $cuotaActual + 1 ), 'procesado' => '1', 'fechaFinalizacion' => leadZero($mes)."-".$year, )  );                    
                     } elseif( $d['cuotaTotal'] != 0 ) {
                         
                         // Actualizar campo FINALIZACION con mes y año de periodo y Activo = 0
@@ -137,15 +134,16 @@ if( $_POST ){
                         $db->update( 't_descuento', array( 'activo' => 0, 'fechaFinalizacion' => leadZero($mes)."-".$year, 'procesado' => '1' )  ); 
                     }         
                 } else { // Sino, es UPDATE de liquidacion
-                    if( $d['procesado'] == 1 ){
-                        $cuotaActual = ( $d['cuotaActual'] - 1 );   
+                    if(  ( $d['fechaFinalizacion'] == leadZero($mes)."-".$year ) && ( $d['activo'] == 1 ) ){
+                        $cuotaActual = ( $d['cuotaActual'] - 1 );
                     } else {
                         if( ( $d['cuotaActual'] < $d['cuotaTotal'] ) && ( $d['cuotaTotal'] != 0 ) ){
                             $cuotaActual = $d['cuotaActual'];
                             $db->where('id',$d['id']);
-                            $db->update( 't_descuento', array( 'cuotaActual' => ( $cuotaActual + 1 ), 'procesado' => '1' )  );
+                            $db->update( 't_descuento', array( 'cuotaActual' => ( $cuotaActual + 1 ), 'procesado' => '1', 'fechaFinalizacion' => leadZero($mes)."-".$year )  );
                         } elseif( $d['cuotaTotal'] != 0 ) {
                             // Actualizar campo FINALIZACION con mes y año de periodo y Activo = 0
+                            $cuotaActual = $d['cuotaActual'];
                             $db->where('id',$d['id']); 
                             $db->update( 't_descuento', array( 'activo' => 0, 'fechaFinalizacion' => leadZero($mes)."-".$year, 'procesado' => '1' )  ); 
                         } 
@@ -158,17 +156,7 @@ if( $_POST ){
                 $valor_subtotal = ( $valor_tipo_moneda * $d['valor'] );
                 
                 $monto = $valor_subtotal;
-                
-
-                if( existeLiquidacion($trabajador_id) ){
-                    if( ( $d['procesado'] == 1 )&& ( $d['activo'] == 1 ) ){
-                        $cuotaActual = ( $d['cuotaActual'] - 1 ); 
-                    }else {
-                        $cuotaActual = $d['cuotaActual'];
-                    }                                                                    
-                } else {
-                    $cuotaActual = $d['cuotaActual'];    
-                }
+            
 
                 $arr_l_debe = array(
                     'liquidacion_id' => $liquidacion_id,
@@ -190,7 +178,7 @@ if( $_POST ){
         $db->where('liquidacion_id',$liquidacion_id);
         $db->delete('l_haber');     
         
-        $query_desc = "SELECT * FROM t_haber WHERE activo = 1 OR ( activo = 0 AND fechaFinalizacion = '".leadZero($mes)."-$year' ) ORDER BY mesInicio DESC";        
+        $query_desc = "SELECT * FROM t_haber WHERE activo = 1 OR ( activo = 0 AND fechaFinalizacion = '".leadZero($mes)."-$year' ) ORDER BY mesInicio DESC";
         $haberes_trabajador = $db->rawQuery( $query_desc );                
         
         
@@ -547,11 +535,19 @@ if( isset($parametros[1]) ){
     $db->orderBy('mesInicio','DESC');
     $debes_trabajador = $db->get("t_descuento");        
     */
-    $query_desc = "SELECT * FROM `t_descuento` 
-    WHERE trabajador_id=$trabajador_id and activo =1 AND descuento_id != " . ID_ANTICIPO . " or
-     (activo = 0 and fechaFinalizacion = '". leadZero($mes) ."-$year' and trabajador_id=$trabajador_id AND trabajador_id=$trabajador_id AND descuento_id != " . ID_ANTICIPO . ")  ORDER BY mesInicio DESC ";         
+    $query_desc = "
+        SELECT * FROM t_descuento 
+        WHERE trabajador_id=$trabajador_id 
+        AND activo = 1 
+        AND descuento_id != " . ID_ANTICIPO . " 
+        OR
+            (
+            activo = 0 and fechaFinalizacion = '". leadZero($mes) ."-$year' 
+            AND trabajador_id = $trabajador_id 
+            AND descuento_id != " . ID_ANTICIPO . "
+            )  
+        ORDER BY mesInicio DESC ";
     $debes_trabajador = $db->rawQuery( $query_desc );
-    
     
     
     /* ANTICIPO ******************************
