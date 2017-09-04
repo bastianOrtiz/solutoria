@@ -32,7 +32,12 @@
         <p class="login-box-msg <?php echo @$array_reponse['status']; ?>">
         <?php echo (isset($array_reponse)) ? "<strong>".@$array_reponse['mensaje']."</strong>" : "Ingrese sus datos para iniciar sesión"; ?>
         </p>
-        <form method="post" id="frmLogin">
+        <form method="post" id="frmLogin" autocomplete="off">
+            
+            <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->
+            <input type="text" name="email" style="position: absolute;top: -99999px; left: -99999px">
+            <input type="password" name="password" autocomplete="new-password" style="position: absolute;top: -99999px; left: -99999px">
+
             <input type="hidden" value="login" name="action" id="action" />
           <div class="form-group has-feedback login_cuenta">
             <input name="login_cuenta" type="text" class="form-control required" value="TECNODATA" placeholder="Empresa" />
@@ -40,7 +45,7 @@
           </div>
           <div class="form-group has-feedback login_email">
             <input name="login_rut" id="login_rut" type="text" class="form-control required" placeholder="Rut"/>
-            <span class="glyphicon glyphicon-credit-card form-control-feedback"></span>
+            <span class="glyphicon form-control-feedback" style="font-family: sans-serif; font-weight: bold;padding-right: 5px">RUT</span>
           </div>
           <div class="form-group has-feedback login_password">
             <input name="login_password" type="password" class="form-control required" placeholder="Password"/>
