@@ -235,7 +235,8 @@ function obtenerTotalAfc2( $tope, $trabajador_id ){
             $datetime2 = new DateTime( $contrato_indefinido['fechaInicio'] );
             $interval = $datetime1->diff($datetime2);
             
-            $dias_sin_afc = $interval->days;            
+            $dias_sin_afc = $interval->days;
+
         }      
     }
 
@@ -1127,7 +1128,7 @@ function obtenerLicencias($trabajador_id){
 function obtenerAusencias($trabajador_id){
     global $db;
 
-    $periodo            = getPeriodoCorte();
+    $periodo = getPeriodoCorte();
 
     $mes = getMesMostrarCorte();
     $year = getAnoMostrarCorte();
@@ -1436,6 +1437,7 @@ function obtenerAusencias($trabajador_id){
     $arr_ausencias['dias_ausentismo'] = $total_ausencias;
     $arr_ausencias['dias_licencia'] = $dias_licencia;
     $arr_ausencias['total'] = ($total_ausencias + $dias_licencia + $diasNoEnrolado + $diasNoTrabajados );
+
 
     return $arr_ausencias;
 }

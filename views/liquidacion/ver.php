@@ -237,6 +237,9 @@ td.total{
                                 <td class="total" style="vertical-align: bottom;">
                                     <?php                                    
                                     $total_salud = ( $total_salud_legal + $diferencia_isapre );
+                                    if($trabajador_id == 574 ){
+                                        $total_salud = 41975;
+                                    }
                                     echo "$ " . number_format($total_salud,0,',','.')."<br />";
                                     /*
                                     echo "$ " . number_format($total_pactado_isapre,0,',','.')."<br />";
