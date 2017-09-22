@@ -85,6 +85,7 @@ if( ( $_POST ) || $parametros ){
         
         $db->where ('rut', $login_rut);
         $db->where ('password', md5($login_password));
+        $db->where('tipocontrato_id',array(3,4),'NOT IN');
         $valid_user = $db->getOne('m_trabajador');        
         
         if( $db->count > 0 ){
