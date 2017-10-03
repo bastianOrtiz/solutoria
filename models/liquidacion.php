@@ -264,9 +264,11 @@ function obtenerTotalAfc2( $tope, $trabajador_id ){
  * @return (number)  Total a descontar por AFC
  */
 function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $tipocontrato_id){
+    
+    
     global $db;                    
     $tope_afc = obtenerTope(3);
-    $tope_imponible = obtenerTope(1);                                   
+    $tope_imponible = obtenerTope(1);
     
     if( ( $ausencias >=  0 ) && ( $dias_licencia == 0 ) ){
         if( $remuneracion_tributable > $tope_afc ){

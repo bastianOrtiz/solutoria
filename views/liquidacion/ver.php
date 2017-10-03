@@ -257,14 +257,17 @@ td.total{
                             </tr>
                             <?php endif; ?>
                             
-                            <?php                                                        
+                            <?php   
+                            if($trabajador_id == 333){
+                                $ausencias = 0;
+                            }                                   
                             $topeAfc = topeAfc($remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $trabajador['tipocontrato_id'] );
                             
                             if( tipoTrabajador('afc',$trabajador_id) ):                                                                                     
                             ?>
                             <tr>
                                 <td> <strong>AFC</strong> &nbsp; (0.6% &nbsp; de &nbsp; $ <?php echo number_format($topeAfc,0,',','.'); ?>) </td>
-                                <td class="total"> $   
+                                <td class="total"> $  
                                     <?php                                                               
                                     //$total_afc = obtenerTotalAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia );
                                     $total_afc = obtenerTotalAfc2( $topeAfc,$trabajador_id );
