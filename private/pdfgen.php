@@ -366,38 +366,13 @@ $content .= '</td>
             <td class="last"> &nbsp; </td>
         </tr>';
         }
+
         $content .= '
         <tr>
             <td colspan="2" style="text-align: left !important;">
                 <div style="float: left;"><strong>Cálculo de Impuesto Unico</strong></div>                
                 <table class="subtable">
-                    <tbody>
-                        <tr>
-                            <td> Remuneración Tributable </td>
-                            <td style="text-align: right; padding-right: 200px;"> $ '. number_format($remuneracionTributable,0,',','.') .' </td>
-                        </tr>
-                        <tr>
-                            <td> Descuentos Previsionales a rebajar </td>
-                            <td style="text-align: right; padding-right: 200px;"> 
-                                $ '. number_format($descuentoPrevisional,0,',','.') .'
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> Total Tributable </td>
-                            <td style="text-align: right; padding-right: 200px;"> $ '. number_format($totalTributable,0,',','.') .' </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right;"> 
-                                Total Impuesto<br /> 
-                                Cantidad rebajar<br />
-                                Impuesto a Pagar
-                            </td>
-                            <td style="text-align: right;">  
-                                $ '. number_format($impuestoTotal,0,',','.') .' <br />
-                                $ '. number_format($impuestoRebajar,0,',','.') .' <br />
-                                $ '. number_format($impuestoPagar,0,',','.') .' <br />                                     
-                            </td>
-                        </tr>';
+                    <tbody>';
                         if( $trabajador['agricola'] == 1 ){
                         $content .= '
                         <tr>
@@ -405,9 +380,39 @@ $content .= '</td>
                                 Impuesto único al Trabajador Agrícola
                             </td>
                             <td style="text-align: right;">  
-                                $ '. number_format($impuestoAgricola,0,',','.') .'                                     
+                                $ '. number_format($impuestoAgricola,0,',','.') .'
                             </td>
-                        </tr>';                            
+                        </tr>';  
+
+                        } else {
+                            
+                            $content .= '
+                            <tr>
+                                <td> Remuneración Tributable </td>
+                                <td style="text-align: right; padding-right: 200px;"> $ '. number_format($remuneracionTributable,0,',','.') .' </td>
+                            </tr>
+                            <tr>
+                                <td> Descuentos Previsionales a rebajar </td>
+                                <td style="text-align: right; padding-right: 200px;"> 
+                                    $ '. number_format($descuentoPrevisional,0,',','.') .'
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> Total Tributable </td>
+                                <td style="text-align: right; padding-right: 200px;"> $ '. number_format($totalTributable,0,',','.') .' </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right;"> 
+                                    Total Impuesto<br /> 
+                                    Cantidad rebajar<br />
+                                    Impuesto a Pagar
+                                </td>
+                                <td style="text-align: right;">  
+                                    $ '. number_format($impuestoTotal,0,',','.') .' <br />
+                                    $ '. number_format($impuestoRebajar,0,',','.') .' <br />
+                                    $ '. number_format($impuestoPagar,0,',','.') .' <br />                                     
+                                </td>
+                            </tr>';
                         }
                         
         $content .= '</tbody>

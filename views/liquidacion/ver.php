@@ -377,7 +377,7 @@ td.total{
                                                     </td>
                                                     <td class="total">  
                                                     <?php 
-                                                    $info_impuesto = calcularImpuesto($total_tributable);                                                    
+                                                    $info_impuesto = calcularImpuesto($total_tributable);
                                                     echo "$ " . number_format($info_impuesto['total_impuesto'],0,',','.')."<br />";
                                                     echo "$ " . number_format($info_impuesto['cantidad_rebajar'],0,',','.')."<br />";
                                                     echo "$ " . number_format($info_impuesto['impuesto_pagar'],0,',','.')."<br />";
@@ -404,8 +404,13 @@ td.total{
                                                     <?php 
                                                     $impuesto_agricola = calcularImpuestoAgricola($remuneracion_tributable); 
                                                     echo "$ " . number_format($impuesto_agricola,0,',','.'); 
-                                                    
-                                                    $info_impuesto = calcularImpuesto($total_tributable);
+                                                    //Si es trabajador agricola, solo se calcula el impuesto al trabajdor Agricola 
+                                                    //y el otro impuesto queda en 0
+                                                    $info_impuesto = array(
+                                                        'total_impuesto' => 0,
+                                                        'cantidad_rebajar' => 0,
+                                                        'impuesto_pagar' => 0
+                                                    )
                                                     ?> 
                                                     </td>
                                                 </tr>
