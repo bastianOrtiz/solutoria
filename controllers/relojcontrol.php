@@ -283,26 +283,86 @@ if( $parametros ){
         $db->where("id",$_SESSION[PREFIX.'login_eid']);
         $umbral = $db->getValue('m_empresa','umbralRelojControl');
 
-        $sql = "
-        SELECT  * FROM m_relojcontrol
-        WHERE  userid = '$relojcontrol_id'
-        AND checktime >= '$fecha_desde 00:00:00'
-        AND checktime <= '$fecha_limite 23:59:59'
-        AND time( checktime ) < '$umbral'
-        ORDER BY checktime ASC
-        ";
-        $entradas = $db->rawQuery($sql);
+        /** Marcajes **/
+        $date_from = strtotime($fecha_desde . "00:00:00");
+        $date_to = strtotime($fecha_limite . "23:59:59");
+        $db->where('id',$trabajador['horario_id']);
+        $m_horarios = $db->getOne('m_horario');
+        $array_dias_temp = array($m_horarios['lun'],$m_horarios['mar'],$m_horarios['mie'],$m_horarios['jue'],$m_horarios['vie'],$m_horarios['sab'],$m_horarios['dom']);
+        $dias_laborales_horario = array();
         
+        foreach( $array_dias_temp as $k => $i ){
+            if( $i == 1 ){
+                $dias_laborales_horario[] = $k;
+            }
+        } 
         
-        $sql = "
-        SELECT  * FROM m_relojcontrol
-        WHERE  userid = '$relojcontrol_id'
-        AND checktime >= '$fecha_desde 00:00:00'
-        AND checktime <= '$fecha_limite 23:59:59'
-        AND time( checktime ) > '$umbral'
-        ORDER BY checktime ASC
-        ";
-        $salidas = $db->rawQuery($sql);
+        $entradas = array();
+        $salidas = array();
+                
+        for($unixtime=$date_from; $unixtime<=$date_to; $unixtime+=86400){            
+            $dia_semana = date('N', $unixtime);
+            $dia_semana--;
+            
+            if( in_array($dia_semana,$dias_laborales_horario) ){
+                $date_iterar = date('Y-m-d',$unixtime);
+                if( ! isDiaFeriado($date_iterar) ){
+                    
+                    $sql = "
+                    SELECT  * FROM m_relojcontrol 
+                    WHERE  userid = '$relojcontrol_id' 
+                    AND checktime LIKE '$date_iterar %'              
+                    ORDER BY checktime ASC
+                    ";  
+                                  
+                    $marcajes = $db->rawQuery($sql);                                                                               
+                    
+                    if( $db->count == 1 ){
+                        $unix_hora_umbral = strtotime( $date_iterar . ' ' . $umbral );
+                        $unix_hora_marcada = strtotime( $marcajes[0]['checktime'] );
+                        if( $unix_hora_marcada > $unix_hora_umbral ){
+                            $salidas[] = array(
+                                'id' => $marcajes[0]['id'],
+                                'userid' => $marcajes[0]['userid'],
+                                'checktime' => $marcajes[0]['checktime'],
+                                'checktype' => $marcajes[0]['checktype'],
+                                'logid' => $marcajes[0]['logid']
+                            );
+                        } else {
+                            $entradas[] = array(
+                                'id' => $marcajes[0]['id'],
+                                'userid' => $marcajes[0]['userid'],
+                                'checktime' => $marcajes[0]['checktime'],
+                                'checktype' => $marcajes[0]['checktype'],
+                                'logid' => $marcajes[0]['logid']
+                            );
+                        }   
+                    } 
+                    
+                    if( $db->count > 1 ){
+                        
+                        $primer_marcaje = 0;
+                        $ultimo_marcaje = ( count($marcajes) - 1 );                        
+                        $entradas[] = array(
+                            'id' => $marcajes[$primer_marcaje]['id'],
+                            'userid' => $marcajes[$primer_marcaje]['userid'],
+                            'checktime' => $marcajes[$primer_marcaje]['checktime'],
+                            'checktype' => $marcajes[$primer_marcaje]['checktype'],
+                            'logid' => $marcajes[$primer_marcaje]['logid']
+                        );
+                        $salidas[] = array(
+                            'id' => $marcajes[$ultimo_marcaje]['id'],
+                            'userid' => $marcajes[$ultimo_marcaje]['userid'],
+                            'checktime' => $marcajes[$ultimo_marcaje]['checktime'],
+                            'checktype' => $marcajes[$ultimo_marcaje]['checktype'],
+                            'logid' => $marcajes[$ultimo_marcaje]['logid']
+                        );
+                    } 
+                
+                }
+            }                 
+                            
+        }
 
 
         $db->where('id',$trabajador['horario_id']);
