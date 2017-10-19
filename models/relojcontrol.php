@@ -1,18 +1,28 @@
 <?php
 function comprobarAusencia($fecha, $trabajador_id){
-    global $db;
-    
-    $db->where('fecha_inicio', $fecha, '<=');
-    $db->where('fecha_fin', $fecha, '>=');
-    $db->where('trabajador_id',$trabajador_id);    
-    $res = $db->get('t_ausencia');       
-    
-    if( $db->count > 0 ){
-        return true;
-    } else {
+    if($trabajador_id==''){
         return false;
+        exit();        
     }
     
+    global $db;          
+    $arr_return = array();
+    
+    $db->where('fecha_inicio', $fecha, '<=');
+    $db->where('fecha_fin', $fecha, '>=');    
+    $db->where('trabajador_id',$trabajador_id);
+    $res = $db->getOne('t_ausencia');
+    
+    if( $db->count > 0 ){
+        $motivo = fnGetNombre($res['ausencia_id'],'m_ausencia',false);
+        $arr_return['es_ausencia'] = true;
+        $arr_return['motivo'] = $motivo;
+    } else {
+        $arr_return['es_ausencia'] = false;
+        $arr_return['motivo'] = '';
+    }           
+    
+    return $arr_return;
 }
 
 
