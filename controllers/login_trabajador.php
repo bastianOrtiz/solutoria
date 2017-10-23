@@ -17,6 +17,7 @@ if( ( $_POST ) || $parametros ){
             logit( $login_rut,$_POST['action'],'login trabajador',0,$db->getLastQuery() );
             
             $db->where('rut',$login_rut);
+            $db->where ("tipocontrato_id", array(3,4), 'NOT IN');
             $usuario = $db->getOne('m_trabajador',array('nombres','email'));
             
             $trabajador_nombre = $usuario['nombres'];
