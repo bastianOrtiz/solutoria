@@ -104,10 +104,11 @@
                                                         $arr_no_IN = array();
                                                         $arr_no_OUT = array();                        
                                                         $arr_ausencias = array();
-                                                                                                    
+                                                      
                                                         for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
                                                         $fecha_iterar = date("Y-m-d", $i);
                                                         $es_ausencia = comprobarAusencia($fecha_iterar, $trabajador['id']);
+                                                        $es_ausencia = $es_ausencia['es_ausencia'];
                                                         
                                                         $fecha_iterar_int = str_replace("-","",$fecha_iterar)."1";
                                                         $fecha_iterar_int = (int)$fecha_iterar_int;                                                                        
@@ -120,9 +121,34 @@
                                                         ?>
                                                             
                                                             <td class="no_laboral"><?php echo $fecha_iterar; ?></td>
-                                                            <td colspan="4" class="no_laboral">
-                                                                                                                                
+                                                            <td class="no_laboral">
+                                                                <?php                                                                                     
+                                                                $arr_marcajes = getMarcajeFDS($fecha_iterar, $trabajador['id']);
+                                                                if( $arr_marcajes['entrada'] != "" ){
+                                                                    $time = strtotime($arr_marcajes['entrada']['checktime']);
+                                                                    ?>
+                                                                    <span class="badge">
+                                                                    <?php echo date('H:i:s',$time); ?>
+                                                                    </span>
+                                                                    <?php
+                                                                } 
+                                                                ?>                                                               
                                                             </td>
+                                                            <td class="no_laboral">&nbsp;</td>
+                                                            <td class="no_laboral">
+                                                                <?php                                                                                     
+                                                                $arr_marcajes = getMarcajeFDS($fecha_iterar, $trabajador['id']);                                                                                    
+                                                                if( $arr_marcajes['salida'] != "" ){
+                                                                    $time = strtotime($arr_marcajes['salida']['checktime']);
+                                                                    ?>
+                                                                    <span class="badge">
+                                                                    <?php echo date('H:i:s',$time); ?>
+                                                                    </span>
+                                                                    <?php
+                                                                } 
+                                                                ?>
+                                                            </td>
+                                                            <td class="no_laboral">&nbsp;</td>
                                                             
                                                         <?php } elseif( isDiaFeriado($fecha_iterar) ){ ?> 
                                                             <td class="no_laboral"><?php echo  $fecha_iterar; ?></td>
