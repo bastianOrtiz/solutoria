@@ -542,6 +542,18 @@ if( $action == 'add_ahe_comment' ){
     
 }
 
+if( $action == 'cambiar_status_trabajador' ){
+    
+    $data_upd = array(
+        "activo" => $new_status
+    );
+    $db->where('id',$trabajador_id);
+    $last_upd = $db->update('m_trabajador',$data_upd);
+    if( $last_upd ){                
+        $json['status'] = 'OK';            
+    } 
+}
+
 
 $json = json_encode($json);
 echo $json;

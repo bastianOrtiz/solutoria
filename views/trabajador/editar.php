@@ -63,6 +63,46 @@
     cursor: help;
 }
 
+.switcher{
+    display: inline-block;
+    border: 2px solid #00a65a;
+    border-radius: 17px;
+    width: 80px;
+    height: 34px;
+    background: #00a65a;
+    margin-bottom: 10px;
+}
+
+.switcher.off{
+    border: 2px solid #dd4b39;
+    background: #dd4b39;
+}
+
+.switcher:before{
+    content: 'ON';
+    color: #00a65a;
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    font-weight: bold;
+    text-align: center;
+    line-height: 28px;
+    float: left;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -ms-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    margin-left: 0px;
+}
+.switcher.off:before{
+    margin-left: 46px;
+    content: 'OFF';
+    color: #dd4b39;
+}
+
 </style>
 
 <div id="trabajador_detail">
@@ -500,7 +540,14 @@
                                     </div>
                                     
                                     <div class="col-md-6">
-                                                                                
+                                        
+                                        <!--
+                                        <label class="pull-left"><strong>Estado del trabajador: </strong></label>
+                                        <a href="#tab_2" class="switcher pull-left <?php echo ($trabajador['activo'] ? '' : 'off' ); ?>"></a>    
+                                        -->
+                                        
+                                        <br class="clear">
+
                                         <div class="box" id="box_contratos">
                                             <div class="col-md-12">
                                                 
@@ -3108,6 +3155,42 @@ function loadFile(event) {
     reader.readAsDataURL(event.target.files[0]);
 };
 
+$(".switcher").click(function(e){
+    e.preventDefault();
+    if($(this).hasClass('off')){
+        if(confirm("Seguro que quiere HABILITAR el trabajador")){
+            $.ajax({
+                type: "POST",
+                url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+                data: "trabajador_id=<?php echo $trabajador_id ?>&action=cambiar_status_trabajador&new_status=1",
+                dataType: 'json',
+                beforeSend: function(){
+                    $(".switcher").fadeTo(0, 0.3);
+                },
+                success: function (json) {
+                    $(".switcher").removeClass('off');
+                    $(".switcher").fadeTo(0, 1);
+                }
+            })
+        }
+    } else {
+        if(confirm("Seguro que quiere DESHABILITAR el trabajador")){
+            $.ajax({
+                type: "POST",
+                url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+                data: "trabajador_id=<?php echo $trabajador_id ?>&action=cambiar_status_trabajador&new_status=0",
+                dataType: 'json',
+                beforeSend: function(){
+                    $(".switcher").fadeTo(0, 0.3);
+                },
+                success: function (json) {
+                    $(".switcher").addClass('off');
+                    $(".switcher").fadeTo(0, 1);
+                }
+            })
+        }
+    }
+})
 
 
 $(window).load(function(){
