@@ -28,31 +28,51 @@
                     <form role="form" id="frmCrear" method="post">
                         <input type="hidden" name="action" value="edit_profile" />                    
                         <div class="col-md-6">                            
-                            <div class="box-body">
-                                                                                                        
-                                <div class="form-group">
-                                  <label for="emailUsuario">Email Usuario</label>
-                                  <input type="text" class="form-control required" value="<?php echo $perfil['email'] ?>" id="emailUsuario" name="emailUsuario" placeholder="usuario@dominio.cl" />
-                                </div>
-                                
-                                <div class="form-group">
-                                  <label for="passwordUsuario">Password</label>
-                                  <input type="password" class="form-control required" value="**********" id="passwordUsuario" name="passwordUsuario" placeholder="Elija contraseña" />
-                                </div>
-                                <div class="form-group">
-                                  <label for="rePasswordUsuario">Reingrese Password</label>
-                                  <input type="password" class="form-control required" value="**********" id="rePasswordUsuario" name="rePasswordUsuario" placeholder="Reescriba la contraseña elejida" />
-                                </div>
-                                
-                              </div><!-- /.box-body -->
-            
-                              <div class="box-footer">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                <a href="<?php echo BASE_URL . '/' . $entity ?>/listar" class="btn btn-default">Cancelar</a>
-                              </div>                            
+                            <div class="box-body">                                                                     
+                              <div class="form-group">
+                                <label for="emailUsuario">Email Usuario</label>
+                                <input type="text" class="form-control required" value="<?php echo $perfil['email'] ?>" id="emailUsuario" name="emailUsuario" placeholder="usuario@dominio.cl" />
+                              </div>
+                              
+                              <div class="form-group">
+                                <label for="passwordUsuario">Password</label>
+                                <input type="password" class="form-control required" value="**********" id="passwordUsuario" name="passwordUsuario" placeholder="Elija contraseña" />
+                              </div>
+                              <div class="form-group">
+                                <label for="rePasswordUsuario">Reingrese Password</label>
+                                <input type="password" class="form-control required" value="**********" id="rePasswordUsuario" name="rePasswordUsuario" placeholder="Reescriba la contraseña elejida" />
+                              </div>
+                              
+                            </div><!-- /.box-body -->                            
                         </div>
-                    </form>
+                        <div class="col-md-6">  
+                          <div class="box box-success">
+                            <div class="box-header">
+                                <strong>Datos adicionales</strong>
+                            </div>
+                            <div class="box-body">  
+                              <div class="form-group">
+                                <label for="telefonoUsuario">Teléfono</label>
+                                <input type="text" name="telefonoUsuario" id="telefonoUsuario" class="form-control" value="<?php echo $perfil['telefono'] ?>">
+                              </div>
+                              <div class="form-group">
+                                <label for="direccionUsuario">Dirección</label>
+                                <input type="text" name="direccionUsuario" id="direccionUsuario" class="form-control" value="<?php echo $perfil['direccion'] ?>">
+                              </div>
+                              <div class="form-group">
+                                <label for="emergenciaUsuario">En caso de emergencia comunicarse con:</label>
+                                <textarea name="emergenciaUsuario" id="emergenciaUsuario" class="form-control"><?php echo $perfil['emergencia'] ?></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    <div class="clearfix"></div>
+                    <div class="box-footer">
+                      <button type="submit" class="btn btn-primary">Guardar</button>
+                      <a href="<?php echo BASE_URL . '/' . $entity ?>/listar" class="btn btn-default">Cancelar</a>
+                    </div>
                 </div>
+                </form>
               </div><!-- /.box -->
             
             </div>

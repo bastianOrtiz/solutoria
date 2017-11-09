@@ -396,6 +396,7 @@ if( isset($parametros[1]) ){
 
     $arr_ausencias = @obtenerAusencias($trabajador_id);
 
+
     $ausencias = $arr_ausencias['total'];                  
     $dias_licencia = $arr_ausencias['dias_licencia'];
     $dias_no_enrolado = 0;

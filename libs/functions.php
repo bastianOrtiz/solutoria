@@ -917,6 +917,19 @@ function menuJefe(){
  */
 function menuTrabajador(){
     $menu = array();
+
+    $menu['profile'] = array(
+        'label' => 'Mi Perfil',
+        'icon_class' => 'fa fa-user',
+        'childs' => array(
+            array(
+                'entidad' => 'usuario',
+                'accion' => 'perfil',
+                'label' => 'Modificar Datos'
+            )
+        )
+    );
+
     $menu['liquidaciones'] = array(
         'label' => 'Liquidaciones',
         'icon_class' => 'fa fa-file-text',

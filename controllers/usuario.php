@@ -84,24 +84,23 @@ if( $_POST ){
     }
         
     if( @$action == 'edit_profile' ){
-        
         if( $passwordUsuario != $rePasswordUsuario ){
             $response = encrypt('status=warning&mensaje=Las password no coinciden&id=NULL');
             redirect(BASE_URL . '/' . $entity . '/editar/' . $usuario_id . '/response/' . $response );
             exit();
         }
         
-        // Si la password NO se modificó
-        if( $passwordUsuario == "**********" ){
-            $data = Array (
-                "email" => $emailUsuario
-            );
-        } else {
-            $data = Array (
-                "email" => $emailUsuario,
-                "password" => md5($passwordUsuario)
-            );
-        }
+
+        $data = Array (
+            "email" => $emailUsuario,
+            'telefono' => $telefonoUsuario,
+            'direccion' => $direccionUsuario,
+            'emergencia' => $emergenciaUsuario
+        );
+        // Si la password se modificó
+        if( $passwordUsuario != "**********" ){
+            $data['password'] = md5($passwordUsuario);
+        } 
         
         $trabajador_id = $_SESSION[ PREFIX . 'login_uid' ];
         $updateUser = editarPerfil( $trabajador_id, $data);
@@ -211,7 +210,6 @@ if( $parametros ){
                 
         $db->where ("id", $parametros[1]);
         $usuario = $db->getOne("m_usuario");
-
         
         $db->where ("usuario_id", $parametros[1]);
         $usuarioempresa = $db->get("m_usuarioempresa");
@@ -223,7 +221,8 @@ if( $parametros ){
     
     if( @$parametros[0] == 'perfil' ){
         $db->where ("id", $_SESSION[ PREFIX . 'login_uid' ]);
-        $perfil = $db->getOne("m_trabajador",'email'); 
+        $perfil = $db->getOne("m_trabajador"); 
+        
     }
 }
 
