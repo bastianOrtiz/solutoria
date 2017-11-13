@@ -706,7 +706,7 @@ if( $parametros[0] == 'imposiciones' ){
     where C.trabajador_id IN ( SELECT id FROM m_trabajador 
     WHERE empresa_id = ". $_SESSION[PREFIX.'login_eid'] ." )
     AND T.id = C.trabajador_id
-    group by trabajador_id HAVING SUM(activo)>1  
+    group by trabajador_id HAVING SUM(T.activo)>1  
     ";
     $plazo_a_indefinido = $db->rawQuery( $sql1 );
     
