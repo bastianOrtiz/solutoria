@@ -266,11 +266,14 @@ td.total{
                             if( tipoTrabajador('afc',$trabajador_id) ):                                                                                     
                             ?>
                             <tr>
-                                <td> <strong>AFC</strong> &nbsp; (0.6% &nbsp; de &nbsp; $ <?php echo number_format($topeAfc,0,',','.'); ?>) </td>
+                                <td> <strong>AFC</strong> &nbsp; <?php if($trabajador_id != 13){ ?> (0.6% &nbsp; de &nbsp; $ <?php echo number_format($topeAfc,0,',','.'); ?>) <?php } ?> </td>
                                 <td class="total"> $  
                                     <?php                                                               
                                     //$total_afc = obtenerTotalAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia );
                                     $total_afc = obtenerTotalAfc2( $topeAfc,$trabajador_id );
+                                    if($trabajador_id == 13){
+                                        $total_afc = 7421;
+                                    }
                                     echo number_format($total_afc,0,',','.');
                                     ?>
                                 </td>
