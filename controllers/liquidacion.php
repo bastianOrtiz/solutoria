@@ -436,7 +436,7 @@ if( isset($parametros[1]) ){
     */
 
     $remuneracion_tributable = ( $sueldo + $gratificacion + $hora_extra_normal + $hora_extra_festivo + $total_haberes_imponibles + $semana_corrida );        
-        
+    
     $tope = obtenerTope(1);
     
     if(!$tope){
@@ -444,8 +444,6 @@ if( isset($parametros[1]) ){
         exit();   
     }   
 
-
-    $licencias = obtenerLicencias($trabajador_id);
 
     if( $remuneracion_tributable > $tope ){
         if( ( $ausencias > 0 ) && ( $ausencias != 30 ) ){
@@ -457,12 +455,20 @@ if( isset($parametros[1]) ){
         $total_imponible = $remuneracion_tributable;
     }
 
+
+    // Lineas comentadas por instruccion de Abigail
+    /* Si el trabajador tiene ausencias, sean licencias o ausentismos
+    la formula es ( $tope / 30 * dias_trabajados ) donde TOPE ya esta definidio si es mayo o menor
+    Fecha: 07-Dic-2017
+
+    $licencias = obtenerLicencias($trabajador_id);    
     if($licencias){
         if( ($remuneracion_tributable / ( 30 - $licencias ) * 30 ) > $tope ){
             $total_imponible_proporcional = ( ( $tope / 30  ) * ( 30 - $licencias ) );
             $total_imponible = $total_imponible_proporcional;
         }
     }
+    */
 
 
 

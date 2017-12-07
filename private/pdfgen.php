@@ -316,7 +316,7 @@ $content .= '</td>
             if( $afcMonto == 0 ){
                 $content .= '<strong>AFC</strong> (No cotiza)';
             } else {
-                $content .= '<strong>AFC</strong> (0.6%)';
+                $content .= '<strong>AFC</strong> (0.6% &nbsp; de '. number_format($topeAfc,0,',','.') .')';
             }
             
             $content .= '</td>
