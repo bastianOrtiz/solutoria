@@ -1,6 +1,5 @@
 <?php
-
-
+                    
 /**
  * Calcula el Costo empresa SIS
  * @param (int) $rentaImponible Total imponible del mes
@@ -1017,6 +1016,7 @@ function isLicencia($ausencia_id){
 
 
 function obtenerLicencias($trabajador_id){
+
     global $db;
 
     /** Ahora Se Recorren Las LICENCIAS **/
@@ -1136,6 +1136,7 @@ function obtenerLicencias($trabajador_id){
  * @return (Array) Arreglo con las fechas de ausencias  
  */
 function obtenerAusencias($trabajador_id){
+
     global $db;
 
     $periodo = getPeriodoCorte();
@@ -1419,10 +1420,6 @@ function obtenerAusencias($trabajador_id){
         if( $mes == 2 ){
             $fechaFinCorte=strtotime( $ano.'-'.$mes.'-28' );
         }
-
-        echo $ano.'-'.$mes.'-01'."<br>".$fecha_fin_contrato_plano;
-        exit();
-
 
         if( $fecha_fin_contrato < $fechaFinCorte ){
             if( ( date('m',$fechaFinCorte) == date('m',$fecha_fin_contrato) ) ){

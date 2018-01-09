@@ -40,6 +40,7 @@ td.total{
                         </tr>
                     </table>                    
                     <br /><br />
+                    
                     <h3 class="box-title" style="display: block;">Nombre: <?php echo $trabajador['nombres'] ?> <?php echo $trabajador['apellidoPaterno'] ?> <?php echo $trabajador['apellidoMaterno'] ?> 
                         <span style="float: right; font-size: 14px;">(Última liquidacion procesada: <strong><?php echo $ultima_liquidacion ?></strong>)</span>
                     </h3>

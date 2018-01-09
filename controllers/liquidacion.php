@@ -1,4 +1,5 @@
 <?php
+
 @session_start();
 $year = getAnoMostrarCorte();
 $mes = getMesMostrarCorte();
@@ -314,7 +315,9 @@ if( isset($parametros[1]) ){
     AND TH.activo = 1
     ORDER by H.nombre DESC
     ";
-    */        
+    */
+
+            
     $sql_haberes = "
     SELECT H.nombre, TH.valor, TH.tipomoneda_id, H.comision AS es_comision, TH.glosa        
     FROM m_haber H, t_haber TH 
@@ -563,6 +566,7 @@ if( isset($parametros[1]) ){
             )  
         ORDER BY mesInicio DESC ";
     $debes_trabajador = $db->rawQuery( $query_desc );
+
     
     
     /* ANTICIPO ******************************
