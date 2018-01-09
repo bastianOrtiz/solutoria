@@ -395,7 +395,7 @@ if( isset($parametros[1]) ){
     $licencias = obtenerLicencias($trabajador_id);
 
     $arr_ausencias = @obtenerAusencias($trabajador_id);
-
+    
 
     $ausencias = $arr_ausencias['total'];                  
     $dias_licencia = $arr_ausencias['dias_licencia'];
@@ -453,6 +453,14 @@ if( isset($parametros[1]) ){
         }
     } else {
         $total_imponible = $remuneracion_tributable;
+    }
+
+    //show_array($total_imponible, 1);
+
+    $sueldo_SUPER = ( ( $total_imponible / ( 30 - $ausencias ) ) * 30 );
+
+    if( $sueldo_SUPER > $tope ){
+        $total_imponible = ( ( $tope / 30 ) * ( 30 - $ausencias ) );
     }
 
 

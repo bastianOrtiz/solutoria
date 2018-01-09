@@ -265,7 +265,6 @@ function obtenerTotalAfc2( $tope, $trabajador_id ){
  */
 function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $tipocontrato_id){
     
-    
     global $db;                    
     $tope_afc = obtenerTope(3);
     $tope_imponible = obtenerTope(1);
@@ -279,12 +278,19 @@ function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_l
         }
         
     } else {
-        if( $total_imponible > $tope_imponible ){
-            $topeAfcCalcular = $tope_imponible;
+
+        $res = (( $remuneracion_tributable / (30 - $ausencias) ) * 30 );
+        
+        if( $res > $tope_afc ){
+            $topeAfcCalcular = $tope_afc;
         } else {
-            $topeAfcCalcular = $total_imponible;
-        }                      
-    }                            
+            $topeAfcCalcular = $res;
+        }
+
+        if( ( $ausencias == 30 ) || ( $dias_licencia == 30 ) ){
+            $topeAfcCalcular = 0;
+        }
+    }
     
     return $topeAfcCalcular;
 }
@@ -623,6 +629,8 @@ function calcularSueldo($id_trabajador){
     
     return $sueldo_mes;
 }
+
+
 
 /**
  * Retorna el total de Atrasos del Trabajador en MINUTOS TOTALES  
@@ -1411,6 +1419,10 @@ function obtenerAusencias($trabajador_id){
         if( $mes == 2 ){
             $fechaFinCorte=strtotime( $ano.'-'.$mes.'-28' );
         }
+
+        echo $ano.'-'.$mes.'-01'."<br>".$fecha_fin_contrato_plano;
+        exit();
+
 
         if( $fecha_fin_contrato < $fechaFinCorte ){
             if( ( date('m',$fechaFinCorte) == date('m',$fecha_fin_contrato) ) ){
