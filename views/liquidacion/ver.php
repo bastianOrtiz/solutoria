@@ -247,7 +247,7 @@ td.total{
                                 </td>
                             </tr>
                             <?php 
-                            else: 
+                            else:
                             $total_salud = 0;
                             $total_pactado_isapre = 0;
                             $diferencia_isapre = 0;
@@ -264,6 +264,12 @@ td.total{
                             }                                   
                             $topeAfc = topeAfc($remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $trabajador['tipocontrato_id'] );
                             
+                            if($trabajador_id == 144){
+                                $topeAfc =  $total_imponible;   
+                            }
+                            
+
+
                             if( tipoTrabajador('afc',$trabajador_id) ):                                                                                     
                             ?>
                             <tr>
