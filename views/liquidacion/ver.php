@@ -264,7 +264,7 @@ td.total{
                             }                                   
                             $topeAfc = topeAfc($remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $trabajador['tipocontrato_id'] );
                             
-                            if($trabajador_id == 144){
+                            if($trabajador_id == 144 || $trabajador_id == 107){
                                 $topeAfc =  $total_imponible;   
                             }
                             

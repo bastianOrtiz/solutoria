@@ -264,7 +264,6 @@ function obtenerTotalAfc2( $tope, $trabajador_id ){
  */
 function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $tipocontrato_id){
     
-    
     global $db;                    
     $tope_afc = obtenerTope(3);
     $tope_imponible = obtenerTope(1);
