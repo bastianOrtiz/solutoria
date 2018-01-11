@@ -229,7 +229,8 @@ td.total{
                                     <br /><br />
                                     <?php } ?>
                                     
-                                    <?php if( $diferencia_isapre > 0 ){ ?>
+                                    <?php
+                                     if( $diferencia_isapre > 0 ){ ?>
                                     Diferencia Isapre: $ <?php echo number_format($diferencia_isapre,0,',','.'); ?>
                                     <?php } } else { $dias_licencia = 0; } ?>
                                     <span style="padding-right: 300px;"></span>

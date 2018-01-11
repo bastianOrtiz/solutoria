@@ -506,11 +506,6 @@ if( isset($parametros[1]) ){
         $total_salud_legal = round($total_imponible * 0.07, 0);            
         $diferencia_isapre = 0;         
     } else {
-        if( $prevision_trabajador['tipomoneda_id'] == ID_UF ){                                
-            $total_pactado_isapre = ( $prevision_trabajador['montoPlan'] * $uf);
-        } else {
-            $total_pactado_isapre = $prevision_trabajador['montoPlan'];
-        }
         
         if($dias_licencia > 0){
             $proporcional_pactado_licencia = ( ( $prevision_trabajador['montoPlan'] / 30 ) * ( 30 - $dias_licencia ) );
@@ -519,12 +514,20 @@ if( isset($parametros[1]) ){
         }
 
         $total_salud_legal = round($total_imponible * 0.07, 0);
-        
-        $proporcional_pactado_licencia_en_pesos = round($proporcional_pactado_licencia * $uf, 0);
-        
 
+        if( $prevision_trabajador['tipomoneda_id'] == ID_UF ){                                
+            $total_pactado_isapre = ( $prevision_trabajador['montoPlan'] * $uf);
+            $proporcional_pactado_licencia_en_pesos = round($proporcional_pactado_licencia * $uf, 0);
+        } else {
+            $total_pactado_isapre = $prevision_trabajador['montoPlan'];
+            $proporcional_pactado_licencia_en_pesos = $proporcional_pactado_licencia;
+        }
+
+        
         if( $proporcional_pactado_licencia_en_pesos > $total_salud_legal ){
             $diferencia_isapre = ( $proporcional_pactado_licencia_en_pesos - $total_salud_legal ); 
+
+
             if($arr_ausencias['dias_finiquito'] > 0){
                 $prop = ($total_pactado_isapre / 30 ) * ( ( 30 - $arr_ausencias['dias_finiquito'] ) - $arr_ausencias['dias_licencia'] );
                 
@@ -533,6 +536,11 @@ if( isset($parametros[1]) ){
                 }
 
                 $diferencia_isapre = (( $total_salud_legal - $prop ) * -1);
+
+                if( $_SESSION[PREFIX . 'login_eid'] == 14 ){
+                    $diferencia_isapre = ( $proporcional_pactado_licencia_en_pesos - $total_salud_legal );
+                }
+
             }
         } else {
             $diferencia_isapre = 0;
