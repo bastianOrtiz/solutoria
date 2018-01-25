@@ -280,13 +280,17 @@ function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_l
         
     } else {
 
-        $res = (( $remuneracion_tributable / (30 - $ausencias) ) * (30 - $ausentismos ) );
+        //$res = (( $remuneracion_tributable / (30 - $ausencias) ) * (30 - $ausentismos ) );
         
+        $topeAfcCalcular = $total_imponible;
+
+        /*
         if( $res > $tope_afc ){
             $topeAfcCalcular = $tope_afc;
         } else {
             $topeAfcCalcular = $res;
         }
+        */
 
         if( ( $ausencias == 30 ) || ( $dias_licencia == 30 ) ){
             $topeAfcCalcular = 0;
