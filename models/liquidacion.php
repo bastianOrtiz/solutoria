@@ -316,9 +316,9 @@ function obtenerTotalDescuentoXAtrasos($trabajador_id, $aplica_gracia = true){
 
     if( marcaTarjeta($trabajador_id) ){                              
 
-        $atrasos_entrada = obtenerAtrasosAusenciasTrabajador($trabajador_id,'I');        
-        $atrasos_salida = obtenerAtrasosAusenciasTrabajador($trabajador_id,'O');                                                                        
-        
+        $atrasos_entrada = obtenerAtrasosAusenciasTrabajador($trabajador_id,'I');
+        $atrasos_salida = obtenerAtrasosAusenciasTrabajador($trabajador_id,'O');
+
         $total_atrasos = ( $atrasos_entrada['total_atraso'] + $atrasos_salida['total_atraso'] );
         
 
@@ -1321,8 +1321,7 @@ function obtenerAusencias($trabajador_id){
         ORDER BY fecha_inicio
     ";
     $res_licencias = $db->rawQuery($sql_licencia,'',false);    
-    
-    
+
     foreach($res_licencias as $aus){
         $ausencias = 0;
         $date_fin_mes = new DateTime( $hasta_licencia . ' 23:59:59' );
@@ -1379,8 +1378,14 @@ function obtenerAusencias($trabajador_id){
     if( $dias_licencia > 30 ){
         $dias_licencia = 30;
     }
-    
-    
+
+
+    if( ( $trabajador_id == 643 ) && ($mes == 2) && ( getAnoMostrarCorte() == 2018 ) ){
+        $dias_licencia = 30;
+    }
+
+
+
     /** Proceso para determinar dias de NO enrolado **/
     $diasNoEnrolado = 0;
     
@@ -1454,7 +1459,6 @@ function obtenerAusencias($trabajador_id){
     $arr_ausencias['dias_ausentismo'] = $total_ausencias;
     $arr_ausencias['dias_licencia'] = $dias_licencia;
     $arr_ausencias['total'] = ($total_ausencias + $dias_licencia + $diasNoEnrolado + $diasNoTrabajados );
-
 
     return $arr_ausencias;
 }
