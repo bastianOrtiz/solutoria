@@ -546,12 +546,6 @@ if( isset($parametros[1]) ){
             $diferencia_isapre = 0;
         }
         
-        
-        if( $trabajador_id == 81 ){
-            $propor = ( $proporcional_pactado_licencia_en_pesos - $total_salud_legal );
-            
-            $diferencia_isapre = $propor;
-        }
     }
      
      /*   

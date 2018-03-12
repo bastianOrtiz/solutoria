@@ -1277,6 +1277,7 @@ function obtenerAusencias($trabajador_id){
             }        
         }
     }
+
     
     
     /** Ahora Se Recorren Las LICENCIAS **/
@@ -1375,13 +1376,22 @@ function obtenerAusencias($trabajador_id){
             //echo "4<br />";
         }        
     }
+
     if( $dias_licencia > 30 ){
         $dias_licencia = 30;
     }
 
+    
+
+    /*********************************************/
+    /**************** EXCEPCIONES ****************/
+    /*********************************************/
 
     if( ( $trabajador_id == 643 ) && ($mes == 2) && ( getAnoMostrarCorte() == 2018 ) ){
         $dias_licencia = 30;
+    }
+    if( ( $trabajador_id == 358 ) && ($mes == 2) && ( getAnoMostrarCorte() == 2018 ) ){
+        $dias_licencia = 29;
     }
 
 
