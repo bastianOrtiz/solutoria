@@ -198,6 +198,11 @@ if( $_POST ){
         $marcaTarjetaTrabajador = $marcaTarjetaTrabajador[0];
         $revisaRelojTrabajador = $revisaRelojTrabajador[0];
         $fullJerarquiaTrabajador = $fullJerarquiaTrabajador[0];
+
+         if($forzarPlanCompleto){
+            $forzarPlanCompleto = 1;
+         }
+
         
         $db->where('id',$idTrabajador);
         $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
@@ -254,8 +259,10 @@ if( $_POST ){
             
             'tipopago_id' => $tipoPagoTrabajador,
             'tipopagodato' => $customFields,
-            'relojcontrol_id' => $relojControlIdTrabajador
+            'relojcontrol_id' => $relojControlIdTrabajador,
+            'forzar_plan_completo' => $forzarPlanCompleto
         );
+
         
         if( $_FILES['fotoTrabajador']['name'] != "" ){
             $return = upload_image('fotoTrabajador', ROOT . '/private/uploads/images/');

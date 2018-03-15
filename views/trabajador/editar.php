@@ -816,8 +816,17 @@
                                                 <label for="planPesoTrabajadorSalud">Plan $</label>
                                                 <input type="text" class="form-control" name="planPesoTrabajadorSalud" id="planPesoTrabajadorSalud" value="<?php echo $datos_prev['montoPlan'] ?>" />
                                             </div>
+                                            <div class="box-header">                  
+                                              <h3 class="box-title">
+                                                <input type="checkbox" name="forzarPlanCompleto" id="forzarPlanCompleto" <?php if( $trabajador['forzar_plan_completo'] ){ echo 'checked'; } ?>> 
+                                                &nbsp; <label for="forzarPlanCompleto" style="font-weight: 400"> Forzar plan completo para finiquitar </label> 
+                                                </h3>
+                                            </div>
+
                                         </div>
                                         
+                                        <hr>
+
                                         <div class="form-group">
                                             <div class="radio">
                                                 <label>
@@ -912,6 +921,7 @@
                                             $("button.cuenta2_tooggler[value=1]").addClass('active');
                                         </script>   
                                         <?php } ?>
+
                                     </div>
                                 </div>                                
                             </div>          
@@ -2889,6 +2899,7 @@ $(document).ready(function(){
             $("#datosFonasa").slideDown(200);
             $("#datosFonasa input, #datosFonasa select").addClass('required');
             $("#datosIsapre input, #datosIsapre select").removeClass('required');
+            $("#forzarPlanCompleto").prop('checked',0);
         } else {
             $("#datosIsapre").slideDown(200);
             $("#datosIsapre input, #datosIsapre select").addClass('required');

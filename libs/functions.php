@@ -7,6 +7,26 @@
  * @param (date) $fecha Fecha a consultar     
  * @return (bool) True o False si ya esta finiquitado en la fecha pasada por parametro  
  */
+function pagaPlanCompleto($trabajador_id){
+    global $db;
+    
+    $db->where("id", $trabajador_id);
+    $db->where("forzar_plan_completo", 1);
+    $forzar_plan = $db->get("m_trabajador");
+    if( $db->count ){
+        return true;
+    } else { 
+            return false;
+    }
+}
+
+
+/**
+ * Determina si el trabajador esta finiquitado en la fecha dada
+ * @param (int) $trabajador_id ID del trabajador a consultar
+ * @param (date) $fecha Fecha a consultar     
+ * @return (bool) True o False si ya esta finiquitado en la fecha pasada por parametro  
+ */
 function estaFiniquitado($trabajador_id, $fecha){
     global $db;
     
@@ -30,6 +50,7 @@ function estaFiniquitado($trabajador_id, $fecha){
         }   
     }     
 }
+
 
 /**
  * Retorna un arreglo con las horas marcadas a la entrada y salida

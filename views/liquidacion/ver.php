@@ -216,7 +216,13 @@ td.total{
                                     <?php } ?>
                                     <span style="padding-right: 200px;"></span>  
                                                                         
-                                    7% Legal: $ <?php echo number_format($total_salud_legal,0,',','.'); ?>                                    
+                                    7% Legal: $ <?php echo number_format($total_salud_legal,0,',','.'); ?>  
+
+                                    <?php if( pagaPlanCompleto($trabajador_id) ){ ?>
+                                    &nbsp; &nbsp; &nbsp;
+                                    <strong>(Solicitó pagar plan completo x finiquito)</strong>
+                                    <?php } ?>
+
                                     <br /><br />
                                     
                                     <?php 
@@ -237,8 +243,11 @@ td.total{
                                     $ <?php echo number_format( ( $total_salud_legal + $diferencia_isapre ) - $total_salud_legal,0,',','.' ); ?>
                                 </td>
                                 <td class="total" style="vertical-align: bottom;">
-                                    <?php                                    
+                                    <?php            
                                     $total_salud = ( $total_salud_legal + $diferencia_isapre );
+                                    if( pagaPlanCompleto($trabajador_id) ){
+                                        $total_salud = ( $isaprePactado * getValorMoneda($mes, $year, $prevision_trabajador['tipomoneda_id']) );
+                                    }
                                     echo "$ " . number_format($total_salud,0,',','.')."<br />";
                                     /*
                                     echo "$ " . number_format($total_pactado_isapre,0,',','.')."<br />";
