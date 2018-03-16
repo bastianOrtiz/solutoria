@@ -458,14 +458,13 @@ if( isset($parametros[1]) ){
         $total_imponible = $remuneracion_tributable;
     }
 
-    //show_array($total_imponible, 1);
+    if($licencias > 0){
+        $sueldo_SUPER = ( ( $total_imponible / ( 30 - $ausencias ) ) * 30 );
 
-    $sueldo_SUPER = ( ( $total_imponible / ( 30 - $ausencias ) ) * 30 );
-
-    if( $sueldo_SUPER > $tope ){
-        $total_imponible = ( ( $tope / 30 ) * ( 30 - $ausencias ) );
+        if( $sueldo_SUPER > $tope ){
+            $total_imponible = ( ( $tope / 30 ) * ( 30 - $ausencias ) );
+        }
     }
-
 
     // Lineas comentadas por instruccion de Abigail
     /* Si el trabajador tiene ausencias, sean licencias o ausentismos

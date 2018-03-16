@@ -7,13 +7,14 @@ function getInfoSueldos($ano, $mes, $trabajador_id){
     $array_data = array();
     
     $super_sql = "
-    SELECT ( remuneracionTributable - totalNoImponible ) as sueldo, ( ( totalImponible * 0.07 ) + afpMonto + afcMonto ) as prevision, impuestoPagar
+    SELECT  remuneracionTributable  as sueldo, ( saludMonto + afpMonto + afcMonto ) as prevision, impuestoPagar
     
     FROM liquidacion
     WHERE trabajador_id = $trabajador_id
     and mes = $mes
     and ano = $ano
-    ";        
+    ";      
+    
     $resul = $db->rawQuery($super_sql);
     $resul = $resul[0];
         
