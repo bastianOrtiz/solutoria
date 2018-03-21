@@ -7,7 +7,7 @@ function getInfoSueldos($ano, $mes, $trabajador_id){
     $array_data = array();
     
     $super_sql = "
-    SELECT  remuneracionTributable  as sueldo, ( saludMonto + afpMonto + afcMonto ) as prevision, impuestoPagar
+    SELECT  remuneracionTributable  as sueldo, descuentoPrevisional as prevision, impuestoPagar
     
     FROM liquidacion
     WHERE trabajador_id = $trabajador_id
@@ -32,6 +32,9 @@ function getInfoSueldos($ano, $mes, $trabajador_id){
     $db->where('mes',$mes);
     $db->where('ano',$ano);
     $factor = $db->getValue('m_factormonetario','factor');
+    if(!$factor){
+        $factor = 1;
+    }
     
     
     $array_data['col1'] = round($resul['sueldo']);

@@ -1247,7 +1247,7 @@ function mainMenu(){
             array(
                 'entidad' => 'factorcorreccion',
                 'accion' => 'listar',
-                'label' => 'Factor Corrección Monetaria'
+                'label' => 'Factor de actualización'
             ),
             array(
                 'entidad' => 'costoempresa',

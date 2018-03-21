@@ -2,7 +2,7 @@
       <div class="content-wrapper">
         
         <section class="content-header">
-          <h1> Factor correción monetaria </h1>
+          <h1> Factor de actualización Renta</h1>
           <?php include ROOT . '/views/comun/breadcrumbs.php';  ?>
           
             <?php 

@@ -85,6 +85,12 @@ tfoot td{
                 </div><!-- /.box -->
                 <?php } else { ?>
                 <div class="box">
+                    <div class="box-header">
+                        <strong><?php echo getNombreTrabajador($trabajador_id) ?> - <?php echo $ano_certificado ?></strong>
+                        <a href="javascript: history.back()" class="btn btn-primary btn-xs pull-right"><strong> <i class="fa fa-chevron-left"></i> volver</strong></a>
+                    </div>
+                </div>
+                <div class="box">
                     <div class="box-body table-responsive">
                         <table class="table table-bordered table-hover">
                             <thead>
@@ -128,22 +134,22 @@ tfoot td{
                                     $totales['col9'] += $data['col9'];                                
                                     ?>
                                     <tr>
-                                        <td style="text-align: left;"> <?php echo getNombreMes($mes) ?> </td>
-                                        <td> <?php echo number_format($data['col1'],0,',','.') ?> </td>
-                                        <td> <?php echo number_format($data['col2'],0,',','.') ?> </td>
-                                        <td> <?php echo number_format($data['col3'],0,',','.') ?> </td>
-                                        <td> <?php echo number_format($data['col4'],0,',','.') ?> </td>
-                                        <td> - </td>
-                                        <td> - </td>
-                                        <td> <?php echo number_format($data['col5'],0,',','.') ?> </td>
-                                        <td> - </td>
-                                        <td> <?php echo $data['col6'] ?> </td>
-                                        <td> <?php echo number_format($data['col7'],0,',','.') ?> </td>
-                                        <td> <?php echo number_format($data['col8'],0,',','.') ?> </td>
-                                        <td> - </td>
-                                        <td> <?php echo number_format($data['col9'],0,',','.') ?> </td>
-                                        <td> - </td>
-                                        <td> - </td>
+                                        <td class="dataCol0" style="text-align: left;"> <?php echo getNombreMes($mes) ?> </td>
+                                        <td class="dataCol1"> <?php echo number_format($data['col1'],0,',','.') ?> </td>
+                                        <td class="dataCol2"> <?php echo number_format($data['col2'],0,',','.') ?> </td>
+                                        <td class="dataCol3"> <?php echo number_format($data['col3'],0,',','.') ?> </td>
+                                        <td class="dataCol4"> <?php echo number_format($data['col4'],0,',','.') ?> </td>
+                                        <td style="background: #ffe"> - </td>
+                                        <td style="background: #ffe"> - </td>
+                                        <td class="dataCol5"> <input type="text" value="<?php echo number_format($data['col5'],0,',','.') ?>" class="txtCol9" name="" style="text-align: right;"> </td>
+                                        <td style="background: #ffe"> - </td>
+                                        <td class="dataCol6"> <?php echo $data['col6'] ?> </td>
+                                        <td class="dataCol7"> <?php echo number_format($data['col7'],0,',','.') ?> </td>
+                                        <td class="dataCol7"> <?php echo number_format($data['col8'],0,',','.') ?> </td>
+                                        <td style="background: #ffe"> - </td>
+                                        <td style="background: #ffe"> - </td>
+                                        <td class="dataCol9"> <?php echo number_format($data['col9'],0,',','.') ?> </td>
+                                        <td style="background: #ffe"> - </td>
                                         
                                     </tr>
                                 <?php } ?>      
@@ -155,17 +161,17 @@ tfoot td{
                                     <td> <?php echo number_format($totales['col2'],0,',','.') ?> </td>
                                     <td> <?php echo number_format($totales['col3'],0,',','.') ?> </td>
                                     <td> <?php echo number_format($totales['col4'],0,',','.') ?> </td>
-                                    <td> - </td>
-                                    <td> - </td>
-                                    <td> <?php echo number_format($totales['col5'],0,',','.') ?> </td>
-                                    <td> - </td>
+                                    <td style="background: #ffe"> - </td>
+                                    <td style="background: #ffe"> - </td>
+                                    <td class="totalRenta"> <?php echo number_format($totales['col5'],0,',','.') ?> </td>
+                                    <td style="background: #ffe"> - </td>
                                     <td>  </td>
                                     <td> <?php echo number_format($totales['col7'],0,',','.') ?> </td>
                                     <td> <?php echo number_format($totales['col8'],0,',','.') ?> </td>
-                                    <td> - </td>
-                                    <td> <?php echo number_format($totales['col9'],0,',','.') ?> </td>
-                                    <td> - </td>
-                                    <td> - </td>
+                                    <td style="background: #ffe"> - </td>
+                                    <td style="background: #ffe"> - </td>
+                                    <td class="totalRentaNoGravada"> <?php echo number_format($totales['col9'],0,',','.') ?> </td>
+                                    <td style="background: #ffe"> - </td>
                                     
                                 </tr>
                             </tfoot>
@@ -181,7 +187,59 @@ tfoot td{
 
 <script>
 
+function recalcularRentaNoGravada(factor, renta){
+    total_renta_no_gravada = ( renta * factor );
+
+    return total_renta_no_gravada;
+}
+
 $(document).ready(function(){
+
+    $(".txtCol9").focus(function(){
+        $(this).val( $(this).val().replace(".","") );
+    })
+
+    $(".txtCol9").blur(function(){
+        valor = $(this).val();
+        factor = $(this).closest('tr').find('.dataCol6').text();
+
+        // Recalcula la renta no gravada de ESTA fila
+        nuevaRenta = recalcularRentaNoGravada(factor,valor);
+        nuevaRenta = formatea( nuevaRenta );
+        $(this).closest('tr').find('.dataCol9').text(nuevaRenta);
+
+
+        // Vuelve a sumar todas las rentas no gravadas
+        total_renta = 0;
+        $(".txtCol9").each(function(){
+            thisVal = $(this).val().replace(".","");
+            thisVal = parseInt(thisVal);
+
+            total_renta += thisVal;
+        })
+        total_renta = formatea( total_renta );
+
+        $(".totalRenta").text(total_renta);
+
+
+        // Recalcula el total de las rentas de todas las filas ya aplicado el factor
+        total_renta_con_factor = 0;
+        $(".dataCol9").each(function(){
+            thisVal = $(this).text().replace(".","");
+            thisVal = parseInt(thisVal);
+
+            total_renta_con_factor += thisVal;
+        })
+        total_renta_con_factor = formatea( total_renta_con_factor );
+
+        $(".totalRentaNoGravada").text(total_renta_con_factor);
+
+
+
+        // Al final vuelve a dejar el numero formateado con punto
+        num_format = formatea( valor );
+        $(this).val(num_format);
+    })
     
     $(".btn_ver_liquidacion").click(function(e){
         e.preventDefault();
@@ -207,6 +265,35 @@ $(document).ready(function(){
     });
 
 })
+
+
+function formatea(numero){
+    numero = String(numero);
+    terna = 1;
+    formatted = "";
+    if( numero.length > 3 ){
+        for (i = (numero.length - 1); i>=0 ; i--) {
+            caracter = numero.charAt(i);
+            formatted += caracter;
+            if(terna == 3){
+                formatted += '.';
+                terna = 0;
+            }
+            terna++;
+        }
+
+        invertido = "";
+        for (i = (formatted.length - 1); i>=0 ; i--) {
+            chaaar = formatted.charAt(i);
+            invertido += chaaar;
+        }
+
+    } else {
+        invertido = numero;
+    }
+
+    return invertido;
+}
 
 
 </script>      
