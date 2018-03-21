@@ -205,7 +205,8 @@ $(document).ready(function(){
 
         // Recalcula la renta no gravada de ESTA fila
         nuevaRenta = recalcularRentaNoGravada(factor,valor);
-        nuevaRenta = formatea( nuevaRenta );
+        nuevaRenta = numeral( nuevaRenta ).format('0,0');
+        nuevaRenta = nuevaRenta.replace(",",".");
         $(this).closest('tr').find('.dataCol9').text(nuevaRenta);
 
 
@@ -217,7 +218,8 @@ $(document).ready(function(){
 
             total_renta += thisVal;
         })
-        total_renta = formatea( total_renta );
+        total_renta = numeral( total_renta ).format('0,0');
+        total_renta = total_renta.replace(",",".");
 
         $(".totalRenta").text(total_renta);
 
@@ -230,14 +232,16 @@ $(document).ready(function(){
 
             total_renta_con_factor += thisVal;
         })
-        total_renta_con_factor = formatea( total_renta_con_factor );
+        total_renta_con_factor = numeral( total_renta_con_factor ).format('0,0');
+        total_renta_con_factor = total_renta_con_factor.replace(",",".");
 
         $(".totalRentaNoGravada").text(total_renta_con_factor);
 
 
 
         // Al final vuelve a dejar el numero formateado con punto
-        num_format = formatea( valor );
+        num_format = numeral( valor ).format('0,0');
+        num_format = num_format.replace(",",".");
         $(this).val(num_format);
     })
     
@@ -265,35 +269,6 @@ $(document).ready(function(){
     });
 
 })
-
-
-function formatea(numero){
-    numero = String(numero);
-    terna = 1;
-    formatted = "";
-    if( numero.length > 3 ){
-        for (i = (numero.length - 1); i>=0 ; i--) {
-            caracter = numero.charAt(i);
-            formatted += caracter;
-            if(terna == 3){
-                formatted += '.';
-                terna = 0;
-            }
-            terna++;
-        }
-
-        invertido = "";
-        for (i = (formatted.length - 1); i>=0 ; i--) {
-            chaaar = formatted.charAt(i);
-            invertido += chaaar;
-        }
-
-    } else {
-        invertido = numero;
-    }
-
-    return invertido;
-}
 
 
 </script>      
