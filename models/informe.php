@@ -24,7 +24,13 @@ function getInfoSueldos($ano, $mes, $trabajador_id){
     where LH.liquidacion_id = L.id
     AND L.trabajador_id = T.id
     AND LH.haber_id IN ( select id from m_haber WHERE m_haber.asignacion = 1 )
-    AND LH.liquidacion_id IN ( SELECT id FROM liquidacion L WHERE L.mes = $mes AND L.ano = $ano AND L.trabajador_id = $trabajador_id )        
+    AND LH.liquidacion_id IN ( 
+        SELECT id 
+        FROM liquidacion L 
+        WHERE L.mes = $mes 
+        AND L.ano = $ano 
+        AND L.trabajador_id = $trabajador_id 
+    )        
     ";
     $resul_asignaciones = $db->rawQuery($sql_asignaciones);    
 

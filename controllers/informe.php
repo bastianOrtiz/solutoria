@@ -21,6 +21,108 @@ if( $_POST ){
             'col9' => 0
         );                
     }
+
+    if( $action == 'certificado_sueldos_print' ){
+        $totales = array('col1' => 0,'col2' => 0,'col3' => 0,'col4' => 0,'col5' => 0,'col6' => 0,'col7' => 0,'col8' => 0,'col9' => 0);
+        $orientation = 'L';
+        
+        $html = '<style type="text/css">';
+        $html .= 'table{ font-size: 10px; }';
+        $html .= 'table th{ font-size: 9px; }';
+        $html .= 'table td, table th{ border: 1px solid #333; padding: 3px 2px; }';
+        $html .= '</style>';
+        $html .= '<page backtop="1mm" backbottom="0mm" backleft="1mm" backright="5mm" style="font-size: 10pt">';
+        
+        $html .= '<table style="border-collapse: collapse">  '  . 
+        '       <thead>  '  . 
+        '           <tr>    '  . 
+        '               <th colspan="10">  </th>  '  . 
+        '               <th colspan="6" style="text-align: center"> MONTOS ACTUALIZADOS </th>  '  . 
+        '           </tr>  '  . 
+        '           <tr>  '  . 
+        '               <th> PERIODOS </th>  '  . 
+        '               <th> SUELDO <BR>BRUTO </th>  '  . 
+        '               <th style="width: 70px"> COTIZACIÓN PREVISIONAL O DE SALUD DE CARGO DEL TRABAJADOR </th>  '  . 
+        '               <th style="width: 70px"> RENTA  IMPONIBLE AFECTA AL IMPTO. ÚNICO DE  2° CAT.  </th>  '  . 
+        '               <th style="width: 50px"> IMPTO ÚNICO RETENIDO</th>  '  . 
+        '               <th style="width: 60px"> MAYOR  RETENCION DE IMPTO. SOLICITADA  ART. 88 LIR  </th>  '  . 
+        '               <th style="width: 30px"> RENTA TOTAL EXENTA </th>  '  . 
+        '               <th style="width: 60px"> RENTA TOTAL NO GRAVADA </th>  '  . 
+        '               <th style="width: 60px"> REBAJA POR ZONAS EXTREMAS (Franquicia  D.L. 889) </th>  '  . 
+        '               <th style="width: 40px"> FACTOR </th>  '  . 
+        '               <th style="width: 60px"> RENTA AFECTA AL IMPTO.  ÚNICO DE 2° CAT.  </th>  '  . 
+        '               <th style="width: 45px"> IMPTO. ÚNICO  RETENIDO </th>  '  . 
+        '               <th style="width: 60px"> MAYOR RETENCIÓN DE IMPTO. SOLICITADA ART. 88 LIR </th>  '  . 
+        '               <th style="width: 30px"> RENTA TOTAL EXENTA  </th>  '  . 
+        '               <th style="width: 50px"> RENTA TOTAL NO GRAVADA  </th>  '  . 
+        '               <th style="width: 60px"> REBAJA POR ZONAS EXTREMAS (Franquicia D.L.889)  </th>  '  . 
+        '                 '  . 
+        '           </tr>  '  . 
+        '       </thead>  '  . 
+        '       <tbody>  ';
+
+
+        for( $mes=1; $mes<=12; $mes++ ){
+            $data = getInfoSueldos($ano_certificado, $mes, $trabajador_id);
+            $totales['col1'] += $data['col1'];
+            $totales['col2'] += $data['col2'];
+            $totales['col3'] += $data['col3'];
+            $totales['col4'] += $data['col4'];
+            $totales['col5'] += $data['col5'];
+            $totales['col6'] += $data['col6'];
+            $totales['col7'] += $data['col7'];
+            $totales['col8'] += $data['col8'];
+            $totales['col9'] += $data['col9'];
+
+            $html .='        <tr>  '  . 
+            '                   <td class="dataCol0" style="text-align: left;"> ' . getNombreMes($mes) . ' </td>  '  . 
+            '                   <td class="dataCol1"> ' . number_format($data['col1'],0,',','.') . ' </td>  '  . 
+            '                   <td class="dataCol2">' . number_format($data['col2'],0,',','.') . ' </td>  '  . 
+            '                   <td class="dataCol3">' . number_format($data['col3'],0,',','.') . ' </td>  '  . 
+            '                   <td class="dataCol4">' . number_format($data['col4'],0,',','.') . ' </td>  '  . 
+            '                   <td style="background: #ffe"> - </td>  '  . 
+            '                   <td style="background: #ffe"> - </td>  '  . 
+            '                   <td class="dataCol5">' . $txtRentaNoGravada[$mes] . ' </td>  '  . 
+            '                   <td style="background: #ffe"> - </td>  '  . 
+            '                   <td class="dataCol6">' . $data['col6'] . ' </td>  '  . 
+            '                   <td class="dataCol7">' . number_format($data['col7'],0,',','.') . ' </td>  '  . 
+            '                   <td class="dataCol7">' . number_format($data['col8'],0,',','.') . ' </td>  '  . 
+            '                   <td style="background: #ffe"> - </td>  '  . 
+            '                   <td style="background: #ffe"> - </td>  '  . 
+            '                   <td class="dataCol9">' . number_format($data['col9'],0,',','.') . ' </td>  '  . 
+            '                   <td style="background: #ffe"> - </td>  '  .
+            '               </tr>  ';
+         }
+
+         
+        $html .= '       </tbody>  '  . 
+        '       <tfoot>  '  . 
+        '           <tr>  '  . 
+        '               <td style="text-align: left;"> <strong>Totales</strong> </td>  '  . 
+        '               <td>' . number_format($totales['col1'],0,',','.') . ' </td>  '  . 
+        '               <td>' . number_format($totales['col2'],0,',','.') . ' </td>  '  . 
+        '               <td>' . number_format($totales['col3'],0,',','.') . ' </td>  '  . 
+        '               <td>' . number_format($totales['col4'],0,',','.') . ' </td>  '  . 
+        '               <td style="background: #ffe"> - </td>  '  . 
+        '               <td style="background: #ffe"> - </td>  '  . 
+        '               <td class="totalRenta">' . number_format($totales['col5'],0,',','.') . ' </td>  '  . 
+        '               <td style="background: #ffe"> - </td>  '  . 
+        '               <td>  </td>  '  . 
+        '               <td>' . number_format($totales['col7'],0,',','.') . ' </td>  '  . 
+        '               <td>' . number_format($totales['col8'],0,',','.') . ' </td>  '  . 
+        '               <td style="background: #ffe"> - </td>  '  . 
+        '               <td style="background: #ffe"> - </td>  '  . 
+        '               <td class="totalRentaNoGravada">' . number_format($totales['col9'],0,',','.') . ' </td>  '  . 
+        '               <td style="background: #ffe"> - </td>  '  .
+        '           </tr>  '  . 
+        '       </tfoot>  '  . 
+        '  </table>  ' ; 
+
+        $html .= '</page>';
+
+    }
+
+
     
     if( $action == "reporte_atrasos" ){
         //Obtener umbral
