@@ -184,7 +184,8 @@ tfoot td{
                             </table>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> &nbsp; Guardar</button>
+                    <button type="submit" class="btn btn-success pull-right"><i class="fa fa-file-pdf-o"></i> &nbsp; Generar &nbsp; <i class="fa fa-caret-right"></i> </button>
+                    <div class="clearfix"></div>
                 </form>
                 <?php } ?>
             </section>
@@ -194,7 +195,6 @@ tfoot td{
 
 function recalcularRentaNoGravada(factor, renta){
     total_renta_no_gravada = ( renta * factor );
-
     return total_renta_no_gravada;
 }
 

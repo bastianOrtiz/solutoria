@@ -23,33 +23,63 @@ if( $_POST ){
     }
 
     if( $action == 'certificado_sueldos_print' ){
+
         $totales = array('col1' => 0,'col2' => 0,'col3' => 0,'col4' => 0,'col5' => 0,'col6' => 0,'col7' => 0,'col8' => 0,'col9' => 0);
         $orientation = 'L';
+
+        $db->where('id',$_SESSION[PREFIX.'login_eid']);
+        $empresa = $db->getOne('m_empresa');
+
+        $db->where('id',$trabajador_id);
+        $trabajador = $db->getOne('m_trabajador');
+        $presentacion_genero = ' el Sr. ';
+        if( $trabajador['sexo'] != 1){
+            $presentacion_genero = ' la Srta. ';
+        }
         
         $html = '<style type="text/css">';
-        $html .= 'table{ font-size: 10px; }';
-        $html .= 'table th{ font-size: 9px; }';
-        $html .= 'table td, table th{ border: 1px solid #333; padding: 3px 2px; }';
+        $html .= 'p, table{ font-size: 10px; }';
+        $html .= 'table.tabla{ border-collapse: collapse }';
+        $html .= 'table th{ font-size: 9px; text-align: center }';
+        $html .= 'table.tabla td{ text-align: right }';
+        $html .= 'table.tabla td, table.tabla th{ border: 1px solid #333; padding: 3px 2px; }';
+        $html .= 'table tfoot th{ text-align: right; font-weight: bold }';
         $html .= '</style>';
         $html .= '<page backtop="1mm" backbottom="0mm" backleft="1mm" backright="5mm" style="font-size: 10pt">';
         
-        $html .= '<table style="border-collapse: collapse">  '  . 
+        $html .= '<table><tr><td style="width: 800px;">' .
+        '<p>EMPLEADOR: ' . $empresa['razonSocial'] . '<br>' .
+        'RUT: ' . $empresa['rut'] .  '<br>' .
+        'DIRECCIÓN: ' . $empresa['direccion'] .  '<br>' .
+        'GIRO: ' . $empresa['giro'] .  '<br>' .
+        '</p>' . 
+        '</td><td>Certificado Nº 122<br> Santiago, ' . date('d') . ' de ' . getNombreMes(date('n')) .' de ' . date('Y') . '</td>' . 
+        '</tr></table>' . 
+
+        '<br><br><p> <strong> CERTIFICADO Nº6 SOBRE SUELDOS Y OTRAS RENTAS SIMILARES </strong> </p><br><br>' . 
+        ' <p>El empleador, <strong>' . $empresa['razonSocial'] . '</strong> certifica que ' . $presentacion_genero . getNombreTrabajador($trabajador_id, true) . 
+        ' RUT ' . $trabajador['rut'] . 
+        ' en su calidad de empleado dependiente <br> durante el año ' . $ano_certificado . ' se le han pagado las rentas que se indican y sobre las cuales se le practicaron las retenciones de impuestos que se señalan: ' . 
+        ' </p> ' . 
+        ' <p>Situación Tributaria: </p> ';
+
+        $html .= '<table class="tabla">  '  . 
         '       <thead>  '  . 
         '           <tr>    '  . 
         '               <th colspan="10">  </th>  '  . 
-        '               <th colspan="6" style="text-align: center"> MONTOS ACTUALIZADOS </th>  '  . 
+        '               <th colspan="6"> MONTOS ACTUALIZADOS </th>  '  . 
         '           </tr>  '  . 
         '           <tr>  '  . 
         '               <th> PERIODOS </th>  '  . 
         '               <th> SUELDO <BR>BRUTO </th>  '  . 
         '               <th style="width: 70px"> COTIZACIÓN PREVISIONAL O DE SALUD DE CARGO DEL TRABAJADOR </th>  '  . 
         '               <th style="width: 70px"> RENTA  IMPONIBLE AFECTA AL IMPTO. ÚNICO DE  2° CAT.  </th>  '  . 
-        '               <th style="width: 50px"> IMPTO ÚNICO RETENIDO</th>  '  . 
+        '               <th style="width: 45px"> IMPTO ÚNICO RETENIDO</th>  '  . 
         '               <th style="width: 60px"> MAYOR  RETENCION DE IMPTO. SOLICITADA  ART. 88 LIR  </th>  '  . 
         '               <th style="width: 30px"> RENTA TOTAL EXENTA </th>  '  . 
-        '               <th style="width: 60px"> RENTA TOTAL NO GRAVADA </th>  '  . 
+        '               <th style="width: 40px"> RENTA <BR> TOTAL <br> NO <br> GRAVADA </th>  '  . 
         '               <th style="width: 60px"> REBAJA POR ZONAS EXTREMAS (Franquicia  D.L. 889) </th>  '  . 
-        '               <th style="width: 40px"> FACTOR </th>  '  . 
+        '               <th style="width: 70px"> FACTOR<br> ACTUALIZACIÓN</th>  '  . 
         '               <th style="width: 60px"> RENTA AFECTA AL IMPTO.  ÚNICO DE 2° CAT.  </th>  '  . 
         '               <th style="width: 45px"> IMPTO. ÚNICO  RETENIDO </th>  '  . 
         '               <th style="width: 60px"> MAYOR RETENCIÓN DE IMPTO. SOLICITADA ART. 88 LIR </th>  '  . 
@@ -98,25 +128,27 @@ if( $_POST ){
         $html .= '       </tbody>  '  . 
         '       <tfoot>  '  . 
         '           <tr>  '  . 
-        '               <td style="text-align: left;"> <strong>Totales</strong> </td>  '  . 
-        '               <td>' . number_format($totales['col1'],0,',','.') . ' </td>  '  . 
-        '               <td>' . number_format($totales['col2'],0,',','.') . ' </td>  '  . 
-        '               <td>' . number_format($totales['col3'],0,',','.') . ' </td>  '  . 
-        '               <td>' . number_format($totales['col4'],0,',','.') . ' </td>  '  . 
-        '               <td style="background: #ffe"> - </td>  '  . 
-        '               <td style="background: #ffe"> - </td>  '  . 
-        '               <td class="totalRenta">' . number_format($totales['col5'],0,',','.') . ' </td>  '  . 
-        '               <td style="background: #ffe"> - </td>  '  . 
-        '               <td>  </td>  '  . 
-        '               <td>' . number_format($totales['col7'],0,',','.') . ' </td>  '  . 
-        '               <td>' . number_format($totales['col8'],0,',','.') . ' </td>  '  . 
-        '               <td style="background: #ffe"> - </td>  '  . 
-        '               <td style="background: #ffe"> - </td>  '  . 
-        '               <td class="totalRentaNoGravada">' . number_format($totales['col9'],0,',','.') . ' </td>  '  . 
-        '               <td style="background: #ffe"> - </td>  '  .
+        '               <th style="text-align: left;"> <strong>Totales</strong> </th>  '  . 
+        '               <th>' . number_format($totales['col1'],0,',','.') . ' </th>  '  . 
+        '               <th>' . number_format($totales['col2'],0,',','.') . ' </th>  '  . 
+        '               <th>' . number_format($totales['col3'],0,',','.') . ' </th>  '  . 
+        '               <th>' . number_format($totales['col4'],0,',','.') . ' </th>  '  . 
+        '               <th style="background: #ffe"> - </th>  '  . 
+        '               <th style="background: #ffe"> - </th>  '  . 
+        '               <th class="totalRenta">' . number_format($totales['col5'],0,',','.') . ' </th>  '  . 
+        '               <th style="background: #ffe"> - </th>  '  . 
+        '               <th>  </th>  '  . 
+        '               <th>' . number_format($totales['col7'],0,',','.') . ' </th>  '  . 
+        '               <th>' . number_format($totales['col8'],0,',','.') . ' </th>  '  . 
+        '               <th style="background: #ffe"> - </th>  '  . 
+        '               <th style="background: #ffe"> - </th>  '  . 
+        '               <th class="totalRentaNoGravada">' . number_format($totales['col9'],0,',','.') . ' </th>  '  . 
+        '               <th style="background: #ffe"> - </th>  '  .
         '           </tr>  '  . 
         '       </tfoot>  '  . 
-        '  </table>  ' ; 
+        '  </table>  ' . 
+        '  <br><p> Se extiende el siguiente certificado en cumplimiento de lo dispuesto en la Resolución Ex. Nº6509, del Servicio de Impuestos Internos, publica en el Diario Oficial de fecha 20 Diciembre de 1993 <br> y sus modificaciones posteriores </p>' . 
+        ' <p style="text-align: right; padding: 100px 100px 0px 0px">  MIGUEL RIVERA CERDA <br> R.U.T.: 6.374.381 - K &nbsp;&nbsp;&nbsp; </p>';
 
         $html .= '</page>';
 

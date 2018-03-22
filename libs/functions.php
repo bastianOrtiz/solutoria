@@ -569,13 +569,17 @@ function diasHabiles($trabajador_id,$fechaInicio, $fechaFin, $ausencia_id){
  * @param ($trabajador_id) $trabajador_id ID del 
  * @return (string) $nombre_completo Nombre completo del trabajador
  */
-function getNombreTrabajador($trabajador_id){
+function getNombreTrabajador($trabajador_id, $nombre_primero=false){
     global $db;    
     $db->where('id',$trabajador_id);
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
     $trabajador = $db->getOne('m_trabajador',array('nombres','apellidoPaterno','apellidoMaterno'));
     $nombre_completo = $trabajador['apellidoPaterno'].' '.$trabajador['apellidoMaterno'].' '.$trabajador['nombres'];
     
+    if( $nombre_primero == true ){
+        $nombre_completo = $trabajador['nombres'] . " " . $trabajador['apellidoPaterno'].' '.$trabajador['apellidoMaterno'];
+    }
+
     return $nombre_completo;
 }
 
