@@ -27,6 +27,17 @@ if( $_POST ){
         $totales = array('col1' => 0,'col2' => 0,'col3' => 0,'col4' => 0,'col5' => 0,'col6' => 0,'col7' => 0,'col8' => 0,'col9' => 0);
         $orientation = 'L';
 
+        $arr_indice_trabajadores = array();
+        $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+        $db->orderBy('apellidoPaterno','ASC');
+        $trabajadores = $db->get('m_trabajador');
+        foreach ($trabajadores as $key => $trabajador) {
+            $arr_indice_trabajadores[$trabajador['id']] = array(
+                'indice' => $key,
+                'nombre' => $trabajador['nombres'] . " " . $trabajador['apellidoPaterno']
+            );
+        };
+
         $db->where('id',$_SESSION[PREFIX.'login_eid']);
         $empresa = $db->getOne('m_empresa');
 
@@ -53,10 +64,10 @@ if( $_POST ){
         'DIRECCIÓN: ' . $empresa['direccion'] .  '<br>' .
         'GIRO: ' . $empresa['giro'] .  '<br>' .
         '</p>' . 
-        '</td><td>Certificado Nº 122<br> Santiago, ' . date('d') . ' de ' . getNombreMes(date('n')) .' de ' . date('Y') . '</td>' . 
+        '</td><td>Certificado Nº ' . $arr_indice_trabajadores[$trabajador_id]['indice'] . '<br> Santiago, ' . date('d') . ' de ' . getNombreMes(date('n')) .' de ' . date('Y') . '</td>' . 
         '</tr></table>' . 
 
-        '<br><br><p> <strong> CERTIFICADO Nº6 SOBRE SUELDOS Y OTRAS RENTAS SIMILARES </strong> </p><br><br>' . 
+        '<br><br><p> <strong> CERTIFICADO Nº' . $arr_indice_trabajadores[$trabajador_id]['indice'] . ' SOBRE SUELDOS Y OTRAS RENTAS SIMILARES </strong> </p><br><br>' . 
         ' <p>El empleador, <strong>' . $empresa['razonSocial'] . '</strong> certifica que ' . $presentacion_genero . getNombreTrabajador($trabajador_id, true) . 
         ' RUT ' . $trabajador['rut'] . 
         ' en su calidad de empleado dependiente <br> durante el año ' . $ano_certificado . ' se le han pagado las rentas que se indican y sobre las cuales se le practicaron las retenciones de impuestos que se señalan: ' . 
@@ -94,7 +105,7 @@ if( $_POST ){
 
         for( $mes=1; $mes<=12; $mes++ ){
             $data = getInfoSueldos($ano_certificado, $mes, $trabajador_id);
-            $txtRentaNoGravada[$mes] = (int) str_replace(".", "", $txtRentaNoGravada[$mes]);
+            $txtRentaNoGravada[$mes] = (int) str_replace(array(',','.'), "", $txtRentaNoGravada[$mes]);
             $totales['col1'] += $data['col1'];
             $totales['col2'] += $data['col2'];
             $totales['col3'] += $data['col3'];

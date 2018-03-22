@@ -86,7 +86,7 @@ tfoot td{
 
                 <?php } else { ?>
 
-                <form method="post" id="frmPrintCertificado">
+                <form method="post" id="frmPrintCertificado" target="_blank">
                     <input type="hidden" name="action" value="certificado_sueldos_print">
                     <input type="hidden" name="trabajador_id" value="<?php echo $trabajador_id; ?>">
                     <input type="hidden" name="ano_certificado" value="<?php echo $ano_certificado ?>">
