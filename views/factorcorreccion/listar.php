@@ -141,10 +141,28 @@
                   </table>
                 </div><!-- /.box-body -->
                 </div><!-- /.box -->
-                <a href="<?php echo BASE_URL . '/' . $entity ?>/ingresar" class="btn btn-primary">
+                <a href="#" class="btn btn-primary btnNuevoFactor pull-left">
                     <i class="fa fa-plus-circle"></i> Nueva <?php echo ucfirst($entity) ?>
                 </a>
+                <div class="pull-left" style="width: 200px; display: none; margin-left: 10px; overflow: hidden;" id="boxAno">
+                    <form method="post">
+                        <input type="hidden" name="action" value="crear_ano_factor" />
+                        <input type="text" class="form-control pull-left" name="anoFactor" placeholder="Año" style="width: 100px">
+                        <button class="btn btn-success pull-left">Crear</button>
+                    </form>
+                </div>
                 <?php } ?>              
                                 
         </section>
       </div><!-- /.content-wrapper -->
+
+<script>
+
+$(document).ready(function(){
+    $(".btnNuevoFactor").click(function(ee){
+        ee.preventDefault();
+        $("#boxAno").slideDown('fast');
+    })
+})
+
+</script>

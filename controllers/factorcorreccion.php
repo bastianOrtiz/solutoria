@@ -20,6 +20,22 @@ if( $_POST ){
         redirect(BASE_URL . '/' . $entity . '/listar/' . $parametros[1] . '/response/' . $response );
         exit();
     }
+
+    if( $action == 'crear_ano_factor' ){
+        
+        for($i=1; $i<=12; $i++){
+            $data = array(
+                'ano' => $anoFactor,
+                'mes' => $i,
+                'factor' => 1
+            );
+            $db->insert('m_factormonetario', $data);
+        }
+        
+        $response = encrypt('status=success&mensaje=Los registros se han editado correctamente&id=null');
+        redirect(BASE_URL . '/' . $entity . '/listar/' . $anoFactor );
+        exit();
+    }
     
                 
 }

@@ -94,15 +94,16 @@ if( $_POST ){
 
         for( $mes=1; $mes<=12; $mes++ ){
             $data = getInfoSueldos($ano_certificado, $mes, $trabajador_id);
+            $txtRentaNoGravada[$mes] = (int) str_replace(".", "", $txtRentaNoGravada[$mes]);
             $totales['col1'] += $data['col1'];
             $totales['col2'] += $data['col2'];
             $totales['col3'] += $data['col3'];
             $totales['col4'] += $data['col4'];
-            $totales['col5'] += $data['col5'];
+            $totales['col5'] += $txtRentaNoGravada[$mes];
             $totales['col6'] += $data['col6'];
             $totales['col7'] += $data['col7'];
             $totales['col8'] += $data['col8'];
-            $totales['col9'] += $data['col9'];
+            $totales['col9'] += ( $txtRentaNoGravada[$mes] * $data['col6'] );
 
             $html .='        <tr>  '  . 
             '                   <td class="dataCol0" style="text-align: left;"> ' . getNombreMes($mes) . ' </td>  '  . 
@@ -112,14 +113,14 @@ if( $_POST ){
             '                   <td class="dataCol4">' . number_format($data['col4'],0,',','.') . ' </td>  '  . 
             '                   <td style="background: #ffe"> - </td>  '  . 
             '                   <td style="background: #ffe"> - </td>  '  . 
-            '                   <td class="dataCol5">' . $txtRentaNoGravada[$mes] . ' </td>  '  . 
+            '                   <td class="dataCol5">' . number_format($txtRentaNoGravada[$mes],0,',','.') . ' </td>  '  . 
             '                   <td style="background: #ffe"> - </td>  '  . 
             '                   <td class="dataCol6">' . $data['col6'] . ' </td>  '  . 
             '                   <td class="dataCol7">' . number_format($data['col7'],0,',','.') . ' </td>  '  . 
             '                   <td class="dataCol7">' . number_format($data['col8'],0,',','.') . ' </td>  '  . 
             '                   <td style="background: #ffe"> - </td>  '  . 
             '                   <td style="background: #ffe"> - </td>  '  . 
-            '                   <td class="dataCol9">' . number_format($data['col9'],0,',','.') . ' </td>  '  . 
+            '                   <td class="dataCol9">' . number_format(($txtRentaNoGravada[$mes] * $data['col6']),0,',','.') . ' </td>  '  . 
             '                   <td style="background: #ffe"> - </td>  '  .
             '               </tr>  ';
          }
