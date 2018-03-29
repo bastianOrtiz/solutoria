@@ -269,17 +269,20 @@ function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_l
     $tope_imponible = obtenerTope(1);
     $ausentismos = $ausencias - $dias_licencia;
 
-
     if( ( $ausencias >=  0 ) && ( $dias_licencia == 0 ) ){
         if( $remuneracion_tributable > $tope_afc ){
-            $sub_total_afc = ( ($tope_afc / 30 ) * (30 - $ausencias) );
-            $topeAfcCalcular = $sub_total_afc;                             
+            if( $tipocontrato_id == 3 ){
+                $topeAfcCalcular = $tope_afc;
+            } else {
+                $sub_total_afc = ( ($tope_afc / 30 ) * (30 - $ausencias) );
+                $topeAfcCalcular = $sub_total_afc;
+            }
+            
         } else {
             $topeAfcCalcular = $remuneracion_tributable;
         }
         
     } else {
-
         //$res = (( $remuneracion_tributable / (30 - $ausencias) ) * (30 - $ausentismos ) );
         
         $topeAfcCalcular = $total_imponible;
