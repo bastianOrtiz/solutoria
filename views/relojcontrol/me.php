@@ -108,7 +108,9 @@
                                                         for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
                                                         $fecha_iterar = date("Y-m-d", $i);
                                                         $es_ausencia = comprobarAusencia($fecha_iterar, $trabajador['id']);
+                                                        $ausencia_motivo = $es_ausencia['motivo'];
                                                         $es_ausencia = $es_ausencia['es_ausencia'];
+
                                                         
                                                         $fecha_iterar_int = str_replace("-","",$fecha_iterar)."1";
                                                         $fecha_iterar_int = (int)$fecha_iterar_int;                                                                        
@@ -157,7 +159,7 @@
                                                             </td>
                                                         <?php } elseif( $es_ausencia ){ ?>
                                                             <td class="ausente es_ausencia"><?php echo $fecha_iterar; ?></td>
-                                                            <td class="ausente es_ausencia" colspan="4" style="text-align: left;">Ausencia</td>    
+                                                            <td class="ausente es_ausencia" colspan="4" style="text-align: left;"><?php echo $ausencia_motivo; ?></td>    
                                                         <?php } else {  ?>
                                                             
                                                         <?php 
