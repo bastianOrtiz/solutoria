@@ -531,7 +531,7 @@ function obtenerSemanaCorrida($haberes_comision){
     $mes = getMesMostrarCorte();
     $db->where('mes',$mes);
     $db->where('ano',$year);
-    $res = $db->getOne('m_semanacorrida');            
+    $res = $db->getOne('m_semanacorrida');
     
     if($db->count > 0){
         
