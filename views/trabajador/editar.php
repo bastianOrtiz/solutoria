@@ -1361,7 +1361,10 @@
                                                                                         $time = strtotime($arr_marcajes['entrada']['checktime']);
                                                                                         ?>
                                                                                         <span class="badge">
-                                                                                        <?php echo date('H:i:s',$time); ?>
+                                                                                        <?php 
+                                                                                        $horario_entrada_no_laboral = date('H:i:s',$time);
+                                                                                        echo $horario_entrada_no_laboral;
+                                                                                        ?>
                                                                                         </span>
                                                                                         <?php
                                                                                     } 
@@ -1399,6 +1402,7 @@
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][hora_marcada]" value="<?php echo date('H:i:s',$time); ?>" />
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][comentario]" class="hd_comm_ahe" value="" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][no_laboral]" value="<?php echo $horario_entrada_no_laboral; ?>" />
                                                                                     <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>
@@ -1413,7 +1417,10 @@
                                                                                 $time = strtotime($arr_marcajes['entrada']['checktime']);
                                                                                 ?>
                                                                                 <span class="badge">
-                                                                                <?php echo date('H:i:s',$time); ?>
+                                                                                <?php 
+                                                                                $horario_entrada_no_laboral = date('H:i:s',$time);
+                                                                                echo $horario_entrada_no_laboral;
+                                                                                ?>
                                                                                 </span>
                                                                                 <?php
                                                                             } 
@@ -1450,6 +1457,7 @@
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][hora_marcada]" value="<?php echo date('H:i:s',$time); ?>" />
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][comentario]" class="hd_comm_ahe" value="" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][no_laboral]" value="<?php echo $horario_entrada_no_laboral; ?>" />
                                                                                     <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>

@@ -95,10 +95,10 @@ if( $_POST ){
         
         $db->where('id',$horarioTrabajador);
         $m_horarios = $db->getOne('m_horario');
-        $m_horario_entrada = $m_horarios['entradaTrabajo'];        
+        $m_horario_entrada = $m_horarios['entradaTrabajo'];
         $m_horario_salida = $m_horarios['salidaTrabajo'];    
         
-        
+
         // Guardar las justificaciones        
         if( @$_POST['justificativo'] ){
                         
@@ -113,16 +113,23 @@ if( $_POST ){
                     if( $justif['tipo'] == 'H' ){                        
                         if( $justif['hora_extra_efectiva'] == 0 ){
                             // sacar la diferencia entre lo marcado y el horario en BD
-                            if($justif['io'] == 'I')
-                                $m_horarioen_BD = $m_horario_entrada;
-                            else 
+                            
+                            if($justif['io'] == 'I'){
+                                if(@$justif['no_laboral']){
+                                    $m_horarioen_BD = $justif['no_laboral'];
+                                } else {
+                                    $m_horarioen_BD = $m_horario_entrada;
+                                }
+                            } else{
                                 $m_horarioen_BD = $m_horario_salida;
+                            }
                             
                             
                             $datetime1 = date_create(date('Y-m-d ') . $m_horarioen_BD);
                             $datetime2 = date_create(date('Y-m-d ') . $justif['hora_marcada']);
                             
                             $interval = date_diff($datetime1, $datetime2);
+                            //show_array($interval);
                             $sub_total_min = ( $interval->h * 60 );
                             $total_min = ( $interval->i + $sub_total_min );                            
                             $horas_extras_efectivas = ( $total_min / 60 );
@@ -135,6 +142,8 @@ if( $_POST ){
                     }                
                     $horas_extras_efectivas = round($horas_extras_efectivas, 2);
                     
+
+
                     $data_j = array(
                         'logid' => $jkey,
                         'tipo' => $justif['tipo'],
@@ -782,7 +791,7 @@ if( $parametros ){
         
         //Justificativos
         $db->where("trabajador_id", $parametros[1]);
-        $t_atrasohoraextra = $db->get('t_atrasohoraextra');                
+        $t_atrasohoraextra = $db->get('t_atrasohoraextra');
                
         
         /** Datos previsionales Trabajador **/
