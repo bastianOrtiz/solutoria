@@ -19,6 +19,7 @@ if( $tabla != "m_empresa" )
     $db->where('empresa_id',$_SESSION[PREFIX . 'login_eid']);
 $foto = $db->getOne($tabla,'foto');
 
+
 $img = @imagecreatefromjpeg( ROOT . '/private/uploads/images/' . $foto['foto'] );
 imagejpeg($img);
 imagedestroy($img);
