@@ -74,9 +74,13 @@ $nombre_trabajador_slug = slugify($nombre_trabajador);
 
 $dias_trabajados = ( 30 - $diaAusencia );
 
-
 $total_salud_legal = round($totalImponible * 0.07,0);
 
+if( !file_exists(ROOT .'/private/uploads/images/'. $empresa['foto']) ){
+    $foto_empresa_src = ROOT .'/public/img/no_img.jpg';
+} else {
+    $foto_empresa_src = ROOT .'/private/uploads/images/'. $empresa['foto'];
+}
 
 $content = '
 <style type="text/css">
@@ -109,7 +113,7 @@ $content = '
     <tbody>
         <tr>
             <td style="padding: 0 20px;"> 
-            <img class="round" src="'. ROOT .'/private/uploads/images/'. $empresa['foto'] .'" />
+            <img class="round" src="'. $foto_empresa_src .'" />
             </td>
             <td>
                 <table>
