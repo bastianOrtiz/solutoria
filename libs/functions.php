@@ -2019,10 +2019,13 @@ function translateDia($dia_EN){
 function getDiaCortado($intMes){
     global $db;
     
-    $db->setTrace(true);
+    $anoCorte = getAnoMostrarCorte();
+
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
     $db->where('mes',$intMes);
-    $diaCorte = $db->getOne('m_corte');    
+    $db->where('ano',$anoCorte);
+    $diaCorte = $db->getOne('m_corte');
+    
     if( $db->count > 0 ){
         return $diaCorte['dia'];  
     } else {

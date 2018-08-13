@@ -48,7 +48,9 @@
                 <div id="calendar_corte" style="width: 100%; padding: 10px;">
                     <p>Fecha de hoy: <?php echo date('d') ?>-<?php echo getNombreMes(date('m'),true) ?>-<?php echo date('Y') ?></p>
                     <div class="input-group">
-                        <?php $mesMostrar = getMesMostrarCorte(); ?>                        
+                        <?php 
+                        $mesMostrar = getMesMostrarCorte(); 
+                        ?>
                         <select class="form-control" name="cboDiaCorte" id="cboDiaCorte">
                             <?php 
                             $limite = getLimiteMes($mesMostrar);
