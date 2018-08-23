@@ -701,16 +701,19 @@ if( $parametros ){
                     ORDER BY checktime ASC
                     ";  
                                   
-                    $marcajes = $db->rawQuery($sql);                                                                               
+                    $marcajes = $db->rawQuery($sql);
                     
                     if( $db->count == 1 ){
                         $unix_hora_umbral = strtotime( $date_iterar . ' ' . $umbral );
                         $unix_hora_marcada = strtotime( $marcajes[0]['checktime'] );
+
+                        $temp_timestamp = strtotime($marcajes[0]['checktime']);
+
                         if( $unix_hora_marcada > $unix_hora_umbral ){
                             $salidas[] = array(
                                 'id' => $marcajes[0]['id'],
                                 'userid' => $marcajes[0]['userid'],
-                                'checktime' => $marcajes[0]['checktime'],
+                                'checktime' => date('Y-m-d H:i:\0\0',$temp_timestamp),
                                 'checktype' => $marcajes[0]['checktype'],
                                 'logid' => $marcajes[0]['logid']
                             );
@@ -718,7 +721,7 @@ if( $parametros ){
                             $entradas[] = array(
                                 'id' => $marcajes[0]['id'],
                                 'userid' => $marcajes[0]['userid'],
-                                'checktime' => $marcajes[0]['checktime'],
+                                'checktime' => date('Y-m-d H:i:\0\0',$temp_timestamp),
                                 'checktype' => $marcajes[0]['checktype'],
                                 'logid' => $marcajes[0]['logid']
                             );
@@ -729,17 +732,21 @@ if( $parametros ){
                         
                         $primer_marcaje = 0;
                         $ultimo_marcaje = ( count($marcajes) - 1 );                        
+                        
+                        $temp_timestamp_I = strtotime($marcajes[$primer_marcaje]['checktime']);
+                        $temp_timestamp_O = strtotime($marcajes[$ultimo_marcaje]['checktime']);
+
                         $entradas[] = array(
                             'id' => $marcajes[$primer_marcaje]['id'],
                             'userid' => $marcajes[$primer_marcaje]['userid'],
-                            'checktime' => $marcajes[$primer_marcaje]['checktime'],
+                            'checktime' => date('Y-m-d H:i:\0\0',$temp_timestamp_I),
                             'checktype' => $marcajes[$primer_marcaje]['checktype'],
                             'logid' => $marcajes[$primer_marcaje]['logid']
                         );
                         $salidas[] = array(
                             'id' => $marcajes[$ultimo_marcaje]['id'],
                             'userid' => $marcajes[$ultimo_marcaje]['userid'],
-                            'checktime' => $marcajes[$ultimo_marcaje]['checktime'],
+                            'checktime' => date('Y-m-d H:i:\0\0',$temp_timestamp_O),
                             'checktype' => $marcajes[$ultimo_marcaje]['checktype'],
                             'logid' => $marcajes[$ultimo_marcaje]['logid']
                         );
