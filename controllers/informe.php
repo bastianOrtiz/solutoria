@@ -573,7 +573,7 @@ if( $_POST ){
         AND L.mes = $mes 
         AND L.ano = $ano
         AND T.empresa_id = $empresa_id
-        AND T.tipocontrato_id NOT IN (3,4)
+        AND T.id NOT IN (936)
         ";
 
         if( !@$mostrarZero )
