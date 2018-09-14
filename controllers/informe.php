@@ -572,8 +572,9 @@ if( $_POST ){
         WHERE T.id = L.trabajador_id
         AND L.mes = $mes 
         AND L.ano = $ano
-        AND T.empresa_id = $empresa_id";
-        
+        AND T.empresa_id = $empresa_id
+        AND T.tipocontrato_id NOT IN (3,4)
+        ";
 
         if( !@$mostrarZero )
             $sql_impuesto .= " AND L.$tipoImpuesto > 0 ";
