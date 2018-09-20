@@ -42,7 +42,7 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab_1">          
             <form role="form" id="frmCrearHaber" method="post">
-                    
+               <input type="hidden" value="new_haber" name="action">   
               <div class="row">
                   <div class="col-md-12">
                       <!-- general form elements -->
@@ -175,7 +175,7 @@
                     </div><!-- /.box -->
                       
                         <div class="box-footer">
-                            <button type="submit" name="action" value="new_haber" class="btn btn-primary">Agregar Haber</button>
+                            <button type="submit" name="action" class="btn btn-primary">Agregar Haber</button>
                         </div>
                     </div>
               </div>
@@ -183,7 +183,8 @@
         </div>
         
         <div class="tab-pane" id="tab_2">
-            <form role="form" id="frmCrearDescuento" method="post">                    
+            <form role="form" id="frmCrearDescuento" method="post">
+              <input type="hidden" value="new_descuento" name="action">
               <div class="row">
                   <div class="col-md-12">
                       <!-- general form elements -->
@@ -316,7 +317,7 @@
                     </div><!-- /.box -->
                       
                         <div class="box-footer">
-                            <button type="submit" name="action" value="new_descuento" class="btn btn-primary">Agregar Descuento</button>
+                            <button type="submit" name="action" class="btn btn-primary">Agregar Descuento</button>
                         </div>
                     </div>
               </div>
