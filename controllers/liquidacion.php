@@ -11,10 +11,27 @@ $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $registros = $db->get("m_trabajador");
 
 if( $_SESSION[PREFIX.'is_trabajador'] ){    
+
     $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
     $db->orderBy('ano','DESC');
     $db->orderBy('mes','DESC');
-    $iquidaciones_trabajador = $db->get('liquidacion',12);        
+    $ultima_liquidacion = $db->getOne('liquidacion');
+
+    
+    $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
+    $db->orderBy('ano','DESC');
+    $db->orderBy('mes','DESC');
+
+    $limite = (int)$ultima_liquidacion['ano'].leadZero($ultima_liquidacion['mes']).'28';
+    $hoy = (int)date('Ymd');
+
+    if( $hoy < $limite ){
+        $iquidaciones_trabajador = $db->get('liquidacion',array(1,12));
+    } else {
+        $iquidaciones_trabajador = $db->get('liquidacion',array(0,12));
+    }
+
+    
 }
 
 if( $_POST ){
