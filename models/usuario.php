@@ -30,7 +30,9 @@ function crearUsuario($data_array){
 function verificarExisteUsuario($emailUsuario){
     global $db;
     $db->where ("user", $emailUsuario);
+    $db->where ("cuenta_id", $_SESSION[PREFIX.'login_cid']);
     $exist = $db->get("m_usuario");
+
     if ($db->count > 0){
         return true;
     } else {
