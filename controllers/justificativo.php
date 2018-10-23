@@ -1,5 +1,6 @@
 <?php
 
+$db->where ("cuenta_id", $_SESSION[PREFIX.'login_cid']);
 $registros = $db->get("m_justificativo");
 $justificativos = $registros;
 
@@ -11,9 +12,9 @@ if( $_POST ){
         
         $tipo = $justificativoTipo[0];
         $data = Array (
+            "cuenta_id" => $_SESSION[PREFIX.'login_cid'],
             "nombre" => $nombreJustificativo,            
-            "tipo" => $tipo,
-            "cuenta_id" => $_SESSION[PREFIX.'login_cid']
+            "tipo" => $tipo
         );
 
         if( editarJustificativo($justificativo_id, $data) ){
@@ -44,9 +45,9 @@ if( $_POST ){
         
         $tipo = $justificativoTipo[0];
         $data = Array (
+            "cuenta_id" => $_SESSION[PREFIX.'login_cid'],
             "nombre" => $nombreJustificativo,            
-            "tipo" => $tipo,
-            "cuenta_id" => $_SESSION[PREFIX.'login_cid']
+            "tipo" => $tipo
         );
         
         $create_id = crearJustificativo($data);
@@ -69,6 +70,7 @@ if( $parametros ){
     /** Consultar datos de justificativo **/
     if( isset($parametros[1]) ){
         $db->where ("id", $parametros[1]);
+        $db->where ("cuenta_id", $_SESSION[PREFIX.'login_cid']);
         $justificativo = $db->getOne("m_justificativo");        
     }
 }
