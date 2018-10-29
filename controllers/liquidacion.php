@@ -17,20 +17,22 @@ if( $_SESSION[PREFIX.'is_trabajador'] ){
     $db->orderBy('mes','DESC');
     $ultima_liquidacion = $db->getOne('liquidacion');
 
-    
+    $limite_mostrar = getLimiteMes(date('n'));
+
+
     $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
     $db->orderBy('ano','DESC');
     $db->orderBy('mes','DESC');
-
-    $limite = (int)$ultima_liquidacion['ano'].leadZero($ultima_liquidacion['mes']).'28';
-    $hoy = (int)date('Ymd');
-
-    if( $hoy < $limite ){
-        $iquidaciones_trabajador = $db->get('liquidacion',array(1,12));
+    if ( $ultima_liquidacion['mes'] == date('n') ) {
+        if( date('j') < $limite_mostrar ){
+            $db->where('mes',date('n'),"<");
+            $liquidaciones_trabajador = $db->get('liquidacion');
+        } else {
+            $liquidaciones_trabajador = $db->get('liquidacion');
+        }
     } else {
-        $iquidaciones_trabajador = $db->get('liquidacion',array(0,12));
+        $liquidaciones_trabajador = $db->get('liquidacion');
     }
-
     
 }
 

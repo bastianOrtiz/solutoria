@@ -117,7 +117,7 @@
                             <div class="info-box-content">
                               <span class="info-box-text">Descargar últma liquidacion</span>
                               <span class="info-box-number">
-                                <a href="<?php echo BASE_URL . '/private/pdfgen.php?id=' . encrypt($ultima_liquidacion['id']) ?>" target="_blank" class="btn btn-default">Descargar</a>
+                                <a href="<?php echo BASE_URL . '/private/pdfgen.php?id=' . encrypt($liquidacion_trabajador['id']) ?>" target="_blank" class="btn btn-default">Descargar</a>
                               </span>
                               <span class="progress-description">
                               (Correspondiente al mes de <?php echo $mes_ultima_liquidacion; ?>)

@@ -85,20 +85,30 @@ foreach($resul_vacaciones as $rango){
 
 
 if( $_SESSION[PREFIX.'is_trabajador'] ){
+
     $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
     $db->orderBy('ano','DESC');
     $db->orderBy('mes','DESC');
     $ultima_liquidacion = $db->getOne('liquidacion');
 
-    $limite = (int)$ultima_liquidacion['ano'].leadZero($ultima_liquidacion['mes']).'28';
-    $hoy = (int)date('Ymd');
+    $limite_mostrar = getLimiteMes(date('n'));
 
-    if( $hoy < $limite ){
-        $ultima_liquidacion = $db->rawQuery("SELECT  * FROM liquidacion WHERE  trabajador_id = '".$_SESSION[PREFIX.'login_uid']."'  ORDER BY ano DESC, mes DESC  LIMIT 1 OFFSET 1");
-        $ultima_liquidacion = $ultima_liquidacion[0];
+    $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
+    $db->orderBy('ano','DESC');
+    $db->orderBy('mes','DESC');
+    if ( $ultima_liquidacion['mes'] == date('n') ) {
+        if( date('j') < $limite_mostrar ){
+            $db->where('mes',date('n'),"<");
+            $liquidacion_trabajador = $db->getOne('liquidacion');
+        } else {
+            $liquidacion_trabajador = $db->getOne('liquidacion');
+        }
+    } else {
+        $liquidacion_trabajador = $db->getOne('liquidacion');
     }
 
-    $mes_ultima_liquidacion = getNombreMes($ultima_liquidacion['mes']);
+
+    $mes_ultima_liquidacion = getNombreMes($liquidacion_trabajador['mes']);
 }
 
 include ROOT . '/views/comun/header.php';

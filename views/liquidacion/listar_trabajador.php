@@ -34,7 +34,7 @@
                   <h3 class="box-title"><?php echo ucfirst($entity) ?></h3>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive">                
-                <?php if( $iquidaciones_trabajador ){ ?>
+                <?php if( $liquidaciones_trabajador ){ ?>
                   <table id="trabajadores_list" class="table table-bordered table-striped">
                     <thead>
                       <tr>
@@ -47,7 +47,7 @@
                     <tbody>
                         <?php
                         $i=1; 
-                        foreach( $iquidaciones_trabajador as $reg ){ ?>
+                        foreach( $liquidaciones_trabajador as $reg ){ ?>
                             <tr>
                                 <td> <?php echo $i; ?> </td>
                                 
