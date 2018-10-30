@@ -1581,7 +1581,7 @@
                                                                             $arr_no_IN[] = $fecha_iterar;
                                                                         ?>
                                                                         
-                                                                			<td class="ausente"> <?php echo  translateDia( date('D', strtotime($fecha_iterar)) ) ?> <?php echo $fecha_iterar ?> </td>
+                                                                			<td class="ausente"><?php echo  translateDia( date('D', strtotime($fecha_iterar)) ) ?> <?php echo $fecha_iterar ?> </td>
                                                                 			<td class="ausente" colspan="2">                                                                            
                                                                                 <div class="input-group" title="No marcó">
                                                                                     <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">

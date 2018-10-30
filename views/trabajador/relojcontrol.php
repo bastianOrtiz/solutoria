@@ -301,7 +301,7 @@ table th,
                                             			<td class="ausente no_mark" colspan="2"> 
                                                             <small>No Marcó</small>
                                                             <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][justificado]" />
-                                                            <span id="span_<?php echo $fecha_iterar ?>"></span>                                                            
+                                                            <span id="span_<?php echo $fecha_iterar ?>"></span>
                                                         </td>                                                            			                                                    			                                                                
                                             		    
                                                     <?php } ?>
