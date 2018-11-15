@@ -1,5 +1,9 @@
 <!-- Content Wrapper. Contains page content -->    
-    
+<style>
+#myModal td:first-child{
+    white-space: nowrap;
+}
+</style>     
       <div class="content-wrapper">
         
         <section class="content-header">
@@ -77,8 +81,12 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="textoDocumento">Texto del Documento</label>
-                                    <textarea class="form-control required wys_editor" id="textoDocumento" name="textoDocumento"></textarea>
-                                    <div id="MyMenu"></div>
+                                    <div class="pull-right">
+                                      <a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal"> <i class="fa fa-question-circle"></i> &nbsp; Ayuda Etiquetas</a>
+                                    </div>
+                                    <br class="clearfix">
+                                    <br class="clearfix">
+                                    <textarea class="form-control required wys_editor" id="textoDocumento" name="textoDocumento"><?php echo html_entity_decode($documento['texto']) ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -89,13 +97,17 @@
                       </div>
                     </form>
                   </div><!-- /.box -->
-    
-    
                 </div>
           </div>   <!-- /.row -->
         </section>
         
       </div><!-- /.content-wrapper -->
+
+
+      <?php include 'modal_tags.php'; ?>
+
+
+
       
 <script>
 

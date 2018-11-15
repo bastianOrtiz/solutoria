@@ -62,18 +62,22 @@ if( $_POST ){
         } else {
             logit( $_SESSION[PREFIX.'login_name'],$_POST['action'] ,'documento',$create_id,$db->getLastQuery() );
             $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$create_id);
-            redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
+            redirect(BASE_URL . '/' . $entity . '/editar/'.$create_id.'/response/' . $response );
             exit();                
         }
                    
     }      
 }
 
-if( $parametros ){
+if( $parametros[0] == 'editar' ){
     /** Consultar datos de documento **/
     if( isset($parametros[1]) ){
+        $db->where ("empresa_id", $_SESSION[PREFIX."login_eid"]);
         $db->where ("id", $parametros[1]);
         $documento = $db->getOne("m_documento");        
+        if(!$documento){
+            redirect(BASE_URL.'/documento/listar', 301, true, 'Documento no existe en la empresa');
+        }
     }
 }
 
