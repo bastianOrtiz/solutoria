@@ -269,7 +269,8 @@ if( $_POST ){
             'tipopago_id' => $tipoPagoTrabajador,
             'tipopagodato' => $customFields,
             'relojcontrol_id' => $relojControlIdTrabajador,
-            'forzar_plan_completo' => $forzarPlanCompleto
+            'forzar_plan_completo' => $forzarPlanCompleto,
+            'estadoCivil' => $estadoCivil 
         );
 
         
@@ -426,7 +427,8 @@ if( $_POST ){
             
             'tipopago_id' => $tipoPagoTrabajador,
             'tipopagodato' => $customFields,
-            'relojcontrol_id' => $relojControlIdTrabajador
+            'relojcontrol_id' => $relojControlIdTrabajador,
+            'estadoCivil' => $estadoCivil 
         );
         
         

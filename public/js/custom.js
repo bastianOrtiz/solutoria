@@ -34,11 +34,8 @@ $(document).ready(function(){
         var editor = $(".wys_editor").Editor();    
     }    
     
-    $("#menuBarDiv").append('<div class="btn-group"><a href="javascript:void(0)" class="btn btn-default" id="comodin_trabajador_nombre" title="Toggle Screen" style="cursor: pointer;"><i class="fa fa-help"></i></a></div>')
+    $("#menuBarDiv").append('<div class="btn-group"><a href="javascript:void(0)" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="cursor: pointer;"><i class="fa fa-question-circle"></i></a></div>')
     
-    $('#comodin_trabajador_nombre').on('click', function(){
-        $(".Editor-editor").append('[trabajador.nombre]');
-    })
     
     mouse_inside_side_search = false;
     $(document).on('mouseover','#overlay_search_trabajador', function(){

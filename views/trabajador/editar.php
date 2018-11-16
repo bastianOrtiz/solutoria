@@ -299,6 +299,16 @@
                                                     <label for="emergenciaTrabajador">En caso de emergencia</label>
                                                     <textarea class="form-control required" placeholder="Información relevante en caso de emergencias" name="emergenciaTrabajador" id="emergenciaTrabajador" style="height: 100px;"><?php echo $trabajador['emergencia'] ?></textarea>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label for="comunaTrabajador">Estado Civil</label>
+                                                    <select class="form-control required" name="estadoCivil" id="estadoCivil">
+                                                        <option value="">Seleccione Estado Civil</option>
+                                                        <option value="Soltero">Soltero(a)</option>
+                                                        <option value="Casado">Casado(a)</option>
+                                                    </select>
+                                                    <script>$("#estadoCivil").val('<?php echo $trabajador['estadoCivil'] ?>') </script>
+                                                </div>
                                                 
                                             </div>
                                         </div>

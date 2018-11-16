@@ -67,6 +67,10 @@
                           <input type="text" class="form-control required" value="<?php echo $empresa['direccion'] ?>" id="direccionEmpresa" name="direccionEmpresa" placeholder="Dirección Empresa" />
                         </div>
                         <div class="form-group">
+                          <label for="ciudadEmpresa">Ciudad</label>
+                          <input type="text" class="form-control required" value="<?php echo $empresa['ciudad'] ?>" id="ciudadEmpresa" name="ciudadEmpresa" placeholder="Ciudad Empresa" />
+                        </div>
+                        <div class="form-group">
                           <label for="giroEmpresa">Giro</label>
                           <input type="text" class="form-control required" value="<?php echo $empresa['giro'] ?>" id="giroEmpresa" name="giroEmpresa" placeholder="Giro Empresa" />                      
                         </div>                         

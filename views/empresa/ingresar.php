@@ -58,6 +58,10 @@
                               <input type="text" class="form-control required" id="direccionEmpresa" name="direccionEmpresa" placeholder="Dirección Empresa" />
                             </div>
                             <div class="form-group">
+                              <label for="ciudadEmpresa">Ciudad</label>
+                              <input type="text" class="form-control required" id="ciudadEmpresa" name="ciudadEmpresa" placeholder="Ciudad Empresa" />
+                            </div>
+                            <div class="form-group">
                               <label for="giroEmpresa">Giro</label>
                               <input type="text" class="form-control required" id="giroEmpresa" name="giroEmpresa" placeholder="Giro Empresa" />
                             </div>

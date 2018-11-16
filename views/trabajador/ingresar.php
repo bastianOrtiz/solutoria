@@ -193,6 +193,15 @@ input.form-control.loading{
                                                     <label for="emergenciaTrabajador">En caso de emergencia</label>
                                                     <textarea class="form-control required" placeholder="Información relevante en caso de emergencias" name="emergenciaTrabajador" id="emergenciaTrabajador" style="height: 100px;"></textarea>
                                                 </div>
+
+                                                 <div class="form-group">
+                                                    <label for="comunaTrabajador">Estado Civil</label>
+                                                    <select class="form-control required" name="estadoCivil" id="estadoCivil">
+                                                        <option value="">Seleccione Estado Civil</option>
+                                                        <option value="Soltero">Soltero(a)</option>
+                                                        <option value="Casado">Casado(a)</option>
+                                                    </select>
+                                                </div>
                                                 
                                             </div>
                                         </div>

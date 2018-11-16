@@ -49,7 +49,7 @@
                           <code>{{ empresa.ciudad }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
-                          Ciudad de la empresa.<i class="fa fa-asterisk text-red"></i>
+                          Ciudad de la empresa.
                       </td>
                   </tr>
               </tbody>
@@ -97,7 +97,7 @@
                           <code>{{ trabajador.ciudad }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
-                          Ciudad del trabajador. <i class="fa fa-asterisk text-red"></i>
+                          Ciudad del trabajador.
                       </td>
                   </tr>
                   <tr>
@@ -131,7 +131,6 @@
                       </td>
                       <td>
                           Estado civil del trabajador
-                          <i class="fa fa-asterisk text-red"></i>
                       </td>
                   </tr>
                   <tr>
@@ -140,7 +139,6 @@
                       </td>
                       <td>
                           Texto de titulo del horario del trabajador (para la impresión en contratos)
-                          <i class="fa fa-asterisk"></i>
                       </td>
                   </tr>
                   <tr>

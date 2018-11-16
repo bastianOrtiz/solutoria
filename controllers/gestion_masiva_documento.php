@@ -26,7 +26,7 @@ if( $_POST ){
             $start_tags_found = strpos_recursive($string,$tag_ini);
             $end_tags_found = strpos_recursive($string,$tag_end);
 
-            $arr_tgs_no_bd = ['fecha1'];
+            $arr_tgs_no_bd = ['fecha1','fecha2','trabajador.ciudad','trabajador.finiquito','trabajador.horario'];
 
             $array_search = [];
             foreach ($start_tags_found as $key => $pos) {
@@ -65,14 +65,60 @@ if( $_POST ){
                             break;
                     }
                     $data = $db->getOne('m_'.$tag_DB_table,$tag_DB_field);
-                    $array_replace[] = $data[$tag_DB_field];
+                    $array_replace[$key] = $data[$tag_DB_field];
+                } else {
+
+                    switch ($clean_tag) {
+                        case 'fecha1':
+                            $array_replace[$key] = date('d-m-Y');
+                            break;
+
+                        case 'fecha2':
+                            $array_replace[$key] = date('d') . ' de ' . getNombreMes(date('n')) . ' de ' . date('Y');
+                            break;
+
+                        case 'trabajador.ciudad':
+                            $db->where('id',$trabajador_id);
+                            $db->where('empresa_id',$empresa_id);
+                            $data = $db->getOne('m_trabajador','comuna_id');
+                            $comuna_id = $data['comuna_id'];
+
+                            $db->where('id',$comuna_id);
+                            $comuna = $db->getOne('m_comuna','nombre');
+                            $array_replace[$key] = $comuna['nombre'];
+                            break;
+
+                        case 'trabajador.finiquito':
+                            $db->where('id',$trabajador_id); 
+                            $db->where('empresa_id',$empresa_id);
+                            $data = $db->getOne('m_trabajador','sueldoBase');
+
+                            $array_replace[$key] = $data['sueldoBase'];
+                            break;
+
+                        case 'trabajador.horario':
+                            $db->where('id',$trabajador_id); 
+                            $db->where('empresa_id',$empresa_id);
+                            $horario_id = $db->getValue('m_trabajador','horario_id');
+
+                            $db->where('id',$horario_id);
+                            $horario = $db->getValue('m_horario','nombre');
+                            $array_replace[$key] = $horario;
+                            break;
+
+                        
+                        default:
+                            # code...
+                            break;
+                    }
+
                 }
             }
              
             $pdf_output = str_replace( $array_search,$array_replace,$pdf_output );
         }
 
-
+       
         require_once( ROOT . '/libs/html2pdf/html2pdf.class.php');
         $html2pdf = new HTML2PDF('P','LETTER','es');
         $html2pdf->WriteHTML($pdf_output);        
