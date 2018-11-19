@@ -80,7 +80,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textoDocumento">Texto del Documento</label>
+                                    <label for="textoDocumento" class="pull-left">Texto del Documento</label>
+                                    <div class="clearfix"></div>
+                                    <a href="#" class="btn btn-default pull-left" data-toggle="modal" data-target="#modalMedia">
+                                      Imagen <i class="fa fa-image"></i>
+                                    </a>
                                     <div class="pull-right">
                                       <a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal"> <i class="fa fa-question-circle"></i> &nbsp; Ayuda Etiquetas</a>
                                     </div>
@@ -105,6 +109,7 @@
 
 
       <?php include 'modal_tags.php'; ?>
+      <?php include 'modal_media.php'; ?>
 
 
 

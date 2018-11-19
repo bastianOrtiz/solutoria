@@ -1,7 +1,4 @@
 <?php
-ini_set('error_reporting', E_ALL); 
-ini_set('display_errors', 1);
-
 if( $_POST ){
 
     if( $_POST['action'] == 'generar_documento' ){ 
@@ -26,7 +23,7 @@ if( $_POST ){
             $start_tags_found = strpos_recursive($string,$tag_ini);
             $end_tags_found = strpos_recursive($string,$tag_end);
 
-            $arr_tgs_no_bd = ['fecha1','fecha2','trabajador.ciudad','trabajador.finiquito','trabajador.horario'];
+            $arr_tgs_no_bd = ['fecha1','fecha2','trabajador.ciudad','trabajador.finiquito','trabajador.horario','trabajador.sueldoBase'];
 
             $array_search = [];
             foreach ($start_tags_found as $key => $pos) {
@@ -106,6 +103,14 @@ if( $_POST ){
                             $array_replace[$key] = $horario;
                             break;
 
+                        case 'trabajador.sueldoBase':
+                            $db->where('id',$trabajador_id); 
+                            $db->where('empresa_id',$empresa_id);
+                            $sueldo_base = $db->getValue('m_trabajador','sueldoBase');
+                            $sueldo_base = "$".number_format($sueldo_base,0,',','.');
+
+                            $array_replace[$key] = $sueldo_base;
+                            break;
                         
                         default:
                             # code...

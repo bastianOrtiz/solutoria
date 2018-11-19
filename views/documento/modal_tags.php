@@ -22,7 +22,7 @@
                       </td>
                   </tr>
                   <tr>
-                      <td><code>{{ empresa.razonSocial }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a> 
+                      <td><code>{{ empresa.razonSocial }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a> 
                       </td>
                       <td>
                           Razon social de la empresa en que pertenece el trabajador.
@@ -30,7 +30,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ empresa.rut }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ empresa.rut }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Rut de la empresa en que pertenece el trabajador.
@@ -38,7 +38,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ empresa.direccion }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ empresa.direccion }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Direccion de la empresa
@@ -46,7 +46,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ empresa.ciudad }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ empresa.ciudad }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Ciudad de la empresa.
@@ -68,9 +68,9 @@
                   </tr>
                   <tr>
                       <td>
-                            <code>{{ trabajador.nombres }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a><br>
-                            <code>{{ trabajador.apellidoPaterno }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a><br>
-                            <code>{{ trabajador.apellidoMaterno }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                            <code>{{ trabajador.nombres }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a><br>
+                            <code>{{ trabajador.apellidoPaterno }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a><br>
+                            <code>{{ trabajador.apellidoMaterno }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Variantes del Nombre del trabajador (nombre, apellido Paterno, apellido Materno) 
@@ -78,7 +78,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.rut }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.rut }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Rut del trabajador.
@@ -86,7 +86,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.direccion }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.direccion }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Dirección del trabajador.
@@ -94,7 +94,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.ciudad }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.ciudad }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Ciudad del trabajador.
@@ -102,7 +102,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.idNacionalidad }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.idNacionalidad }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Nacionalidad del trabajador
@@ -110,7 +110,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.fechaNacimiento }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.fechaNacimiento }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Fecha de nacimiento del trabajador en formato ej: 6 de Julio de 1990
@@ -118,7 +118,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.finiquito }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.finiquito }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Monto de finiquito del trabajador en formato $ ##.### (miles y pesos)
@@ -127,7 +127,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.estadoCivil }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.estadoCivil }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Estado civil del trabajador
@@ -135,7 +135,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.horario }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.horario }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Texto de titulo del horario del trabajador (para la impresión en contratos)
@@ -143,7 +143,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.sueldoBase }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.sueldoBase }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Monto de sueldo base del trabajador en formato $ ##.### (miles y pesos)
@@ -151,10 +151,11 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ trabajador.gratificacion }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ trabajador.gratificacion }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Monto de la gratificación del trabajador en formato $ ##.### (miles y pesos)
+                          <i class="fa fa-asterisk"></i>
                       </td>
                   </tr>
               </tbody>
@@ -173,7 +174,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ fecha1 }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ fecha1 }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Fecha del dia con formato dd-mm-yyyy EJ: 01-01-2018.
@@ -181,7 +182,7 @@
                   </tr>
                   <tr>
                       <td>
-                          <code>{{ fecha2 }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta al final del texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                          <code>{{ fecha2 }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
                       </td>
                       <td>
                           Fecha del día con formato “18 de Septiembre de 2018"
@@ -210,7 +211,6 @@ $(".btnAddTag").click(function(e){
     else{
         document.execCommand('insertHTML',false,tag);
     }
-    
 })
 
 </script>

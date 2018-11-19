@@ -16,7 +16,7 @@
 </style>    
 
 <div class="content-wrapper">
-    <form method="post">
+    <form method="post" target="_blank">
         <input type="hidden" name="action" value="generar_documento">
         <section class="content-header">
             <h1> Gestión de documentos Masivo </h1>
@@ -53,7 +53,13 @@
                                             </select>
                                         </div>
 
-
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <a href="#" id="selectAll" class="btn btn-default pull-right"> Seleccionar todos <i class="fa fa-check-square"></i> </a>
+                                                <br class="clearfix">
+                                                <br class="clearfix">
+                                            </div>
+                                        </div>
                                         <table id="seleccionTrabajadores" class="table table-bordered">
                                             <thead>
                                                 <tr>
@@ -113,127 +119,11 @@ $("select").change(function(){
     $(this).parent().find('label').find('small').remove();
 })
 
-$("#frmCrearHaber").submit(function(e){
-    e.preventDefault();
-    error = 0;
-    $("#frmCrearHaber .required").each(function(){
-        if( $(this).val() == "" ){
-            if( !$(this).parent().hasClass('has-error') ){
-                $(this).parent().addClass('has-error');
-                $(this).parent().find('label').append(' <small>(Este campo es requerido)</small>');
-            }
-            error++;
-        }
-    })    
-    if( error == 0 ){
-        $(".overlayer").show();
-        $("#frmCrearHaber")[0].submit();
-    }
-})
-
-$("#frmCrearDescuento").submit(function(e){
-    e.preventDefault();
-    error = 0;
-    $("#frmCrearDescuento .required").each(function(){
-        if( $(this).val() == "" ){
-            if( !$(this).parent().hasClass('has-error') ){
-                $(this).parent().addClass('has-error');
-                $(this).parent().find('label').append(' <small>(Este campo es requerido)</small>');
-            }
-            error++;
-        }
-    })    
-    if( error == 0 ){
-        $(".overlayer").show();
-        $("#frmCrearDescuento")[0].submit();
-    }
-})
-
-$(".checkbox.parent input[type=checkbox]").click(function(){
-    var rel = $(this).attr('rel');
-    if( $(this).prop('checked') == true ){
-        $(".checkbox.hijos_" + rel).slideDown();
-        $(".checkbox.hijos_" + rel + " input[type=checkbox]").prop('checked',true);
-    } else {
-        $(".checkbox.hijos_" + rel).slideUp();
-        $(".checkbox.hijos_" + rel + " input[type=checkbox]").prop('checked',false);
-    }
-})
-       
-$("#haberTrabajador").change(function(){
-    var opt_data =  $('option:selected', this).data() ;        
-    if( ( opt_data.fijo == 1 ) || ( $(this).val() == "" ) ){
-        $("#haber_cuotas").slideUp(200);
-        $("#cuotaActualHaberTrabajador").removeClass('required');
-        $("#totalCuotasHaberTrabajador").removeClass('required');
-    } else {
-        $("#haber_cuotas").slideDown(200);
-        $("#cuotaActualHaberTrabajador").addClass('required');
-        $("#totalCuotasHaberTrabajador").addClass('required');
-    }
-    
-    if( opt_data.predet == 1 ){
-        $("#valorHaberTrabajador").val( opt_data.valor );
-        $("#tipoMonedaHaber").val( opt_data.tipo_moneda )
-    } else {
-        $("#valorHaberTrabajador").val('');
-        $("#tipoMonedaHaber").val('');
-    }
-})
-
-       
-$("#descuentoTrabajador").change(function(){
-    var opt_data =  $('option:selected', this).data() ;
-    console.log( opt_data );        
-    if( ( opt_data.fijo == 1 ) || ( $(this).val() == "" ) ){
-        $("#descuento_cuotas").slideUp(200);
-        $("#cuotaActualDescuentoTrabajador").removeClass('required');
-        $("#totalCuotasDescuentoTrabajador").removeClass('required');
-    } else {
-        $("#descuento_cuotas").slideDown(200);
-        $("#cuotaActualDescuentoTrabajador").addClass('required');
-        $("#totalCuotasDescuentoTrabajador").addClass('required');
-    }
-    
-    if( opt_data.predet == 1 ){
-        $("#valorDescuentoTrabajador").val( opt_data.valor );
-        $("#tipoMonedaDescuento").val( opt_data.tipo_moneda )
-    } else {
-        $("#valorDescuentoTrabajador").val('');
-        $("#tipoMonedaDescuento").val('');
-    }
-})       
 
 $(document).ready(function(){
-    
-    $(".btnIngresarAnticipo").click(function(){
-        if( ( $("#montoAnticipoMasivo").val() == "" ) || ( isNaN($("#montoAnticipoMasivo").val()) ) ){
-            alert("Debe ingresar un valor numerico en el monto");
-            return false;
-        } else {
-            oTable.fnFilter('');
-            $("#frmCrearAnticipo")[0].submit();    
-        }
+    $("#selectAll").click(function(){
+        $("#seleccionTrabajadores input").prop('checked',true);
     })
-
-    
-    $(function () {        
-        oTable = $('#seleccionTrabajadores').dataTable({
-            "bPaginate": false,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bSort": false,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "pageLength": 999
-        });
-    });  
-    
-    if( window.location.hash.length > 0 ){
-        hash = window.location.hash;
-        hash = hash.replace("#","");
-        $(".nav-tabs a[href=#" + hash + "]").click();
-    }
 })
 
 $(window).load(function(){
