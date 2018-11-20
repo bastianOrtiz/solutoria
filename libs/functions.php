@@ -1264,6 +1264,16 @@ function mainMenu(){
                 'entidad' => 'costoempresa',
                 'accion' => 'ingresar',
                 'label' => 'Costos Empresa'
+            ),
+            array(
+                'entidad' => 'documento',
+                'accion' => 'listar',
+                'label' => 'Redacción de Documentos'
+            ),
+            array(
+                'entidad' => 'gestion_masiva_documento',
+                'accion' => 'dashboard',
+                'label' => 'Gestion Masiva Documento'
             )
         )
     );

@@ -1,5 +1,19 @@
 <?php
+include ROOT . '/models/liquidacion.php';
 if( $_POST ){
+
+    if( $_POST['action'] == 'finiquitos' ){
+        foreach ($_POST['finiquito'] as $trabajador_id => $value) {
+            $data_upd = ['finiquito'=>$value];
+            $db->where('empresa_id',$_SESSION[PREFIX."login_eid"]);
+            $db->where('id',$trabajador_id);
+            $db->update('m_trabajador',$data_upd);
+        }
+
+        $response = encrypt('status=success&mensaje=Los registros se han editado correctamente&id=');
+        redirect(BASE_URL . '/' . $entity . '/finiquitos/response/' . $response );
+        exit();
+    }
 
     if( $_POST['action'] == 'generar_documento' ){ 
 
@@ -23,7 +37,7 @@ if( $_POST ){
             $start_tags_found = strpos_recursive($string,$tag_ini);
             $end_tags_found = strpos_recursive($string,$tag_end);
 
-            $arr_tgs_no_bd = ['fecha1','fecha2','trabajador.ciudad','trabajador.finiquito','trabajador.horario','trabajador.sueldoBase'];
+            $arr_tgs_no_bd = ['fecha1','fecha2','trabajador.ciudad','trabajador.finiquito','trabajador.horario','trabajador.sueldoBase','trabajador.sueldoBase','trabajador.gratificacion'];
 
             $array_search = [];
             foreach ($start_tags_found as $key => $pos) {
@@ -111,9 +125,17 @@ if( $_POST ){
 
                             $array_replace[$key] = $sueldo_base;
                             break;
+
+                        case 'trabajador.gratificacion':
+                            if( gratificacion( $trabajador_id ) ){
+                                $gratificacion = calcularGratificacion(0);
+                            } else {
+                                $gratificacion = 0;
+                            }
+                            $array_replace[$key] = "$" . number_format($gratificacion,0,',','.');
+                            break;
                         
                         default:
-                            # code...
                             break;
                     }
 
