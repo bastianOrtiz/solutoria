@@ -18,7 +18,21 @@ if( $_SESSION[PREFIX.'is_trabajador'] ){
     $ultima_liquidacion = $db->getOne('liquidacion');
 
     $limite_mostrar = getLimiteMes(date('n'));
+    $dateJ = (date('j'));
 
+    $str_Date = strtotime(date('Y-m-'.$limite_mostrar));
+
+    $diaMes =  date('D',$str_Date);
+
+
+    if( $diaMes == 'Sat' ){
+        $limite_mostrar--;
+    }
+
+    if( $diaMes == 'Sun' ){
+        $limite_mostrar--;
+        $limite_mostrar--;
+    }
 
     $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
     $db->orderBy('ano','DESC');

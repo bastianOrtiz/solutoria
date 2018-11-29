@@ -842,7 +842,7 @@ function getComparte($entidad){
 
 /**
  * Retorna tru o false si la fecha pasada por parametro es un dia feriado   
- * @param (date) $fecha Fecha
+ * @param (date) $fecha Fecha en formato Y-m-d
  * @return (boolean) Tru o False si la fecha es feriado  
  */
 function trabajoDiaFeriado($fecha){
