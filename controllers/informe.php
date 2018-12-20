@@ -238,6 +238,74 @@ if( $_POST ){
         //show_array($arr_fechas_x_trab);
     }
 
+
+    if( $action == "reporte_atrasos_mensual" ){
+        //Obtener umbral
+
+        $fechaInicio = strtotime('01-'. $mesAtraso .'-' . $anoAtraso . ' 00:00:00');
+        $fechaFin = strtotime( getLimiteMes($mesAtraso) . $mesAtraso .'-' . $anoAtraso . ' 23:59:59');
+
+        for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+            $fecha_iterar = date("Y-m-d", $i);
+            $dia_semana = date("N", $i);
+            if( $dia_semana < 6 ){
+                $arr_fechas[] = $fecha_iterar;
+            }
+        }
+
+
+        $str_IN = "";
+        foreach($_POST['trabajadorAtraso'] as $key => $ch){
+            $str_IN .= $key . ",";
+        }
+        $str_IN = trim($str_IN,",");
+
+        $sql_trabajadores = "SELECT * FROM m_trabajador where id IN ($str_IN) ORDER BY apellidoPaterno ASC";
+        $trabajadores = $db->rawQuery($sql_trabajadores);
+
+        $arr_fechas_x_trab = array();
+        foreach ($trabajadores as $key => $trabajador) {
+            
+            //Obtener horario de entrda del trabajador
+            $db->where('id',$trabajador['horario_id']);
+            $entrada = $db->getValue('m_horario','entradaTrabajo');
+            $entrada = strtotime($entrada);
+            
+            $arr_fechas_x_trab[$trabajador['id']]['nombre'] = $trabajador['apellidoPaterno']." ".$trabajador['apellidoMaterno']." ".$trabajador['nombres'];
+            foreach ($arr_fechas as $k => $f) {
+                $subsql = "
+                SELECT * FROM `m_relojcontrol` 
+                WHERE userid = ". $trabajador['relojcontrol_id'] ." 
+                AND checktime BETWEEN '$f 00:00:00' AND '$f 13:30:00'
+                ORDER BY checktime ASC
+                LIMIT 1
+                ";
+                $subresult = $db->rawQuery($subsql);
+                if( $subresult ){
+                    $subresult = $subresult[0];
+                    $hora_bd = strtotime($subresult['checktime']);
+                    $hora_marcada = date('H:i',$hora_bd);
+                    $atraso = false;
+                    
+                    if( strtotime($hora_marcada) > $entrada ){
+                        $atraso = true;
+                    }
+                } else {
+                    $hora_marcada = "";
+                    $atraso = true;
+                }
+
+
+                $arr_fechas_x_trab[$trabajador['id']]['fechas'][$f] = array(
+                    'hora_marcada' => $hora_marcada,
+                    'atraso' => $atraso
+                );
+            }
+        }
+        //show_array($arr_fechas_x_trab);
+    }
+
+
     if( $action == 'ausencias' ){
         
         $sql_ausencia = "
