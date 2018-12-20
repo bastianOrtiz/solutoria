@@ -1300,6 +1300,11 @@ function mainMenu(){
             ),
             array(
                 'entidad' => 'informe',
+                'accion' => 'atrasos_mensual',
+                'label' => 'Reporte de Atrasos x mes'
+            ),
+            array(
+                'entidad' => 'informe',
                 'accion' => 'personalizado',
                 'label' => 'Informe Personalizado'
             ),

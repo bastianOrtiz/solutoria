@@ -15,23 +15,41 @@
     </section>
                 
     <section class="content">
-        <form role="form" id="frmVerAtrasos" method="post">
-            <input type="hidden" name="action" id="action" value="atrasos_view" />
+        <form role="form" id="frmVerAtrasosMensual" method="post">
+            <input type="hidden" name="action" id="action" value="reporte_atrasos_mensual" />
             <div class="row">
                 <div class="col-md-12">                                      
                     <div class="box">
                         <div class="box-body">
                             <div class="col-md-12">
                                 <div class="row">
+                                    <?php if($_POST): ?>
+                                        <div class="small-box bg-green">
+                                            <div class="inner">
+                                              <h3 style="font-size: 80px"><?php echo $tot_global_atrasos; ?></h3>
+                                              <p>Atrasos en el mes de <strong><?php echo getNombreMes($mesAtraso) ?></strong> de <?php echo ($anoAtraso) ?> </p>
+                                            </div>
+                                            <div class="icon">
+                                              <i class="ion ion-stats-bars"></i>
+                                            </div>
+                                            <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/atrasos" class="small-box-footer">Obtener informe detallado por dia <i class="fa fa-arrow-circle-right"></i></a>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/atrasos_mensual" class="btn btn-primary pull-left"> <i class="fa fa-chevron-left"></i> Volver</a>
+                                            </div>
+                                        </div>
+                                    <?php else: ?>
                                     <div class="col-lg-4">
                                         <div class="input-group input-group-lg">
+                                            <input type="hidden" name="mesAtraso" class="hdnValue">
                                             <div class="input-group-btn">
-                                              <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Seleccione mes
+                                              <button type="button" class="btn btn-warning" data-toggle="dropdown">Seleccione mes
                                                 <span class="fa fa-caret-down"></span></button>
-                                              <ul class="dropdown-menu">
+                                              <ul class="dropdown-menu" id="cboMes">
                                                 <li><a href="#">Seleccione mes</a></li>
                                                 <?php for($i=1;$i<=12;$i++){ ?>
-                                                <li><a href="#"> <?php echo getNombreMes($i) ?> </a></li>
+                                                <li><a href="#" data-val="<?php echo $i ?>"> <?php echo getNombreMes($i) ?> </a></li>
                                                 <?php } ?>
                                               </ul>
                                             </div>
@@ -39,21 +57,23 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="input-group input-group-lg">
+                                            <input type="hidden" name="anoAtraso" class="hdnValue">
                                             <div class="input-group-btn">
-                                              <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Seleccione Año
+                                              <button type="button" class="btn btn-warning" data-toggle="dropdown">Seleccione Año
                                                 <span class="fa fa-caret-down"></span></button>
-                                              <ul class="dropdown-menu">
-                                                <li><a href="#">Seleccione Año</a></li>
-                                                <?php for($i=date('Y');$i>=2015;$i--){ ?>
-                                                <li><a href="#"> <?php echo $i ?> </a></li>
-                                                <?php } ?>
-                                              </ul>
+                                                  <ul class="dropdown-menu" id="cboAno">
+                                                    <li><a href="#">Seleccione Año</a></li>
+                                                    <?php for($i=date('Y');$i>=2015;$i--){ ?>
+                                                    <li><a href="#" data-val="<?php echo $i ?>"> <?php echo $i ?> </a></li>
+                                                    <?php } ?>
+                                                  </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <button class="btn btn-primary btn-lg">Enviar</button>
                                     </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>         
 
@@ -68,98 +88,32 @@
 </div><!-- /.content-wrapper -->
       
 <script>
-
-$("input").keydown(function(){
-    $(this).parent().removeClass('has-error');
-    $(this).parent().find('label').find('small').remove();
-})
-$("select").change(function(){
-    $(this).parent().removeClass('has-error');
-    $(this).parent().find('label').find('small').remove();
-})
-
-
 $(document).ready(function(){    
-    
-    $(".btnCartaAmonestacion").click(function(e){
+   
+    $(".dropdown-menu a").click(function(e){
         e.preventDefault();
-        id = $(this).attr('href');
-        $.ajax({
-			type: "POST",
-			url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
-			data: "id="+id+"&action=generate_carta",
-            dataType: 'json',
-            beforeSend: function(){                
-            },
-			success: function (json) {
-			     window.open('<?php echo BASE_URL; ?>/private/carta.php?id=' + json.id);
+        var txt = $(this).text();
+        var val = $(this).data('val');
+        $(this).closest('.input-group-btn').find('button.btn').html(txt + '<span class="fa fa-caret-down"></span>');
+        $(this).closest('.input-group').find('.hdnValue').val(val);
+    })
+
+    $("#frmVerAtrasosMensual").submit(function(e){
+        e.preventDefault();
+        err=0;
+        $(".hdnValue").each(function(){
+            if($(this).val()==""){
+                err++;
             }
-		})
-    })
-    
-    $(".check_employee").click(function(){
-        $("#check_all").prop('checked',false);
-    })
-    
-    $("#check_all").click(function(){
-        if( $(this).prop('checked') == true ){
-            $(".check_employee").prop('checked',true);
+        })
+        if( err == 0 ){
+            $("#frmVerAtrasosMensual")[0].submit();
         } else {
-            $(".check_employee").prop('checked',false);
+            alert('Seleccione mes y Año');
+            return false;
         }
     })
-    
-    $(".datepicker").datepicker({
-        startView : 'year',
-        autoclose : true,
-        format : 'yyyy-mm-dd'
-    });
-    
-    
-    $(".btnEnviar").click(function(){
-        if( $(".check_employee:checked").length == 0 ){
-            alert("Debe seleccionar al menos 1 trabajador");
-            return;
-        } else {
-            oTable.fnFilter('');
-            $("#frmVerAtrasos")[0].submit();
-        }
-    })
-    
-    $(".btnImprimir").click(function(){
-        $("#action").val('atrasos');
-        $("#frmVerAtrasos").attr('target','_blank');
-        $("#frmVerAtrasos")[0].submit();        
-    })
-    
-    $(".btnExcel").click(function(){
-        $("#action").val('atrasos_excel');
-        $("#frmVerAtrasos").attr('target','_blank');
-        $("#frmVerAtrasos")[0].submit();        
-    })
-    
-    $(function () {        
-        oTable = $('#seleccionTrabajadores').dataTable({
-            "bPaginate": false,
-            "bLengthChange": false,
-            "bFilter": true,
-            "bSort": false,
-            "bInfo": false,
-            "bAutoWidth": false,
-            "pageLength": 999
-        });
-    }); 
-    
-    $('#table_list_atrasos').dataTable({
-        "bPaginate": false,
-        "bLengthChange": false,
-        "bFilter": true,
-        "bSort": false,
-        "bInfo": false,
-        "bAutoWidth": false,
-        "pageLength": 999
-    });
-             
+
 })
 
             

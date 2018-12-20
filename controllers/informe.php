@@ -2,6 +2,8 @@
 @extract($_POST);
 $db->orderBy('apellidoPaterno','ASC');
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+$db->where('tipocontrato_id',array(3,4),'NOT IN');
+$db->where('marcaTarjeta',1);
 @$trabajadores_todos = $db->get('m_trabajador');
 
 if( $_POST ){        
@@ -241,68 +243,55 @@ if( $_POST ){
 
     if( $action == "reporte_atrasos_mensual" ){
         //Obtener umbral
+        $fechaInicio = strtotime('01-'. leadZero($mesAtraso) .'-' . $anoAtraso . ' 00:00:00');
+        $fechaFin = strtotime( getLimiteMes($mesAtraso) . '-' . leadZero($mesAtraso) .'-' . $anoAtraso . ' 23:59:59');
 
-        $fechaInicio = strtotime('01-'. $mesAtraso .'-' . $anoAtraso . ' 00:00:00');
-        $fechaFin = strtotime( getLimiteMes($mesAtraso) . $mesAtraso .'-' . $anoAtraso . ' 23:59:59');
+        $tot_global_atrasos = 0;
 
-        for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
-            $fecha_iterar = date("Y-m-d", $i);
-            $dia_semana = date("N", $i);
-            if( $dia_semana < 6 ){
-                $arr_fechas[] = $fecha_iterar;
-            }
+        $db->where("id",$_SESSION[PREFIX.'login_eid']);
+        $umbral = $db->getValue('m_empresa','umbralRelojControl');            
+        
+        $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+        $db->where('tipocontrato_id',array(3,4),'NOT IN');
+        $db->where('marcaTarjeta',1);
+        $trabajadorAtraso = $db->get ("m_trabajador", null,'id');
+
+        $arr_ids_trabajadores = "(";
+        foreach( $trabajadorAtraso as $key => $t ){
+            $arr_ids_trabajadores .= $t['id'].',';
         }
+        $arr_ids_trabajadores = trim($arr_ids_trabajadores,",");
+        $arr_ids_trabajadores .= ")";
 
-
-        $str_IN = "";
-        foreach($_POST['trabajadorAtraso'] as $key => $ch){
-            $str_IN .= $key . ",";
-        }
-        $str_IN = trim($str_IN,",");
-
-        $sql_trabajadores = "SELECT * FROM m_trabajador where id IN ($str_IN) ORDER BY apellidoPaterno ASC";
-        $trabajadores = $db->rawQuery($sql_trabajadores);
-
-        $arr_fechas_x_trab = array();
-        foreach ($trabajadores as $key => $trabajador) {
+        for($i=$fechaInicio; $i<=$fechaFin; $i+=86400) {
+            $fechaConsultar = date('Y-m-d',$i);
+            $sql = "
+            SELECT T.id, CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, T.horario_id, R.checktime, R.checktype 
+            FROM m_trabajador T, m_relojcontrol R 
+            WHERE T.relojcontrol_id = R.userid 
+            AND R.checktime LIKE '$fechaConsultar%'        
+            AND time( checktime ) < '$umbral'
+            AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
+            AND T.marcaTarjeta = 1
+            AND T.id IN $arr_ids_trabajadores
+            ORDER BY T.apellidoPaterno ASC      
+            ";      
+            $res_IN = $db->rawQuery($sql);
             
-            //Obtener horario de entrda del trabajador
-            $db->where('id',$trabajador['horario_id']);
-            $entrada = $db->getValue('m_horario','entradaTrabajo');
-            $entrada = strtotime($entrada);
-            
-            $arr_fechas_x_trab[$trabajador['id']]['nombre'] = $trabajador['apellidoPaterno']." ".$trabajador['apellidoMaterno']." ".$trabajador['nombres'];
-            foreach ($arr_fechas as $k => $f) {
-                $subsql = "
-                SELECT * FROM `m_relojcontrol` 
-                WHERE userid = ". $trabajador['relojcontrol_id'] ." 
-                AND checktime BETWEEN '$f 00:00:00' AND '$f 13:30:00'
-                ORDER BY checktime ASC
-                LIMIT 1
-                ";
-                $subresult = $db->rawQuery($subsql);
-                if( $subresult ){
-                    $subresult = $subresult[0];
-                    $hora_bd = strtotime($subresult['checktime']);
-                    $hora_marcada = date('H:i',$hora_bd);
-                    $atraso = false;
-                    
-                    if( strtotime($hora_marcada) > $entrada ){
-                        $atraso = true;
-                    }
-                } else {
-                    $hora_marcada = "";
-                    $atraso = true;
+            foreach( $res_IN as $row ){ 
+                $db->where('id',$row['horario_id']);
+                $horario_entrada_db = $db->getValue('m_horario','entradaTrabajo');
+                
+                $arr_checktime = explode(" ",$row['checktime']);    
+                $horario_entrada_marcado = $arr_checktime[1]; 
+                
+                if( marcoAtrasado( $row['id'], $row['horario_id'], $row['checktime'] ) ){
+                    $tot_global_atrasos++;
                 }
-
-
-                $arr_fechas_x_trab[$trabajador['id']]['fechas'][$f] = array(
-                    'hora_marcada' => $hora_marcada,
-                    'atraso' => $atraso
-                );
             }
-        }
-        //show_array($arr_fechas_x_trab);
+        }    
+        
+        $tot_global_atrasos;
     }
 
 
@@ -698,13 +687,13 @@ if( $_POST ){
         $db->where("id",$_SESSION[PREFIX.'login_eid']);
         $umbral = $db->getValue('m_empresa','umbralRelojControl');            
         
+
         $arr_ids_trabajadores = "(";
         foreach( $trabajadorAtraso as $key => $t ){
             $arr_ids_trabajadores .= $key.',';
         }
         $arr_ids_trabajadores = trim($arr_ids_trabajadores,",");
         $arr_ids_trabajadores .= ")";
-                
         
         $sql = "
         SELECT T.id, CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, T.horario_id, R.checktime, R.checktype 
@@ -742,6 +731,7 @@ if( $_POST ){
         $html .= '</thead>';
         
         $html .= '<tbody>';
+        $total = 0;
         foreach( $res_IN as $row ){ 
             $db->where('id',$row['horario_id']);
             $horario_entrada_db = $db->getValue('m_horario','entradaTrabajo');
@@ -756,9 +746,13 @@ if( $_POST ){
                 $html .= '  <td> '. $horario_entrada_marcado .' </td>';
                 $html .= '  <td> <a href="#'. base64_encode(base64_encode($row['id'])) .'" class="btn btn-flat btn-default btn-xs btnCartaAmonestacion" title="Generar Carta de amonestación"> <i class="fa fa-file-text"></i> </a> </td>';
                 $html .= '</tr>';
+                $total++;
             }
         }
         $html .= '</tbody>';
+        $html .= '<tfoot>';
+        $html .= '  <tr><td colspan="4"><strong>Total: '.$total.'</strong></td></tr>';
+        $html .= '</tfoot>';
                 
         $html .= '</table>';
         $html .= '</page>'; 
@@ -781,11 +775,13 @@ if( $_POST ){
     
     $array_informes_NOT_pdf = array(
         'atrasos_view',
+        'reporte_atrasos_mensual',
         'remuneraciones-ccosto',
         'ausencias_trabajador',
         'ausencias',
         'certificado_sueldos',
         'reporte_atrasos'
+
     ); // Informes que NO se imprimen en PDF
     
     if(!in_array($action,$array_informes_NOT_pdf)){
