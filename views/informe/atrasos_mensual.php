@@ -101,6 +101,7 @@ $(document).ready(function(){
     $("#frmVerAtrasosMensual").submit(function(e){
         e.preventDefault();
         err=0;
+        $(".overlayer").show();
         $(".hdnValue").each(function(){
             if($(this).val()==""){
                 err++;
@@ -110,6 +111,7 @@ $(document).ready(function(){
             $("#frmVerAtrasosMensual")[0].submit();
         } else {
             alert('Seleccione mes y Año');
+            $(".overlayer").hide();
             return false;
         }
     })
