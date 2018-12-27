@@ -591,12 +591,12 @@ if( isset($parametros[1]) ){
         SELECT * FROM t_descuento 
         WHERE trabajador_id=$trabajador_id 
         AND activo = 1 
-        AND descuento_id != " . ID_ANTICIPO . " 
+        AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
         OR
             (
             activo = 0 and fechaFinalizacion = '". leadZero($mes) ."-$year' 
             AND trabajador_id = $trabajador_id 
-            AND descuento_id != " . ID_ANTICIPO . "
+            AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
             )  
         ORDER BY mesInicio DESC ";
     $debes_trabajador = $db->rawQuery( $query_desc );
@@ -616,10 +616,10 @@ if( isset($parametros[1]) ){
     SELECT * FROM `t_descuento` 
     WHERE trabajador_id = $trabajador_id 
     AND activo = 1 
-    AND descuento_id = " . ID_ANTICIPO ."  
-    OR ((activo = 0 and fechaFinalizacion = '".leadZero($mes)."-$year') and trabajador_id = $trabajador_id AND descuento_id = " . ID_ANTICIPO ." ) 
+    AND descuento_id IN (select id from m_descuento where mostrarAbajo = 1)
+    OR ((activo = 0 and fechaFinalizacion = '".leadZero($mes)."-$year') and trabajador_id = $trabajador_id AND descuento_id IN (select id from m_descuento where mostrarAbajo = 1) ) 
     ORDER BY id DESC";                
-    $anticipos = $db->rawQuery( $sql_anticipo );    
+    $anticipos = $db->rawQuery( $sql_anticipo );
     
     if( $anticipos ){
         foreach( $anticipos as $a ){

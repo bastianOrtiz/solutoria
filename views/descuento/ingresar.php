@@ -87,6 +87,27 @@
                             <option value="1">Activo</option>
                             <option value="0">Inactivo</option>                            
                           </select>
+                        </div>  
+
+
+                        <br>
+                        <br>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label for="mostrarAbajoDescuento">¿Es Anticipo? (Mostrar abajo de la liquidación)</label>
+                                    <select class="form-control required" name="mostrarAbajoDescuento" id="mostrarAbajoDescuento">
+                                        <option value="0">NO</option>
+                                        <option value="1">SI</option>                            
+                                    </select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="<?php echo BASE_URL ?>/public/img/anticipo.png" target="_blank">
+                                        <img src="<?php echo BASE_URL ?>/public/img/anticipo.png" class="img-responsive">
+                                    </a>
+                                </div>
+                            </div>
                         </div>                        
                         
                       </div><!-- /.box-body -->

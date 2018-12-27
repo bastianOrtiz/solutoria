@@ -20,7 +20,8 @@ if( $_POST ){
             "tipomoneda_id" => $tipoMonedaDescuento,
             "valor" => $valorDescuento,            
             "activo" => $activoDescuento,
-            "empresa_id" => $_SESSION[PREFIX.'login_eid']
+            "empresa_id" => $_SESSION[PREFIX.'login_eid'],
+            "mostrarAbajo" => $mostrarAbajoDescuento
         );
 
         if( editarDescuento($descuento_id, $data) ){
@@ -58,7 +59,8 @@ if( $_POST ){
             "tipomoneda_id" => $tipoMonedaDescuento,
             "valor" => $valorDescuento,            
             "activo" => $activoDescuento,
-            "empresa_id" => $_SESSION[PREFIX.'login_eid']
+            "empresa_id" => $_SESSION[PREFIX.'login_eid'],
+            "mostrarAbajo" => $mostrarAbajoDescuento
         );
         
         $create_id = crearDescuento($data);
