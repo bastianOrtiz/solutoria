@@ -274,6 +274,7 @@ if( $_POST ){
             AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
             AND T.marcaTarjeta = 1
             AND T.id IN $arr_ids_trabajadores
+            GROUP by T.id, nombre, T.horario_id, R.checktime, R.checktype
             ORDER BY T.apellidoPaterno ASC      
             ";      
             $res_IN = $db->rawQuery($sql);
@@ -704,8 +705,10 @@ if( $_POST ){
         AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
         AND T.marcaTarjeta = 1
         AND T.id IN $arr_ids_trabajadores
+        GROUP BY T.id, nombre, T.horario_id, R.checktime, R.checktype
         ORDER BY T.apellidoPaterno ASC      
-        ";        
+        ";  
+
         $res_IN = $db->rawQuery($sql);
         
         $html = '<style type="text/css">';
@@ -756,7 +759,8 @@ if( $_POST ){
                 
         $html .= '</table>';
         $html .= '</page>'; 
-        
+
+
         if( $_POST['action'] == 'atrasos_view' ){
             $_POST['html'] = $html;
         }                
