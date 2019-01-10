@@ -624,7 +624,6 @@ if( $_POST ){
 
     
     if( @$action == 'impuesto' ){
-        $mostrarZero = $mostrarZero[0];
         $mes = $mesImpuesto;
         $ano = $anoImpuesto;
         $empresa_id = $_SESSION[PREFIX.'login_eid'];
@@ -644,11 +643,11 @@ if( $_POST ){
         AND T.id NOT IN (936)
         ";
 
-        if( !@$mostrarZero )
+        if( !@$_POST['mostrarZero'] ){
             $sql_impuesto .= " AND L.$tipoImpuesto > 0 ";
+        }
                 
         $sql_impuesto .= " ORDER BY T.apellidoPaterno ASC ";
-        
         
         $impuestos_list = $db->rawQuery( $sql_impuesto );        
         
@@ -681,6 +680,9 @@ if( $_POST ){
         
         $html .= '</table>';
         $html .= '</page>'; 
+
+
+        $orientation = 'L';
                     
     }
     
