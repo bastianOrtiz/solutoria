@@ -1,10 +1,18 @@
 <?php
 @extract($_POST);
+
 $db->orderBy('apellidoPaterno','ASC');
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $db->where('tipocontrato_id',array(3,4),'NOT IN');
 $db->where('marcaTarjeta',1);
 @$trabajadores_todos = $db->get('m_trabajador');
+
+
+$db->orderBy('apellidoPaterno','ASC');
+$db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+$db->where('tipocontrato_id',array(3,4),'NOT IN');
+$trabajadores_todos_cert_sueldos = $db->get('m_trabajador');    
+
 
 if( $_POST ){        
         
@@ -21,7 +29,9 @@ if( $_POST ){
             'col7' => 0,
             'col8' => 0,
             'col9' => 0
-        );                
+        );   
+
+                 
     }
 
     if( $action == 'certificado_sueldos_print' ){

@@ -43,7 +43,7 @@ tfoot td{
                 </div>
                 <div class="box">
                     <div class="box-body table-responsive">                
-                    <?php if( $trabajadores_todos ){ ?>
+                    <?php if( $trabajadores_todos_cert_sueldos ){ ?>
                       <table id="trabajadores_list" class="table table-bordered table-striped">
                             <thead>
                               <tr>
@@ -56,7 +56,7 @@ tfoot td{
                               </tr>
                             </thead>
                             <tbody>
-                                <?php foreach( $trabajadores_todos as $reg ){ ?>
+                                <?php foreach( $trabajadores_todos_cert_sueldos as $reg ){ ?>
                                     <tr>
                                         <td> <?php echo $reg['id']?> </td>
                                         <td style="text-transform: uppercase;"> <?php echo ucfirst(strtolower($reg['apellidoPaterno'])) ?> <?php echo $reg['apellidoMaterno'] ?> <?php echo $reg['nombres'] ?>   </td>
