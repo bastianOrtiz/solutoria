@@ -50,7 +50,10 @@ show_array( $db->getLastQuery() );
 */
 
 if($_SESSION[PREFIX.'is_jefe']){ 
-    $sql_trabajadores_x_cargo = "SELECT * from m_trabajador T WHERE T.cargo_id IN " . $str_IN . "  AND T.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
+    $sql_trabajadores_x_cargo = "SELECT * from m_trabajador T WHERE T.cargo_id IN " . $str_IN;
+    if( $_SESSION[PREFIX.'login_uid'] != 151 ){
+        $sql_trabajadores_x_cargo .= "  AND T.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
+    }
     $trabajadores_x_cargo = $db->rawQuery( $sql_trabajadores_x_cargo );
 }
 if( $_POST ){
