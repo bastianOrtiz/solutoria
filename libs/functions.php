@@ -876,6 +876,7 @@ function isDiaFeriado($fecha){
 
 function getAnoMostrarCorte(){
     global $db;    
+    
     if( getMesMostrarCorte() > (int)date('m') ){
         $year = ( date('Y') - 1 );
     } else {

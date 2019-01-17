@@ -517,10 +517,9 @@ if( $parametros ){
         WHERE trabajador_id=$trabajador_id 
         AND fechaInicio <= '$ano-$mes-$max_days'
         AND activo =1 or
-        (activo = 0 and fechaFinalizacion = '".leadZero($mes)."-$year' and trabajador_id=$trabajador_id AND trabajador_id=$trabajador_id)  ORDER BY mesInicio DESC ";
-    
-        $haberes_trabajador = $db->rawQuery( $query_habers,'',false );             
-        
+        (activo = 0 and fechaFinalizacion = '".leadZero($mes)."-$year' AND trabajador_id=$trabajador_id)  ORDER BY mesInicio DESC ";
+        $haberes_trabajador = $db->rawQuery( $query_habers,'',false );
+
         $periodo = getPeriodoCorte();        
         $desde = $periodo['desde'].' 00:00:00';
         $hasta = $periodo['hasta'].' 23:59:59';
