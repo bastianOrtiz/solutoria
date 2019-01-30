@@ -10,8 +10,7 @@ $db->where('marcaTarjeta',1);
 
 $db->orderBy('apellidoPaterno','ASC');
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
-$db->where('tipocontrato_id',array(3,4),'NOT IN');
-$trabajadores_todos_cert_sueldos = $db->get('m_trabajador');    
+$trabajadores_todos_cert_sueldos = $db->get('m_trabajador');
 
 
 if( $_POST ){        

@@ -57,7 +57,7 @@ tfoot td{
                             </thead>
                             <tbody>
                                 <?php foreach( $trabajadores_todos_cert_sueldos as $reg ){ ?>
-                                    <tr>
+                                    <tr data-tr-id="<?php echo $reg['id']?>">
                                         <td> <?php echo $reg['id']?> </td>
                                         <td style="text-transform: uppercase;"> <?php echo ucfirst(strtolower($reg['apellidoPaterno'])) ?> <?php echo $reg['apellidoMaterno'] ?> <?php echo $reg['nombres'] ?>   </td>
                                         <td> <?php echo $reg['rut']?> </td>
@@ -199,6 +199,26 @@ function recalcularRentaNoGravada(factor, renta){
 }
 
 $(document).ready(function(){
+
+    $(".cbo_liq").change(function(){
+        year = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+            data: "year="+year+"&action=select_year",
+            dataType: 'json',
+            beforeSend: function(){
+                $(".overlayer").fadeIn(500);
+            },
+            success: function (json) {
+                $("#trabajadores_list tbody tr").show(200);
+                $.each(json, function(k,v){
+                    $("[data-tr-id="+v.id+"]").hide(500);
+                })
+                $(".overlayer").fadeOut(500);
+            }
+        })
+    })
 
     $(".txtCol9").focus(function(){
         $(this).val( $(this).val().replace(".","") );

@@ -12,6 +12,19 @@ if( $action == 'generate_carta' ){
     $json['id'] = str_replace("#","",$id);
 }
 
+if( $action == 'select_year' ){
+    //select * from m_trabajador where tipocontrato_id IN (3,4) AND year(fechaContratoFin) < 2018 AND fechaContratoFin != "0000-00-00"
+
+    
+    $db->where('tipocontrato_id',array(3,4),'IN');
+    $db->where('year(fechaContratoFin)','2018',"<");
+    $db->where('fechaContratoFin','0000-00-00',"!=");
+    $t = $db->get('m_trabajador');
+
+    $json = $t;
+
+}
+
 if( $action == 'resumen_anual' ){
     
     $sql = "

@@ -1,6 +1,5 @@
 <?php
 
-
 function getInfoSueldos($ano, $mes, $trabajador_id){
     global $db;
     
