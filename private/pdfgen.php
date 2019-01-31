@@ -469,7 +469,12 @@ $content .= '</td>
                     <tbody>';
 
                     foreach( $debes_trabajador as $dt ){
-                        if( $dt['descuento_id'] != ID_ANTICIPO ){
+                        
+                        $db->where('mostrarAbajo',1);
+                        $db->where('id',$dt['descuento_id']);
+                        $anticpo = $db->getOne('m_descuento');
+
+                        if( !$anticpo ){
 
             $content .= '<tr>
                             <td> ' . $dt['cuotaActual'] . ' </td>
