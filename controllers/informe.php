@@ -681,7 +681,7 @@ if( $_POST ){
         $html .= '</page>'; 
 
 
-        $orientation = 'L';
+        $orientation = 'P';
                     
     }
     
