@@ -29,6 +29,7 @@ if( $_SESSION[PREFIX . 'is_trabajador'] ){
     }
 }
 
+
 extract($empresa);
 extract($liquidacion);
 

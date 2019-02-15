@@ -18,7 +18,12 @@ if( $_POST ){
     logit( $_SESSION[PREFIX.'login_name'],'generar informe',$_POST['action'],0,$db->getLastQuery() );
     
     if( $action == 'certificado_sueldos' ){
-       $totales = array(
+
+        $db->where ("id_trabajador", $trabajador_id);
+        $db->where ("ano", $ano_certificado);
+        $datos_guardados = $db->getOne ("t_certificadosueldos");
+
+        $totales = array(
             'col1' => 0,
             'col2' => 0,
             'col3' => 0,
@@ -35,6 +40,7 @@ if( $_POST ){
 
     if( $action == 'certificado_sueldos_print' ){
 
+
         $totales = array('col1' => 0,'col2' => 0,'col3' => 0,'col4' => 0,'col5' => 0,'col6' => 0,'col7' => 0,'col8' => 0,'col9' => 0);
         $orientation = 'L';
 
@@ -42,13 +48,22 @@ if( $_POST ){
         $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
         $db->orderBy('apellidoPaterno','ASC');
         $trabajadores = $db->get('m_trabajador');
+
         foreach ($trabajadores as $key => $trabajador) {
-            $arr_indice_trabajadores[$trabajador['id']] = array(
-                'indice' => $key,
-                'nombre' => $trabajador['nombres'] . " " . $trabajador['apellidoPaterno']
-            );
+            $arr_fecha_contrato_fin = explode("-",$trabajador['fechaContratoFin']);
+            $ano_contrato_fin = $arr_fecha_contrato_fin[0];
+            
+            if( ( $ano_contrato_fin >= $_POST['ano_certificado'] ) || $ano_contrato_fin == '0000' ){
+                $arr_indice_trabajadores[$trabajador['id']] = array(
+                    'indice' => $key,
+                    'nombre' => $trabajador['nombres'] . " " . $trabajador['apellidoPaterno']
+                );
+            }
+            
         };
 
+
+        
         $db->where('id',$_SESSION[PREFIX.'login_eid']);
         $empresa = $db->getOne('m_empresa');
 

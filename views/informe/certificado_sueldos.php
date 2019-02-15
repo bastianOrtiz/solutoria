@@ -105,7 +105,7 @@ tfoot td{
                                         <th colspan="6" style="border-left: 3px solid #eaeaea;"> MONTOS ACTUALIZADOS </th>
                                     </tr>
                                     <tr>
-                                        <th> Periodos </th>
+                                        <th col="0"> Periodos </th>
                                         <th> Sueldo Bruto </th>
                                         <th> COTIZACIÓN PREVISIONAL O DE SALUD DE CARGO DEL TRABAJADOR </th>
                                         <th> RENTA  IMPONIBLE AFECTA AL IMPTO. ÚNICO DE  2° CAT.  </th>
@@ -185,6 +185,7 @@ tfoot td{
                         </div>
                     </div>
                     <button type="submit" class="btn btn-success pull-right"><i class="fa fa-file-pdf-o"></i> &nbsp; Generar &nbsp; <i class="fa fa-caret-right"></i> </button>
+                    <!--<a href="#" class="btn btn-primary pull-left btn_guardar"><i class="fa fa-floppy-o"></i> &nbsp; Guardar &nbsp; </a>-->
                     <div class="clearfix"></div>
                 </form>
                 <?php } ?>
@@ -199,6 +200,21 @@ function recalcularRentaNoGravada(factor, renta){
 }
 
 $(document).ready(function(){
+
+    $(".btn_guardar").click(function(){
+        $.ajax({
+            type: "POST",
+            url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+            data:  $("#frmPrintCertificado").serialize() + "&action=save_data",
+            dataType: 'json',
+            beforeSend: function(){
+                $(".overlayer").fadeIn(500);
+            },
+            success: function (json) {
+                $(".overlayer").fadeOut(500);
+            }
+        })
+    })
 
     $(".cbo_liq").change(function(){
         year = $(this).val();

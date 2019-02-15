@@ -12,12 +12,42 @@ if( $action == 'generate_carta' ){
     $json['id'] = str_replace("#","",$id);
 }
 
+if( $action == 'save_data' ){
+    $db->where ("id_trabajador", $trabajador_id);
+    $db->where ("ano", $ano_certificado);
+    $exist = $db->getOne ("t_certificadosueldos");
+
+    $data = [
+        'ano' => $ano_certificado,
+        'id_trabajador' => $trabajador_id,
+        'mes1' => $txtRentaNoGravada[1],
+        'mes2' => $txtRentaNoGravada[2],
+        'mes3' => $txtRentaNoGravada[3],
+        'mes4' => $txtRentaNoGravada[4],
+        'mes5' => $txtRentaNoGravada[5],
+        'mes6' => $txtRentaNoGravada[6],
+        'mes7' => $txtRentaNoGravada[7],
+        'mes8' => $txtRentaNoGravada[8],
+        'mes9' => $txtRentaNoGravada[9],
+        'mes10' => $txtRentaNoGravada[10],
+        'mes11' => $txtRentaNoGravada[11],
+        'mes11' => $txtRentaNoGravada[12]
+    ];
+
+    if( $exist ){
+        $db->where('id',$exist['id']);
+        $db->update('t_certificadosueldos',$data);
+    } else {
+        $db->insert('t_certificadosueldos',$data);
+    }
+}
+
 if( $action == 'select_year' ){
     //select * from m_trabajador where tipocontrato_id IN (3,4) AND year(fechaContratoFin) < 2018 AND fechaContratoFin != "0000-00-00"
 
     
     $db->where('tipocontrato_id',array(3,4),'IN');
-    $db->where('year(fechaContratoFin)','2018',"<");
+    $db->where('year(fechaContratoFin)',$year,"<");
     $db->where('fechaContratoFin','0000-00-00',"!=");
     $t = $db->get('m_trabajador');
 

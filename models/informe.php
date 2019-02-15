@@ -6,14 +6,13 @@ function getInfoSueldos($ano, $mes, $trabajador_id){
     $array_data = array();
     
     $super_sql = "
-    SELECT  remuneracionTributable  as sueldo, descuentoPrevisional as prevision, impuestoPagar
+    SELECT  remuneracionTributable  as sueldo, descuentoPrevisional as prevision, impuestoPagar, impuestoAgricola
     
     FROM liquidacion
     WHERE trabajador_id = $trabajador_id
     and mes = $mes
     and ano = $ano
-    ";      
-    
+    ";
     $resul = $db->rawQuery($super_sql);
     $resul = $resul[0];
         
@@ -45,7 +44,7 @@ function getInfoSueldos($ano, $mes, $trabajador_id){
     $array_data['col1'] = round($resul['sueldo']);
     $array_data['col2'] = round($resul['prevision']);
     $array_data['col3'] = round( $resul['sueldo'] - $resul['prevision'] );
-    $array_data['col4'] = round($resul['impuestoPagar']);
+    $array_data['col4'] = round($resul['impuestoPagar'] + $resul['impuestoAgricola']);
     $array_data['col5'] = round($resul_asignaciones[0]['rentaNoGravada']);
     $array_data['col6'] = $factor;
     $array_data['col7'] = round( ( $resul['sueldo'] - $resul['prevision'] ) * $factor );
