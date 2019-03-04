@@ -2188,6 +2188,20 @@ function getNombreMes($num, $acortar = false){
 
 
 /**
+ * Funcion que determina si un año es bisiesto
+ * @param int $ano Año a verificar
+ */
+function esAnoBisiesto($ano){
+    $bisiestos = array("2012","2016","2020","2024","2028","2032","2036","2040","2044","2048","2052","2056","2060","2064","2068","2072","2076","2080","2084","2088","2092","2096");
+    if( in_array($ano,$bisiestos) ){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+/**
  * Funcion que retorna el maximo de dias del mes
  * @param int $num Numero del mes de 1 a 12 
  */
