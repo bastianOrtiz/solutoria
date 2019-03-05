@@ -1126,9 +1126,24 @@ function obtenerLicencias($trabajador_id){
         }
     }
 
+
+
     if( $dias_licencia > 30 ){
         $dias_licencia = 30;
     }
+    
+
+    if( esAnoBisiesto(getAnoMostrarCorte()) ){
+        $limiteFeb = 29;
+    } else {
+        $limiteFeb = 28;
+    }
+    
+
+    if( ( getMesMostrarCorte() == 2 ) && ( $dias_licencia == $limiteFeb ) ){
+        $dias_licencia += ( 30 - $limiteFeb );
+    }
+
 
     return $dias_licencia;
 }
@@ -1380,8 +1395,22 @@ function obtenerAusencias($trabajador_id){
         }        
     }
 
+
+
     if( $dias_licencia > 30 ){
         $dias_licencia = 30;
+    }
+
+
+    if( esAnoBisiesto(getAnoMostrarCorte()) ){
+        $limiteFeb = 29;
+    } else {
+        $limiteFeb = 28;
+    }
+    
+
+    if( ( getMesMostrarCorte() == 2 ) && ( $dias_licencia == $limiteFeb ) ){
+        $dias_licencia += ( 30 - $limiteFeb );
     }
 
     
