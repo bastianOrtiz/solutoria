@@ -158,7 +158,15 @@
                 <?php } ?>
 
             </div><!-- /.col (RIGHT) -->
-        </div><!-- /.row -->                                        
+        </div><!-- /.row -->    
+
+        <div class="row">
+          <div class="col-lg-12">
+            <form method="post">
+                <input type="submit" name="backup" value="CREAR REPALDO DEL SISTEMA" class="btn btn-danger pull-right">
+            </form>
+          </div>
+        </div>                                    
         
     </section><!-- /.content -->
 </div>
