@@ -40,18 +40,45 @@ function getInfoSueldos($ano, $mes, $trabajador_id){
         $factor = 1;
     }
     
+
+    $total_rentas_no_gravadas = 0;
+    $db->where('id_trabajador',$trabajador_id);
+    $db->where('ano',$ano);
+    $db->where('mes',$mes);
+    $rentas_no_gravadas = $db->get('t_rentasnogravadas');
     
+    foreach ($rentas_no_gravadas as $renta_no_g) {
+        $total_rentas_no_gravadas += $renta_no_g['valor'];
+    }
+    
+    $total_rentas_no_gravadas += ($resul_asignaciones[0]['rentaNoGravada']);
+
     $array_data['col1'] = round($resul['sueldo']);
     $array_data['col2'] = round($resul['prevision']);
     $array_data['col3'] = round( $resul['sueldo'] - $resul['prevision'] );
     $array_data['col4'] = round($resul['impuestoPagar'] + $resul['impuestoAgricola']);
-    $array_data['col5'] = round($resul_asignaciones[0]['rentaNoGravada']);
+    $array_data['col5'] = round($total_rentas_no_gravadas);
     $array_data['col6'] = $factor;
     $array_data['col7'] = round( ( $resul['sueldo'] - $resul['prevision'] ) * $factor );
     $array_data['col8'] = round( $resul['impuestoPagar'] * $factor );
     $array_data['col9'] = round( $resul_asignaciones[0]['rentaNoGravada'] * $factor );    
     
     return $array_data;
+}
+
+function getRentaNoGravada($ano, $mes, $trabajador_id){
+    global $db;
+
+    $db->where ('ano', $ano);
+    $db->where ('id_trabajador', $trabajador_id);
+    $db->where ('mes', $mes);
+    $renta = $db->getOne ("t_rentasnogravadas",'valor');
+
+    if( $renta ){
+        return $renta;
+    } else {
+        return false;
+    }
 }
 
 
