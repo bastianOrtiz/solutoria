@@ -1,4 +1,13 @@
 <?php
+
+if( $_POST['backup'] ){
+    if( exportarTablas("localhost", "root", "", "rrhh") ){
+        redirect(BASE_URL);
+        exit();
+    }
+}
+
+
 if( $_SESSION[PREFIX.'login_eid'] == "" ){
     $empresa_logged = 1;
 } else {
