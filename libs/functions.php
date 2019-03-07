@@ -1373,6 +1373,11 @@ function mainMenu(){
                 'entidad' => 'gestion_masiva_documento',
                 'accion' => 'dashboard',
                 'label' => 'Gestion Masiva Documento'
+            ),
+            array(
+                'entidad' => 'rentas_no_gravadas',
+                'accion' => 'listar',
+                'label' => 'Rentas no Gravadas'
             )
         )
     );

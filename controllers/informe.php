@@ -19,10 +19,6 @@ if( $_POST ){
     
     if( $action == 'certificado_sueldos' ){
 
-        $db->where ("id_trabajador", $trabajador_id);
-        $db->where ("ano", $ano_certificado);
-        $datos_guardados = $db->getOne ("t_certificadosueldos");
-
         $totales = array(
             'col1' => 0,
             'col2' => 0,
@@ -34,7 +30,6 @@ if( $_POST ){
             'col8' => 0,
             'col9' => 0
         );   
-
                  
     }
 

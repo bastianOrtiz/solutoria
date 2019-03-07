@@ -106,21 +106,21 @@ tfoot td{
                                     </tr>
                                     <tr>
                                         <th col="0"> Periodos </th>
-                                        <th> Sueldo Bruto </th>
-                                        <th> COTIZACIÓN PREVISIONAL O DE SALUD DE CARGO DEL TRABAJADOR </th>
-                                        <th> RENTA  IMPONIBLE AFECTA AL IMPTO. ÚNICO DE  2° CAT.  </th>
-                                        <th> IMPTO ÚNICO RETENIDO</th>
-                                        <th> MAYOR  RETENCION DE IMPTO. SOLICITADA  ART. 88 LIR  </th>
-                                        <th> RENTA TOTAL EXENTA </th>
-                                        <th> RENTA TOTAL NO GRAVADA </th>
-                                        <th> REBAJA POR ZONAS EXTREMAS (Franquicia  D.L. 889) </th>
-                                        <th> FACTOR ACTUALIZACIÓN </th>
-                                        <th style="border-left: 3px solid #eaeaea;"> RENTA AFECTA AL IMPTO.  ÚNICO DE 2° CAT.  </th>
-                                        <th> IMPTO. ÚNICO  RETENIDO </th>
-                                        <th> MAYOR RETENCIÓN DE IMPTO. SOLICITADA ART. 88 LIR </th>
-                                        <th> RENTA TOTAL EXENTA  </th>
-                                        <th> RENTA TOTAL NO GRAVADA  </th>
-                                        <th> REBAJA POR ZONAS EXTREMAS (Franquicia D.L.889)  </th>
+                                        <th col="1"> Sueldo Bruto </th>
+                                        <th col="2"> COTIZACIÓN PREVISIONAL O DE SALUD DE CARGO DEL TRABAJADOR </th>
+                                        <th col="3"> RENTA  IMPONIBLE AFECTA AL IMPTO. ÚNICO DE  2° CAT.  </th>
+                                        <th col="4"> IMPTO ÚNICO RETENIDO</th>
+                                        <th col="5"> MAYOR  RETENCION DE IMPTO. SOLICITADA  ART. 88 LIR  </th>
+                                        <th col="6"> RENTA TOTAL EXENTA </th>
+                                        <th col="7"> RENTA TOTAL NO GRAVADA </th>
+                                        <th col="8"> REBAJA POR ZONAS EXTREMAS (Franquicia  D.L. 889) </th>
+                                        <th col="9"> FACTOR ACTUALIZACIÓN </th>
+                                        <th col="10" style="border-left: 3px solid #eaeaea;"> RENTA AFECTA AL IMPTO.  ÚNICO DE 2° CAT.  </th>
+                                        <th col="11"> IMPTO. ÚNICO  RETENIDO </th>
+                                        <th col="12"> MAYOR RETENCIÓN DE IMPTO. SOLICITADA ART. 88 LIR </th>
+                                        <th col="13"> RENTA TOTAL EXENTA  </th>
+                                        <th col="14"> RENTA TOTAL NO GRAVADA  </th>
+                                        <th col="15"> REBAJA POR ZONAS EXTREMAS (Franquicia D.L.889)  </th>
                                         
                                     </tr>
                                 </thead>
@@ -147,7 +147,7 @@ tfoot td{
                                             <td class="dataCol4"> <?php echo number_format($data['col4'],0,',','.') ?> </td>
                                             <td style="background: #ffe"> - </td>
                                             <td style="background: #ffe"> - </td>
-                                            <td class="dataCol5"> <input type="text" value="<?php echo number_format($data['col5'],0,',','.') ?>" class="txtCol9" name="txtRentaNoGravada[<?php echo $mes ?>]" style="text-align: right;"> </td>
+                                            <td class="dataCol5"> <input type="text" value="<?php echo number_format($data['col5'],0,',','.') ?>" class="txtCol9" name="txtRentaNoGravada[<?php echo $mes ?>]" style="text-align: right;" readonly> </td>
                                             <td style="background: #ffe"> - </td>
                                             <td class="dataCol6"> <?php echo $data['col6'] ?> </td>
                                             <td class="dataCol7"> <?php echo number_format($data['col7'],0,',','.') ?> </td>
