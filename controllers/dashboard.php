@@ -1,7 +1,7 @@
 <?php
 
 if( $_POST['backup'] ){
-    if( exportarTablas("localhost", "root", "", "rrhh") ){
+    if( exportarTablas(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ){
         redirect(BASE_URL);
         exit();
     }
