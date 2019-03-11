@@ -4,23 +4,25 @@ $registros = getRegistrosCompartidos('Haber','m_haber');
 $tipomoneda = $db->get("m_tipomoneda");
 
 if( $_POST ){
-    
+
     extract($_POST);
     
     if( @$_POST['action'] == 'edit' ){
         $fijo = $fijoHaber[0];
         $valorPredeterminado = $predeterminadoHaber[0];
         $imponible = $imponibleHaber[0]; 
-        $comision = $comisionHaber[0];       
+        $comision = $comisionHaber[0];
+        $asignacion = $asignacionHaber[0];
         
         $data = Array (
-            "nombre" => $nombreHaber,            
+            "nombre" => $nombreHaber,
             "fijo" => $fijo,
             "valorPredeterminado" => $valorPredeterminado,
             "tipomoneda_id" => $tipoMonedaHaber,
             "valor" => $valorHaber,
             "imponible" => $imponible,
             "comision" => $comision,
+            "asignacion" => $asignacion,
             "activo" => $activoHaber,
             "empresa_id" => $_SESSION[PREFIX.'login_eid']
         );
@@ -41,7 +43,7 @@ if( $_POST ){
         $delete = eliminarHaber( $haber_id );
         if( $delete ){
             logit( $_SESSION[PREFIX.'login_name'],$_POST['action'] ,'haber',$haber_id,$db->getLastQuery() );
-            $response = encrypt('status=success&mensaje=Registro eliminado correctamente&id='.$haber_id);            
+            $response = encrypt('status=success&mensaje=Registro eliminado correctamente&id='.$haber_id);     
         } else {
             $response = encrypt('status=warning&mensaje=No se pudo eliminar la haber porque tiene trabajadores asociados&id='.$haber_id);
         } 
@@ -49,20 +51,23 @@ if( $_POST ){
         exit();
     }
     
-    if( @$_POST['action'] == 'new' ){        
+    if( @$_POST['action'] == 'new' ){  
+          
         $fijo = $fijoHaber[0];
         $valorPredeterminado = $predeterminadoHaber[0];
         $imponible = $imponibleHaber[0];
-        $comision = $comisionHaber[0];        
+        $comision = $comisionHaber[0];
+        $asignacion = $asignacionHaber[0];
         
         $data = Array (
-            "nombre" => $nombreHaber,            
+            "nombre" => $nombreHaber,
             "fijo" => $fijo,
             "valorPredeterminado" => $valorPredeterminado,
             "tipomoneda_id" => $tipoMonedaHaber,
             "valor" => $valorHaber,
             "imponible" => $imponible,
-            "comision" => $comision,            
+            "comision" => $comision,
+            "asignacion" => $asignacion,
             "activo" => $activoHaber,
             "empresa_id" => $_SESSION[PREFIX.'login_eid']
         );
@@ -77,7 +82,7 @@ if( $_POST ){
             logit( $_SESSION[PREFIX.'login_name'],$_POST['action'] ,'haber',$create_id,$db->getLastQuery() );
             $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$create_id);
             redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
-            exit();                
+            exit();         
         }                   
     }      
 }
@@ -86,7 +91,7 @@ if( $parametros ){
     /** Consultar datos de haber **/
     if( isset($parametros[1]) ){
         $db->where ("id", $parametros[1]);
-        $haber = $db->getOne("m_haber");        
+        $haber = $db->getOne("m_haber"); 
     }
 }
 
