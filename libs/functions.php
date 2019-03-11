@@ -826,7 +826,7 @@ function fnAlertas(){
         }
     }
 
-    if( !exportarTablas("localhost", "root", "tecnochamba2016", "rrhh") ){
+    if( !exportarTablas(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) ){
         $alertas['respaldos'] = array(
             'mensaje' => 'Hubo un problema al crear el respaldo. Por favor generarlo manualmente en el Dashboard',
             'link' => BASE_URL
