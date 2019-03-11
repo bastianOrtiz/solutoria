@@ -112,6 +112,22 @@
                         </div>
                         
                         <div class="form-group">
+                            <label for="comisionHaber">Es Asignacion <small>(Contar como Renta No Gravada)</small> </label>
+                            <div class="radio">
+                                <label>
+                                <input type="radio" class="asignacionHaber" name="asignacionHaber[]" value="1" id="asignacionHaberSi" />
+                                SI
+                                </label>
+                                &nbsp; 
+                                <label>
+                                <input type="radio" class="asignacionHaber" name="asignacionHaber[]" value="0" id="asignacionHaberNo" />
+                                NO
+                                </label>
+                            </div>
+                            <script> $(".asignacionHaber[value=<?php echo $haber['asignacion'] ?>]").prop('checked',true) </script>
+                        </div>
+
+                        <div class="form-group">
                           <label for="activoHaber">Estado</label>
                           <select class="form-control required" name="activoHaber" id="activoHaber">
                             <option value="1">Activo</option>
