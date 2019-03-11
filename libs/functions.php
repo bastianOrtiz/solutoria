@@ -2,6 +2,23 @@
 @session_start();
 
 
+function getRepresentante($empresa_id){
+    global $db;
+    $representante = [];
+
+    $db->where("id", $empresa_id);
+    $result = $db->getOne("m_empresa");
+    
+    if( !$db->count ){
+        return false;
+    } else { 
+        $representante['nombre'] = $result['representante'];
+        $representante['rut'] = $result['rut_representante'];
+
+        return $representante;
+    }
+}
+
 /**
  * Respaldar base de datos de MySQL con PHP
  * Función modificada de: https://stackoverflow.com/a/21284229/5032550

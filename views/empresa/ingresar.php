@@ -84,6 +84,16 @@
                                     <?php } ?>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                              <label for="representante">Representante</label>
+                              <input type="text" class="form-control required" id="representante" name="representante" placeholder="Representante de la Empresa" />
+                          </div>
+                          <div class="form-group">
+                              <label for="rut_representante">Rut Representante</label>
+                              <input type="text" class="form-control required" id="rut_representante" name="rut_representante" />
+                          </div>
+
                         </div>
                         
                         <div class="col-md-6">        

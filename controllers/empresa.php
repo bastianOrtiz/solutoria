@@ -65,6 +65,8 @@ if( $_POST ){
             "horasDescuentoNoMarca" => $horasNomarcoEmpresa,
             "umbralRelojControl" => $umbralRelojControl,
             "ausenciaVacaciones" => $tipoAusenciaVacaciones,
+            "representante" => $representante,
+            "rut_representante" => $rut_representante,
             "comuna_id" => $empresaComuna,
             "cuenta_id" => $_SESSION[ PREFIX . 'login_cid']
         );
@@ -132,6 +134,8 @@ if( $_POST ){
                 "horasDescuentoNoMarca" => $horasNomarcoEmpresa,
                 "umbralRelojControl" => $umbralRelojControl,
                 "ausenciaVacaciones" => $tipoAusenciaVacaciones,
+                "representante" => $representante,
+                "rut_representante" => $rut_representante,
                 "comuna_id" => $empresaComuna,
                 "cuenta_id" => $_SESSION[ PREFIX . 'login_cid']
             );

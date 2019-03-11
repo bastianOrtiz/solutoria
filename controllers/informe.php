@@ -69,6 +69,9 @@ if( $_POST ){
             $presentacion_genero = ' la Srta. ';
         }
         
+        $representante = getRepresentante( $_SESSION[PREFIX.'login_eid'] );
+
+
         $html = '<style type="text/css">';
         $html .= 'p, table{ font-size: 10px; }';
         $html .= 'table.tabla{ border-collapse: collapse }';
@@ -181,7 +184,7 @@ if( $_POST ){
         '       </tfoot>  '  . 
         '  </table>  ' . 
         '  <br><p> Se extiende el siguiente certificado en cumplimiento de lo dispuesto en la Resolución Ex. Nº6509, del Servicio de Impuestos Internos, publica en el Diario Oficial de fecha 20 Diciembre de 1993 <br> y sus modificaciones posteriores </p>' . 
-        ' <p style="text-align: right; padding: 100px 100px 0px 0px">  MIGUEL RIVERA CERDA <br> R.U.T.: 6.374.381 - K &nbsp;&nbsp;&nbsp; </p>';
+        ' <p style="text-align: right; padding: 100px 100px 0px 0px"> '. $representante['nombre'] .' <br> R.U.T.: '. $representante['rut'] .' &nbsp;&nbsp;&nbsp; </p>';
 
         $html .= '</page>';
 
