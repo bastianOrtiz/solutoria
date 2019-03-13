@@ -8,10 +8,11 @@ $db->where('marcaTarjeta',1);
 @$trabajadores_todos = $db->get('m_trabajador');
 
 
+
 $db->orderBy('apellidoPaterno','ASC');
+$db->where('tipocontrato_id',array(3,4),'NOT IN');
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $trabajadores_todos_cert_sueldos = $db->get('m_trabajador');
-
 
 if( $_POST ){        
         
@@ -88,7 +89,7 @@ if( $_POST ){
         'DIRECCIÓN: ' . $empresa['direccion'] .  '<br>' .
         'GIRO: ' . $empresa['giro'] .  '<br>' .
         '</p>' . 
-        '</td><td>Certificado Nº ' . $arr_indice_trabajadores[$trabajador_id]['indice'] . '<br> Santiago, ' . date('d') . ' de ' . getNombreMes(date('n')) .' de ' . date('Y') . '</td>' . 
+        '</td><td>Certificado Nº ' . $_POST['correlativo'] . '<br> Santiago, ' . date('d') . ' de ' . getNombreMes(date('n')) .' de ' . date('Y') . '</td>' . 
         '</tr></table>' . 
 
         '<br><br><p> <strong> CERTIFICADO Nº' . $arr_indice_trabajadores[$trabajador_id]['indice'] . ' SOBRE SUELDOS Y OTRAS RENTAS SIMILARES </strong> </p><br><br>' . 

@@ -49,6 +49,7 @@ if( $action == 'select_year' ){
     $db->where('tipocontrato_id',array(3,4),'IN');
     $db->where('year(fechaContratoFin)',$year,"<");
     $db->where('fechaContratoFin','0000-00-00',"!=");
+    $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
     $t = $db->get('m_trabajador');
 
     $json = $t;

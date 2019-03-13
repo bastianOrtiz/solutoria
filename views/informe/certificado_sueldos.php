@@ -23,6 +23,7 @@ tfoot td{
                 <form method="post" id="frmSeleccionLiquidacion">
                 <input type="hidden" name="trabajador_id" id="trabajador_id" />
                 <input type="hidden" name="action" id="action" value="certificado_sueldos" />
+                <input type="hidden" name="correlativo" id="correlativo">
                 <div class="box">
                     <div class="box-header">
                         <div id="calendar"></div>                    
@@ -90,9 +91,11 @@ tfoot td{
                     <input type="hidden" name="action" value="certificado_sueldos_print">
                     <input type="hidden" name="trabajador_id" value="<?php echo $trabajador_id; ?>">
                     <input type="hidden" name="ano_certificado" value="<?php echo $ano_certificado ?>">
+                    <input type="hidden" name="correlativo" id="correlativo" value="<?php echo $_POST['correlativo'] ?>">
                     <div class="box">
                         <div class="box-header">
-                            <strong><?php echo getNombreTrabajador($trabajador_id) ?> - <?php echo $ano_certificado ?></strong>
+                            <strong><?php echo getNombreTrabajador($trabajador_id) ?> - <?php echo $ano_certificado ?></strong><br>
+                            <strong>Correlativo: </strong> <?php echo $_POST['correlativo'] ?>
                             <a href="javascript: history.back()" class="btn btn-primary btn-xs pull-right"><strong> <i class="fa fa-chevron-left"></i> volver</strong></a>
                         </div>
                     </div>
@@ -232,6 +235,11 @@ $(document).ready(function(){
                     $("[data-tr-id="+v.id+"]").hide(500);
                 })
                 $(".overlayer").fadeOut(500);
+                correlativo = 1;
+                $(".btn_ver_liquidacion").each(function(){
+                    $(this).attr('data-correlativo',correlativo);
+                    correlativo++;
+                })
             }
         })
     })
@@ -294,6 +302,7 @@ $(document).ready(function(){
          if( $("#ano_certificado").val() == "" ){
             alert("Seleccione un año primero");
          } else {
+            $("#correlativo").val( $(this).data('correlativo') );
             $("#frmSeleccionLiquidacion")[0].submit();   
          }
          
@@ -301,13 +310,14 @@ $(document).ready(function(){
 
     $(function () {        
         $('#trabajadores_list').dataTable({
-            "bPaginate": true,
+            "bPaginate": false,
             "bLengthChange": false,
             "bFilter": true,
             "bSort": true,
             "bInfo": true,
             "bAutoWidth": false,
-            "pageLength": 30
+            "ordering": false,
+            "order": [[ 1, "desc" ]]
         });
     });
 
