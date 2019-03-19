@@ -341,6 +341,24 @@ if( isset($parametros[1]) ){
         redirect(BASE_URL.'/trabajador/listar','',true,'El trabajador no existe en la empresa\n(Acceda a la lista de trabajadores y presione el boton liquidar o revise la empresa seleccionada actualmente)');        
         exit();
     } 
+
+
+    //Determinar si eltrabajador esta contratado en la fecha que se esta liquidando
+    $sql = "select 
+                month(T.fechaContratoInicio) AS mes,
+                year(T.fechaContratoInicio) AS ano
+            FROM m_trabajador T 
+            WHERE T.id = $trabajador_id";
+    $result = $db->rawQuery($sql);
+    $result = $result[0];
+    $concat_fecha_contrato = $result['ano'].$result['mes'];
+
+    $concat_fecha_liq = getAnoMostrarCorte().$mes;
+
+    if( $concat_fecha_liq < $concat_fecha_contrato ){
+        redirect(BASE_URL.'/trabajador/editar/'.$trabajador_id,'',true,'No se puede liquidar el trabajador, porque la fecha de inicio de su contrato es despueés del mes que se esta liquidando');
+        exit();
+    }
         
     
     /*    
