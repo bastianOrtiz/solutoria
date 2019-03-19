@@ -637,6 +637,15 @@ if( $_POST ){
 
     
     if( @$action == 'impuesto' ){
+
+
+        if( file_exists( ROOT . '/private/uploads/images/' . fotoEmpresa( $_SESSION[PREFIX.'login_eid'] ) ) ){
+            $foto_empresa =  ROOT . '/private/uploads/images/' . fotoEmpresa( $_SESSION[PREFIX.'login_eid'] );
+        } else {
+            $foto_empresa = ROOT . '/public/img/no_img.jpg';
+        }
+
+
         $mes = $mesImpuesto;
         $ano = $anoImpuesto;
         $empresa_id = $_SESSION[PREFIX.'login_eid'];
@@ -669,7 +678,7 @@ if( $_POST ){
         $html .= 'td{ border: 1px solid #000; padding: 2px 5px; }';
         $html .= '</style>';
         $html .= '<page backtop="1mm" backbottom="0mm" backleft="10mm" backright="10mm" style="font-size: 10pt">';
-        $html .= '<img class="round" src="'. ROOT .'/private/uploads/images/'. fotoEmpresa( $_SESSION[PREFIX.'login_eid'] ) .'">';
+        $html .= '<img class="round" src="'.$foto_empresa.'">';
         $html .= '<h2 style="text-align: center;"> Impuesto único del mes de ' . getNombreMes($mes) . ' de '. $ano .' </h2>';
         $html .= '<table style="border-collapse:collapse" align="center">';
         $html .= '<tr>';

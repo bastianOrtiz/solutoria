@@ -181,7 +181,7 @@ function marcoAtrasado( $trabajador_id, $horario_id, $checktime ){
 function fotoEmpresa($eid){
     global $db;
     $db->where('id',$eid);
-    $foto = $db->getValue('m_empresa','foto');    
+    $foto = $db->getValue('m_empresa','foto');
 
     return $foto;
 }
