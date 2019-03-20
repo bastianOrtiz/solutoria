@@ -30,6 +30,8 @@ function getRepresentante($empresa_id){
 
 function exportarTablas($host, $usuario, $pasword, $nombreDeBaseDeDatos)
 {
+    return true;
+    
     if(!file_exists(ROOT . '/respaldos/backup_' . date('Y-m-d') . '.sql')){
 
         set_time_limit(3000);
