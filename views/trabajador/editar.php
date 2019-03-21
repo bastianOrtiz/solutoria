@@ -1329,8 +1329,8 @@
                                                                         break;
                                                                     }
                                                                     
-                                                                    $fecha_iterar_int = str_replace("-","",$fecha_iterar)."1";
-                                                                    $fecha_iterar_int = (int)$fecha_iterar_int;                                                                        
+                                                                    $fecha_iterar_int = str_replace("-","",$fecha_iterar);
+                                                                    $fecha_iterar_int = (int)$fecha_iterar_int;
                                                                     ?>
                                                                     <tr>
                                                                         <?php 
@@ -1398,22 +1398,22 @@
                                                                             <td class="no_laboral">
                                                                                 <div class="input-group">                                                                                
                                                                                     <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">
-                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int ?>][justificado]" />
+                                                                                        <input type="checkbox" class="chk_autorize holi" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
                                                                                     </span>
-                                                                                    <select class="form-control" name="justificativo[<?php echo$fecha_iterar_int ?>][justificativo]" style="width: 200px; display: none;">
+                                                                                    <select class="form-control" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificativo]" style="width: 200px; display: none;">
                                                                                         <option value="">Seleccione</option>
                                                                                         <?php foreach( $justificativos_horaextra as $j ){ ?>
                                                                                         <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
                                                                                         <?php } ?>
                                                                                     </select>                                                                                    
-                                                                                    <input type="text" name="justificativo[<?php echo $fecha_iterar_int ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][tipo]" value="<?php echo $tipo_j; ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][io]" value="I" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][hora_marcada]" value="<?php echo date('H:i:s',$time); ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][comentario]" class="hd_comm_ahe" value="" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][no_laboral]" value="<?php echo $horario_entrada_no_laboral; ?>" />
-                                                                                    <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int ?>"><i class="fa fa-thumb-tack"></i></a>
+                                                                                    <input type="text" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][tipo]" value="<?php echo $tipo_j; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][io]" value="I" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][hora_marcada]" value="<?php echo date('H:i:s',$time); ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][comentario]" class="hd_comm_ahe" value="" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][no_laboral]" value="<?php echo $horario_entrada_no_laboral; ?>" />
+                                                                                    <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'i' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>
                                                                             
@@ -1453,22 +1453,22 @@
                                                                             <td class="no_laboral">
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">
-                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int ?>][justificado]" />
+                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
                                                                                     </span>
-                                                                                    <select class="form-control" name="justificativo[<?php echo $fecha_iterar_int ?>][justificativo]" style="width: 200px; display: none;">
+                                                                                    <select class="form-control" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificativo]" style="width: 200px; display: none;">
                                                                                         <option value="">Seleccione</option>
                                                                                         <?php foreach( $justificativos_horaextra as $j ){ ?>
                                                                                         <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
                                                                                         <?php } ?>
                                                                                     </select>                                                                                    
-                                                                                    <input type="text" name="justificativo[<?php echo $fecha_iterar_int ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][tipo]" value="<?php echo $tipo_j; ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][io]" value="I" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][hora_marcada]" value="<?php echo date('H:i:s',$time); ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][comentario]" class="hd_comm_ahe" value="" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int ?>][no_laboral]" value="<?php echo $horario_entrada_no_laboral; ?>" />
-                                                                                    <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int ?>"><i class="fa fa-thumb-tack"></i></a>
+                                                                                    <input type="text" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][tipo]" value="<?php echo $tipo_j; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][io]" value="I" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][hora_marcada]" value="<?php echo date('H:i:s',$time); ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][comentario]" class="hd_comm_ahe" value="" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][no_laboral]" value="<?php echo $horario_entrada_no_laboral; ?>" />
+                                                                                    <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'i' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>
                                                                         <?php } elseif( $es_ausencia['es_ausencia'] ){ ?>
@@ -1530,21 +1530,21 @@
                                                                             <td colspan="4" class="<?php echo $cls_no_trabaja; ?>">
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">
-                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $IN['logid'] ?>][justificado]" />
+                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
                                                                                     </span>
-                                                                                    <select class="form-control" name="justificativo[<?php echo $IN['logid'] ?>][justificativo]" style="width: 200px; display: none;">
+                                                                                    <select class="form-control" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificativo]" style="width: 200px; display: none;">
                                                                                         <option value="">Seleccione</option>
                                                                                         <?php foreach( $justificativos as $j ){ ?>
                                                                                         <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
                                                                                         <?php } ?>
                                                                                     </select>                                                                                    
-                                                                                    <input type="text" name="justificativo[<?php echo $IN['logid'] ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][tipo]" value="<?php echo $tipo_j; ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][io]" value="I" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][hora_marcada]" value="<?php echo $datereg[1]; ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][comentario]" class="hd_comm_ahe" value="<?php echo $IN['comentario'] ?>" />
-                                                                                    <a href="#" class="pinit" data-logid="<?php echo $IN['logid'] ?>"><i class="fa fa-thumb-tack"></i></a>
+                                                                                    <input type="text" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][tipo]" value="<?php echo $tipo_j; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][io]" value="I" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][hora_marcada]" value="<?php echo $datereg[1]; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][comentario]" class="hd_comm_ahe" value="<?php echo $IN['comentario'] ?>" />
+                                                                                    <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'i' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>
                                                                             <?php    
@@ -1561,21 +1561,21 @@
                                                                                     ?>
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">
-                                                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $IN['logid'] ?>][justificado]" />
+                                                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
                                                                                         </span>
-                                                                                        <select class="form-control" name="justificativo[<?php echo $IN['logid'] ?>][justificativo]" style="width: 200px; display: none;">
+                                                                                        <select class="form-control" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificativo]" style="width: 200px; display: none;">
                                                                                             <option value="">Seleccione</option>
                                                                                             <?php foreach( $justificativos as $j ){ ?>
                                                                                             <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
                                                                                             <?php } ?>
                                                                                         </select>                                                                                    
-                                                                                        <input type="text" name="justificativo[<?php echo $IN['logid'] ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][tipo]" value="<?php echo $tipo_j; ?>" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][io]" value="I" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][hora_marcada]" value="<?php echo $datereg[1]; ?>" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $IN['logid'] ?>][comentario]" class="hd_comm_ahe" value="<?php echo $IN['comentario'] ?>" />
-                                                                                        <a href="#" class="pinit" data-logid="<?php echo $IN['logid'] ?>"><i class="fa fa-thumb-tack"></i></a>
+                                                                                        <input type="text" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][tipo]" value="<?php echo $tipo_j; ?>" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][io]" value="I" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][hora_marcada]" value="<?php echo $datereg[1]; ?>" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][comentario]" class="hd_comm_ahe" value="<?php echo $IN['comentario'] ?>" />
+                                                                                        <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'i' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                     </div>
                                                                                     <?php 
                                                                                     }
@@ -1595,20 +1595,20 @@
                                                                 			<td class="ausente" colspan="2">                                                                            
                                                                                 <div class="input-group" title="No marcó">
                                                                                     <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">
-                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][justificado]" />
+                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][justificado]" />
                                                                                     </span>
-                                                                                    <select class="form-control" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][justificativo]" style="width: 200px; display: none;">
+                                                                                    <select class="form-control" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][justificativo]" style="width: 200px; display: none;">
                                                                                         <option value="">Seleccione</option>
                                                                                         <?php foreach( $justificativos as $j ){ ?>
                                                                                         <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
                                                                                         <?php } ?>
                                                                                     </select>                                                                                    
-                                                                                    <input type="text" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][tipo]" value="<?php echo $tipo_j; ?>" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][io]" value="I" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][comentario]" class="hd_comm_ahe" value="" />                                                                                
-                                                                                    <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar ?>"><i class="fa fa-thumb-tack"></i></a>
+                                                                                    <input type="text" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
+                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][tipo]" value="<?php echo $tipo_j; ?>" />
+                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][io]" value="I" />
+                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
+                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][comentario]" class="hd_comm_ahe" value="" />                                                                                
+                                                                                    <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'i' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>                                                            			                                                    			                                                                
                                                                 		    
@@ -1672,21 +1672,21 @@
                                                                                     ?>
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">
-                                                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $OUT['logid'] ?>][justificado]" />
+                                                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][justificado]" />
                                                                                         </span>
-                                                                                        <select class="form-control" name="justificativo[<?php echo $OUT['logid'] ?>][justificativo]" style="width: 200px; display: none;">
+                                                                                        <select class="form-control" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][justificativo]" style="width: 200px; display: none;">
                                                                                             <option value="">Seleccione</option>
                                                                                             <?php foreach( $justificativos as $j ){ ?>
                                                                                             <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
                                                                                             <?php } ?>
                                                                                         </select>                                                                                    
-                                                                                        <input type="text" name="justificativo[<?php echo $OUT['logid'] ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $OUT['logid'] ?>][tipo]" value="<?php echo $tipo_j; ?>" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $OUT['logid'] ?>][io]" value="O" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $OUT['logid'] ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $OUT['logid'] ?>][hora_marcada]" value="<?php echo $datereg[1]; ?>" />
-                                                                                        <input type="hidden" name="justificativo[<?php echo $OUT['logid'] ?>][comentario]" class="hd_comm_ahe" value="<?php echo $OUT['comentario'] ?>" />                                                                                    
-                                                                                        <a href="#" class="pinit" data-logid="<?php echo $OUT['logid'] ?>"><i class="fa fa-thumb-tack"></i></a>
+                                                                                        <input type="text" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][tipo]" value="<?php echo $tipo_j; ?>" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][io]" value="O" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][hora_marcada]" value="<?php echo $datereg[1]; ?>" />
+                                                                                        <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][comentario]" class="hd_comm_ahe" value="<?php echo $OUT['comentario'] ?>" />                                                                                    
+                                                                                        <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'o' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                     </div>
                                                                                     <?php 
                                                                                     } 
@@ -1707,20 +1707,20 @@
                                                                 			<td class="ausente" colspan="2"> 
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">
-                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_salida[<?php echo $fecha_iterar; ?>][justificado]" />
+                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][justificado]" />
                                                                                     </span>
-                                                                                    <select class="form-control" name="justificativo_no_marco_salida[<?php echo $fecha_iterar; ?>][justificativo]" style="width: 200px; display: none;">
+                                                                                    <select class="form-control" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][justificativo]" style="width: 200px; display: none;">
                                                                                         <option value="">Seleccione</option>
                                                                                         <?php foreach( $justificativos as $j ){ ?>
                                                                                         <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
                                                                                         <?php } ?>
                                                                                     </select>                                                                                    
-                                                                                    <input type="text" name="justificativo_no_marco_salida[<?php echo $fecha_iterar; ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar; ?>][tipo]" value="<?php echo $tipo_j; ?>" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar; ?>][io]" value="O" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar ?>][comentario]" class="hd_comm_ahe" value="" />
-                                                                                    <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar ?>"><i class="fa fa-thumb-tack"></i></a>
+                                                                                    <input type="text" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
+                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][tipo]" value="<?php echo $tipo_j; ?>" />
+                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][io]" value="O" />
+                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
+                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o' ?>][comentario]" class="hd_comm_ahe" value="" />
+                                                                                    <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'o' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>                                                            			                                                    			                                                                
                                                                 		    
@@ -2296,16 +2296,21 @@ $(document).ready(function(){
     <?php 
     foreach( $t_atrasohoraextra as $ahe ){
         $ahe['horas'] = procesarDecimal($ahe['horas']);
+        $fecha_int = str_replace("-","",$ahe['fecha']);
+        $lowerIO = strtolower($ahe['io']);
+
         if( $ahe['logid'] ){
         ?>
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][justificado]']").prop('checked',true);
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][hora_extra_efectiva]']").val('<?php echo $ahe['horas'] ?>');
-        $("select[name='justificativo[<?php echo $ahe['logid'] ?>][justificativo]']").val('<?php echo $ahe['justificativo_id'] ?>');
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][justificado]']").closest('.input-group').find('.form-control').show();
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][justificado]']").closest('.input-group').find('.pinit').show();
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][justificado]']").closest('.input-group').find('.pinit').attr('data-toggle','tooltip');
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][justificado]']").closest('.input-group').find('.pinit').attr('title','<?php echo $ahe['comentario'] ?>');
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][comentario]']").val('<?php echo $ahe['comentario'] ?>');
+        /* Tiene LOGID */
+        $("input[name='justificativo[<?php echo $fecha_int.$lowerIO ?>][justificado]']").prop('checked',true);
+        $("input[name='justificativo[<?php echo $fecha_int.$lowerIO ?>][hora_extra_efectiva]']").val('<?php echo $ahe['horas'] ?>');
+        $("select[name='justificativo[<?php echo $fecha_int.$lowerIO ?>][justificativo]']").val('<?php echo $ahe['justificativo_id'] ?>');
+        $("input[name='justificativo[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('.input-group').find('.form-control').show();
+        $("input[name='justificativo[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('.input-group').find('.pinit').show();
+        $("input[name='justificativo[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('.input-group').find('.pinit').attr('data-toggle','tooltip');
+        $("input[name='justificativo[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('.input-group').find('.pinit').attr('title','<?php echo $ahe['comentario'] ?>');
+        $("input[name='justificativo[<?php echo $fecha_int.$lowerIO ?>][comentario]']").val('<?php echo $ahe['comentario'] ?>');
+        /* Tiene LOGID */
     <?php 
         } else { 
             if( $ahe['io'] == 'I' )
@@ -2313,16 +2318,18 @@ $(document).ready(function(){
             else 
                 $justificativo_no_marco = 'justificativo_no_marco_salida';
     ?>
-    
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificado]']").prop('checked',true);
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][hora_extra_efectiva]']").val('<?php echo $ahe['horas'] ?>');
-        $("select[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificativo]']").val('<?php echo $ahe['justificativo_id'] ?>');
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificado]']").closest('.input-group').find('.form-control').show();
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificado]']").closest('.input-group').find('.pinit').show();
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificado]']").closest('.input-group').find('.pinit').attr('data-toggle','tooltip');
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificado]']").closest('.input-group').find('.pinit').attr('title','<?php echo $ahe['comentario'] ?>');
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][comentario]']").val('<?php echo $ahe['comentario'] ?>');
         
+        /* NO LOGID */
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").prop('checked',true);
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][hora_extra_efectiva]']").val('<?php echo $ahe['horas'] ?>');
+        $("select[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificativo]']").val('<?php echo $ahe['justificativo_id'] ?>');
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('.input-group').find('.form-control').show();
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('.input-group').find('.pinit').show();
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('.input-group').find('.pinit').attr('data-toggle','tooltip');
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('.input-group').find('.pinit').attr('title','<?php echo $ahe['comentario'] ?>');
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][comentario]']").val('<?php echo $ahe['comentario'] ?>');
+        /* NO LOGID */
+
     <?php
         }
     } 

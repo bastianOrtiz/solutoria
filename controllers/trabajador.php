@@ -98,7 +98,6 @@ if( $_POST ){
         $m_horario_entrada = $m_horarios['entradaTrabajo'];
         $m_horario_salida = $m_horarios['salidaTrabajo'];    
         
-
         // Guardar las justificaciones        
         if( @$_POST['justificativo'] ){
                         
@@ -153,12 +152,12 @@ if( $_POST ){
                         'comentario' => $justif['comentario'],
                         'justificativo_id' => $justif['justificativo'],
                         'trabajador_id' => $idTrabajador
-                    );                                                        
+                    );
                     $db->insert('t_atrasohoraextra', $data_j);           
                 }
             }  
         }
-                        
+
         
         if( @$_POST['justificativo_no_marco_entrada'] ){
             foreach( $_POST['justificativo_no_marco_entrada'] as $jkey => $justif_in ){
@@ -799,8 +798,11 @@ if( $parametros ){
         
         //Justificativos
         $db->where("trabajador_id", $parametros[1]);
+        if( $parametros[2] && $parametros[3] ){
+            $db->where('fecha', Array ($parametros[2], $parametros[3]), 'BETWEEN');    
+        }
         $t_atrasohoraextra = $db->get('t_atrasohoraextra');
-               
+
         
         /** Datos previsionales Trabajador **/
         $db->where("trabajador_id", $parametros[1]);
