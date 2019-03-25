@@ -795,11 +795,15 @@ if( $parametros ){
             }
         }    
         /* fin */
+
         
         //Justificativos
+        $periodo_corte = getPeriodoCorte();
         $db->where("trabajador_id", $parametros[1]);
         if( $parametros[2] && $parametros[3] ){
             $db->where('fecha', Array ($parametros[2], $parametros[3]), 'BETWEEN');    
+        } else {
+            $db->where('fecha', Array ($periodo_corte['desde'], $periodo_corte['hasta']), 'BETWEEN');    
         }
         $t_atrasohoraextra = $db->get('t_atrasohoraextra');
 

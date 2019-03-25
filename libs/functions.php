@@ -1992,6 +1992,9 @@ function checkIfAutorized($logid=null, $trabajador_id, $tipoHora,$io="",$fecha="
         $res = $db->getOne('t_atrasohoraextra');    
         $count = $db->count;                
     }
+
+
+
     if( $count > 0 ){
         return true;
     } else {

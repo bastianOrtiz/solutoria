@@ -137,7 +137,7 @@ table th,
                                                     $fecha_iterar = date("Y-m-d", $i);
                                                     $es_ausencia = comprobarAusencia($fecha_iterar, $trabajador['id']);
                                                     
-                                                    $fecha_iterar_int = str_replace("-","",$fecha_iterar)."1";
+                                                    $fecha_iterar_int = str_replace("-","",$fecha_iterar);
                                                     $fecha_iterar_int = (int)$fecha_iterar_int;                                                                        
                                                     ?>
                                                     <tr>
@@ -184,19 +184,19 @@ table th,
                                                         </td>
                                                         <td class="no_laboral">
                                                             <?php                                                                                     
-                                                                                $arr_marcajes = getMarcajeFDS($fecha_iterar, $trabajador_id);                                                                                    
-                                                                                if( $arr_marcajes['salida'] != "" ){
-                                                                                    $time = strtotime($arr_marcajes['salida']['checktime']);
-                                                                                    ?>
-                                                                                    <span class="badge">
-                                                                                    <?php echo date('H:i:s',$time); ?>
-                                                                                    </span>
-                                                                                    <?php
-                                                                                } 
-                                                                                ?>
+                                                                $arr_marcajes = getMarcajeFDS($fecha_iterar, $trabajador_id);                                                                                    
+                                                                if( $arr_marcajes['salida'] != "" ){
+                                                                    $time = strtotime($arr_marcajes['salida']['checktime']);
+                                                                    ?>
+                                                                    <span class="badge">
+                                                                    <?php echo date('H:i:s',$time); ?>
+                                                                    </span>
+                                                                    <?php
+                                                                } 
+                                                            ?>
                                                         </td>
                                                         <td class="no_laboral">
-                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int ?>][justificado]" />
+                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
                                                             <span id="span_<?php echo $fecha_iterar ?>"></span>                                                                
                                                         </td>                                                        
                                                                                                                                                     
@@ -204,7 +204,7 @@ table th,
                                                     <?php } elseif( isDiaFeriado($fecha_iterar) ){ ?> 
                                                         <td class="no_laboral"><?php echo  $fecha_iterar; ?></td>
                                                         <td colspan="4" class="no_laboral">
-                                                                    <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int ?>][justificado]" />
+                                                                    <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
                                                                     <span id="span_<?php echo $fecha_iterar ?>"></span>                                                            
                                                         </td>
                                                     <?php } elseif( $es_ausencia['es_ausencia'] ){ ?>
@@ -234,7 +234,7 @@ table th,
                                                                     $cls_no_trabaja = '';
                                                                 }                                                                                                                                                                     
                                                         ?>
-                                                    	<td class="<?php echo $cls_no_trabaja; ?>">                                                                            
+                                                    	<td class="<?php echo $cls_no_trabaja; ?>">                                                                       
                                                             <?php echo $fecha_iterar; ?> 
                                                         </td>
                                                         <!-- Badeclass: bg-red Ó bg-transp-->
@@ -264,7 +264,7 @@ table th,
                                                         $tipo_j = 'H';
                                                         ?>
                                                         <td colspan="4" class="<?php echo $cls_no_trabaja; ?>">
-                                                                    <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $IN['logid'] ?>][justificado]" />
+                                                                    <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
                                                                     <span id="span_<?php echo $fecha_iterar ?>"></span>
                                                             
                                                         </td>
@@ -280,7 +280,7 @@ table th,
                                                             <?php
                                                                 if( $hora_entrada != strtotime( $m_horario_entrada ) ) {                                                                        
                                                                 ?>
-                                                                        <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $IN['logid'] ?>][justificado]" />
+                                                                        <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
                                                                         <span id="span_<?php echo $fecha_iterar ?>"></span>
                                                                 
                                                                 <?php 
@@ -363,7 +363,7 @@ table th,
                                                             <?php
                                                                 if( $hora_salida != strtotime( $m_horario_salida ) ) {                                                                        
                                                                 ?>
-                                                                <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $OUT['logid'] ?>][justificado]" />
+                                                                <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][justificado]" />
                                                                 <span id="span_<?php echo $fecha_iterar ?>"></span>
                                                                 
                                                                 <?php 
@@ -481,31 +481,28 @@ $(document).ready(function(){
     
     foreach( $t_atrasohoraextra as $ahe ){
         $ahe['horas'] = procesarDecimal($ahe['horas']);
+        $fecha_int = str_replace("-","",$ahe['fecha']);
+        $lowerIO = strtolower($ahe['io']);
+        
         if( $ahe['horas'] > 0 ){
             $h_ex_efectiva = ' (' . $ahe['horas'] . ' hrs.)';
         } else {
             $h_ex_efectiva = '';
         }
         
-        if( $ahe['logid'] ){            
-        ?>
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][justificado]']").css({ visibility : 'visible' });
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][justificado]']").prop('checked',true);
-        $("input[name='justificativo[<?php echo $ahe['logid'] ?>][justificado]']").next('span').html( '<strong> ' + arr_justificativos[<?php echo $ahe['justificativo_id'] ?>] + '<?php echo $h_ex_efectiva ?> </strong>' );        
-    <?php 
-        } else { 
-            if( $ahe['io'] == 'I' )
-                $justificativo_no_marco = 'justificativo_no_marco_entrada';
-            else 
-                $justificativo_no_marco = 'justificativo_no_marco_salida';
+        
+        if( $ahe['io'] == 'I' )
+            $justificativo_no_marco = 'justificativo';
+        else 
+            $justificativo_no_marco = 'justificativo';
+
     ?>
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificado]']").css({ visibility : 'visible' });
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificado]']").prop('checked',true);
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificado]']").next('span').html( '<strong> ' + arr_justificativos[<?php echo $ahe['justificativo_id'] ?>] + '<?php echo $h_ex_efectiva ?></strong>' );
-        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $ahe['fecha'] ?>][justificado]']").closest('tr').find('small').empty();
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").css({ visibility : 'visible' });
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").prop('checked',true);
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").next('span').html( '<strong> ' + arr_justificativos[<?php echo $ahe['justificativo_id'] ?>] + '<?php echo $h_ex_efectiva ?></strong>' );
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('tr').find('small').empty();
     
     <?php
-        }
     } 
     ?>
     

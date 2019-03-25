@@ -56,6 +56,7 @@ if($_SESSION[PREFIX.'is_jefe']){
     }
     $trabajadores_x_cargo = $db->rawQuery( $sql_trabajadores_x_cargo );
 }
+
 if( $_POST ){
 
     extract($_POST);
@@ -178,11 +179,12 @@ if( $_POST ){
 }
 
 if( $parametros ){
-    
+
     /** Consultar datos de trabajador **/
     if( ( $parametros[0] == 'me' ) && ( $parametros[1] != $_SESSION[ PREFIX . 'login_uid'] ) ){
         redirect(BASE_URL . '/' . $entity . '/me' );
     }
+
     if( isset($parametros[1]) ){
 
         $db->where ("id", $parametros[1]);
@@ -217,6 +219,7 @@ if( $parametros ){
         AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 0 )
         ";
         $ausencias_trabajador = $db->rawQuery( $sql );
+
 
 
         // NUeva SQL para licencias (desde el mes en corte hacia aelante TODAS)
@@ -394,7 +397,7 @@ if( $parametros ){
         $db->where ("tipo", 'H');
         $justificativos_horaextra = $db->get('m_justificativo');
 
-
+        
     } else {
         if( $action != "listar_trabajadores" ){
             if( $_SESSION[PREFIX.'is_trabajador'] == true ){

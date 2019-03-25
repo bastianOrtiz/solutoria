@@ -317,10 +317,12 @@ function obtenerTotalDescuentoXAtrasos($trabajador_id, $aplica_gracia = true){
     $hh = calcularValorHH($trabajador_id);
     $minuto_hh = ( $hh / 60 );
 
+
     if( marcaTarjeta($trabajador_id) ){                              
 
         $atrasos_entrada = obtenerAtrasosAusenciasTrabajador($trabajador_id,'I');
         $atrasos_salida = obtenerAtrasosAusenciasTrabajador($trabajador_id,'O');
+
 
         $total_atrasos = ( $atrasos_entrada['total_atraso'] + $atrasos_salida['total_atraso'] );
         
@@ -361,6 +363,7 @@ function obtenerTotalDescuentoXAtrasos($trabajador_id, $aplica_gracia = true){
         "total_horas_atraso" => $total_horas_atraso,
         "total_descontar_atrasos" => $total_descontar_atrasos
     );
+
     
     return $arr_return;
 }
@@ -813,8 +816,6 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
     
       
     /** FIN MODIFICACION **/
-
-    
     
     
     
@@ -848,14 +849,14 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
                                         if( $tipoMarcadoTarjeta == 'I' ){
                                             if( $str_hora_registro > strtotime( $m_horario_definido ) ) {
                                                 $diff_horas = RestarHoras($m_horario_definido,$hora_registro,$fecha_comparar);
-                                                if( !checkIfAutorized($marcacion['logid'],$id_trabajador,'A') ){
+                                                if( !checkIfAutorized(null,$id_trabajador,'A','I',$fecha_iterar) ){
                                                     $total_horas_atraso = ($total_horas_atraso + $diff_horas['minutos']);
                                                 }
                                             }
                                         } else {
                                             if( $str_hora_registro < strtotime( $m_horario_definido ) ) {
                                                 $diff_horas = RestarHoras($hora_registro,$m_horario_definido,$fecha_comparar);
-                                                if( !checkIfAutorized(null,$id_trabajador,'A',$tipoMarcadoTarjeta,$fecha_iterar) ){
+                                                if( !checkIfAutorized(null,$id_trabajador,'A','O',$fecha_iterar) ){
                                                     $total_horas_atraso = ($total_horas_atraso + $diff_horas['minutos']);
                                                 }                                        
                                             }                                                                                                            
