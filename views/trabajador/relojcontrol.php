@@ -300,7 +300,7 @@ table th,
                                             			<td class="ausente"> <?php echo $fecha_iterar ?> </td>
                                             			<td class="ausente no_mark" colspan="2"> 
                                                             <small>No Marcó</small>
-                                                            <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][justificado]" />
+                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][justificado]" />
                                                             <span id="span_<?php echo $fecha_iterar ?>"></span>
                                                         </td>                                                            			                                                    			                                                                
                                             		    
@@ -383,7 +383,7 @@ table th,
                                                     
                                             			<td class="ausente no_mark"><small>No Marcó</small> </td>
                                             			<td class="ausente" colspan="2"> 
-                                                            <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_salida[<?php echo $fecha_iterar; ?>][justificado]" />
+                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_inr.'o'; ?>][justificado]" />
                                                             <span id="span_<?php echo $fecha_iterar ?>"></span>                                                            
                                                         </td>                                                            			                                                    			                                                                
                                             		    
