@@ -188,8 +188,11 @@ if( $parametros ){
     if( isset($parametros[1]) ){
 
         $db->where ("id", $parametros[1]);
-        $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
+        if( $_SESSION[ PREFIX . 'login_uid'] != 151 ){
+            $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
+        }
         $trabajador = $db->getOne("m_trabajador");
+
         if(!$trabajador){
             redirect(BASE_URL . '/' . $entity . '/listar/' );
         }
@@ -386,8 +389,15 @@ if( $parametros ){
         /* fin */
 
         //Justificativos
+        $periodo_corte = getPeriodoCorte();
         $db->where("trabajador_id", $parametros[1]);
+        if( $parametros[2] && $parametros[3] ){
+            $db->where('fecha', Array ($parametros[2], $parametros[3]), 'BETWEEN');    
+        } else {
+            $db->where('fecha', Array ($periodo_corte['desde'], $periodo_corte['hasta']), 'BETWEEN');    
+        }
         $t_atrasohoraextra = $db->get('t_atrasohoraextra');
+
 
         $db->where ("cuenta_id", $_SESSION[ PREFIX . 'login_cid']);
         $db->orderBy("nombre","ASC");
