@@ -400,19 +400,19 @@
                                                                 			<td class="ausente" colspan="2">                                                                            
                                                                                 <div class="input-group" title="No marcó">
                                                                                     <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">
-                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][justificado]" />
+                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][justificado]" />
                                                                                     </span>
-                                                                                    <select class="form-control" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][justificativo]" style="width: 200px; display: none;">
+                                                                                    <select class="form-control" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][justificativo]" style="width: 200px; display: none;">
                                                                                         <option value="">Seleccione</option>
                                                                                         <?php foreach( $justificativos as $j ){ ?>
                                                                                         <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
                                                                                         <?php } ?>
                                                                                     </select>                                                                                    
-                                                                                    <input type="text" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][tipo]" value="<?php echo $tipo_j; ?>" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][io]" value="I" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar_int.'i'; ?>][comentario]" class="hd_comm_ahe" value="" />                                                                                
+                                                                                    <input type="text" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][tipo]" value="<?php echo $tipo_j; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][io]" value="I" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][comentario]" class="hd_comm_ahe" value="" />                                                                                
                                                                                     <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'i' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>                                                            			                                                    			                                                                
@@ -512,19 +512,19 @@
                                                                 			<td class="ausente" colspan="2"> 
                                                                                 <div class="input-group">
                                                                                     <span class="input-group-addon" style="border-right: 1px solid #d2d6de;">
-                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][justificado]" />
+                                                                                        <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][justificado]" />
                                                                                     </span>
-                                                                                    <select class="form-control" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][justificativo]" style="width: 200px; display: none;">
+                                                                                    <select class="form-control" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][justificativo]" style="width: 200px; display: none;">
                                                                                         <option value="">Seleccione</option>
                                                                                         <?php foreach( $justificativos as $j ){ ?>
                                                                                         <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
                                                                                         <?php } ?>
                                                                                     </select>                                                                                    
-                                                                                    <input type="text" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][tipo]" value="<?php echo $tipo_j; ?>" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][io]" value="O" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o'; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                    <input type="hidden" name="justificativo_no_marco_salida[<?php echo $fecha_iterar_int.'o' ?>][comentario]" class="hd_comm_ahe" value="" />
+                                                                                    <input type="text" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][hora_extra_efectiva]" value="0" class="form-control he_efectiva" style="width: 50px; display: none" maxlength="4" data-toggle="tooltip" title="Horas extra efectivas (Ej: 2.5)" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][tipo]" value="<?php echo $tipo_j; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][io]" value="O" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][comentario]" class="hd_comm_ahe" value="" />
                                                                                     <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'o' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>                                                            			                                                    			                                                                
