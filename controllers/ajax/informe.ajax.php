@@ -45,14 +45,23 @@ if( $action == 'save_data' ){
 if( $action == 'select_year' ){
     //select * from m_trabajador where tipocontrato_id IN (3,4) AND year(fechaContratoFin) < 2018 AND fechaContratoFin != "0000-00-00"
 
-    
+    /*
     $db->where('tipocontrato_id',array(3,4),'IN');
-    $db->where('year(fechaContratoFin)',$year,"<");
+    $db->where('year(fechaContratoFin)',$year,">=");
     $db->where('fechaContratoFin','0000-00-00',"!=");
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
-    $t = $db->get('m_trabajador');
+    $result = $db->get('m_trabajador');
+    */
+    
 
-    $json = $t;
+
+    $sql = "SELECT * FROM m_trabajador T 
+            WHERE T.tipocontrato_id  IN (3,4)
+            OR ( T.tipocontrato_id NOT IN (3,4) AND year(T.fechaContratoFin) = $year )";
+    $result = $db->rawQuery($sql);
+        
+    
+    $json = $result;
 
 }
 
