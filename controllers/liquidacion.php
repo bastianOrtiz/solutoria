@@ -353,7 +353,7 @@ if( isset($parametros[1]) ){
     $result = $result[0];
     $concat_fecha_contrato = $result['ano'].$result['mes'];
 
-    $concat_fecha_liq = getAnoMostrarCorte().$mes;
+    $concat_fecha_liq = getAnoMostrarCorte().leadZero($mes);
 
     if( $concat_fecha_liq < $concat_fecha_contrato ){
         redirect(BASE_URL.'/trabajador/editar/'.$trabajador_id,'',true,'No se puede liquidar el trabajador, porque la fecha de inicio de su contrato es despueés del mes que se esta liquidando');
