@@ -22,8 +22,9 @@
   <div class="navbar-custom-menu">
     <ul class="nav navbar-nav">
       <!-- Messages: style can be found in dropdown.less-->
-    <li>    
-    </li>
+      <li>
+        <a href="javascript: procesarLiquidaciones();"><i class="fa fa-cogs"></i></a>
+      </li>
       <li class="dropdown messages-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <i class="fa fa-calendar"></i>          

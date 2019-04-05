@@ -142,7 +142,7 @@
                 </div><!-- /.box -->
                 <?php } ?>
               <!-- LINE CHART -->
-                <?php if( ! $_SESSION[PREFIX.'is_trabajador'] ){  ?>
+              <?php if( ! $_SESSION[PREFIX.'is_trabajador'] ){  ?>
               <div class="box box-info">
                 <div class="box-header with-border">
                   <h3 class="box-title">Grafico Hombres v/s Mujeres</h3>
@@ -155,24 +155,36 @@
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-                <?php } ?>
+              <?php } ?>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <form method="post">
+                    <input type="submit" name="backup" value="CREAR REPALDO DEL SISTEMA" class="btn btn-danger pull-right">
+                  </form>
+                </div>
+              </div>
+              <br><br>
+               <div class="row">
+                <div class="col-lg-12">
+                    <button type="button" name="procesar_liquidaciones" class="btn btn-success pull-right">CERRAR PROCESO DE LIQUIDACIÓN DE ESTE MES</button>
+                </div>
+              </div>
+
 
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->    
-
-        <div class="row">
-          <div class="col-lg-12">
-            <form method="post">
-                <input type="submit" name="backup" value="CREAR REPALDO DEL SISTEMA" class="btn btn-danger pull-right">
-            </form>
-          </div>
-        </div>                                    
         
     </section><!-- /.content -->
 </div>
 
 <script>
 
+$(document).ready(function(){
+    $("[name=procesar_liquidaciones]").click(function(e){
+        procesarLiquidaciones();
+    })
+})
 
  $(function () {           
     

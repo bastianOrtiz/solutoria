@@ -52,6 +52,9 @@
     <!-- jQuery 2.1.4 -->
     <script>
     BASE_URL = '<?php echo BASE_URL ?>';
+    MES_CORTE = '<?php echo getMesMostrarCorte(); ?>';
+    MES_CORTE_TXT = '<?php echo getNombreMes(getMesMostrarCorte()); ?>';
+    ANO_CORTE = '<?php echo getAnoMostrarCorte(); ?>';
     </script>
     <script src="<?php echo BASE_URL ?>/public/plugins/jQuery/jQuery-2.1.4.min.js"></script>    
   </head>

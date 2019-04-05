@@ -85,6 +85,25 @@ $(document).ready(function(){
         
 })
 
+function procesarLiquidaciones(){
+    if( confirm('¿Cerrar el proceso de liquidacion de '+ MES_CORTE_TXT +'/'+ANO_CORTE+'?') ){
+        $.ajax({
+            type: "POST",
+            url: BASE_URL + '/controllers/ajax/dashboard.ajax.php',
+            data: 'ajax_action=procesar_liquidaciones',
+            dataType: 'json',
+            beforeSend: function(){   
+                $(".overlayer").show();
+            },
+            success: function (json) {                  
+                if(json.status == 'success'){                                               
+                    $(".overlayer").fadeOut(300);
+                }
+            }
+        })
+    }
+}
+
 function callAjaxSidebar(){    
     $.ajax({
 		type: "POST",

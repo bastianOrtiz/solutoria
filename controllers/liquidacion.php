@@ -13,46 +13,11 @@ $registros = $db->get("m_trabajador");
 if( $_SESSION[PREFIX.'is_trabajador'] ){    
 
     $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
+    $db->where('terminada',1);
     $db->orderBy('ano','DESC');
     $db->orderBy('mes','DESC');
-    $ultima_liquidacion = $db->getOne('liquidacion');
+    $liquidaciones_trabajador = $db->get('liquidacion');
 
-    $limite_del_mes = getLimiteMes(date('n'));
-    
-    $fecha_limite = date('Y')."-".date('m')."-".$limite_del_mes;
-
-    // Restamos 5 dias antes de fin de mes para que el trabajador pueda revisar la ultima liquidacion
-    $fecha_limite_mostrar = strtotime($fecha_limite."- ". LIMITE_DIAS_LIQUIDACION ." days"); 
-    $time_hoy = strtotime(date('Y-m-d'));
-
-    if( $time_hoy < $fecha_limite_mostrar ){
-        //Aun no llegamos al limite
-        $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
-        $db->where('mes',date('n'));
-        $db->where('ano',date('Y'));
-        $liquidacion_este_mes = $db->getOne('liquidacion');
-
-        if($liquidacion_este_mes){
-            //Hay liquidaciones este mes
-            $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
-            $db->orderBy('ano','DESC');
-            $db->orderBy('mes','DESC');
-            $liquidaciones_trabajador = $db->get('liquidacion',[1,999]);
-        } else {
-            //NO hay liquidaciones este mes
-            $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
-            $db->orderBy('ano','DESC');
-            $db->orderBy('mes','DESC');
-            $liquidaciones_trabajador = $db->get('liquidacion');
-        }
-    } else {
-        //Ya podemos mostrar la liquidacion del mes
-        $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
-        $db->orderBy('ano','DESC');
-        $db->orderBy('mes','DESC');
-        $liquidaciones_trabajador = $db->get('liquidacion');
-    }
-    
 }
 
 if( $_POST ){
