@@ -892,6 +892,7 @@ if( $parametros[0] == 'imposiciones' ){
     $inicio_plazo_fijo_mes = $db->rawQuery( $sql );        
        
     
+    /* OLD
     $sql = "
     SELECT CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, A.trabajador_id, A.fecha_inicio, A.fecha_fin 
     FROM t_ausencia A, m_trabajador T
@@ -902,7 +903,72 @@ if( $parametros[0] == 'imposiciones' ){
     AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
     ORDER BY nombre ASC
     ";
-    $licencias = $db->rawQuery( $sql ); 
+    */
+    $licencias = [];
+    $this_year = strtotime(date('Y-m-d'));
+    $un_ano_atras = ($this_year - 31536000);
+    $un_ano_atras = date('Y-m-d',$un_ano_atras);
+    $sql = "
+    SELECT 
+    concat(T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres) AS nombre,
+    TA.trabajador_id,
+    TA.fecha_inicio,
+    TA.fecha_fin
+    FROM t_ausencia TA, m_trabajador T
+    where TA.ausencia_id IN ( SELECT id FROM m_ausencia M WHERE M.licencia = 1 ) 
+    AND T.empresa_id = 2
+    AND T.id = TA.trabajador_id
+    AND TA.fecha_fin > '$un_ano_atras'
+    ";
+    $all_licencias = $db->rawQuery( $sql ); 
+
+    foreach ($all_licencias as $licencia) {
+        
+        $int_fecha_inicio_licencia = explode("-",$licencia['fecha_inicio']);
+        $int_fecha_inicio_licencia = $int_fecha_inicio_licencia[0].$int_fecha_inicio_licencia[1].$int_fecha_inicio_licencia[2];
+        
+        $int_fecha_fin_licencia = explode("-",$licencia['fecha_fin']);
+        $int_fecha_fin_licencia = $int_fecha_fin_licencia[0].$int_fecha_fin_licencia[1].$int_fecha_fin_licencia[2];
+        
+        $int_fecha_inicio_informe = getAnoMostrarCorte().getMesMostrarCorte().'01';
+        
+        $int_fecha_fin_informe = getAnoMostrarCorte().getMesMostrarCorte().getLimiteMes((int)getMesMostrarCorte());
+        
+        if( $int_fecha_fin_licencia < $int_fecha_inicio_informe ){
+        } elseif ($int_fecha_inicio_licencia > $int_fecha_fin_informe) {
+        } elseif ( $int_fecha_inicio_licencia >= $int_fecha_inicio_informe && $int_fecha_fin_licencia <= $int_fecha_fin_informe ) {
+            $licencias[] = [
+                'nombre' => $licencia['nombre'],
+                'trabajador_id' => $licencia['trabajador_id'],
+                'fecha_inicio' => $licencia['fecha_inicio'],
+                'fecha_fin' => $licencia['fecha_fin']
+            ];
+        } elseif ( $int_fecha_fin_licencia >= $int_fecha_inicio_informe && $int_fecha_fin_licencia <= $int_fecha_fin_informe ) {
+            $licencias[] = [
+                'nombre' => $licencia['nombre'],
+                'trabajador_id' => $licencia['trabajador_id'],
+                'fecha_inicio' => $licencia['fecha_inicio'],
+                'fecha_fin' => $licencia['fecha_fin']
+            ];
+        } elseif (  $int_fecha_inicio_licencia >= $int_fecha_inicio_informe && $int_fecha_inicio_licencia <= $int_fecha_fin_informe  ) {
+            $licencias[] = [
+                'nombre' => $licencia['nombre'],
+                'trabajador_id' => $licencia['trabajador_id'],
+                'fecha_inicio' => $licencia['fecha_inicio'],
+                'fecha_fin' => $licencia['fecha_fin']
+            ];
+        } elseif ( $int_fecha_inicio_licencia < $int_fecha_inicio_informe && $int_fecha_fin_licencia > $int_fecha_fin_informe ) {
+            $licencias[] = [
+                'nombre' => $licencia['nombre'],
+                'trabajador_id' => $licencia['trabajador_id'],
+                'fecha_inicio' => $licencia['fecha_inicio'],
+                'fecha_fin' => $licencia['fecha_fin']
+            ];
+        }
+
+
+        
+    }
 
     
     $db->where("id",$_SESSION[PREFIX.'login_eid']);
