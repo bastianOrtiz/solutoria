@@ -158,7 +158,25 @@
                             <a class="btn btn-primary output" data-or="pdf">
                                 <i class="fa fa-check"></i> &nbsp; <i class="fa fa-file-pdf-o"></i> &nbsp; PDF
                             </a>
-                            
+
+                            <br /><br /><br />
+
+                            <div class="form-group">
+                                <label class="top">Incluir trabajadores Finiquitados y/o despedidos</label>
+                                  <div class="radio">                            
+                                    <label>
+                                      <input type="radio" name="trabajadores_all[]" value="1" />
+                                        SI
+                                    </label>
+                                    &nbsp; &nbsp; &nbsp; 
+                                    <label>
+                                      <input type="radio" name="trabajadores_all[]" value="0" checked />
+                                      NO
+                                    </label>
+                                  </div>
+                                  <script> $("input.rbtSexo[value=1]").prop('checked',true) </script>
+                                </div>
+
                             <input type="hidden" name="output" id="output" value="pdf" />
                             
                         </div>

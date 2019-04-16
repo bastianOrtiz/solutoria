@@ -14,7 +14,7 @@ $db->where('tipocontrato_id',array(3,4),'NOT IN');
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $trabajadores_todos_cert_sueldos = $db->get('m_trabajador');
 
-if( $_POST ){        
+if( $_POST ){
         
     logit( $_SESSION[PREFIX.'login_name'],'generar informe',$_POST['action'],0,$db->getLastQuery() );
     
@@ -580,16 +580,24 @@ if( $_POST ){
             $include_order = "";
         }
 
-
+        $trabajadores_all = $trabajadores_all[0];
 
         $sql = "
         SELECT  $str_cols
-        FROM m_trabajador T
-        WHERE  tipocontrato_id NOT IN (3,4)  
-        AND empresa_id = '". $_SESSION[ PREFIX . 'login_eid' ] ."'
+        FROM m_trabajador T ";
+        if( $trabajadores_all ){
+            $sql .= "WHERE empresa_id = '". $_SESSION[ PREFIX . 'login_eid' ] ."'";
+        } else {
+            $sql .= "
+                WHERE  tipocontrato_id NOT IN (3,4)  
+                AND empresa_id = '". $_SESSION[ PREFIX . 'login_eid' ] ."'
+            ";
+        }
+        $sql .= "
         $include_depa
         $include_order
         ";
+
         $trabajadores = $db->rawQuery($sql);
 
         $html = '<style type="text/css">';
