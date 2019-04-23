@@ -155,7 +155,7 @@
                   </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
-              <?php } ?>
+              
 
               <div class="row">
                 <div class="col-lg-12">
@@ -171,6 +171,7 @@
                 </div>
               </div>
 
+              <?php } ?>
 
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->    
