@@ -2316,7 +2316,7 @@ $(document).ready(function(){
             if( $ahe['io'] == 'I' )
                 $justificativo_no_marco = 'justificativo';
             else 
-                $justificativo_no_marco = 'justificativo_no_marco_salida';
+                $justificativo_no_marco = 'justificativo';
     ?>
         
         /* NO LOGID */
