@@ -1528,7 +1528,7 @@ function obtenerHoraExtraTrabajador($id_trabajador){
         $db->where('trabajador_id',$id_trabajador);
         $db->where('horas','0','>');
         $db->where('fecha', Array ($desde, $hasta), 'BETWEEN');
-        $hh = $db->get('t_atrasohoraextra');              
+        $hh = $db->get('t_atrasohoraextra');
          
         foreach( $hh as $h ){
             if( translateDia( date( 'D', strtotime( $h['fecha'] ) ) ) == 'Dom' ){
@@ -1557,6 +1557,7 @@ function obtenerHoraExtraTrabajador($id_trabajador){
             $total_horas_extras_especiales = 0;
         }
     } 
+
     
     $arr_horas_extras = array(
         'normal' => $total_horas_extras,

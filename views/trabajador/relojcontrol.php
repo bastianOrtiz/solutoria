@@ -383,7 +383,7 @@ table th,
                                                     
                                             			<td class="ausente no_mark"><small>No Marcó</small> </td>
                                             			<td class="ausente" colspan="2"> 
-                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_inr.'o'; ?>][justificado]" />
+                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][justificado]" />
                                                             <span id="span_<?php echo $fecha_iterar ?>"></span>                                                            
                                                         </td>                                                            			                                                    			                                                                
                                             		    

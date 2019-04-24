@@ -156,7 +156,9 @@
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
               
+              <?php } ?>
 
+              <?php if( isAdmin() ){  ?>
               <div class="row">
                 <div class="col-lg-12">
                   <form method="post">
@@ -170,8 +172,9 @@
                     <button type="button" name="procesar_liquidaciones" class="btn btn-success pull-right">CERRAR PROCESO DE LIQUIDACIÓN DE ESTE MES</button>
                 </div>
               </div>
-
               <?php } ?>
+
+              
 
             </div><!-- /.col (RIGHT) -->
         </div><!-- /.row -->    
