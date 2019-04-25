@@ -120,6 +120,7 @@ if( $_POST ){
         $query_desc = "SELECT * FROM t_descuento WHERE (activo = 1 OR ( activo = 0 AND fechaFinalizacion = '".leadZero($mes)."-$year' )) and trabajador_id = $trabajador_id ORDER BY mesInicio DESC";        
         $debes_trabajador = $db->rawQuery( $query_desc );
 
+
         
         foreach( $debes_trabajador as $d ){
             if( $d['trabajador_id'] == $trabajador_id ){

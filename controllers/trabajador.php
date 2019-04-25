@@ -97,7 +97,8 @@ if( $_POST ){
         $m_horarios = $db->getOne('m_horario');
         $m_horario_entrada = $m_horarios['entradaTrabajo'];
         $m_horario_salida = $m_horarios['salidaTrabajo'];    
-        
+
+
         // Guardar las justificaciones        
         if( @$_POST['justificativo'] ){
                         
@@ -106,11 +107,10 @@ if( $_POST ){
             $db->where('fecha', Array ($fechaInicio, $fechaFin), 'BETWEEN');
             $db->delete('t_atrasohoraextra');
             //end
-            
             foreach( $_POST['justificativo'] as $jkey => $justif ){                                
                 if( $justif['justificado'] ){
                     if( $justif['tipo'] == 'H' ){                        
-                        if( $justif['hora_extra_efectiva'] == 0 ){
+                        if(( $justif['hora_extra_efectiva'] == 0 ) && ( $justif['no_marco'] != 1 ) ){
                             // sacar la diferencia entre lo marcado y el horario en BD
                             
                             if($justif['io'] == 'I'){
@@ -495,14 +495,17 @@ if( $parametros ){
         $debes_trabajador = $db->get("t_descuento");
         */
         
-        $max_days = cal_days_in_month(CAL_GREGORIAN, $mes, $ano);
-        $query_desc = "SELECT * FROM `t_descuento` 
-        WHERE trabajador_id=$trabajador_id 
-        AND fechaInicio <= '$ano-$mes-$max_days'
-        AND activo = 1 OR
-        (activo = 0 and fechaFinalizacion = '".leadZero($mes)."-$year' and trabajador_id=$trabajador_id AND trabajador_id=$trabajador_id)          
-        ORDER BY fechaInicio DESC ";
-        $debes_trabajador = $db->rawQuery( $query_desc,'',false );        
+        $query_desc = "
+        SELECT * FROM t_descuento 
+        WHERE trabajador_id=$parametros[1] 
+        AND activo = 1 
+        OR
+            (
+            activo = 0 and fechaFinalizacion = '". leadZero($mes) ."-$ano' 
+            AND trabajador_id = $parametros[1]
+            )  
+        ORDER BY mesInicio DESC ";
+        $debes_trabajador = $db->rawQuery( $query_desc );     
         
         
         /*
