@@ -667,11 +667,13 @@ if( $_POST ){
         SELECT T.rut, CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, L.$tipoImpuesto 
         FROM m_trabajador T, liquidacion L
         WHERE T.id = L.trabajador_id
+        AND (T.fechaContratoFin >= '".$ano."-".leadZero($mes)."-01' OR T.fechaContratoFin = '0000-00-00')
         AND L.mes = $mes 
         AND L.ano = $ano
         AND T.empresa_id = $empresa_id
         AND T.id NOT IN (936)
         ";
+
 
         if( !@$_POST['mostrarZero'] ){
             $sql_impuesto .= " AND L.$tipoImpuesto > 0 ";
