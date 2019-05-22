@@ -319,6 +319,12 @@ if( $_POST ){
     }
 
 
+    if( $action == 'haberes_descuentos' ){
+        show_array($_POST);
+    }
+
+
+
     if( $action == 'ausencias' ){
         
         $sql_ausencia = "
@@ -828,7 +834,8 @@ if( $_POST ){
         'ausencias_trabajador',
         'ausencias',
         'certificado_sueldos',
-        'reporte_atrasos'
+        'reporte_atrasos',
+        'haberes_descuentos'
 
     ); // Informes que NO se imprimen en PDF
     
@@ -1093,9 +1100,15 @@ if( $parametros[0] == 'remuneraciones-centrocosto' ){
       
 }
 
+
+
 if( $parametros[0] == 'ausencias' ){    
-    $ausencias_todas = $db->get('m_ausencia');    
-    
+    $ausencias_todas = $db->get('m_ausencia');        
+}
+
+if( $parametros[0] == 'haberes_descuentos' ){    
+    $haberes = getRegistrosCompartidos('Haber','m_haber');
+    $descuentos = getRegistrosCompartidos('Descuento','m_descuento');
 }
 
 

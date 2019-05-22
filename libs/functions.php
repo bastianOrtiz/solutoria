@@ -1459,6 +1459,11 @@ function mainMenu(){
                 'entidad' => 'informe',
                 'accion' => 'certificado_antiguedad',
                 'label' => 'Certificado de Antigüedad'
+            ),
+            array(
+                'entidad' => 'informe',
+                'accion' => 'haberes_descuentos',
+                'label' => 'Informe Haberes/Descuentos'
             )
         )
     );
