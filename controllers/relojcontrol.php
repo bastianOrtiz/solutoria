@@ -92,7 +92,7 @@ if( $_POST ){
                 if( $justif['justificado'] ){
 
                     if( $justif['tipo'] == 'H' ){
-                        if( $justif['hora_extra_efectiva'] == 0 ){
+                        if(( $justif['hora_extra_efectiva'] == 0 ) && ( $justif['no_marco'] != 1 ) ){
                             // sacar la diferencia entre lo marcado y el horario en BD
                             if($justif['io'] == 'I')
                                 $m_horarioen_BD = $m_horario_entrada;

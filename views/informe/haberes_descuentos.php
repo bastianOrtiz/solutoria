@@ -46,7 +46,7 @@
                                                 <tbody>
                                                         <?php 
                                                         $sumatoria = 0;
-                                                        for($i=0;$i<10;$i++): 
+                                                        foreach ($results['registros'] as $key => $result) :
                                                         ?>
                                                         <tr>
                                                             <td> sadsadasds </td>
@@ -55,7 +55,7 @@
                                                         </tr>
                                                         <?php 
                                                         $sumatoria += ($i*100);
-                                                        endfor; 
+                                                        endforeach; 
                                                         ?>
                                                 </tbody>
                                                 <tfoot>
@@ -77,6 +77,7 @@
                                     <?php else: ?>
                                     
                                     <div class="row">
+                                        <input type="hidden" name="hdnTipoMovimiento" id="hdnTipoMovimiento">
                                         <div class="col-lg-4 col-sm-4 cols-xs-12">
                                             <div class="form-group">
                                                 <label> Empresa </label>
@@ -87,7 +88,8 @@
                                         </div>
                                         <div class="col-lg-4 col-sm-4 cols-xs-12">
                                             <label> Descuento o Haber </label>
-                                            <select class="form-control" id="cboHaberesDescuentos" name="cboHaberesDescuentos">
+                                            <select class="form-control" id="cboHaberesDescuentos" name="cboHaberesDescuentos" required>
+                                                <option value="">Seleccione</option>
                                                 <optgroup label="Haberes">
                                                     <?php foreach ($haberes as $haber) { ?>
                                                     <option value="<?php echo $haber['id'] ?>"> <?php echo $haber['nombre'] ?> </option>
@@ -132,12 +134,10 @@
 <script>
 $(document).ready(function(){    
    
-    $(".dropdown-menu a").click(function(e){
-        e.preventDefault();
-        var txt = $(this).text();
-        var val = $(this).data('val');
-        $(this).closest('.input-group-btn').find('button.btn').html(txt + '<span class="fa fa-caret-down"></span>');
-        $(this).closest('.input-group').find('.hdnValue').val(val);
+    $("#cboHaberesDescuentos").change(function(){
+        var selectedOption = $('#cboHaberesDescuentos option:selected');
+        var label = selectedOption.closest('optgroup').attr('label');
+        $("#hdnTipoMovimiento").val(label);
     })
 
     $("#frmVerAtrasosMensual").submit(function(e){
