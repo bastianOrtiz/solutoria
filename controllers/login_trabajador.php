@@ -1,5 +1,6 @@
 <?php
-
+echo "Acceso no disponible";
+exit();
 if( ( $_POST ) || $parametros ){
     extract($_POST);
     
