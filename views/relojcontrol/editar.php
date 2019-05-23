@@ -412,7 +412,8 @@
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][tipo]" value="<?php echo $tipo_j; ?>" />
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][io]" value="I" />
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
-                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][comentario]" class="hd_comm_ahe" value="" />                                                                                
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][comentario]" class="hd_comm_ahe" value="" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][no_marco]" value="1" />
                                                                                     <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'i' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>                                                            			                                                    			                                                                
@@ -525,6 +526,7 @@
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][io]" value="O" />
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][fecha]" value="<?php echo $fecha_iterar; ?>" />
                                                                                     <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o' ?>][comentario]" class="hd_comm_ahe" value="" />
+                                                                                    <input type="hidden" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][no_marco]" value="1" />
                                                                                     <a href="#" class="pinit" data-logid="<?php echo $fecha_iterar_int.'o' ?>"><i class="fa fa-thumb-tack"></i></a>
                                                                                 </div>
                                                                             </td>                                                            			                                                    			                                                                

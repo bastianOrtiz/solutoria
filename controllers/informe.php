@@ -320,7 +320,18 @@ if( $_POST ){
 
 
     if( $action == 'haberes_descuentos' ){
-        show_array($_POST);
+        $results = [];
+
+        if( $_POST['hdnTipoMovimiento'] == "Haberes" ){
+            $mov = 't_haber';
+        }
+        if( $_POST['hdnTipoMovimiento'] == "Descuentos" ){
+            $mov = 't_descuento';
+        }
+
+        $db->where('trabajador_id',$_POST['cboTrabajadores']);
+        $results['registros'] = $db->get($mov);
+
     }
 
 
