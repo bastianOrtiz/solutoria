@@ -2533,13 +2533,15 @@ function upload_image($input_name, $folder){
 /**
  * Funcion para subir archivos
  * @param string $input_name El nombre del input
- * @param string $folder Ruta donde se subirá el documento (excluyendo la raiz 
+ * @param string $folder Ruta donde se subirá el documento (incluyendo la raiz 
  * definida en la constante ROOT y AGREGANDO el ultimo slash / )
+ * @return (Array) Arreglo con el Status del upload (true o false), el nombre del archivo generado
+ * y un mensaje descriptivo con el resultado. 
  */
 function upload_doc($input_name, $folder){
     $name = $_FILES[$input_name]['name'];
     $pathinfo = pathinfo($name);
-    $array_extension_allowed = array('pdf','xls', 'xlsx', 'doc', 'docx','jpeg','jpg','png');
+    $array_extension_allowed = array('pdf','xls', 'xlsx', 'doc', 'docx','jpeg','jpg','png','dat');
     if( in_array($pathinfo['extension'],$array_extension_allowed) ){ 
         $array_return = array();
                 
@@ -2550,8 +2552,8 @@ function upload_doc($input_name, $folder){
             $foo->Process($folder);
             if ($foo->processed) {
                 $array_return['status'] = true;
-                $array_return['filename'] = $filename_body . '.' . $pathinfo['extension'];
-                $array_return['mensaje'] = "Archivo subido correctamente";            
+                $array_return['filename'] = $foo->file_dst_name_body . '.' . $foo->file_dst_name_ext;
+                $array_return['mensaje'] = "Archivo subido correctamente";          
             } else {
                 $array_return['status'] = false;
                 $array_return['filename'] = '';
