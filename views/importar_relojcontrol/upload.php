@@ -67,7 +67,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Fecha Fin del Rango (opcional)</label>
-                                        <input type="text" value="<?php echo date('Y-m-d') ?>" name="fechaFinRango" id="fechaFinRango" class="form-control datepicker" readonly>
+                                        <input type="text" value="<?php echo date('Y-m-d') ?>" name="fechaFinRango" id="fechaFinRango" class="form-control datepicker input-lg" readonly>
                                     </div>
                                 </div>
                             </div>

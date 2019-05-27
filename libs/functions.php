@@ -1509,6 +1509,19 @@ function mainMenu(){
         )
     );
     
+    
+    $menu['importar_relojcontrol'] = array(
+        'label' => 'Importar Relojcontrol',
+        'icon_class' => 'fa fa-clock-o',
+        'childs' => array(
+            array(
+                'entidad' => 'importar_relojcontrol',
+                'accion' => 'upload',
+                'label' => 'Subir archivo'
+            )
+        )
+    );
+    
     return $menu;   
 }
 
