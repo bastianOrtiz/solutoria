@@ -320,17 +320,23 @@ if( $_POST ){
 
 
     if( $action == 'haberes_descuentos' ){
-        $results = [];
-
-        if( $_POST['hdnTipoMovimiento'] == "Haberes" ){
-            $mov = 't_haber';
-        }
-        if( $_POST['hdnTipoMovimiento'] == "Descuentos" ){
-            $mov = 't_descuento';
-        }
-
-        $db->where('trabajador_id',$_POST['cboTrabajadores']);
-        $results['registros'] = $db->get($mov);
+        
+        $sql = "
+        SELECT 
+        	T.rut,
+        	CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
+            H.nombre,
+            LH.monto
+        FROM m_haber H, l_haber LH, m_trabajador T, liquidacion L
+        WHERE LH.liquidacion_id = L.id
+        AND L.trabajador_id = T.id
+        AND LH.haber_id = H.id
+        AND H.id = 12
+        ";
+        
+        $results['registros'] = $db->rawQuery($sql);
+        
+        show_array($results);
 
     }
 

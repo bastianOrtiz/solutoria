@@ -24,8 +24,9 @@
     </section>
                 
     <section class="content">
-        <form role="form" id="frmVerAtrasosMensual" method="post">
+        <form role="form" id="frmHaberesDescuentos" method="post">
             <input type="hidden" name="action" id="action" value="haberes_descuentos" />
+            <input type="hidden" name="hdnTipoMovimiento" id="hdnTipoMovimiento" value="" />
             <div class="row">
                 <div class="col-md-12">                                      
                     <div class="box">
@@ -77,7 +78,6 @@
                                     <?php else: ?>
                                     
                                     <div class="row">
-                                        <input type="hidden" name="hdnTipoMovimiento" id="hdnTipoMovimiento">
                                         <div class="col-lg-4 col-sm-4 cols-xs-12">
                                             <div class="form-group">
                                                 <label> Empresa </label>
@@ -89,7 +89,7 @@
                                         <div class="col-lg-4 col-sm-4 cols-xs-12">
                                             <label> Descuento o Haber </label>
                                             <select class="form-control" id="cboHaberesDescuentos" name="cboHaberesDescuentos" required>
-                                                <option value="">Seleccione</option>
+                                                <option value="">Seleccione Haber o Descuento</option>
                                                 <optgroup label="Haberes">
                                                     <?php foreach ($haberes as $haber) { ?>
                                                     <option value="<?php echo $haber['id'] ?>"> <?php echo $haber['nombre'] ?> </option>
@@ -113,6 +113,28 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-lg-4 col-sm-4 cols-xs-12">
+                                            <label>Fecha Inicio</label>
+                                            <input type="text" class="form-control datepicker" id="fechaInicioInforme" name="fechaInicioInforme"readonly />
+                                        </div>
+                                        <div class="col-lg-4 col-sm-4 cols-xs-12">
+                                            <label>Fecha Fin</label>
+                                            <input type="text" class="form-control datepicker" id="fechaFinInforme" name="fechaFinInforme"readonly />
+                                        </div>
+                                        <div class="col-lg-4 col-sm-4 col-xs-12">
+                                            <div class="radio">
+                                              <label>
+                                                <input type="radio" value="C" name="consolidado[]" checked> Consolidado
+                                              </label>
+                                            </div>
+                                            <div class="radio">
+                                              <label>
+                                                <input type="radio" value="M" name="consolidado[]"> Detallado Mensual
+                                              </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-lg-12">
                                             <button class="btn btn-primary btn-lg pull-right">Enviar</button>
                                         </div>
@@ -132,7 +154,13 @@
 </div><!-- /.content-wrapper -->
       
 <script>
-$(document).ready(function(){    
+$(document).ready(function(){  
+    
+    $(".datepicker").datepicker({
+        startView : 'year',
+        autoclose : true,
+        format : 'yyyy-mm-dd'
+    });
    
     $("#cboHaberesDescuentos").change(function(){
         var selectedOption = $('#cboHaberesDescuentos option:selected');
@@ -140,7 +168,7 @@ $(document).ready(function(){
         $("#hdnTipoMovimiento").val(label);
     })
 
-    $("#frmVerAtrasosMensual").submit(function(e){
+    $("#frmHaberesDescuentos").submit(function(e){
         e.preventDefault();
         err=0;
         $(".overlayer").show();
@@ -150,7 +178,7 @@ $(document).ready(function(){
             }
         })
         if( err == 0 ){
-            $("#frmVerAtrasosMensual")[0].submit();
+            $("#frmHaberesDescuentos")[0].submit();
         } else {
             alert('Seleccione mes y Año');
             $(".overlayer").hide();
