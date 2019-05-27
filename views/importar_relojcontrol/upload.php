@@ -1,3 +1,34 @@
+<style>
+#loadme_overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.7);
+    z-index: 9999;
+}
+
+#loadme_overlay .progress{
+    position: absolute;
+    width: 70%;
+    top: 50%;
+    left: 15%;
+    height: 40px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+}
+#loadme_overlay .progress span{
+    color: #000;
+    font-size: 18px;
+    display: block;
+    line-height: 38px;
+    text-align: center;
+}
+
+
+</style>
 <div class="content-wrapper">
     <section class="content-header">
         <h1> Subir Archivo del RelojControl (.dat) </h1>
@@ -30,18 +61,20 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Fecha Inicio del Rango (opcional)</label>
-                                        <input type="text" name="fechaInicioRango" id="fechaInicioRango" class="form-control datepicker" readonly>
+                                        <input type="text" value="<?php echo date('Y-m-d') ?>" name="fechaInicioRango" id="fechaInicioRango" class="form-control datepicker input-lg" readonly>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Fecha Fin del Rango (opcional)</label>
-                                        <input type="text" name="fechaFinRango" id="fechaFinRango" class="form-control datepicker" readonly>
+                                        <input type="text" value="<?php echo date('Y-m-d') ?>" name="fechaFinRango" id="fechaFinRango" class="form-control datepicker" readonly>
                                     </div>
                                 </div>
+                            </div>
                         </div>
+                    
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary btn-lg">Subir <i class="fa fa-upload"></i> </button>
+                            <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg pull-right">Subir archivo e Importar data <i class="fa fa-upload"></i> </button>
                         </div>
                     </div>
                  </form>
@@ -50,10 +83,40 @@
     </section>
 </div>
 <!-- /.content-wrapper -->
+
+
+<div id="loadme_overlay">
+    <div class="progress">
+        <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+        </div>
+    </div>
+</div>
+
+
 <script>
+sec=0;
+function loadMe() {
+    $("#loadme_overlay").fadeIn(300);
+    repeat = setInterval(function(){
+        if( sec <= 100 ){
+            $(".progress-bar").css({
+                'width' : sec + '%' 
+             });
+             sec++;
+        } else {
+            sec=0;
+        }
+    },200);
+}
+
 
 $(document).ready(function(){
 
+    $("input").focus(function(){
+        $(this).parent().removeClass('has-error');
+        $(this).parent().find('label').find('small').remove();
+    })
+    
     $("#frmCrear").submit(function(e){
         e.preventDefault();
         error = 0;
@@ -85,24 +148,26 @@ $(document).ready(function(){
 
         if( ( $("#fechaInicioRango").val() != "" ) && ( $("#fechaFinRango").val() != "" ) ){
             var fechaIniInt = $("#fechaInicioRango").val();
-            var fechaIniInt = fechaIniInt.replace('-','');
+            var fechaIniInt = fechaIniInt.replace(/-/g, "");
 
             var fechaEndInt = $("#fechaFinRango").val();
-            var fechaEndInt = fechaEndInt.replace('-','');
+            var fechaEndInt = fechaEndInt.replace(/-/g, "");
 
-            console.log( fechaIniInt + " - " + fechaEndInt );
-            if( ( $("#fechaInicioRango").val() == "" ) && ( $("#fechaFinRango").val() != "" ) ){
-                if( !$("#fechaInicioRango").parent().hasClass('has-error') ){
-                    $("#fechaInicioRango").parent().addClass('has-error');
-                    $("#fechaInicioRango").parent().find('label').append('<br><small>(Si elije fecha de Fin, DEBE seleccionar fecha Inicio)</small>');
-                }
+            if( parseInt(fechaIniInt) > parseInt(fechaEndInt) ){
+                $("#fechaInicioRango").parent().addClass('has-error');
+                $("#fechaInicioRango").parent().find('label').append('<br><small>(La fecha de Inicio no puede ser mayor a la fecha Fin)</small>');
+                
+                $("#fechaFinRango").parent().addClass('has-error');
+                $("#fechaFinRango").parent().find('label').append('<br><small>(La fecha de Inicio no puede ser mayor a la fecha Fin)</small>');   
                 error++;
             }
+            
         }
-
+    
 
         if( error == 0 ){
-            $(".overlayer").show();
+            $("#btnSubmit").prop('disabled',true);            
+            loadMe();
             $("#frmCrear")[0].submit();
         }
     })   
