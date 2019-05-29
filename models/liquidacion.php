@@ -878,32 +878,49 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
             }
         
         }
-    }        
+    }     
+
               
     $arr_no_marco_NO_autorizado = array();
        
-    
     if( $arr_no_marco ){        
         foreach( $arr_no_marco[$tipoMarcadoTarjeta] as $fechas_no_marcadas ){            
+
             $dia_semana = date('N', strtotime($fechas_no_marcadas));
             $dia_semana--;                        
             
             /** SI ES un dia laboral **/
-            if( in_array($dia_semana,$dias_laborales_horario) ){                      
+            if( in_array($dia_semana,$dias_laborales_horario) ){
                 /** SI NO es un dia feriado **/
                 if( !isDiaFeriado($fechas_no_marcadas) ){
+                    /** SI NO esta autorizado **/
                     if( !checkIfAutorized(null,$id_trabajador,'A',$tipoMarcadoTarjeta,$fechas_no_marcadas) ){
-                        if( !fnCheckAusencia( $relojcontrol_id, $fechas_no_marcadas ) ){
-                            $horas_descuento_no_marcar = getHorasDescontarNoMarcado();
-                            $minutos_descuento = ( $horas_descuento_no_marcar * 60 );                            
-                            $total_horas_atraso = ( $total_horas_atraso + $minutos_descuento );                                                        
-                            $arr_no_marco_NO_autorizado[$tipoMarcadoTarjeta][] = $fechas_no_marcadas;
-                        } else { 
+                        if( fnCheckAusencia( $relojcontrol_id, $fechas_no_marcadas ) ){
                             if( ( empresaUsaRelojControl() ) && ( relojControlSync() ) && ( marcaTarjeta($id_trabajador) ) ){                                                                
                                 if( !estaFiniquitado($id_trabajador, $fechas_no_marcadas) ){
+                                    //show_array("agregarAusencia($fechas_no_marcadas,$id_trabajador)",0);
+                                    /* 
+                                    consultar si hay algun registro en t_atrasohoraestra
+                                    Para determinar si se justifico elguna entrada o salida
+                                    Como es una ausencia, si tiene 1 justifiacion, entonces 
+                                    se le descuenta 4 horas, si tiene las 2, entonces no es un ausencia
+                                    */
+                                    $db->where('trabajador_id',$id_trabajador);
+                                    $db->where('fecha',$fechas_no_marcadas);
+                                    $count_to_discount = $db->getValue ("t_atrasohoraextra", "count(*)");
+                                    
+                                    $horas_descuento_no_marcar = getHorasDescontarNoMarcado();
+                                    $minutos_descuento = ( $horas_descuento_no_marcar * 60 );
+                                    $total_horas_atraso = ( $total_horas_atraso + $minutos_descuento );
+
                                     agregarAusencia($fechas_no_marcadas, $id_trabajador);
                                 }
-                            }                                                    
+                            }
+                        } else { 
+                            $horas_descuento_no_marcar = getHorasDescontarNoMarcado();
+                            $minutos_descuento = ( $horas_descuento_no_marcar * 60 );
+                            $total_horas_atraso = ( $total_horas_atraso + $minutos_descuento );
+                            $arr_no_marco_NO_autorizado[$tipoMarcadoTarjeta][] = $fechas_no_marcadas;
                         }                        
                     }
                 }
@@ -916,7 +933,7 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
         'total_atraso' => $total_horas_atraso,
         'fechas_ausencia' => $arr_no_marco_NO_autorizado
     );
-    
+
     return $arr_return;            
       
 }
@@ -935,13 +952,13 @@ function agregarAusencia($fecha, $trabajador_id){
     $db->where('fecha_fin', $fecha, '>= ');
     $db->where('trabajador_id', $trabajador_id);
     $res_check = $db->get( 't_ausencia' );
-        
+
     if( ! $res_check ){
                 
         $db->where('trabajador_id',$trabajador_id);
         $db->where('fecha',$fecha);
-        $count = $db->getValue ("t_atrasohoraextra", "count(*)");                
-        
+        $count = $db->getValue ("t_atrasohoraextra", "count(*)");
+
         if( $count == 0 ){        
             $data_insert_ausencia = array(
                 'fecha_inicio' => $fecha,
