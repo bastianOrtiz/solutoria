@@ -820,6 +820,70 @@ if( $parametros ){
         $documentos_trabajador = $db->get("t_documentotrabajador");
         
         
+        
+        
+        
+        
+        
+        if( $parametros[0] == "marcaje" ){
+            
+            $super_arreglo = [];
+            
+            $indice=0;
+            for( fI -> fCurrent fF ){
+                
+                $super_arreglo[$indice]['fecha'] = fCurrent;
+                
+                $existe_en_t_atrasoHE = $db ->  existe en t_atraso
+                
+                if( count($existe_en_t_atrasoHE) > 0 ){
+                    $super_arreglo[$indice]['existe'] = 1;
+                    $super_arreglo[$indice]['io'] = $existe_en_t_atrasoHE['io'];
+                    
+                    $justificativo = $db->m_justuifucativo;
+                    $super_arreglo[$indice]['nombre_justif'] = $justificativo['nombre'];
+                    
+                    $super_arreglo[$indice]['horas'] = $existe_en_t_atrasoHE['horas'];
+                    
+                } else {
+                    $super_arreglo[$indice]['existe'] = 0;
+                    $super_arreglo[$indice]['io'] = "";
+                    $super_arreglo[$indice]['nombre_justif'] = "";                    
+                    $super_arreglo[$indice]['horas'] = "";
+                }
+                
+                $db->where('checktype') = 'I'
+                $existe_en_relojcontrol_I = $db ->  existe en m_reloljcontrol;
+                
+                if( $existe_en_relojcontrol_I ){
+                
+                    $super_arreglo[$indice]['hora_entrada'] = $existe_en_relojcontrol_I['checktime']; // OJO --- solo la hora
+                    
+                } else {
+                    $super_arreglo[$indice]['hora_entrada'] = 'no marco';
+                }
+                
+                
+                
+                $existe_en_relojcontrol_O = $db ->  existe en m_reloljcontrol;
+                
+                if( $existe_en_relojcontrol_O ){
+                    $super_arreglo[$indice]['hora_salida'] = $existe_en_relojcontrol_O['checktime']; // OJO --- solo la hora
+                    
+                } else {
+                
+                    $super_arreglo[$indice]['hora_salida'] = 'no marco';
+                }
+                
+                $indice++;
+            }
+            
+            
+            
+        }
+        
+        
+        
     }
 }
 

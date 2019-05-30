@@ -6,7 +6,7 @@
             
     <section class="content">
         <?php 
-        show_array($parametros,0);
+        show_array($parametros);
         ?>
     </section>
 </div>
