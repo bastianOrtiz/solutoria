@@ -298,7 +298,7 @@ table th,
                                                     ?>
                                                     
                                             			<td class="ausente"> <?php echo $fecha_iterar ?> </td>
-                                            			<td class="ausente no_mark" colspan="2"> 
+                                            			<td class="ausente no_mark no_marco_no_justif no_marco_in" colspan="2"> 
                                                             <small>No Marcó</small>
                                                             <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i'; ?>][justificado]" />
                                                             <span id="span_<?php echo $fecha_iterar ?>"></span>
@@ -381,7 +381,7 @@ table th,
                                                                                                                             
                                                         ?>
                                                     
-                                            			<td class="ausente no_mark"><small>No Marcó</small> </td>
+                                            			<td class="ausente no_mark no_marco_no_justif no_marco_out"><small>No Marcó</small> </td>
                                             			<td class="ausente" colspan="2"> 
                                                             <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'o'; ?>][justificado]" />
                                                             <span id="span_<?php echo $fecha_iterar ?>"></span>                                                            
@@ -454,18 +454,6 @@ arr_justificativos[<?php echo $j['id'] ?>] = '<?php echo $j['nombre'] ?>';
 
 $(document).ready(function(){
     
-    total_imp = 0;
-    $("#table_reloj_control tbody tr").each(function(){
-        if( $(this).find('.bg-red').length > 0 ){
-            total_imp++;
-        }
-    })
-    
-    total_imp += $('.no_mark').length;
-    $("#tota_impuntualidades").text( total_imp );    
-    $("#total_dias_ausente").text( ( $(".es_ausencia").length / 2 ) )
-    
-    
     
     $(".chk_autorize").click(function(){
         if($(this).is(':checked')){            
@@ -489,27 +477,30 @@ $(document).ready(function(){
         } else {
             $h_ex_efectiva = '';
         }
-        
-        
-        if( $ahe['io'] == 'I' )
-            $justificativo_no_marco = 'justificativo';
-        else 
-            $justificativo_no_marco = 'justificativo';
+
+        $justificativo_no_marco = 'justificativo';
 
     ?>
         $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").css({ visibility : 'visible' });
         $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").prop('checked',true);
         $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").next('span').html( '<strong> ' + arr_justificativos[<?php echo $ahe['justificativo_id'] ?>] + '<?php echo $h_ex_efectiva ?></strong>' );
         $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('tr').find('small').empty();
+        $("input[name='<?php echo $justificativo_no_marco ?>[<?php echo $fecha_int.$lowerIO ?>][justificado]']").closest('tr').find('td.no_mark').removeClass('no_marco_no_justif');
     
     <?php
     } 
     ?>
     
+    
+    
+    total_imp = ($("#table_reloj_control .badge.bg-red").length + $('.no_marco_no_justif').length );
+    $("#tota_impuntualidades").text( total_imp );    
+    $("#total_dias_ausente").text( ( $(".es_ausencia").length / 2 ) )
+    
 })
 
 $(window).load(function(){
-    window.print();
+    //window.print();
     //window.onfocus=function(){ window.close();}
 })
 
