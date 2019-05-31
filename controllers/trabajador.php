@@ -818,14 +818,66 @@ if( $parametros ){
         /** Documentos escaneados del trabajador **/
         $db->where("trabajador_id", $parametros[1]);
         $documentos_trabajador = $db->get("t_documentotrabajador");
-        
-        
-        
-        
-        
-        
-        
-        if( $parametros[0] == "marcaje" ){
+
+        if ($parametros[0] == 'marcaje') {
+
+            $fecha_ini = strtotime($parametros[2]);
+            $fecha_fin = strtotime($parametros[3]);
+
+            $super_arreglo = [];
+
+            $indice=0;
+
+            for($i=$fecha_ini; $i<=$fecha_fin; $i+=86400){
+                $fecha_iterar = date("Y-m-d", $i);
+                $super_arreglo[$indice]['fecha'] = $fecha_iterar;
+
+                $db->where ("fecha", $fecha_iterar);
+                $existe_en_t_atrasoHE = $db->getOne ("t_atrasohoraextra");
+                
+                if (count($existe_en_t_atrasoHE) > 0) {
+                    $super_arreglo[$indice]['existe'] = 1;
+                    $super_arreglo[$indice]['io'] = $existe_en_t_atrasoHE['io'];
+                    $super_arreglo[$indice]['justificativo_id'] = $existe_en_t_atrasoHE['justificativo_id'];
+                    $super_arreglo[$indice]['trabajador_id'] = $existe_en_t_atrasoHE['trabajador_id'];
+
+                    $db->where("id",$super_arreglo[$indice]['justificativo_id']);
+                    $justificativo = $db->getOne("m_justificativo");
+
+                    $super_arreglo[$indice]['nombre_justif'] = $justificativo['nombre'];
+                    
+                    $super_arreglo[$indice]['horas'] = $existe_en_t_atrasoHE['horas'];
+                } else {
+                    $super_arreglo[$indice]['existe'] = 0;
+                    $super_arreglo[$indice]['io'] = "";
+                    $super_arreglo[$indice]['justificativo_id'] = 0;
+                    $super_arreglo[$indice]['nombre_justif'] = "";                    
+                    $super_arreglo[$indice]['horas'] = "";
+                    $super_arreglo[$indice]['trabajador_id'] = 0;
+                } 
+
+                    //$db->where('checktype','I');
+                    $db->where('userid',$super_arreglo[$indice]['trabajador_id']);
+                    $existe_en_relojcontrol_I = $db->getOne('m_relojcontrol');
+
+                if($existe_en_relojcontrol_I){
+                
+                    $super_arreglo[$indice]['hora_entrada'] = $existe_en_relojcontrol_I['checktime']; // OJO --- solo la hora
+                    
+                } else {
+                    $super_arreglo[$indice]['hora_entrada'] = 'no marco';
+                }
+
+
+                $indice++;
+            }
+            show_array($existe_en_relojcontrol_I);
+            show_array($super_arreglo);
+            exit();
+
+        }
+
+        /*if( $parametros[0] == "marcaje" ){
             
             $super_arreglo = [];
             
@@ -880,9 +932,7 @@ if( $parametros ){
             
             
             
-        }
-        
-        
+        }*/
         
     }
 }
