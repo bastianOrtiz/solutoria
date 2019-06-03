@@ -828,13 +828,24 @@ if( $parametros ){
 
             $indice=0;
 
+            $db->where('id',$parametros[1]);
+            $trabajador = $db->getOne('m_trabajador');
+            $relojcontrol_id = $trabajador['relojcontrol_id'];
+
+            $dias_laborales = mHorarios($trabajador['horario_id']);
+            
+
             for($i=$fecha_ini; $i<=$fecha_fin; $i+=86400){
+
                 $fecha_iterar = date("Y-m-d", $i);
                 $super_arreglo[$indice]['fecha'] = $fecha_iterar;
+                $fecha_comparar_temp = strtotime($fecha_iterar);
+                $dias_semana_comparar = date('N',$fecha_comparar_temp);
 
                 $db->where ("fecha", $fecha_iterar);
+                $db->where('id',$parametros[1]);
                 $existe_en_t_atrasoHE = $db->getOne ("t_atrasohoraextra");
-                
+
                 if (count($existe_en_t_atrasoHE) > 0) {
                     $super_arreglo[$indice]['existe'] = 1;
                     $super_arreglo[$indice]['io'] = $existe_en_t_atrasoHE['io'];
@@ -856,24 +867,48 @@ if( $parametros ){
                     $super_arreglo[$indice]['trabajador_id'] = 0;
                 } 
 
-                    //$db->where('checktype','I');
-                    $db->where('userid',$super_arreglo[$indice]['trabajador_id']);
-                    $existe_en_relojcontrol_I = $db->getOne('m_relojcontrol');
+                $db->where('checktype','I');
+                $db->where('userid',$relojcontrol_id);
+                $db->where('checktime',$fecha_iterar.' %','LIKE');
+                $existe_en_relojcontrol_I = $db->getOne('m_relojcontrol');
 
-                if($existe_en_relojcontrol_I){
-                
-                    $super_arreglo[$indice]['hora_entrada'] = $existe_en_relojcontrol_I['checktime']; // OJO --- solo la hora
+                if (in_array($dias_semana_comparar, $dias_laborales)) {
+                    if($existe_en_relojcontrol_I){
+                        $hora_entrada = explode(' ', $existe_en_relojcontrol_I['checktime']);
+                        $hora_entrada = $hora_entrada[1];
+                        $super_arreglo[$indice]['hora_entrada'] = $hora_entrada;
+                        
+                    } else {
+                        $super_arreglo[$indice]['hora_entrada'] = 'no marco';
+                    }
+
+                    $db->where('checktype','O');
+                    $db->where('userid',$relojcontrol_id);
+                    $db->where('checktime',$fecha_iterar.' %','LIKE');
+                    $existe_en_relojcontrol_O = $db->getOne('m_relojcontrol');
+
+                    if($existe_en_relojcontrol_O){
+                        $hora_salida = explode(' ', $existe_en_relojcontrol_O['checktime']);
+                        $hora_salida = $hora_salida[1];
+                        $super_arreglo[$indice]['hora_salida'] = $hora_salida;
+                        
+                    } else {
+                        $super_arreglo[$indice]['hora_salida'] = 'no marco';
+                    }
+
+                }else{
+                    $super_arreglo[$indice]['hora_salida'] = "Dia no laboral";
+                    $super_arreglo[$indice]['hora_entrada'] = "Dia no laboral";
                     
-                } else {
-                    $super_arreglo[$indice]['hora_entrada'] = 'no marco';
                 }
-
+                if($super_arreglo[$indice]['hora_entrada'] == "no marco" && $super_arreglo[$indice]['hora_salida'] == "no marco"){
+                    $super_arreglo[$indice]['no_marco_dia_completo'] = true;
+                }else{
+                    $super_arreglo[$indice]['no_marco_dia_completo'] = false;
+                }
 
                 $indice++;
             }
-            show_array($existe_en_relojcontrol_I);
-            show_array($super_arreglo);
-            exit();
 
         }
 

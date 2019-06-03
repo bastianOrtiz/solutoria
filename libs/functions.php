@@ -564,6 +564,44 @@ function diasNoLaborales($fecha_ini, $fecha_fin,$trabajador_id){
     return $restar;
 }
 
+function mHorarios($horario_id){
+    global $db;
+    $dias_laborales = [];
+
+    $db->where('id', $horario_id);
+    $m_horario = $db->getOne('m_horario');
+
+    if ($m_horario['lun'] == 1) {
+        $dias_laborales[] = 1;
+    }
+
+    if ($m_horario['mar'] == 1) {
+        $dias_laborales[] = 2;
+    }
+
+    if ($m_horario['mie'] == 1) {
+        $dias_laborales[] = 3;
+    }
+
+    if ($m_horario['jue'] == 1) {
+        $dias_laborales[] = 4;
+    }
+
+    if ($m_horario['vie'] == 1) {
+        $dias_laborales[] = 5;
+    }
+
+    if ($m_horario['sab'] == 1) {
+        $dias_laborales[] = 6;
+    }
+
+    if ($m_horario['dom'] == 1) {
+        $dias_laborales[] = 7;
+    }
+    
+    return $dias_laborales;
+}
+
 
 
 /**
