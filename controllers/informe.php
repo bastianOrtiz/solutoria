@@ -321,9 +321,12 @@ if( $_POST ){
 
     if( $action == 'haberes_descuentos' ){
         
+        
         if( $_POST['hdnTipoMovimiento'] == 'Descuentos' ){
             $sql = "
             SELECT 
+                L.mes,
+                L.ano,                
             	T.rut,
             	CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
                 D.nombre,
@@ -337,6 +340,8 @@ if( $_POST ){
         } else {
             $sql = "
             SELECT 
+                L.mes,
+                L.ano,            
             	T.rut,
             	CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
                 H.nombre,
@@ -349,12 +354,28 @@ if( $_POST ){
             ";
         }
         
-       
+        if( $_POST['fechaInicioInforme'] && $_POST['fechaFinInforme'] ){
+            $fecha_ini_proc = strtotime($_POST['fechaInicioInforme']);
+            $fecha_end_proc = strtotime($_POST['fechaFinInforme']);
+            $mes_SQL_ini = date('n',$fecha_ini_proc);
+            $mes_SQL_end = date('n',$fecha_end_proc);
+            $ano_SQL_ini = date('Y',$fecha_ini_proc);
+            $ano_SQL_end = date('Y',$fecha_end_proc);
+            
+            $sql .= " AND L.mes BETWEEN $mes_SQL_ini AND $mes_SQL_end \n";
+            $sql .= " AND L.ano BETWEEN $ano_SQL_ini AND $ano_SQL_end \n ";
+        }
+        
+        
+        if( $_POST['cboTrabajadores'] != "" ){
+            $sql .= " AND L.trabajador_id = " . $_POST['cboTrabajadores'] . " \n";
+        }
+        
+        $sql .= "ORDER BY L.ano DESC, L.mes ASC, T.apellidoPaterno ASC";
+        
         
         $results['registros'] = $db->rawQuery($sql);
         
-        show_array($results);
-
     }
 
 

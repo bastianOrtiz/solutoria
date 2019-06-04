@@ -9,7 +9,7 @@
 </style>
 <div class="content-wrapper">
     <section class="content-header">
-      <h1> REPORTE ATRASOS MENSUAL </h1>
+      <h1> REPORTE HABERES / DESCUENTOS</h1>
       <?php include ROOT . '/views/comun/breadcrumbs.php';  ?>
       
         <?php 
@@ -36,11 +36,20 @@
                                     <?php if($_POST): ?>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <table class="table table-bordered table-striped">
+                                            <a href="<?php echo BASE_URL ?>/informe/haberes_descuentos" class="btn btn-primary btn-lg"> <i class="fa fa-chevron-left"></i> Volver</a>
+                                            <br /><br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <table class="table table-bordered table-striped" id="tableReporte">
                                                 <thead>
                                                     <tr>
+                                                        <th> Mes </th>
+                                                        <th> Año </th>
                                                         <th> Rut </th>
                                                         <th> Nombre Completo </th>
+                                                        <th> Haber o Descuento </th>
                                                         <th> Monto </th>
                                                     </tr>
                                                 </thead>
@@ -50,20 +59,23 @@
                                                         foreach ($results['registros'] as $key => $result) :
                                                         ?>
                                                         <tr>
-                                                            <td> sadsadasds </td>
-                                                            <td> sadsadasds </td>
-                                                            <td class="text-right"> <?php echo ($i*100); ?> </td>
+                                                            <td> <?php echo getNombreMes($result['mes']) ?> </td>
+                                                            <td> <?php echo $result['ano'] ?> </td>
+                                                            <td> <?php echo $result['rut'] ?> </td>
+                                                            <td> <?php echo $result['nombreCompleto'] ?> </td>
+                                                            <td> <?php echo $result['nombre'] ?> </td>
+                                                            <td style="text-align: right;"> $ <?php echo number_format($result['monto'],0,',','.') ?> </td>
                                                         </tr>
                                                         <?php 
-                                                        $sumatoria += ($i*100);
+                                                        $sumatoria += ($result['monto']);
                                                         endforeach; 
                                                         ?>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <th> &nbsp; </th>
+                                                        <th colspan="4"> &nbsp; </th>
                                                         <th class="text-right"> <strong>Total:</strong> </th>
-                                                        <th class="text-right"> <?php echo $sumatoria; ?> </th>
+                                                        <th class="text-right"> $ <?php echo number_format($sumatoria,0,',','.'); ?> </th>
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -154,8 +166,18 @@
 </div><!-- /.content-wrapper -->
       
 <script>
-$(document).ready(function(){  
-    
+$(document).ready(function(){ 
+         
+    $('#tableReporte').dataTable({
+        "bPaginate": true,
+        "bLengthChange": false,
+        "bFilter": true,
+        "bSort": false,
+        "bInfo": true,
+        "bAutoWidth": false,
+        "pageLength": 30
+    });
+
     $(".datepicker").datepicker({
         startView : 'year',
         autoclose : true,
