@@ -321,18 +321,35 @@ if( $_POST ){
 
     if( $action == 'haberes_descuentos' ){
         
-        $sql = "
-        SELECT 
-        	T.rut,
-        	CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
-            H.nombre,
-            LH.monto
-        FROM m_haber H, l_haber LH, m_trabajador T, liquidacion L
-        WHERE LH.liquidacion_id = L.id
-        AND L.trabajador_id = T.id
-        AND LH.haber_id = H.id
-        AND H.id = 12
-        ";
+        if( $_POST['hdnTipoMovimiento'] == 'Descuentos' ){
+            $sql = "
+            SELECT 
+            	T.rut,
+            	CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
+                D.nombre,
+                LD.monto
+            FROM m_descuento D, l_descuento LD, m_trabajador T, liquidacion L
+            WHERE LD.liquidacion_id = L.id
+            AND L.trabajador_id = T.id
+            AND LD.descuento_id = D.id
+            AND D.id = ". $_POST['cboHaberesDescuentos'] ."
+            ";  
+        } else {
+            $sql = "
+            SELECT 
+            	T.rut,
+            	CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
+                H.nombre,
+                LH.monto
+            FROM m_haber H, l_haber LH, m_trabajador T, liquidacion L
+            WHERE LH.liquidacion_id = L.id
+            AND L.trabajador_id = T.id
+            AND LH.haber_id = H.id
+            AND H.id = ". $_POST['cboHaberesDescuentos'] ."
+            ";
+        }
+        
+       
         
         $results['registros'] = $db->rawQuery($sql);
         
