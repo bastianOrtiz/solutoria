@@ -371,6 +371,9 @@ if( $_POST ){
             $sql .= " AND L.trabajador_id = " . $_POST['cboTrabajadores'] . " \n";
         }
         
+        
+        $sql .= " AND T.empresa_id = ".$_SESSION[PREFIX.'login_eid'] . " \n";
+        
         $sql .= "ORDER BY L.ano DESC, L.mes ASC, T.apellidoPaterno ASC";
         
         
