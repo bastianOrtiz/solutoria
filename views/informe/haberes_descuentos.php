@@ -36,6 +36,12 @@
                                     <?php if($_POST): ?>
                                     <div class="row">
                                         <div class="col-lg-12">
+                                            <?php 
+                                            foreach($arr_parametros as $param){ 
+                                                echo "<strong>".$param['nombre'].": </strong>" . $param['valor'] . "<br />";    
+                                            } 
+                                            ?>
+                                            <br /><br />
                                             <a href="<?php echo BASE_URL ?>/informe/haberes_descuentos" class="btn btn-primary btn-lg"> <i class="fa fa-chevron-left"></i> Volver</a>
                                             <br /><br />
                                         </div>

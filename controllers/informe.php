@@ -321,8 +321,8 @@ if( $_POST ){
 
     if( $action == 'haberes_descuentos' ){
         
-        
         if( $_POST['hdnTipoMovimiento'] == 'Descuentos' ){
+            $t='m_descuento';
             $sql = "
             SELECT 
                 L.mes,
@@ -338,6 +338,7 @@ if( $_POST ){
             AND D.id = ". $_POST['cboHaberesDescuentos'] ."
             ";  
         } else {
+            $t='m_haber';
             $sql = "
             SELECT 
                 L.mes,
@@ -378,6 +379,50 @@ if( $_POST ){
         
         
         $results['registros'] = $db->rawQuery($sql);
+        
+        
+        
+        
+        $arr_parametros = [];
+        
+        $arr_parametros[] = [
+            'nombre' => 'Haber o Descuento',
+            'valor' => $_POST['hdnTipoMovimiento']
+        ];
+        $arr_parametros[] = [
+            'nombre' => 'Empresa',
+            'valor' => getNombre($_POST['empresa'],'m_empresa', false)
+        ];
+        $arr_parametros[] = [
+            'nombre' => 'Nombre Haber/Descuento',
+            'valor' => getNombre($_POST['cboHaberesDescuentos'],$t, false)
+        ];
+        if( $_POST['cboTrabajadores'] ){
+            $arr_parametros[] = [
+                'nombre' => 'Trabajador',
+                'valor' => getNombre($_POST['empresa'],'m_empresa')
+            ];
+        } else {
+            $arr_parametros[] = [
+                'nombre' => 'Trabajador',
+                'valor' => 'Todos'
+            ];
+        }
+        
+        if( $_POST['fechaInicioInforme'] ){
+            $arr_parametros[] = [
+                'nombre' => 'Fecha Inicio',
+                'valor' => $_POST['fechaInicioInforme']
+            ];
+        }
+        
+        if( $_POST['fechaFinInforme'] ){
+            $arr_parametros[] = [
+                'nombre' => 'Fecha Fin',
+                'valor' => $_POST['fechaFinInforme']
+            ];
+        }
+        
         
     }
 
