@@ -38,22 +38,33 @@
     							<td><?php echo $registro['hora_salida']; ?></td>
     						</tr>
     					<?php endforeach; ?>
-    					<tr></tr>
     				</tbody>
+
+    				<tfoot>
+    					<a class="btn btn-primary" href="<?php echo BASE_URL ?>/trabajador/marcaje">Volver</a>
+    				</tfoot>
     			</table>
     		<?php }else{?>
-    			<form action="" method="post">
+    			<form action="" method="post" id="frmMarcaje">
     				<div class="box box-primary">
     					<div class="box-body">
     						<div class="col-lg-4">
-		    					<input type="date" class="form-control" name="fecha_ini" id="fecha_ini">
+		    					<select class="form-control" id="trabajadores" required>
+		    						<option value="">Seleccione</option>
+		    						<?php foreach ($lista_trabajadores as $trabajador): ?>
+		    						<option value="<?php echo $trabajador['id']; ?>"><?php echo $trabajador['apellidoPaterno']; ?> <?php echo $trabajador['apellidoMaterno']; ?> <?php echo $trabajador['nombres']; ?></option>
+		    						<?php endforeach; ?>
+		    					</select>
+		    				</div>
+    						<div class="col-lg-4">
+		    					<input type="text" value="<?php echo date('Y-m-d') ?>" name="fecha_ini" id="fecha_ini" class="form-control datepicker input-lg" readonly>
 		    				</div>
 		    				<div class="col-lg-4">
-		    					<input type="date" class="form-control" name="fecha_fin" id="fecha_fin">
+		    					<input type="text" value="<?php echo date('Y-m-d') ?>" name="fecha_fin" id="fecha_fin" class="form-control datepicker input-lg" readonly>
 		    				</div>
     					</div>
     					<div class="box-footer">
-    						<button type="button" class="btn btn-primary btn-lg pull-right">Enviar</button>
+    						<button type="submit" id="btnEnviarParametros" class="btn btn-primary btn-lg pull-right">Ver Marcaje</button>
     					</div>
     				</div>
     			</form>
@@ -62,3 +73,28 @@
     	</div>
     </section>
 </div>
+
+<script>
+	$("#frmMarcaje").submit(function(e){
+		e.preventDefault();
+
+		fecha_inicio = $("#fecha_ini").val();
+		fecha_termino = $("#fecha_fin").val();
+		trabajador_id = $("#trabajadores").val();
+
+		$(".overlayer").show();
+
+		url = "<?php echo BASE_URL ?>/trabajador/marcaje/"+trabajador_id+"/"+fecha_inicio+"/"+fecha_termino;
+
+		location.href = url;
+	})
+
+	$(document).ready(function(){
+
+		$(".datepicker").datepicker({
+	        startView : 'year',
+	        autoclose : true,
+	        format : 'yyyy-mm-dd'
+	    });
+	});
+</script>
