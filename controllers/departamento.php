@@ -71,6 +71,7 @@ if( $_POST ){
             redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
             exit();
         } else {
+            logit( $_SESSION[PREFIX.'login_name'],$_POST['action'] ,'departamento',$create_id,$db->getLastQuery() );
             $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$id);
             redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
             exit();                

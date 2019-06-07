@@ -321,14 +321,16 @@ if( $_POST ){
 
     if( $action == 'haberes_descuentos' ){
         
+        $consolidado = $_POST['consolidado'][0];
+        
         if( $_POST['hdnTipoMovimiento'] == 'Descuentos' ){
             $t='m_descuento';
             $sql = "
             SELECT 
                 L.mes,
                 L.ano,                
-            	T.rut,
-            	CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
+                T.rut,
+                CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
                 D.nombre,
                 LD.monto
             FROM m_descuento D, l_descuento LD, m_trabajador T, liquidacion L
@@ -343,8 +345,8 @@ if( $_POST ){
             SELECT 
                 L.mes,
                 L.ano,            
-            	T.rut,
-            	CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
+                T.rut,
+                CONCAT(T.apellidoPaterno,' ',T.apellidoMaterno,' ',T.nombres) AS nombreCompleto,
                 H.nombre,
                 LH.monto
             FROM m_haber H, l_haber LH, m_trabajador T, liquidacion L
@@ -355,16 +357,12 @@ if( $_POST ){
             ";
         }
         
-        if( $_POST['fechaInicioInforme'] && $_POST['fechaFinInforme'] ){
+        if( $_POST['mesIni'] && $_POST['anoIni'] && $_POST['mesFin'] && $_POST['anoFin'] ){
             $fecha_ini_proc = strtotime($_POST['fechaInicioInforme']);
             $fecha_end_proc = strtotime($_POST['fechaFinInforme']);
-            $mes_SQL_ini = date('n',$fecha_ini_proc);
-            $mes_SQL_end = date('n',$fecha_end_proc);
-            $ano_SQL_ini = date('Y',$fecha_ini_proc);
-            $ano_SQL_end = date('Y',$fecha_end_proc);
             
-            $sql .= " AND L.mes BETWEEN $mes_SQL_ini AND $mes_SQL_end \n";
-            $sql .= " AND L.ano BETWEEN $ano_SQL_ini AND $ano_SQL_end \n ";
+            $sql .= " AND L.mes BETWEEN ". $_POST['mesIni'] ." AND ". $_POST['mesFin'] ." \n";
+            $sql .= " AND L.ano BETWEEN ". $_POST['anoIni'] ." AND ". $_POST['anoFin'] ." \n ";
         }
         
         
@@ -381,8 +379,6 @@ if( $_POST ){
         $results['registros'] = $db->rawQuery($sql);
         
         
-        
-        
         $arr_parametros = [];
         
         $arr_parametros[] = [
@@ -391,7 +387,7 @@ if( $_POST ){
         ];
         $arr_parametros[] = [
             'nombre' => 'Empresa',
-            'valor' => getNombre($_POST['empresa'],'m_empresa', false)
+            'valor' => $_SESSION[PREFIX.'login_empresa']
         ];
         $arr_parametros[] = [
             'nombre' => 'Nombre Haber/Descuento',
@@ -400,7 +396,7 @@ if( $_POST ){
         if( $_POST['cboTrabajadores'] ){
             $arr_parametros[] = [
                 'nombre' => 'Trabajador',
-                'valor' => getNombre($_POST['empresa'],'m_empresa')
+                'valor' => getNombreTrabajador($_POST['cboTrabajadores'])
             ];
         } else {
             $arr_parametros[] = [
@@ -424,9 +420,221 @@ if( $_POST ){
         }
         
         
+        $_SESSION['haberes_descuentos_data'] = [
+            'registros' => $results['registros'],
+            'consolidado' => $consolidado,
+            'parametros' => $arr_parametros
+        ];
+            
     }
+    
+    
+    if( $action == 'haberes_descuentos_pdf' || $action == 'haberes_descuentos_excel' ){
+        
+        $data = $_SESSION['haberes_descuentos_data'];
+        $results = $data['registros'];
+        $consolidado = $data['consolidado'];
+        
+        $style = '
+        <style>
+        #tableReporte{
+            width: 100%;
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+        #tableReporte td,
+        #tableReporte th{
+            border: 1px solid #000;
+            padding: 5px 10px;
+        }
+        .tr_anual td{
+            background-color: #c3ffc5;
+        }
+        .tr_mensual td{
+            background-color: #fff4b0;
+        }
+        .text-right{
+            text-align: right;
+        }
+        
+        </style>';
+        
+        
+        $html_pdf = '
+        <table id="tableReporte">
+            <thead>
+                <tr>
+                    <th colspan="6" style="width: 100%">
+                        <p style="text-align: center">
+                            REPORTE HABERES/DESCUENTOS
+                        </p>
+                        
+                        <table style="width: 100%; border: 0px" border="0">
+                            <tr>
+                                <td style="width: 50%; border: 0px">';
+                                    
+                                foreach($data['parametros'] as $param){ 
+                                    $html_pdf .= "<strong>".$param['nombre'].": </strong>" . $param['valor'] . "<br />";    
+                                } 
+                                
+                                $html_pdf .= '
+                                </td>
+                                <td style="width: 50%; border: 0px" class="text-right">
+                                    Fecha: ' . date('d') . " " . getNombreMes(date('n'),true) . ' ' . date('Y') . '<br>
+                                    Hora: ' . date('H:i') . '
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                    
+                    </th>
+                </tr>
+                <tr>
+                    <th style="width: 31%"> Nombre de Haber o Descuento </th>
+                    <th style="width: 6%"> Año </th>
+                    <th style="width: 9%"> Mes </th>
+                    <th style="width: 10%"> Rut </th>
+                    <th style="width: 32%"> Nombre Completo </th>
+                    <th style="width: 12%"> Monto </th>
+                </tr>
+            </thead>
+            <tbody>';
 
-
+                $i=0;
+                $sumatoria = 0;
+                $ano0 = $results[0]['ano'];
+                $mes0 = $results[0]['mes'];
+                $tot_anual = 0;
+                $tot_mensual = 0;
+                    
+                foreach ($results as $key => $result) :
+                    
+                    if( $consolidado == 'M' ){
+                        if( $result['mes'] != $mes0 ){
+                        
+                        
+                        $html_pdf .= '
+                        <tr class="tr_mensual">
+                            <td colspan="4">&nbsp; </td>
+                            <td><strong>Total Mes ' . getNombreMes($mes0) . '</strong></td>
+                            <td style="text-align: right;"><strong>$ ' . number_format($tot_mensual,0,',','.') . '</strong></td>
+                        </tr>';
+                        
+                        $tot_mensual = 0;
+                        $mes0 = $result['mes'];
+                        }
+                    }
+                    
+                    
+                    
+                    if( $consolidado == 'A' ){    
+                        if( $result['ano'] != $ano0 ){
+                        
+                        $html_pdf .= '
+                        <tr class="tr_anual">
+                            <td colspan="4">&nbsp; </td>
+                            <td><strong>Total año ' . $ano0 . '</strong></td>
+                            <td style="text-align: right;"><strong>$ ' . number_format($tot_anual,0,',','.') . '</strong></td>
+                        </tr>';
+                    }
+                    
+                    
+                    $tot_anual = 0;
+                    $ano0 = $result['ano'];
+                    }
+                    
+                    $html_pdf .= '
+                    <tr>
+                        <td> ' . $result['nombre'] . ' </td>
+                        <td> ' . $result['ano'] . ' </td>
+                        <td> ' . getNombreMes($result['mes']) . ' </td>
+                        <td> ' . $result['rut'] . ' </td>
+                        <td> ' . $result['nombreCompleto'] . ' </td>
+                        <td style="text-align: right;"> $ ' . number_format($result['monto'],0,',','.') .'</td>
+                    </tr>';
+                    
+                    
+                    $sumatoria += ($result['monto']);
+                    
+                    
+                    
+                    if( $consolidado == 'A' ){
+                        $tot_anual += $result['monto'];
+                    }
+                    
+                    if( $consolidado == 'M' ){
+                        $tot_mensual += $result['monto'];
+                    }
+                    
+                    
+                    
+        
+                    if( $i == (count($results)-1) ){
+                        
+                        if( $consolidado == 'M' ){
+                        
+                            $html_pdf .= '
+                            <tr class="tr_mensual">
+                                <td colspan="4">&nbsp; </td>
+                                <td><strong>Total mes ' . getNombreMes($mes0) . '</strong></td>
+                                <td style="text-align: right;"><strong>$ ' . number_format($tot_mensual,0,',','.') . '</strong></td>
+                            </tr>';
+                        }
+                            
+                            
+                        if( $consolidado == 'A' ){
+                            
+                            $html_pdf .= '
+                            <tr class="tr_anual">
+                                <td colspan="4">&nbsp; </td>
+                                <td><strong>Total año ' . $ano0 . '</strong></td>
+                                <td style="text-align: right;"><strong>$ ' . number_format($tot_anual,0,',','.') . '</strong></td>
+                            </tr>';
+                            
+                        }
+                            
+                            
+                        if( $consolidado == 'A' ){
+                            $ano0 = $result['ano'];
+                        }
+                        
+                        if( $consolidado == 'M' ){
+                            $mes0 = $result['mes'];
+                        }
+                    }
+                    
+                    
+                    
+                    $i++;
+                endforeach; 
+                
+                $html_pdf .= '
+                    <tr>
+                        <td colspan="4"> &nbsp; </td>
+                        <td class="text-right"> <strong>TOTAL:</strong> </td>
+                        <td class="text-right"><strong> $ ' . number_format($sumatoria,0,',','.') . '</strong> </td>
+                    </tr>   
+                </tbody>
+            </table>';
+           
+           $orientation = 'L';
+           
+           $html = $style.$html_pdf;
+            
+    }
+    
+    if( $action == 'haberes_descuentos_excel' ){
+        
+        header("Content-Type: application/xls");    
+        header("Content-Disposition: attachment; filename=reporte_haberes-descuentos_".date('Y-m-d').".xls");  
+        header("Pragma: no-cache"); 
+        header("Expires: 0");
+        echo $html;
+        exit();
+        
+    }
+    
+   
 
     if( $action == 'ausencias' ){
         
