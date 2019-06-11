@@ -1559,6 +1559,19 @@ function mainMenu(){
             )
         )
     );
+
+
+    $menu['centralizacion'] = array(
+        'label' => 'Centralizacion',
+        'icon_class' => 'fa fa-files-o',
+        'childs' => array(
+            array(
+                'entidad' => 'centralizacion',
+                'accion' => 'criterios-centrocosto',
+                'label' => 'Criterios por Centros de Costos'
+            )
+        )
+    );
     
     return $menu;   
 }
