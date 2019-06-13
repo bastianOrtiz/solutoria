@@ -260,7 +260,7 @@ class MysqliDb
             throw new Exception('MySQL host is not set');
         }
 
-        $this->_mysqli = new mysqli($this->host, $this->username, $this->password, $this->db, $this->port);
+       @$this->_mysqli = new mysqli($this->host, $this->username, $this->password, $this->db, $this->port);
 
         if ($this->_mysqli->connect_error) {
             throw new Exception('Connect Error ' . $this->_mysqli->connect_errno . ': ' . $this->_mysqli->connect_error);            
