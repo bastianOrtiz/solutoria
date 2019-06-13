@@ -278,6 +278,12 @@ if( $_POST ){
         } else {
             $data['foto'] = $foto['foto'];
         }
+
+        if( $_POST['comisiones_pendientes'] ){
+            $data['comisiones_pendientes'] = 1;
+        } else {
+            $data['comisiones_pendientes'] = 0;
+        }
         
         if( $saludTrabajador == 'fonasa' ){
             $data_prev = array(
@@ -325,7 +331,6 @@ if( $_POST ){
                 $db->insert('t_documentotrabajador', $insertData);
             }       
         }
-        
         
         $edit_trabajador = editarTrabajador($idTrabajador, $data);
         logit( $_SESSION[PREFIX.'login_name'],'editar','trabajador',$idTrabajador,$db->getLastQuery() );

@@ -980,6 +980,16 @@ if( $_POST ){
         if( $tipoTrabajadorImpuesto == 'agricolas' )
             $tipoImpuesto = 'impuestoAgricola';
         
+
+        $db->where('comisiones_pendientes',1);
+        $trabajadores_com_pend = $db->get('m_trabajador',null,['id']);
+        $comisiones_pend_IN = '';
+        foreach ($trabajadores_com_pend as $value) {
+            $comisiones_pend_IN .= $value['id'].',';
+        }
+        $comisiones_pend_IN = trim($comisiones_pend_IN,',');
+
+
         $sql_impuesto = "
         SELECT T.rut, CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, L.$tipoImpuesto 
         FROM m_trabajador T, liquidacion L
@@ -988,7 +998,6 @@ if( $_POST ){
         AND L.mes = $mes 
         AND L.ano = $ano
         AND T.empresa_id = $empresa_id
-        AND T.id NOT IN (936)
         ";
 
 
@@ -998,8 +1007,29 @@ if( $_POST ){
                 
         $sql_impuesto .= " ORDER BY T.apellidoPaterno ASC ";
         
-        $impuestos_list = $db->rawQuery( $sql_impuesto );        
+        $impuestos_list = $db->rawQuery( $sql_impuesto );
+
+
+
+
+        $sql_impuesto_comisiones_pendientes = "
+        SELECT T.rut, CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, L.$tipoImpuesto 
+        FROM m_trabajador T, liquidacion L
+        WHERE T.id = L.trabajador_id
+        AND L.mes = $mes 
+        AND L.ano = $ano
+        AND T.empresa_id = $empresa_id
+        AND T.id IN ($comisiones_pend_IN)
+        ORDER BY T.apellidoPaterno ASC
+        ";
         
+        $impuestos_comisiones_pendientes = $db->rawQuery( $sql_impuesto_comisiones_pendientes );
+        foreach ($impuestos_comisiones_pendientes as $comisiones_pend) {
+            $impuestos_list[] = $comisiones_pend;
+        }
+
+        
+
         
         $html = '<style type="text/css">';
         $html .= 'td{ border: 1px solid #000; padding: 2px 5px; }';
