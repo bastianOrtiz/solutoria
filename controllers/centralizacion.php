@@ -2,17 +2,12 @@
 
 if( $_POST ){
     
-    $pass = "devti777";
-    $usuario = "desarrollo";
-    $nombreBaseDeDatos = "test";
-    # Puede ser 127.0.0.1 o el nombre de tu equipo; o la IP de un servidor remoto
-    $rutaServidor = "192.168.0.3";
-    try {
-        $base_de_datos = new PDO("sqlsrv:server=$rutaServidor;database=$nombreBaseDeDatos", $usuario, $pass);
-        $base_de_datos->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (Exception $e) {
-        echo "Ocurrió un error con la base de datos: " . $e->getMessage();
-    }
+
+    $bancos = sqlServQuery("select top 5 * from BANCO");
+    
+    show_array($bancos);   
+    
+    //FUNCIONAAAAA CTM!!!     
 
     exit();
 }

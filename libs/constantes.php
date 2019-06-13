@@ -9,4 +9,10 @@ define('NO_IMG_PERFIL','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAEVCA
 define('ID_AUSENCIA_SIN_JUSTIFICAR',3);
 define('MINUTOS_GRACIA_CARTA_AMONESTACION',5);
 define('LIMITE_DIAS_LIQUIDACION',5);
+
+define('SQLSERV_USER','desarrollo');
+define('SQLSERV_PASS','devti777');
+define('SQLSERV_DBNAME','TEST');
+define('SQLSERV_HOST','192.168.0.3');
+
 ?>

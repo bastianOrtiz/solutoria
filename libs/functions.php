@@ -1,6 +1,35 @@
 <?php
 @session_start();
 
+    
+/**
+ * Se conecta a una base de datos SQL Server y realiza una Query
+ * Por seguridad, solo realiza consultas de datos, no escribe ni actualiza
+ * @param (string) $sql Consulta SQL a realizar
+ * @return (array) $arr_return Arreglo con los datos resultantes de la consulta sql  
+ */ 
+function sqlServQuery($sql){
+
+    try {
+        $conn = new PDO("sqlsrv:server=".SQLSERV_HOST.";database=".SQLSERV_DBNAME, SQLSERV_USER, SQLSERV_PASS);
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (Exception $e) {
+        echo "Ocurrió un error con la base de datos: " . $e->getMessage();
+    }
+
+    $arr_return = [];
+    $query = $sql;
+    $stmt = $conn->query( $query );
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $arr_return[] = $row;
+    }
+    
+    // Liberar la conexion;
+    $stmt = null;
+    $conn = null;
+    
+    return $arr_return;
+}
 
 function getRepresentante($empresa_id){
     global $db;
