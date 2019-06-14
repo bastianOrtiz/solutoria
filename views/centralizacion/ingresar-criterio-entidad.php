@@ -1,14 +1,13 @@
 <!-- Content Wrapper. Contains page content -->    
 <div class="content-wrapper">
     <section class="content-header">
-        <h1> Ingresar Criterio por Centro Costo </h1>
+        <h1> Ingresar Criterio por Entidad </h1>
         <?php include ROOT . '/views/comun/breadcrumbs.php';  ?>
         <?php include ROOT . '/views/comun/alertas.php';  ?>
     </section>
     <section class="content">
         <form role="form" id="frmCrear" method="post">
-            <input type="hidden" name="action" value="new_criterio_centrocosto" />
-            <input type="hidden" name="idEmpresa" value="<?php echo $_SESSION[PREFIX.'login_eid'] ?>" />
+            <input type="hidden" name="action" value="new_criterio_entidad" />
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Datos del Criterio</h3>
@@ -418,6 +417,25 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label for="tablaEntidad">Tipo Entidad Previsional</label>
+                                <select id="tablaEntidad" name="tablaEntidad" class="form-control" required>
+                                    <option value="">Seleccione una opción</option>
+                                    <option value="m_afp">AFP</option>
+                                    <option value="m_isapre">ISAPRES</option>
+                                    <option value="m_institucion">Instituciones Aseguradoras</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label for="entidad">Entidad</label>
+                                <select name="entidad" class="form-control" required>
+                                    <option value="">Seleccione una opción</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="box-footer">
                         <button type="submit" class="btn btn-success btn-lg">Guardar</button>
@@ -433,5 +451,35 @@
 $("[name=cuentaContable]").change(function(){
     var nombreCtaCont = $(this).find('option:selected').text();
     $("[name=nombreCuentaContable]").val(nombreCtaCont);
+});
+
+$("#tablaEntidad").change(function(){
+    if( $(this).val() != "" ){
+        nombre_tabla = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo BASE_URL . '/controllers/ajax/centralizacion.ajax.php'?>",
+            data: "ajax_action=get_entidades&nombre_tabla=" + nombre_tabla,
+            dataType: 'json',
+            beforeSend: function(){
+                $(".overlayer").show();
+            },
+            success: function (json) {
+                $('[name=entidad]').empty();
+                $('[name=entidad]').append($('<option>', { 
+                    value: "",
+                    text : "Seleccione una opción"
+                }));
+                $.each(json.registros, function (i, item) {
+                    $('[name=entidad]').append($('<option>', { 
+                        value: item.id,
+                        text : item.nombre 
+                    }));
+                });
+                $(".overlayer").hide();
+            }
+        })
+    }
 })
+
 </script>
