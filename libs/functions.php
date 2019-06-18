@@ -2563,6 +2563,51 @@ function fnSexo($bool){
     }
 }
 
+function fnTipPago($id){
+    global $db;
+    $db->where ("id", $id);
+    $tipo_pago = $db->getOne("m_tipopago");
+    return $tipo_pago['nombre'];
+}
+
+function fnPais($dato, $bool){
+    if ($dato == 46) {
+        if ($bool == 1) {
+            return "Chileno";
+        }else{
+            return "Chilena";
+        }
+    }else{
+        if ($bool == 1) {
+            return "Extranjero";
+        }else{
+            return "Extranjera";
+        }
+    }
+}
+
+function previTrabajador($trabajador_id){
+    global $db;
+    $db->where("trabajador_id", $trabajador_id);
+    $datos_prev = $db->getOne("t_prevision");
+    $datos_prev = saberAfp($datos_prev["afp_id"]);
+    return $datos_prev;
+}
+
+function saberAfp($id_afp){
+    global $db;
+    $db->where("id", $id_afp);
+    $dato = $db->getOne("m_afp");
+    return $dato;
+}
+
+function tipoTrabajador($tipotrabajador_id){
+    global $db;
+    $db->where("id", $tipotrabajador_id);
+    $trabajador = $db->getOne("m_tipotrabajador");
+    return $trabajador;
+}
+
 /**
  * Funcion que retorna el nombre de la entidad
  * @param int $id Id del nombre

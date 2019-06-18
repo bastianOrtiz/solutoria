@@ -41,7 +41,7 @@
     				</tbody>
 
     				<tfoot>
-    					<a class="btn btn-primary" href="<?php echo BASE_URL ?>/trabajador/marcaje">Volver</a>
+    					<a class="btn btn-primary pull-right" href="<?php echo BASE_URL ?>/trabajador/marcaje">Volver</a>
     				</tfoot>
     			</table>
     		<?php }else{?>
