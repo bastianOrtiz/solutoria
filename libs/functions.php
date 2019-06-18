@@ -1,6 +1,25 @@
 <?php
 @session_start();
 
+
+
+/**
+ * Retorna "Haber" o "Descuento" segun caracter D o H
+ * 
+ * @param bool, el valor booleano en 0 ó 1
+ * @return string, SI ó NO
+ */
+function getDebeHaber($char){
+    $char = strtolower($char);
+    if( $char == 'd' ){
+        return 'Debe';
+    } elseif ($char == 'h') {
+        return "Haber";
+    } else {
+        return "-";
+    }
+}
+
     
 /**
  * Se conecta a una base de datos SQL Server y realiza una Query
