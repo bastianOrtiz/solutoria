@@ -2582,11 +2582,19 @@ function saberAfp($id_afp){
     return $dato;
 }
 
-function tipoTrabajador($tipotrabajador_id){
+function tipoEmpleado($tipotrabajador_id){
     global $db;
     $db->where("id", $tipotrabajador_id);
     $trabajador = $db->getOne("m_tipotrabajador");
     return $trabajador;
+}
+
+function getDiasTrabajados($trabajador_id){
+    global $db;
+    $db->where("trabajador_id ", $trabajador_id);
+    $trabajador = $db->getOne("liquidacion");
+    $total_dias_trabajados = 30-$trabajador["diaAusencia"];
+    return $total_dias_trabajados;
 }
 
 /**

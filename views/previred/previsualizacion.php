@@ -52,6 +52,7 @@
                                 <tr>
                                     <td><?php echo $empleado['rut']; ?></td>
                                     <input type="hidden" name="rut[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['rut']; ?>">
+                                    <input type="hidden" name="id[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['id']; ?>">
                                     <td><?php echo $empleado['apellidoPaterno']; ?></td>
                                     <input type="hidden" name="apellidoPaterno[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['apellidoPaterno']; ?>">
                                     <td><?php echo $empleado['apellidoMaterno']; ?></td>
@@ -79,11 +80,11 @@
                                         echo $afp['id']; ?>">
                                     <td>
                                         <?php 
-                                        $tipoTrabajador = tipoTrabajador($empleado["tipotrabajador_id"]);
+                                        $tipoTrabajador = tipoEmpleado($empleado["tipotrabajador_id"]);
                                         echo $tipoTrabajador['nombre'];
                                         ?>
                                     </td>
-                                    <td>30</td>
+                                    <td><?php echo getDiasTrabajados($empleado["id"]);?><td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>

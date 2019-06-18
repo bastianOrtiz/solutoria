@@ -25,11 +25,12 @@ function crearTxt($post){
     foreach ($post['rut'] as $key => $empleado) {
        $empleados[] = [
             'rut'=>$key,
+            'id'=>$post["id"][$key],
             'apellidoPaterno'=> $post["apellidoPaterno"][$key],
             'apellidoMaterno'=> $post["apellidoMaterno"][$key],
             'nombre'=> $post["nombres"][$key],
             'sexo'=> $post["sexo"][$key],
-            'idNacionalidad'=> $post["idNacionalidad"][$key],
+            'idNacionalidad'=> $post["nacionalidad"][$key],
             'tipo_pago' => $post["tipo_pago"][$key],
             'periodoDesde' => $post["periodoDesde"][$key],
             'periodoHasta' => $post["periodoHasta"][$key],
@@ -96,7 +97,7 @@ function crearTxt($post){
             fwrite($fch, $tip_afp); // Grabas
         }
 
-        $tipo_trabajador = tipoTrabajador($empleado["tipo_trabajador"]);
+        $tipo_trabajador = tipoEmpleado($empleado["tipo_trabajador"]);
         if ($tipo_trabajador["id"] == 1 || $tipo_trabajador["id"] == 5 || $tipo_trabajador["id"] == 6 || $tipo_trabajador["id"] == 7) {
             $tip_trabajador = rellenar("0",1,"i");
             fwrite($fch, $tip_trabajador); // Grabas
@@ -107,6 +108,14 @@ function crearTxt($post){
             $tip_trabajador = rellenar("2",1,"i");
             fwrite($fch, $tip_trabajador); // Grabas
         }
+
+        $dias_trabajados = getDiasTrabajados($empleado["id"]);
+        $dias_trabajados = rellenar($dias_trabajados,2,"i");
+        fwrite($fch, $dias_trabajados); // Grabas
+
+        $tipo_linea = "00";
+        $tipo_linea = rellenar($tipo_linea,2,"s");
+        fwrite($fch, $tipo_linea); // Grabas
 
         fwrite($fch, PHP_EOL);
     }
