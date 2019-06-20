@@ -1,4 +1,3 @@
-
 <div class="content-wrapper">  
     <section class="content-header">
         <h1> Previred </h1>
@@ -107,9 +106,5 @@
             autoclose : true,
             format : 'yyyy-mm-dd'
         });
-    });
-
-    $("#frmPrevi").submit(function(e){
-        $(".overlayer").show();
     });
 </script>

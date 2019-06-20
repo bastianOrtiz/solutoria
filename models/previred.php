@@ -145,6 +145,12 @@ function crearTxt($post){
         fwrite($fch, PHP_EOL);
     }
     fclose($fch); // Cierras el archivo.
+
+    // Headers for an download:
+    header('Content-Type: application/octet-stream');
+    header('Content-Disposition: attachment; filename="previred.txt"');
+    readfile($archivo);
+    exit();
 }
 
 /**
