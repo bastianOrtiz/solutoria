@@ -2608,9 +2608,20 @@ function tipoEmpleado($tipotrabajador_id){
     return $trabajador;
 }
 
-function getDiasTrabajados($trabajador_id){
+function getDiasTrabajados($trabajador_id, $mes = "", $year = "" ){
     global $db;
+
+    if ($mes == "") {
+        $mes = getMesMostrarCorte();
+    }
+
+    if ($year == "") {
+        $year = getAnoMostrarCorte();
+    }
+
     $db->where("trabajador_id ", $trabajador_id);
+    $db->where("mes", $mes);
+    $db->where("ano", $year);
     $trabajador = $db->getOne("liquidacion");
     $total_dias_trabajados = 30-$trabajador["diaAusencia"];
     return $total_dias_trabajados;

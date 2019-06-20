@@ -51,33 +51,20 @@
                                 <?php foreach ($empleados as $empleado) : ?>
                                 <tr>
                                     <td><?php echo $empleado['rut']; ?></td>
-                                    <input type="hidden" name="rut[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['rut']; ?>">
-                                    <input type="hidden" name="id[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['id']; ?>">
                                     <td><?php echo $empleado['apellidoPaterno']; ?></td>
-                                    <input type="hidden" name="apellidoPaterno[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['apellidoPaterno']; ?>">
                                     <td><?php echo $empleado['apellidoMaterno']; ?></td>
-                                    <input type="hidden" name="apellidoMaterno[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['apellidoMaterno']; ?>">
                                     <td><?php echo $empleado['nombres']; ?></td>
-                                    <input type="hidden" name="nombres[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['nombres']; ?>">
                                     <td><?php echo fnSexo($empleado['sexo']); ?></td>
-                                    <input type="hidden" name="sexo[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['sexo']; ?>">
                                     <td><?php echo fnPais($empleado['idNacionalidad'], $empleado['sexo']); ?></td>
-                                    <input type="hidden" name="nacionalidad[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['idNacionalidad']; ?>">
                                     <td><?php echo fnTipPago($empleado['tipopago_id']); ?></td>
-                                    <input type="hidden" name="tipo_pago[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['tipopago_id']; ?>">
                                     <td><?php echo $periodoDesde; ?></td>
-                                    <input type="hidden" name="periodoDesde[<?php echo $empleado['rut']; ?>]" value="<?php echo $periodoDesde; ?>">
                                     <td><?php echo $periodoHasta; ?></td>
-                                    <input type="hidden" name="periodoHasta[<?php echo $empleado['rut']; ?>]" value="<?php echo $periodoHasta; ?>">
-                                    <input type="hidden" name="tipo_trabajador[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['tipotrabajador_id']; ?>">
                                     <td>
                                         <?php 
                                         $afp = previTrabajador($empleado["tipotrabajador_id"]);
                                         echo $afp['nombre'];
                                         ?>  
                                     </td>
-                                    <input type="hidden" name="nombre_afp[<?php echo $empleado['rut']; ?>]" value="<?php $afp = previTrabajador($empleado["tipotrabajador_id"]);
-                                        echo $afp['id']; ?>">
                                     <td>
                                         <?php 
                                         $tipoTrabajador = tipoEmpleado($empleado["tipotrabajador_id"]);
@@ -85,6 +72,19 @@
                                         ?>
                                     </td>
                                     <td><?php echo getDiasTrabajados($empleado["id"]);?><td>
+                                        
+                                    <input type="hidden" name="rut[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['rut']; ?>">
+                                    <input type="hidden" name="id[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['id']; ?>">
+                                    <input type="hidden" name="apellidoPaterno[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['apellidoPaterno']; ?>">
+                                    <input type="hidden" name="apellidoMaterno[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['apellidoMaterno']; ?>">
+                                    <input type="hidden" name="nombres[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['nombres']; ?>">
+                                    <input type="hidden" name="sexo[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['sexo']; ?>">
+                                    <input type="hidden" name="nacionalidad[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['idNacionalidad']; ?>">
+                                    <input type="hidden" name="tipo_pago[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['tipopago_id']; ?>">
+                                    <input type="hidden" name="periodoDesde[<?php echo $empleado['rut']; ?>]" value="<?php echo $periodoDesde; ?>">
+                                    <input type="hidden" name="periodoHasta[<?php echo $empleado['rut']; ?>]" value="<?php echo $periodoHasta; ?>">
+                                    <input type="hidden" name="tipo_trabajador[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['tipotrabajador_id']; ?>">
+                                    <input type="hidden" name="nombre_afp[<?php echo $empleado['rut']; ?>]" value="<?php $afp = previTrabajador($empleado["tipotrabajador_id"]);echo $afp['id']; ?>">
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -107,5 +107,9 @@
             autoclose : true,
             format : 'yyyy-mm-dd'
         });
+    });
+
+    $("#frmPrevi").submit(function(e){
+        $(".overlayer").show();
     });
 </script>
