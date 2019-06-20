@@ -60,7 +60,7 @@
                                     <td><?php echo $periodoHasta; ?></td>
                                     <td>
                                         <?php 
-                                        $afp = previTrabajador($empleado["tipotrabajador_id"]);
+                                        $afp = previTrabajador($empleado["id"]);
                                         echo $afp['nombre'];
                                         ?>  
                                     </td>
