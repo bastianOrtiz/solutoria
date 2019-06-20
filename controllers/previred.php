@@ -1,5 +1,5 @@
 <?php
-
+global $db;
 $id_empresa = $_SESSION[PREFIX.'login_eid'];
 $nombre_empresa = $_SESSION[PREFIX.'login_empresa'];
 
