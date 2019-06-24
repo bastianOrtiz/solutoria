@@ -500,7 +500,7 @@ $(document).ready(function(){
 })
 
 $(window).load(function(){
-    //window.print();
+    window.print();
     //window.onfocus=function(){ window.close();}
 })
 
