@@ -18,10 +18,177 @@ function buscarEmpleados($id_empresa){
     }*/
 }
 
+function sqlTramoCarga() {
+    global $db;
+    
+    $super_array = [];
+
+/*-------------- Comienzo SQL de tramo A ----------------*/
+    
+    $db->where("tramoCargas", "A");
+    $resultadosTramoA = $db->get("t_prevision");
+    
+    $ids_trabajadores_resultadoTramoA = [];
+    $datos_retorno_resultadoTramoA = [];
+    
+    foreach($resultadosTramoA as $rta){
+        $ids_trabajadores_resultadoTramoA[] = $rta["trabajador_id"];
+        $datos_retorno_resultadoTramoA[$rta["trabajador_id"]] = [
+            'tramoCargas' => $rta["tramoCargas"],
+            'cargasMaternales' => $rta["cargasMaternales"],
+            'cargasSimples' => $rta["cargasSimples"],
+            'cargasInvalidez' => $rta["cargasInvalidez"]
+        ];
+    }
+    
+    $super_array["tramo_a"] = [
+        'ids' => $ids_trabajadores_resultadoTramoA,
+        'datos' => $datos_retorno_resultadoTramoA
+    ];
+    
+/*-------------- Comienzo SQL de tramo B ----------------*/
+    
+    $db->where("tramoCargas", "B");
+    $resultadosTramoB = $db->get("t_prevision");
+    
+    $ids_trabajadores_resultadoTramoB = [];
+    $datos_retorno_resultadoTramoB = [];
+    
+    foreach($resultadosTramoB as $rtb){
+        $ids_trabajadores_resultadoTramoB[] = $rtb["trabajador_id"];
+        $datos_retorno_resultadoTramoB[$rtb["trabajador_id"]] = [
+            'tramoCargas' => $rtb["tramoCargas"],
+            'cargasMaternales' => $rtb["cargasMaternales"],
+            'cargasSimples' => $rtb["cargasSimples"],
+            'cargasInvalidez' => $rtb["cargasInvalidez"]
+        ];
+    }
+    
+    $super_array["tramo_b"] = [
+        'ids' => $ids_trabajadores_resultadoTramoB,
+        'datos' => $datos_retorno_resultadoTramoB
+    ];
+    
+/*-------------- Comienzo SQL de tramo C ----------------*/
+    
+    $db->where("tramoCargas", "C");
+    $resultadosTramoC = $db->get("t_prevision");
+    
+    $ids_trabajadores_resultadoTramoC = [];
+    $datos_retorno_resultadoTramoC = [];
+    
+    foreach($resultadosTramoC as $rtc){
+        $ids_trabajadores_resultadoTramoC[] = $rtc["trabajador_id"];
+        $datos_retorno_resultadoTramoC[$rtc["trabajador_id"]] = [
+            'tramoCargas' => $rtc["tramoCargas"],
+            'cargasMaternales' => $rtc["cargasMaternales"],
+            'cargasSimples' => $rtc["cargasSimples"],
+            'cargasInvalidez' => $rtc["cargasInvalidez"]
+        ];
+    }
+    
+    $super_array["tramo_c"] = [
+        'ids' => $ids_trabajadores_resultadoTramoC,
+        'datos' => $datos_retorno_resultadoTramoC
+    ];
+    
+/*-------------- Comienzo SQL de tramo D ----------------*/
+    
+    $db->where("tramoCargas", "D");
+    $resultadosTramoD = $db->get("t_prevision");
+    
+    $ids_trabajadores_resultadoTramoD = [];
+    $datos_retorno_resultadoTramoD = [];
+    
+    foreach($resultadosTramoD as $rtd){
+        $ids_trabajadores_resultadoTramoD[] = $rtd["trabajador_id"];
+        $datos_retorno_resultadoTramoD[$rtd["trabajador_id"]] = [
+            'tramoCargas' => $rtd["tramoCargas"],
+            'cargasMaternales' => $rtd["cargasMaternales"],
+            'cargasSimples' => $rtd["cargasSimples"],
+            'cargasInvalidez' => $rtd["cargasInvalidez"]
+        ];
+    }
+    
+    $super_array["tramo_d"] = [
+        'ids' => $ids_trabajadores_resultadoTramoD,
+        'datos' => $datos_retorno_resultadoTramoD
+    ];
+    
+    return $super_array;
+}
+
+function tieneTramo($trabajador_id, $super_array){
+    
+    $array_return = [
+        'tipo_tramo' => "D",
+        'cargas' => [
+            'cargasMaternales' => 0,
+            'cargasSimples' => 0,
+            'cargasInvalidez' => 0
+        ]
+    ];
+    
+/*---------- Tipo A ----------*/
+    
+    if(in_array($trabajador_id,$super_array["tramo_a"]["ids"])){
+        $array_return = [
+            'tipo_tramo' => $super_array["tramo_a"]["datos"][$trabajador_id]["tramoCargas"],
+            'cargas' => [
+                'cargasMaternales' => $super_array["licencias"]["datos"][$trabajador_id]["cargasMaternales"],
+                'cargasSimples' => $super_array["licencias"]["datos"][$trabajador_id]["cargasSimples"],
+                'cargasInvalidez' => $super_array["licencias"]["datos"][$trabajador_id]["cargasInvalidez"]
+            ]
+        ];
+    }
+
+/*---------- Tipo B ----------*/
+    
+    if(in_array($trabajador_id,$super_array["tramo_b"]["ids"])){
+        $array_return = [
+            'tipo_tramo' => $super_array["tramo_b"]["datos"][$trabajador_id]["tramoCargas"],
+            'cargas' => [
+                'cargasMaternales' => $super_array["licencias"]["datos"][$trabajador_id]["cargasMaternales"],
+                'cargasSimples' => $super_array["licencias"]["datos"][$trabajador_id]["cargasSimples"],
+                'cargasInvalidez' => $super_array["licencias"]["datos"][$trabajador_id]["cargasInvalidez"]
+            ]
+        ];
+    }
+    
+/*---------- Tipo C ----------*/
+    
+    if(in_array($trabajador_id,$super_array["tramo_c"]["ids"])){
+        $array_return = [
+            'tipo_tramo' => $super_array["tramo_c"]["datos"][$trabajador_id]["tramoCargas"],
+            'cargas' => [
+                'cargasMaternales' => $super_array["licencias"]["datos"][$trabajador_id]["cargasMaternales"],
+                'cargasSimples' => $super_array["licencias"]["datos"][$trabajador_id]["cargasSimples"],
+                'cargasInvalidez' => $super_array["licencias"]["datos"][$trabajador_id]["cargasInvalidez"]
+            ]
+        ];
+    }
+    
+/*---------- Tipo D ----------*/
+    
+    if(in_array($trabajador_id,$super_array["tramo_d"]["ids"])){
+        $array_return = [
+            'tipo_tramo' => $super_array["tramo_d"]["datos"][$trabajador_id]["tramoCargas"],
+            'cargas' => [
+                'cargasMaternales' => $super_array["licencias"]["datos"][$trabajador_id]["cargasMaternales"],
+                'cargasSimples' => $super_array["licencias"]["datos"][$trabajador_id]["cargasSimples"],
+                'cargasInvalidez' => $super_array["licencias"]["datos"][$trabajador_id]["cargasInvalidez"]
+            ]
+        ];
+    }
+    
+    return $array_return;
+}
+
 function crearTxt($post){
     global $db;
 
     $super_array = sqlMovimientos();
+    $super_arreglo = sqlTramoCarga();
     $empleados = [];
     foreach ($post['rut'] as $key => $empleado) {
        $empleados[] = [
@@ -100,7 +267,7 @@ function crearTxt($post){
             fwrite($fch, $tip_afp); // Grabas
         }
 
-        $tipo_trabajador = tipoEmpleado($empleado["id"]);
+        $tipo_trabajador = tipoEmpleado($empleado["tipo_trabajador"]);
         if ($tipo_trabajador["id"] == 1 || $tipo_trabajador["id"] == 5 || $tipo_trabajador["id"] == 6 || $tipo_trabajador["id"] == 7) {
             $tip_trabajador = rellenar("0",1,"i");
             fwrite($fch, $tip_trabajador); // Grabas
@@ -141,6 +308,19 @@ function crearTxt($post){
             $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
         }
         fwrite($fch, $fecha_formateada_fin); // Grabas
+        
+        $asignacion = tieneTramo($empleado["id"],$super_arreglo);
+        $tramo = rellenar($asignacion["tipo_tramo"],1,"s");
+        fwrite($fch, $tramo); // Grabas
+        
+        $num_cargas_simples = rellenar($asignacion["cargas"]["cargasSimples"],2,"i");
+        fwrite($fch, $num_cargas_simples); // Grabas
+        
+        $num_cargas_maternales = rellenar($asignacion["cargas"]["cargasMaternales"],2,"i");
+        fwrite($fch, $num_cargas_maternales); // Grabas
+        
+        $num_cargas_invalidas = rellenar($asignacion["cargas"]["cargasInvalidez"],2,"i");
+        fwrite($fch, $num_cargas_invalidas); // Grabas
 
         fwrite($fch, PHP_EOL);
     }
