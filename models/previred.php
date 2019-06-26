@@ -389,6 +389,13 @@ function sqlAsignacionFamiliar($mes = "", $year = ""){
 
     $super_array = [];
 
+    if( $mes == '' ){
+        $mes = (int)getMesMostrarCorte();
+    }
+    if( $ano == '' ){
+        $ano = (int)getAnoMostrarCorte();
+    }
+
 /*---------- Asignacion Familiar -----------*/
     $sql = "
     SELECT 
@@ -404,24 +411,12 @@ function sqlAsignacionFamiliar($mes = "", $year = ""){
     AND L.trabajador_id = T.id
     AND LH.haber_id = H.id
     AND H.id = 20
+    AND T.empresa_id = " . $_SESSION[PREFIX.'login_eid'] . "
+    AND L.mes = $mes
+    AND L.ano = $ano
     ";
 
-    $sql .= " AND T.empresa_id = ".$_SESSION[PREFIX.'login_eid'] . " \n";
-
-    if ($mes == "") {
-        $mes = 3; //arreglar el Mes, porque la funcion getMesMostrarCorte viene mes como "03" y se necesita "3"
-        
-        $sql .= " AND L.mes BETWEEN ". $mes ." AND ". $mes ." \n";
-    }else{
-        $sql .= " AND L.mes BETWEEN ". $mes ." AND ". $mes ." \n";
-    }
-
-    if ($year == "") {
-        $year = getAnoMostrarCorte();
-        $sql .= " AND L.ano BETWEEN ". $year ." AND ". $year ." \n ";
-    }else{
-        $sql .= " AND L.ano BETWEEN ". $year ." AND ". $year ." \n ";
-    }
+    show_array($sql);
 
     $results= $db->rawQuery($sql);
 
