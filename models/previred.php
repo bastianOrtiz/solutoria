@@ -18,6 +18,15 @@ function buscarEmpleados($id_empresa){
     }*/
 }
 
+function tramoAsignacion($id_trabajador) {
+    global $db;
+    
+    $db->where("trabajador_id", $id_trabajador);
+    $tramo_trabajador = $db->get("tramoCargas");
+    
+    show_array($tramo_trabajador);  d
+}
+
 function crearTxt($post){
     global $db;
 
