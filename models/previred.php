@@ -217,6 +217,16 @@ function obtenerDiasLicencia($mes = "", $ano = ""){
     return $arreglo_licencia;
 }
 
+function getCodigoAfp($trabajador_id){
+    global $db;
+
+    $db->join("m_afp AFP", "P.afp_id=AFP.id");
+    $db->where("P.trabajador_id",$trabajador_id);
+    $results = $db->getOne("t_prevision P", "AFP.codigo");
+
+    return $results;
+}
+
 function crearTxt($post){
     global $db;
 
@@ -380,6 +390,11 @@ function crearTxt($post){
         }else{
             fwrite($fch, "N"); // Grabas
         }
+
+        $codigo_afp = getCodigoAfp($empleado["id"]);
+        $codigo_afp_convertido = leadZero($codigo_afp["codigo"]);
+        $codigo_afp_rellenar = rellenar($codigo_afp_convertido,2,"i");
+        fwrite($fch, $codigo_afp_rellenar); // Grabas
 
         fwrite($fch, PHP_EOL);
     }

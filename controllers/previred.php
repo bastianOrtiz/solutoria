@@ -14,6 +14,7 @@ if( $_POST ){
 }
 
 if( $parametros ){
+    getCodigoAfp(1);
     $empleados = buscarEmpleados($id_empresa);
     $periodoDesde = date("m").date("Y");
     $periodoHasta = date("m").date("Y");
