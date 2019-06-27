@@ -193,6 +193,30 @@ function tramoAsignacion($id_trabajador) {
     return $tramo_trabajador;
 }
 
+function obtenerDiasLicencia($mes = "", $ano = ""){
+    global $db;
+
+    $arreglo_licencia = [];
+
+    if( $mes == '' ){
+        $mes = (int)getMesMostrarCorte();
+    }
+    if( $ano == '' ){
+        $ano = (int)getAnoMostrarCorte();
+    }
+
+    $db->where("mes", 4);
+    $db->where("ano", $ano);
+    $db->where("diaLicencia",0,">");
+    $dias_licencia = $db->get("liquidacion",null,"trabajador_id");
+
+    foreach ($dias_licencia as $licencia) {
+        $arreglo_licencia[] = $licencia["trabajador_id"];
+    }
+
+    return $arreglo_licencia;
+}
+
 function crearTxt($post){
     global $db;
 
@@ -200,6 +224,7 @@ function crearTxt($post){
     $super_arreglo = sqlTramoCarga();
     $arreglo_asignacion_familiar = sqlAsignacionFamiliar();
     $arreglo_asignacion_familiar_retroactiva = sqlAsignacionFamiliarRetroactiva();
+    $arreglo_ids_licencia = obtenerDiasLicencia();
     $empleados = [];
     foreach ($post['rut'] as $key => $empleado) {
        $empleados[] = [
@@ -347,6 +372,15 @@ function crearTxt($post){
         $monto_reintegro_cargas_familiares = rellenar($reintegro_cargas_familiares,6,"i");
         fwrite($fch, $monto_reintegro_cargas_familiares); // Grabas
 
+        $licencia = obtenerDiasLicencia($empleado["id"]);
+        $dias_de_licencia = rellenar($licencia,1,"s");
+
+        if (in_array($empleado["id"], $arreglo_ids_licencia)) {
+            fwrite($fch, "S"); // Grabas
+        }else{
+            fwrite($fch, "N"); // Grabas
+        }
+
         fwrite($fch, PHP_EOL);
     }
     fclose($fch); // Cierras el archivo.
@@ -384,7 +418,7 @@ function rellenar($dato, $largo, $tipo){
 
 }
 
-function sqlAsignacionFamiliar($mes = "", $year = ""){
+function sqlAsignacionFamiliar($mes = "", $ano = ""){
     global $db;
 
     $super_array = [];
@@ -416,8 +450,6 @@ function sqlAsignacionFamiliar($mes = "", $year = ""){
     AND L.ano = $ano
     ";
 
-    show_array($sql);
-
     $results= $db->rawQuery($sql);
 
     $ids_asignacion_familiar = [];
@@ -439,11 +471,18 @@ function sqlAsignacionFamiliar($mes = "", $year = ""){
     return $super_array;
 }
 
-function sqlAsignacionFamiliarRetroactiva($mes = "", $year = ""){
+function sqlAsignacionFamiliarRetroactiva($mes = "", $ano = ""){
 
     global $db;
 
     $super_array = [];
+
+    if( $mes == '' ){
+        $mes = (int)getMesMostrarCorte();
+    }
+    if( $ano == '' ){
+        $ano = (int)getAnoMostrarCorte();
+    }
 
 /*---------- Asignacion Familiar Retroactiva -----------*/
     $sql = "
@@ -460,24 +499,10 @@ function sqlAsignacionFamiliarRetroactiva($mes = "", $year = ""){
     AND L.trabajador_id = T.id
     AND LH.haber_id = H.id
     AND H.id = 56
+    AND T.empresa_id = " . $_SESSION[PREFIX.'login_eid'] . "
+    AND L.mes = $mes
+    AND L.ano = $ano
     ";
-
-    $sql .= " AND T.empresa_id = ".$_SESSION[PREFIX.'login_eid'] . " \n";
-
-    if ($mes == "") {
-        $mes = 3; //arreglar el Mes, porque la funcion getMesMostrarCorte viene mes como "03" y se necesita "3"
-        
-        $sql .= " AND L.mes BETWEEN ". $mes ." AND ". $mes ." \n";
-    }else{
-        $sql .= " AND L.mes BETWEEN ". $mes ." AND ". $mes ." \n";
-    }
-
-    if ($year == "") {
-        $year = getAnoMostrarCorte();
-        $sql .= " AND L.ano BETWEEN ". $year ." AND ". $year ." \n ";
-    }else{
-        $sql .= " AND L.ano BETWEEN ". $year ." AND ". $year ." \n ";
-    }
 
     $results= $db->rawQuery($sql);
 
