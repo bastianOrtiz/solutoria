@@ -34,6 +34,10 @@
                         <div class="form-group">
                           <label for="nombreAfp">Nombre</label>
                           <input type="text" class="form-control required" value="" id="nombreAfp" name="nombreAfp" placeholder="Nombre Afp" />
+                        </div>  
+                        <div class="form-group">
+                          <label for="codigoAfp">Codigo Previred</label>
+                          <input type="text" class="form-control required" value="" id="codigoAfp" name="codigoAfp" placeholder="Código Afp" />
                         </div>                                                                        
                       </div><!-- /.box-body -->
     
