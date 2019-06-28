@@ -28,6 +28,27 @@ if( $_POST ){
             exit();
 
             break;
+        
+        case 'edit_criterio_centrocosto':
+
+            $data_update = [
+                'fk_empreid' => $_SESSION[PREFIX.'login_eid'],
+                'criterio' => $_POST['nombreCriterio'],
+                'DH' => $_POST['dh'],
+                'ctacont' => $_POST['cuentaContable'],
+                'nombre_cta' => $_POST['nombreCuentaContable'],
+                'id_ccosto' => $_POST['centroCosto']
+            ];
+            $db->where('id',$_POST['regid']);
+            $db->update('c_crixccostos',$data_update);
+
+            logit( $_SESSION[PREFIX.'login_name'],'editar','criterio x centrocosto',$_POST['regid'],$db->getLastQuery() );
+        
+            $response = encrypt('status=success&mensaje=El registro se ha editado correctamente&id='.$_POST['regid']);
+            redirect(BASE_URL . '/centralizacion/criterios-centrocosto/response/' . $response );
+            exit();
+
+            break;
 
 
         case 'new_criterio_entidad';
@@ -55,6 +76,31 @@ if( $_POST ){
             exit();
             break;
         
+
+        case 'new_criterio_idividual';
+            $data_insert = [
+                'fk_empreid' => $_SESSION[PREFIX.'login_eid'],
+                'criterio' => $_POST['nombreCriterio'],
+                'DH' => $_POST['dh'],
+                'ctacont' => $_POST['cuentaContable'],
+                'nombre_cta' => $_POST['nombreCuentaContable'],
+            ];
+
+            $create_id = $db->insert('c_crixindividual',$data_insert);
+
+            logit( $_SESSION[PREFIX.'login_name'],'agregar','criterio x individual',$create_id,$db->getLastQuery() );
+        
+            if(!$create_id){
+                $response = encrypt('status=warning&mensaje=Hubo un error creando el registro en la BD&id=NULL');
+            } else {
+                $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$create_id);
+            }
+
+            redirect(BASE_URL . '/centralizacion/criterios-individual/response/' . $response );
+            exit();
+            break;
+        
+
         default:
             break;
     }
@@ -62,27 +108,41 @@ if( $_POST ){
 }
 
 if( $parametros ){
-    switch ($parametros[0]) {
-        case 'ingresar-criterio-centrocosto':
-        case 'ingresar-criterio-entidad':
-            $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
-            $ccostos = $db->get('m_centrocosto');
-            break;
         
-        case 'criterios-centrocosto':
-            $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
-            $registros = $db->get('c_crixccostos');
-            break;
+    $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+    $ccostos = $db->get('m_centrocosto');
+    
+    $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
+    $registros_criterios_centrocosto = $db->get('c_crixccostos');
+    
+    $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
+    $registros_criterios_entidad = $db->get('c_crixentidad');
+    
+    $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
+    $registros_individual = $db->get('c_crixindividual');
+    
 
 
-        case 'criterios-entidad':
-            $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
-            $registros = $db->get('c_crixentidad');
-            break;
-        
-        default:
-            break;
+    if( $parametros[0] == 'criterios-centrocosto' && $parametros[1] == 'editar' && isset($parametros[2]) ){
+        $parametros[0] = 'editar-criterio-centrocosto';
+        $db->where('id',$parametros[2]);
+        $criterio = $db->getOne('c_crixccostos');
     }
+    
+    if( $parametros[0] == 'criterios-entidad' && $parametros[1] == 'editar' && isset($parametros[2]) ){
+        $parametros[0] = 'editar-criterio-entidad';
+        $db->where('id',$parametros[2]);
+        $criterio = $db->getOne('c_crixentidad');
+    }
+    
+    if( $parametros[0] == 'criterios-individual' && $parametros[1] == 'editar' && isset($parametros[2]) ){
+        $parametros[0] = 'editar-criterio-individual';
+        $db->where('id',$parametros[2]);
+        $criterio = $db->getOne('c_crixindividual');
+    }
+
+    show_array($criterio,0);
+
 }
 
 include ROOT . '/views/comun/header.php';

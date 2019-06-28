@@ -37,7 +37,7 @@
                     </tfoot>
                     <tbody>
                         <?php 
-                            foreach( $registros as $reg ){ 
+                            foreach( $registros_criterios_entidad as $reg ){ 
                             ?>
                         <tr>
                             <td> <?php echo $reg['id']; ?> </td>
@@ -47,7 +47,7 @@
                             <td> <?php echo getNombre($reg['id_entidad'],$reg['tabla_entidad'], false); ?> </td>
                             <td> <?php echo $reg['tabla_entidad']; ?> </td>
                             <td>
-                                <button class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
+                                <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/<?php echo $action ?>/editar/<?php echo $reg['id'] ?>" class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </a>
                                 <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>
                             </td>
                         </tr>

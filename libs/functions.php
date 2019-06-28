@@ -1617,6 +1617,16 @@ function mainMenu(){
                 'entidad' => 'centralizacion',
                 'accion' => 'criterios-centrocosto',
                 'label' => 'Criterios por Centros de Costos'
+            ),
+            array(
+                'entidad' => 'centralizacion',
+                'accion' => 'criterios-entidad',
+                'label' => 'Criterios por Entidad'
+            ),
+            array(
+                'entidad' => 'centralizacion',
+                'accion' => 'criterios-individual',
+                'label' => 'Criterios por Individual'
             )
         )
     );
