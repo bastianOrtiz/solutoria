@@ -1,14 +1,14 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <section class="content-header">
-        <h1> Criterios por Individual </h1>
+        <h1> Malla Liquidaciones </h1>
         <?php include ROOT . '/views/comun/breadcrumbs.php';  ?>
         <?php include ROOT . '/views/comun/alertas.php';  ?>
     </section>
     <section class="content">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Criterios</h3>
+                <h3 class="box-title">Registros</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -33,7 +33,7 @@
                     </tfoot>
                     <tbody>
                         <?php 
-                            foreach( $registros_individual as $reg ){ 
+                            foreach( $registros as $reg ){ 
                             ?>
                         <tr>
                             <td> <?php echo $reg['id']; ?> </td>
@@ -41,7 +41,7 @@
                             <td> <?php echo getDebeHaber($reg['DH']); ?> </td>
                             <td> <?php echo $reg['nombre_cta']; ?> </td>
                             <td>
-                                <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/<?php echo $action ?>/editar/<?php echo $reg['id'] ?>" class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </a>
+                                <button class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
                                 <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>
                             </td>
                         </tr>
@@ -53,8 +53,8 @@
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
-        <a href="<?php echo BASE_URL . '/' . $entity ?>/ingresar-criterio-individual" class="btn btn-primary">
-        <i class="fa fa-plus-circle"></i> Nuevo Criterio x Individual
+        <a href="<?php echo BASE_URL . '/' . $entity ?>/ingresar-malla-liquidacion" class="btn btn-primary">
+        <i class="fa fa-plus-circle"></i> Nueva malla
         </a>
     </section>
 </div>

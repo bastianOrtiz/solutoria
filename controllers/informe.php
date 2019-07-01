@@ -356,7 +356,7 @@ if( $_POST ){
             AND H.id = ". $_POST['cboHaberesDescuentos'] ."
             ";
         }
-        
+
         if( $_POST['mesIni'] && $_POST['anoIni'] && $_POST['mesFin'] && $_POST['anoFin'] ){
             $fecha_ini_proc = strtotime($_POST['fechaInicioInforme']);
             $fecha_end_proc = strtotime($_POST['fechaFinInforme']);
@@ -374,7 +374,6 @@ if( $_POST ){
         $sql .= " AND T.empresa_id = ".$_SESSION[PREFIX.'login_eid'] . " \n";
         
         $sql .= "ORDER BY L.ano DESC, L.mes ASC, T.apellidoPaterno ASC";
-        
         
         $results['registros'] = $db->rawQuery($sql);
         

@@ -10,7 +10,8 @@ if( $_POST ){
     if( @$_POST['action'] == 'edit' ){
         $activo = $afpActivo[0];
         $data = Array (
-            "nombre" => $nombreAfp
+            "nombre" => $nombreAfp,
+            "codigo" => $codigoAfp
         );
 
         if( editarAfp($afp_id, $data) ){
@@ -42,7 +43,8 @@ if( $_POST ){
         $activo = $afpActivo[0];        
         
         $data = Array (
-            "nombre" => $nombreAfp
+            "nombre" => $nombreAfp,
+            "codigo" => $codigoAfp
         );
         
         $create_id = crearAfp($data);
@@ -50,11 +52,11 @@ if( $_POST ){
         
         if(!$create_id){
             $response = encrypt('status=warning&mensaje=Hubo un error creando el registro en la BD&id=NULL');
-            redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
+            redirect(BASE_URL . '/' . $entity . '/editar/'.$create_id.'/response/' . $response );
             exit();
         } else {
             $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$id);
-            redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
+            redirect(BASE_URL . '/' . $entity . '/editar/'.$create_id.'/response/' . $response );
             exit();                
         }
                    

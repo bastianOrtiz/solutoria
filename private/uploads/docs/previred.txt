@@ -1,249 +1,249 @@
-000141640682TERRILE                       ANGULO                        ANGELO MARCELO                M001062019062019AFP030000805-03-201500-00-0000
-000107320695LABRA                         LEMUNAO                       MARTA DOMITILA                M001062019062019AFP1300000                    
-000097075395PEREZ                         VERDUGO                       ELBA DEL CARMEN               F001062019062019AFP130000813-08-201200-00-0000
-000218995365GIURASTANTE                   GENOVESIO                     HERNAN                        M001062019062019AFP300000                    
-00012900259KALLENDE                       ARAUZ                         FERNANDO ENRIQUE              M001062019062019AFP300000                    
-00013286408KARIAS                         POLANCO                       JOSE LUIS                     M001062019062019AFP300000                    
-000190932664AVILES                        MALDONADO                     LUIS ANTONIO                  M001062019062019AFP300000                    
-000174255199AVILES                        CANDIA                        ROBERTO BLADIMIR              M001062019062019AFP300000                    
-000163818809AHUMADA                       MUNOZ                         WALTER LEANDRO                M001062019062019AFP30000803-07-201409-10-2017
-000143400840BUSTAMANTE                    MIRANDA                       CRISTIAN GERARDO              M001062019062019AFP300000                    
-000114854816AREVALO                       ROJAS                         LUIS ALEJANDRO                M001062019062019AFP300000                    
-000062457228BURGOS                        MORALES                       MIGUEL ANGEL                  M001062019062019AFP300000                    
-000093749073BUSTOS                        SAN MARTIN                    HECTOR ANDRES                 M001062019062019AFP300000                    
-000177394513AREVALO                       MEDINA                        MACARENA YESNIK               F001062019062019AFP300000                    
-000126436882CACERES                       ESCOBAR                       ALEJANDRO ANTONIO             M001062019062019AFP300000                    
-000180943153AVILES                        CANDIA                        YERKO NICOLAS                 M001062019062019AFP300000                    
-000177651818ALVAREZ                       MIRANDA                       MATIAS IGNACIO                M001062019062019AFP300000                    
-000057176199ALLENDE                       WILSON                        VIVIANA DEL CARMEN            F001062019062019AFP300000                    
-000122826139CARCAMO                       YUFFER                        JOSE MANUEL                   M001062019062019AFP300000                    
-000057429690CARO                          GONZALEZ                      PEDRO                         M001062019062019AFP300000                    
-000138357465CARRASCO                      AHUMADA                       VERONICA SOLEDAD              F001062019062019AFP30000817-04-201700-00-0000
-000156205028CASTILLO                      VALERA                        MICHAEL YERKO                 M001062019062019AFP300000                    
-000066973727CESPEDES                      ARRIAGADA                     CARLOS FRANCISCO              M001062019062019AFP300000                    
-000185454304ESCOBAR                       CONTRERAS                     BORIS MARCELO                 M001062019062019AFP300000                    
-000179807122CISTERNA                      NAVARRETE                     DANIEL RICARDO                F001062019062019AFP300000                    
-000158007916COLIN                         GONZALEZ                      KAREN MASSIEL                 F001062019062019AFP300000                    
-000130786707CONTRERAS                     MARCHANT                      PATRICIO ALEJANDRO            M001062019062019AFP30000801-03-201718-12-2017
-000091663759ESQUIVEL                      FERNANDEZ                     ENRIQUE EDGARDO               M001062019062019AFP300000                    
-000187866049CONTRERAS                     SANDOVAL                      SEBASTIAN MAURICIO            M001062019062019AFP300000                    
-000170281098CONTRERAS                     OTAROLA                       CHRISTOPHER LUIS              M001062019062019AFP30000820-10-201128-02-2017
-000104018831ESQUIVEL                      FERNANDEZ                     JULIO ALBERTO                 M001062019062019AFP300000                    
-00006554962kCONTRERAS                     VALLADARES                    MIGUEL MARCELO                M001062019062019AFP30000801-08-201112-07-2018
-000175658181ESPINOZA                      ESPINOZA                      CARLOS ANDRES                 M001062019062019AFP300000                    
-000072083911ESPINOZA                      VERDEJO                       JENARO ENRIQUE                M001062019062019AFP300000                    
-000126316070DIAZ                          GAVILAN                       KAREN ANDREA                  F001062019062019AFP300000                    
-000066181472ESCALONA                      AGUIRRE                       PEDRO                         M001062019062019AFP300000                    
-000181853018GALARCE                       GONZALEZ                      NICOLAS                       M001062019062019AFP300000                    
-000093557700FARIAS                        CARREÑO                       EDUARDO ALFONSO               M001062019062019AFP300000                    
-000161931357GARCIA                        GUZMAN                        JOSE ISAIAS                   M001062019062019AFP300000                    
-000099909862FUENTES                       PALOMINOS                     LUIS ENRIQUE                  M001062019062019AFP300000                    
-000179290634GODOY                         CAMPOS                        LEONARDO ANTONIO              M001062019062019AFP300000                    
-000180849149FLORES                        GONZALEZ                      MAURICIO ESTEBAN              M001062019062019AFP300000                    
-000169509891GOMEZ                         CESPEDES                      ALEJANDRA ISABEL              F001062019062019AFP300000                    
-000072594592LLANOS                        LILLO                         JORGE ANTONIO                 M001062019062019AFP300000                    
-000139065336LOPEZ                         MOYA                          MARIA ELIZABETH               F001062019062019AFP300000                    
-000160422556HENRIQUEZ                     MUÑOZ                         BERNARDO LUCIANO              M001062019062019AFP300000                    
-000194180365LOVERA                        ARREDONDO                     KARINA MARGARITA              F001062019062019AFP300000                    
-000165507258JARAMILLO                     ORDENES                       MARCELO ENRIQUE               M001062019062019AFP300000                    
-000155969903JARAMILLO                     ORDENES                       CARLOS ALBERTO                M001062019062019AFP300000                    
-000121238446MARCHANT                      ROJAS                         JEANNETTE                     F001062019062019AFP300000                    
-000155107812LEVIPIL                       COLLIAN                       SERGIO ANDRES                 M001062019062019AFP300000                    
-000171214106LLABRES                       DURAN                         GONZALO SEBASTIAN             M001062019062019AFP300000                    
-000113486260MARIN                         MORENO                        MARCOS ANDRES                 M001062019062019AFP300000                    
-000119777836MADRID                        GUERRA                        BLANCA ROSA                   F001062019062019AFP30000812-08-201330-03-2017
-00016029714KMEDINA                        QUINTEROS                     VICTOR MANUEL                 M001062019062019AFP300000                    
-000140502073MELLADO                       DIEZ DE MEDINA                LUIS ALEJANDRO                M001062019062019AFP300000                    
-000132427607MORAGA                        ROJAS                         ALEJANDRA ELOISA              F001062019062019AFP300000                    
-000173805063MUÑOZ                         QUIDEL                        JUAN CARLOS                   M001062019062019AFP300000                    
-000175644091NAMUNCURA                     ESPINOZA                      DANIEL HERALDO                M001062019062019AFP300000                    
-000141861689NILO                          MACIAS                        CELINDA                       M001062019062019AFP300000                    
-000063879363MORALES                       CERDA                         ISAIAS PATRICIO               M001062019062019AFP300000                    
-00014453980kMUNIZAGA                      VIVANCO                       SAMUEL ALBERTO                M001062019062019AFP300000                    
-000179527251MUÑOZ                         ALBORNOZ                      MARCO ELIAS                   M001062019062019AFP300000                    
-000191640187NUÑEZ                         PEREZ                         CAROLINA ALEJANDRA            F001062019062019AFP300000                    
-000122463230RAIN                          CAYUPI                        OSCAR RENAN                   M001062019062019AFP30000801-09-201400-00-0000
-000169930570ORDENES                       SAAVEDRA                      ULISES HERNAN                 M001062019062019AFP300000                    
-000161902519RAMIREZ                       BUENO                         RAUL ABRAHAM                  M001062019062019AFP300000                    
-00013484261kRECABARREN                    GARCIA                        MARTIN ALEJANDRO              M001062019062019AFP300000                    
-000151310885PIZARRO                       CHAMORRO                      INGRID LORENA                 F001062019062019AFP30000815-05-200631-05-2017
-000130577148PIZARRO                       DURAN                         CRISTIAN MARCELO              M001062019062019AFP300000                    
-000158010534RETAMAL                       VILLEGAS                      FRANCISCO ANTONIO             M001062019062019AFP300000                    
-000165622774PLAZA                         LEON                          CARLA DAYHANA                 F001062019062019AFP300000                    
-000145734347RIVERA                        ESQUIVEL                      TAMARA ANDREA                 F001062019062019AFP300000                    
-000188321550Quintanilla                   Águila                        Miguel Angel                  M001062019062019AFP300000                    
-000177650870QUEZADA                       SILVA                         WLADIMIR ALONSO               M001062019062019AFP30000816-07-201524-11-2017
-000172698034ROJAS                         CIFUENTE                      CAMILO IGNACIO                M001062019062019AFP300000                    
-000157151150ROJAS                         SANHUEZA                      CLAUDIO ANDRES                M001062019062019AFP300000                    
-00006374381kRIVERA                        CERDA                         MIGUEL ANGEL                  M001062019062019AFP300000                    
-000167960693SAEZ                          ZAPATA                        LUZ MARIA                     F001062019062019AFP300000                    
-000146374743SANTIAGO                      SANTISTEBAN                   RICHARD JHONY                 M001062019062019AFP300000                    
-000170047052SAEZ                          VARGAS                        NICOLAS ALFONSO               M001062019062019AFP300000                    
-000124456223SANTA MARIA                   OLIVARES                      JORGE ANDRES                  M001062019062019AFP300000                    
-000165451821SEGUEL                        SAAVEDRA                      BLANCA JOHANNA                F001062019062019AFP300000                    
-00017564623kSEGURA                        ANTILEO                       RUTH BETZABETH                F001062019062019AFP300000                    
-000186934652ROJAS                         MELGAREJO                     CRISTOPHER  ANTONIO           M001062019062019AFP300000                    
-000091598833TAPIA                         GALLARDO                      LILIANA IVETTE                F001062019062019AFP300000                    
-000187636515ROJAS                         TRONCOSO                      ESTEFANI SOLEDAD              F001062019062019AFP300000                    
-000153509042RUBILAR                       DIAZ                          MARCELA CRISTINA              F001062019062019AFP300000                    
-00007897155kTORRES                        CIAPPA                        MARIO EDUARDO                 M001062019062019AFP300000                    
-000113723041TOLOZA                        VERDUGO                       LEONARDO ALFONSO              M001062019062019AFP30000801-06-201700-00-0000
-000118551273URZUA                         GONZALEZ                      PAOLA                         F001062019062019AFP300000                    
-000126527853NUÑEZ                         ARAYA                         ARTURO PATRICIO               M001062019062019AFP300000                    
-00018064492kValenzuela                    Munizaga                      Daniela Andrea                F001062019062019AFP300000                    
-000096718381VERGARA                       QUIROZ                        ROBERTO LEONARDO              M001062019062019AFP300000                    
-000108817240VALDIVIA                      ESPINOZA                      ABIGAIL JIMENA                F001062019062019AFP300000                    
-000185480275YAÑEZ                         GUTIERREZ                     PEDRO ALBERTO                 M001062019062019AFP300000                    
-000152425317VASQUEZ                       LEIVA                         DANILO ESTEBAN                M001062019062019AFP300000                    
-000050347346ALARCON                       ALBORNOZ                      CUSTODIO EDUARDO              M001062019062019AFP300000                    
-000178574884Arriagada                     Hurtado                       Victor Manuel                 M001062019062019AFP300000                    
-000139993616BAEZ                          GONZALEZ                      HENRY JONATHAN                M001062019062019AFP300000                    
-000083472693ESQUIVEL                      FERNANDEZ                     PATRICIA MARIA                F001062019062019AFP300000                    
-000164269906Fernandez                     Barrios                       Milton Matias                 M001062019062019AFP300000                    
-000118857208LOPEZ                         JARA                          ARAMIL ENRIQUE                M001062019062019AFP300000                    
-000124818117MEDINA                        CORNEJO                       ALEJANDRA DE LOURDES          F001062019062019AFP300000                    
-000139040805MENESES                       RIVERA                        ATILIO RODRIGO                M001062019062019AFP300000                    
-000190541738Morales                       Parada                        Jose Gabriel                  M001062019062019AFP300000                    
-00009091538KRIVERA                        CERDA                         ERIKA ISABEL                  F001062019062019AFP300000                    
-000130629113RIVERA                        ESQUIVEL                      MIGUEL ANGEL                  M001062019062019AFP300000                    
-000172547206VALENZUELA                    MUNIZAGA                      FABIAN                        M001062019062019AFP300000                    
-000106162786VALENZUELA                    PADILLA                       MIGUEL OSCAR                  M001062019062019AFP300000                    
-000178351834VERA                          FREDES                        CLAUDIO CAMILO                M001062019062019AFP300000                    
-000170709926ZUÑIGA                        MORALES                       RAUL                          M001062019062019AFP300000                    
-000115772562MUÑOZ                         DIAZ                          ENZO SALVADOR                 M001062019062019AFP300000                    
-000118627016FUENTES                       CIFUENTES                     FRANCISCO JAVIER              M001062019062019AFP300000                    
-000124060494VALDIVIA                      JOFRE                         PATRICIO IVAN                 M001062019062019AFP300000                    
-000078475897QUIJADA                       PAREDES                       VICTOR MANUEL                 M001062019062019AFP300000                    
-000134801506CATALAN                       MARTINEZ                      JOSE ISAIAS                   M001062019062019AFP30000807-03-201600-00-0000
-000101888576MUÑOZ                         CAMPOS                        JORGE ADOLFO                  M001062019062019AFP300000                    
-000187382599ANDRADE                       CARRASCO                      LEONARDO ESTEBAN              M001062019062019AFP30000801-01-201616-12-2016
-000132450323SALAZAR                       CERPA                         KARINA ELIZABETH              F001062019062019AFP30000804-01-201600-00-0000
-000184447789BADILLO                       PEDRAZA                       MATIAS JAVIER                 M001062019062019AFP30000801-01-201615-03-2017
-000167153232BADILLO                       PEDRAZA                       PABLO ANDRES                  M001062019062019AFP300000                    
-000128650717VERGARA                       ACEVEDO                       WILLY FABIAN                  M001062019062019AFP300000                    
-000123549465DEVIA                         RIOS                          DAVID MARCELO                 M001062019062019AFP300000                    
-000195013683FUENTES                       PEREIRA                       OSVALDO IGNACIO               M001062019062019AFP30000806-06-201631-03-2017
-00016027915KMELLADO                       DIEZ DE MEDINA                DIEGO ANDRÃ‰                  M001062019062019AFP30000801-09-201600-00-0000
-00012113490KALVAREZ                       MAUREIRA                      JORGE DEL CARMEN              M001062019062019AFP300000                    
-000158442868GONZALEZ                      MARCHANT                      MARCELO ANDRES                M001062019062019AFP30000807-07-201607-09-2016
-000156141305VIDAL                         MOLINA                        LEONARDO FABIAN               M001062019062019AFP300000                    
-000121058197CANESSA                       MUÑOZ                         JUAN PABLO                    M001062019062019AFP300000                    
-000131484720HOJAS                         MORALES                       PAMELA SOLEDAD                F001062019062019AFP300000                    
-000172809723BUSTOS                        ORELLANA                      CINDY ESTEFANI                F001062019062019AFP300000                    
-000163805928SANCHEZ                       VALENCIA                      JOSE EDUARDO                  M001062019062019AFP300000                    
-000167504817ESCARATE                      GOMEZ                         PEDRO HUMBERTO                M001062019062019AFP300000                    
-000173915004HUENCHUPAN                    BECERRA                       MAGDALENA RUT                 F001062019062019AFP30000801-05-201600-00-0000
-000155840501MORALES                       CORRETEA                      YISVI ALEJANDRA               F001062019062019AFP30000806-09-201630-11-2016
-000130280447ARIAS                         GODOY                         MARIO ANDRES                  M001062019062019AFP300000                    
-000143812375BAEZ                          ZULOAGA                       ARIEL ANTONIO                 M001062019062019AFP300000                    
-000121340240ZAMORANO                      ORDENES                       RUBEN BENJAMIN                M001062019062019AFP300000                    
-000125618901RIVAS                         SOTO                          CLAUDIO ALEXIS                M001062019062019AFP300000                    
-000119832659MORALES                       ANDRADES                      JULIO ENRIQUE                 M001062019062019AFP300000                    
-000084753505FERNANDEZ                     GUTIERREZ                     MARK MARCEL                   M001062019062019AFP300000                    
-000143709825AVALOS                        GONZALEZ                      MARIO ARMANDO                 M001062019062019AFP300000                    
-000104388027ARAYA                         ALLENDES                      FELIX ALBERTO                 M001062019062019AFP300000                    
-00018086394KRIQUELME                      RIQUELME                      VALERY ROMINA                 F001062019062019AFP30000820-07-201600-00-0000
-000195279020FERNANDEZ                     CANELO                        DARYL MICHELLE                F001062019062019AFP30000811-07-201631-10-2016
-000123928466NOVOA                         GUTIERREZ                     ALEX PATRICIO                 M001062019062019AFP30000803-08-201602-04-2017
-00014152254KSALAZAR                       CERPA                         JOSE RODRIGO                  M001062019062019AFP30000804-08-201600-00-0000
-000125141463LOPEZ                         LOPEZ                         CARLOS PATRICIO               M001062019062019AFP300000                    
-000194816227CATALAN                       MARTINEZ                      FRANCO ANTONIO                M001062019062019AFP30000824-08-201600-00-0000
-000093885368HERNANDEZ                     TORRES                        PATRICIO ANTONIO              M001062019062019AFP30000829-08-201600-00-0000
-000159323811RIVERA                        ESQUIVEL                      YENIFER ANDREA                F001062019062019AFP300000                    
-000054312849PALMA                         PULGAR                        ELENA BEATRIZ                 F001062019062019INP30000804-10-201610-01-2017
-000130381219GONZALEZ                      QUEZADA                       JUAN ANDRES                   M001062019062019AFP30000801-10-201600-00-0000
-000136736426LAGOS                         VALENZUELA                    GERMAN MARCELO                M001062019062019AFP30000817-10-201607-04-2017
-000142131226PLACENCIA                     OLATE                         HANS CRISTOBAL                M001062019062019AFP30000824-10-201600-00-0000
-000151467954QUINTANA                      MOYA                          OSCAR EDUARDO                 M001062019062019AFP30000824-10-201600-00-0000
-000181617942GAMBOA                        FIGUEROA                      JOAQUIN IGNACIO               M001062019062019AFP30000801-12-201731-03-2019
-000173423012CABEZAS                       ARAYA                         MICHELL GUSTAVO               M001062019062019AFP300000                    
-000174118078OLMEDO                        BRIONES                       SEGUNDO TEMISTOCLES           M001062019062019AFP30000814-11-201600-00-0000
-000160439793PEREZ                         ROJAS                         ILIAN CHRISTOPHER             M001062019062019AFP30000815-11-201600-00-0000
-00019284309KCARRIZO                       AVILES                        NICOLAS ANDRES                M001062019062019AFP30000803-02-201705-08-2018
-000169083711NEIPAN                        NEIPAN                        CARLOS ANDRES                 M001062019062019AFP30000824-11-201600-00-0000
-000186147359ARROS                         GODOY                         ROCIO PAOLA                   F001062019062019AFP300000                    
-000101114341ANDREWARTHA                   ZURITA                        HENRY ANDRES                  M001062019062019AFP30000801-12-201608-05-2017
-000253397500PEREZ                         SILVA                         JHONATHAN DANIEL              M001062019062019AFP30000801-12-201630-11-2018
-000156652814PARDO                         POBLETE                       JIMMY ALFREDO                 M001062019062019AFP30000803-01-201700-00-0000
-000167425046ROA                           MOYA                          FELIPE ANDRES                 M001062019062019AFP30000803-01-201700-00-0000
-000156076465MONTERO                       MORENO                        LEONARDO ESTEBAN              M001062019062019AFP30000809-01-201700-00-0000
-000114917346CHAPARRO                      ROJAS                         MAURICIO CARLOS               M001062019062019AFP30000809-01-201700-00-0000
-000104469485VARGAS                        CABRERA                       JEANNETTE TATIANA             F001062019062019AFP30000816-01-201700-00-0000
-000108408103CORDOVA                       PALOMINOS                     MARCELO OSVALDO               M001062019062019AFP30000801-05-201700-00-0000
-000126106505PLAZA                         ILLANES                       CRISTIAN MAURICIO             M001062019062019AFP30000806-02-201700-00-0000
-000243268125GUTIERREZ                     HERRERA                       JULIANA MARIA                 F001062019062019AFP30000820-03-201719-10-2017
-000157030507CHAPARRO                      GALLARDO                      CLAUDIO ANDRES                M001062019062019AFP300000                    
-000195438412GONZALEZ                      AHUMADA                       CRISTOPHER ANDRES             M001062019062019AFP30000816-03-201727-04-2018
-000245088922JAIME                         GARCIA                        ELSA CAROLINA                 M001062019062019AFP30000803-04-201705-07-2017
-000153069964VERGARA                       ORMEÑO                        BORIS HECTOR                  M001062019062019AFP30000810-04-201705-08-2018
-000176669853ALIAGA                        TRIVIÑO                       CLAUDIO ARMANDO               M001062019062019AFP300000                    
-000153616515RIVERA                        GONZALEZ                      CARLOS PATRICIO               M001062019062019AFP30000811-04-201700-00-0000
-000172894577BAEZ                          ZULOAGA                       SEBASTIAN LEONARDO            M001062019062019AFP30000811-04-201720-12-2018
-000057449616RAMIREZ                       VILLALOBOS                    WIDESMUNDO PLACIDO            M001062019062019INP300000                    
-000064913840CASTILLO                      JORQUERA                      MARCOS EUGENIO                M001062019062019AFP30000817-04-201725-03-2018
-000144504232DELGADO                       REYES                         ALEJANDRO ABRAHAM             M001062019062019AFP30000808-05-201704-10-2017
-000132649995VILLASECA                     OLGUIN                        KAREN ELIZABETH               F001062019062019AFP30000815-05-201716-05-2018
-000260691902CHACON                        JIMENEZ                       ALEXANDER JESUS               M001062019062019AFP30000815-05-201700-00-0000
-000259778050VIZCAYA                       ROBERTIS                      ERASMO ALBERTO                M001062019062019AFP30000816-06-201711-11-2018
-000185374270LAGOS                         LOPEZ                         NICOLAS MAURICIO              M001062019062019AFP30000812-07-201700-00-0000
-000158932091MARTINEZ                      REYES                         JEAN PAUL                     M001062019062019AFP300000                    
-000153720428CHAVEZ                        ORTEGA                        FERNANDO ENRIQUE              M001062019062019AFP30000813-07-201700-00-0000
-000401231676COTE                          CASTRO                        HEBERT JESUS                  M001062019062019AFP30000817-07-201731-10-2017
-00013497513KGODOY                         ARRAÑO                        PABLO ANSELMO                 M001062019062019AFP30000817-07-201700-00-0000
-00012636766KFARIAS                        ESCOBAR                       MABEL DE LOS ANGELES          F001062019062019AFP30000801-08-201700-00-0000
-000190709841BOWEN                         CHAVEZ                        CRISTIAN FERNANDO             M001062019062019AFP30000802-08-201700-00-0000
-000164287084JIMENEZ                       FERNANDEZ                     RODRIGO ALFONSO               M001062019062019AFP300000                    
-00025977800KMUÑOZ                         IBARRETO                      ANNIE YENIRE                  F001062019062019AFP30000821-07-201727-05-2018
-000259081181PEREZ                         SILVA                         JHULY TATIANA                 F001062019062019AFP30000803-07-201725-02-2018
-000139387562GUEVARA                       VARGAS                        JIMMY HECTOR                  M001062019062019AFP300000                    
-000095777155VARAS                         MELLA                         LEONEL OSVALDO                M001062019062019AFP30000318-05-201916-06-2019
-000184629852RIGUERO                       RODRIGUEZ                     ANDINO                        M001062019062019AFP30000804-09-201722-01-2018
-000256129949ALEMAN                        MARTINEZ                      EDUARDO JOSE                  M001062019062019AFP30000806-09-201700-00-0000
-000137708396URRUTIA                       ALEGRIA                       JORGE ESTEBAN                 M001062019062019AFP300000                    
-000164584852REAL                          ROA                           RAYMONTH RODRIGO              M001062019062019AFP30000802-10-201700-00-0000
-000074377823MORAGA                        RIVERA                        RAMON IGNACIO                 M001062019062019AFP30000802-10-201700-00-0000
-000108482222GALLARDO                      GALDAMES                      CARLOS DANIEL                 M001062019062019AFP30000810-10-201700-00-0000
-000094807379BACHUR                        BRAVO                         JOSE FERNANDO                 M001062019062019AFP30000816-10-201700-00-0000
-000192217342BECAR                         BRAVO                         BASTIAN ALEJANDRO             M001062019062019AFP300000                    
-000197549793MIRANDA                       GONZALEZ                      GIANINNA ESTEFANIA            F001062019062019AFP30000802-11-201700-00-0000
-000170515986TORO                          ZAPATA                        JONATHAN ENRIQUE              M001062019062019AFP30000802-11-201700-00-0000
-000183385461DIAZ                          GATICA                        CRISTOPHER MATIAS             M001062019062019AFP30000815-11-201700-00-0000
-000170248341SANDOVAL                      DÍAZ                          TAMARA IVONNE                 F001062019062019AFP300000                    
-000132586756RUS                           RIMMELIN                      TAMARA EUGENIA                M001062019062019AFP300000                    
-000198434876GOMEZ                         ALARCON                       GABRIEL ANTONIO               M001062019062019AFP30000803-11-201700-00-0000
-000132931836MATURANA                      PIMENTEL                      ARIEL ALEJANDRO               M001062019062019AFP30000801-12-201700-00-0000
-000192327180JARA                          SALVATIERRA                   CARLOS ESTEBAN                M001062019062019AFP30000818-12-201700-00-0000
-000192285763ORTIZ                         FAUNDEZ                       BASTIAN ANDRES                M001062019062019AFP30000818-12-201700-00-0000
-000119037336CONTRERAS                     OPORTO                        NESTOR JAVIER                 M001062019062019AFP300000                    
-000077192336MARIN                         GALLO                         JORGE CHRISTIAN               M001062019062019AFP30000807-03-201800-00-0000
-000202223028CACERES                       CARRASCO                      ISAC ALEJANDRO                M001062019062019AFP30000812-03-201800-00-0000
-000169188513GONZALEZ                      FIGUEROA                      MARIA JOSE                    F001062019062019AFP30000806-04-201800-00-0000
-000153891699TAMAYO                        NAVARRO                       JUAN DOMINGO                  M001062019062019AFP300000                    
-000261126850ZAMBRANO                      ESSAC                         MARIA FERNANDA                F001062019062019AFP300000                    
-000115510819Pérez                         Pérez                         Juan                          M001062019062019AFP300000                    
-000200512545ROSALES                       MORALES                       RONALDO ESTEBEN               M001062019062019AFP30000819-04-201800-00-0000
-000221164261NAVARRO                       SANCHEZ                       GUSTAVO RAFAEL                M001062019062019AFP30000830-04-201805-10-2018
-000175658947SOTO                          MATUS                         JUAN FRANCISCO                M001062019062019AFP30000802-05-201816-04-2019
-000172559859ROJAS                         BRIONES                       EDUARDO ANTONIO               M001062019062019AFP300000                    
-000262588858RONDON                        PEREZ                         NELDANY DEL CARMEN            F001062019062019AFP30000811-06-201800-00-0000
-000261430282GONZALEZ                      PEREZ                         ADRIAN ARTURO                 M001062019062019AFP300000                    
-000185940721ESQUIVEL                      ARROS                         ANDREA FERNANDA               F001062019062019AFP30000803-07-201821-01-2019
-000136114271ROJAS                         ROCA                          YOSELYN SOLANGE               F001062019062019AFP300000                    
-000263473639TAPIA                         XX                            ORLANDO MARCELO               M001062019062019AFP300000                    
-000164716643TORRES                        VEGA                          CAROLINA JASMIN               F001062019062019AFP30000813-08-201800-00-0000
-000259892279BRAVO                         CAMACHO                       FERNANDO JOSE                 M001062019062019AFP30000813-08-201800-00-0000
-00026143749KCHACON                        RUIZ                          MAURICIO ALEJANDRO            M001062019062019AFP300000                    
-000126760914SEPULVEDA                     CARO                          YANET LORENA                  M001062019062019AFP30000822-08-201800-00-0000
-000264369967YEPEZ                         OVIEDO                        RAFAEL ANTONIO                M001062019062019AFP30000809-10-201800-00-0000
-000169113092DUARTE                        CASTRO                        ALEJANDRO ENRIQUE             M001062019062019AFP30000803-12-201800-00-0000
-000177073520DIAZ                          MONDACA                       DIEGO ANTONIO                 M001062019062019AFP30000817-12-201800-00-0000
-000174176299VILLAGRAN                     ZUÑIGA                        JAIME SEBASTIAN               M001062019062019AFP30000808-01-201908-07-2019
-000166671248CESPEDES                      MORALES                       VANIA ALEJANDRA               F001062019062019AFP30000701-02-201901-08-2019
-000154467599CANIUMIL                      ROSALES                       AURELIO ALEXIS                M001062019062019AFP30000713-02-201913-08-2019
-000104650724ARCE                          VASQUEZ                       VERONICA DEL CARMEN           F001062019062019AFP30000718-02-201918-08-2019
-000204174962VALENZUELA                    ROJAS                         BYRON RODRIGO                 M001062019062019AFP30000706-03-201906-06-2019
-00016270348KMUÑOZ                         CEPEDA                        CECILIA ALEJANDRA             F001062019062019AFP30000718-04-201918-07-2019
-000164408132MANCILLA                      JARA                          SOLEDAD HAIDEE                F001062019062019AFP300000                    
-000174888582ALVAREZ                       LEGUINA                       OMAR CRISTIAN                 M001062019062019AFP30000701-05-201901-06-2019
-000157908537ORELLANA                      MIRANDA                       DANIEL ANDRES                 M001062019062019AFP30000701-05-201901-06-2019
-000205796436LEIVA                         DIAZ                          MIGUEL ANGEL                  M001062019062019AFP30000706-05-201906-08-2019
+000141640682TERRILE                       ANGULO                        ANGELO MARCELO                M001062019062019AFP030000805-03-201500-00-0000D000000000000000000000000N05
+000107320695LABRA                         LEMUNAO                       MARTA DOMITILA                M001062019062019AFP0300000                    D000000000000000000000000N33
+000097075395PEREZ                         VERDUGO                       ELBA DEL CARMEN               F001062019062019AFP030000813-08-201200-00-0000D000000000000000000000000N05
+000218995365GIURASTANTE                   GENOVESIO                     HERNAN                        M001062019062019AFP0300000                    D000000000000000000000000N03
+00012900259KALLENDE                       ARAUZ                         FERNANDO ENRIQUE              M001062019062019AFP0300000                    D000000000000000000000000N34
+00013286408KARIAS                         POLANCO                       JOSE LUIS                     M001062019062019AFP0300000                    D000000000000000000000000N05
+000190932664AVILES                        MALDONADO                     LUIS ANTONIO                  M001062019062019AFP0300000                    D000000000000000000000000N34
+000174255199AVILES                        CANDIA                        ROBERTO BLADIMIR              M001062019062019AFP0300000                    D000000000000000000000000N33
+000163818809AHUMADA                       MUNOZ                         WALTER LEANDRO                M001062019062019AFP030000803-07-201409-10-2017D000000000000000000000000N33
+000143400840BUSTAMANTE                    MIRANDA                       CRISTIAN GERARDO              M001062019062019AFP0300000                    D000000000000000000000000N05
+000114854816AREVALO                       ROJAS                         LUIS ALEJANDRO                M001062019062019AFP0300000                    D000000000000000000000000N05
+000062457228BURGOS                        MORALES                       MIGUEL ANGEL                  M001062019062019AFP0300000                    D000000000000000000000000N05
+000093749073BUSTOS                        SAN MARTIN                    HECTOR ANDRES                 M001062019062019AFP0300000                    D000000000000000000000000N03
+000177394513AREVALO                       MEDINA                        MACARENA YESNIK               F001062019062019AFP0300000                    D000000000000000000000000N34
+000126436882CACERES                       ESCOBAR                       ALEJANDRO ANTONIO             M001062019062019AFP0300000                    D000000000000000000000000N05
+000180943153AVILES                        CANDIA                        YERKO NICOLAS                 M001062019062019AFP0300000                    D000000000000000000000000N34
+000177651818ALVAREZ                       MIRANDA                       MATIAS IGNACIO                M001062019062019AFP0300000                    D000000000000000000000000N34
+000057176199ALLENDE                       WILSON                        VIVIANA DEL CARMEN            F001062019062019AFP1300000                    D000000000000000000000000S05
+000122826139CARCAMO                       YUFFER                        JOSE MANUEL                   M001062019062019AFP0300000                    D000000000000000000000000N08
+000057429690CARO                          GONZALEZ                      PEDRO                         M001062019062019AFP2300000                    D000000000000000000000000N08
+000138357465CARRASCO                      AHUMADA                       VERONICA SOLEDAD              F001062019062019AFP030000817-04-201700-00-0000D000000000000000000000000N05
+000156205028CASTILLO                      VALERA                        MICHAEL YERKO                 M001062019062019AFP0300000                    D000000000000000000000000N08
+000066973727CESPEDES                      ARRIAGADA                     CARLOS FRANCISCO              M001062019062019AFP2300000                    D000000000000000000000000N34
+000185454304ESCOBAR                       CONTRERAS                     BORIS MARCELO                 M001062019062019AFP0300000                    D000000000000000000000000N34
+000179807122CISTERNA                      NAVARRETE                     DANIEL RICARDO                F001062019062019AFP0300000                    D000000000000000000000000N34
+000158007916COLIN                         GONZALEZ                      KAREN MASSIEL                 F001062019062019AFP0300000                    D000000000000000000000000N05
+000130786707CONTRERAS                     MARCHANT                      PATRICIO ALEJANDRO            M001062019062019AFP030000801-03-201718-12-2017D000000000000000000000000N08
+000091663759ESQUIVEL                      FERNANDEZ                     ENRIQUE EDGARDO               M001062019062019AFP0300000                    D000000000000000000000000N05
+000187866049CONTRERAS                     SANDOVAL                      SEBASTIAN MAURICIO            M001062019062019AFP0300000                    D000000000000000000000000N29
+000170281098CONTRERAS                     OTAROLA                       CHRISTOPHER LUIS              M001062019062019AFP030000820-10-201128-02-2017D000000000000000000000000N05
+000104018831ESQUIVEL                      FERNANDEZ                     JULIO ALBERTO                 M001062019062019AFP0300000                    D000000000000000000000000N05
+00006554962kCONTRERAS                     VALLADARES                    MIGUEL MARCELO                M001062019062019AFP230000801-08-201112-07-2018D000000000000000000000000N05
+000175658181ESPINOZA                      ESPINOZA                      CARLOS ANDRES                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000072083911ESPINOZA                      VERDEJO                       JENARO ENRIQUE                M001062019062019AFP0300000                    D000000000000000000000000N08
+000126316070DIAZ                          GAVILAN                       KAREN ANDREA                  F001062019062019AFP0300000                    D000000000000000000000000N33
+000066181472ESCALONA                      AGUIRRE                       PEDRO                         M001062019062019AFP0300000                    D000000000000000000000000N05
+000181853018GALARCE                       GONZALEZ                      NICOLAS                       M001062019062019AFP0300000                    D000000000000000000000000N05
+000093557700FARIAS                        CARREÑO                       EDUARDO ALFONSO               M001062019062019AFP0300000                    D000000000000000000000000N33
+000161931357GARCIA                        GUZMAN                        JOSE ISAIAS                   M001062019062019AFP0300000                    D000000000000000000000000N33
+000099909862FUENTES                       PALOMINOS                     LUIS ENRIQUE                  M001062019062019AFP0300000                    D000000000000000000000000N05
+000179290634GODOY                         CAMPOS                        LEONARDO ANTONIO              M001062019062019AFP0300000                    D000000000000000000000000N34
+000180849149FLORES                        GONZALEZ                      MAURICIO ESTEBAN              M001062019062019AFP0300000                    D000000000000000000000000N34
+000169509891GOMEZ                         CESPEDES                      ALEJANDRA ISABEL              F001062019062019AFP0300000                    D000000000000000000000000N05
+000072594592LLANOS                        LILLO                         JORGE ANTONIO                 M001062019062019AFP0300000                    D000000000000000000000000N08
+000139065336LOPEZ                         MOYA                          MARIA ELIZABETH               F001062019062019AFP0300000                    D000000000000000000000000N33
+000160422556HENRIQUEZ                     MUÑOZ                         BERNARDO LUCIANO              M001062019062019AFP0300000                    D000000000000000000000000N33
+000194180365LOVERA                        ARREDONDO                     KARINA MARGARITA              F001062019062019AFP0300000                    D000000000000000000000000N34
+000165507258JARAMILLO                     ORDENES                       MARCELO ENRIQUE               M001062019062019AFP0300000                    D000000000000000000000000N05
+000155969903JARAMILLO                     ORDENES                       CARLOS ALBERTO                M001062019062019AFP0300000                    D000000000000000000000000N03
+000121238446MARCHANT                      ROJAS                         JEANNETTE                     F001062019062019AFP0300000                    D000000000000000000000000N34
+000155107812LEVIPIL                       COLLIAN                       SERGIO ANDRES                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000171214106LLABRES                       DURAN                         GONZALO SEBASTIAN             M001062019062019AFP0300000                    D000000000000000000000000N05
+000113486260MARIN                         MORENO                        MARCOS ANDRES                 M001062019062019AFP0300000                    D000000000000000000000000N08
+000119777836MADRID                        GUERRA                        BLANCA ROSA                   F001062019062019AFP030000812-08-201330-03-2017D000000000000000000000000N33
+00016029714KMEDINA                        QUINTEROS                     VICTOR MANUEL                 M001062019062019AFP0300000                    D000000000000000000000000N03
+000140502073MELLADO                       DIEZ DE MEDINA                LUIS ALEJANDRO                M001062019062019AFP0300000                    D000000000000000000000000S05
+000132427607MORAGA                        ROJAS                         ALEJANDRA ELOISA              F001062019062019AFP0300000                    D000000000000000000000000N05
+000173805063MUÑOZ                         QUIDEL                        JUAN CARLOS                   M001062019062019AFP0300000                    D000000000000000000000000N34
+000175644091NAMUNCURA                     ESPINOZA                      DANIEL HERALDO                M001062019062019AFP0300000                    D000000000000000000000000N05
+000141861689NILO                          MACIAS                        CELINDA                       M001062019062019AFP0300000                    D000000000000000000000000N08
+000063879363MORALES                       CERDA                         ISAIAS PATRICIO               M001062019062019AFP2300000                    D000000000000000000000000N08
+00014453980kMUNIZAGA                      VIVANCO                       SAMUEL ALBERTO                M001062019062019AFP0300000                    D000000000000000000000000N08
+000179527251MUÑOZ                         ALBORNOZ                      MARCO ELIAS                   M001062019062019AFP0300000                    D000000000000000000000000N34
+000191640187NUÑEZ                         PEREZ                         CAROLINA ALEJANDRA            F001062019062019AFP0300000                    D000000000000000000000000N34
+000122463230RAIN                          CAYUPI                        OSCAR RENAN                   M001062019062019AFP030000801-09-201400-00-0000D000000000000000000000000N05
+000169930570ORDENES                       SAAVEDRA                      ULISES HERNAN                 M001062019062019AFP0300000                    D000000000000000000000000N03
+000161902519RAMIREZ                       BUENO                         RAUL ABRAHAM                  M001062019062019AFP0300000                    D000000000000000000000000N33
+00013484261kRECABARREN                    GARCIA                        MARTIN ALEJANDRO              M001062019062019AFP0300000                    D000000000000000000000000N05
+000151310885PIZARRO                       CHAMORRO                      INGRID LORENA                 F001062019062019AFP030000815-05-200631-05-2017D000000000000000000000000N03
+000130577148PIZARRO                       DURAN                         CRISTIAN MARCELO              M001062019062019AFP0300000                    D000000000000000000000000N03
+000158010534RETAMAL                       VILLEGAS                      FRANCISCO ANTONIO             M001062019062019AFP1300000                    D000000000000000000000000N33
+000165622774PLAZA                         LEON                          CARLA DAYHANA                 F001062019062019AFP0300000                    D000000000000000000000000N05
+000145734347RIVERA                        ESQUIVEL                      TAMARA ANDREA                 F001062019062019AFP0300000                    D000000000000000000000000N05
+000188321550Quintanilla                   Águila                        Miguel Angel                  M001062019062019AFP0300000                    D000000000000000000000000N34
+000177650870QUEZADA                       SILVA                         WLADIMIR ALONSO               M001062019062019AFP030000816-07-201524-11-2017D000000000000000000000000N34
+000172698034ROJAS                         CIFUENTE                      CAMILO IGNACIO                M001062019062019AFP0300000                    D000000000000000000000000N08
+000157151150ROJAS                         SANHUEZA                      CLAUDIO ANDRES                M001062019062019AFP0300000                    D000000000000000000000000N29
+00006374381kRIVERA                        CERDA                         MIGUEL ANGEL                  M001062019062019AFP0300000                    D000000000000000000000000N05
+000167960693SAEZ                          ZAPATA                        LUZ MARIA                     F001062019062019AFP0300000                    D000000000000000000000000N05
+000146374743SANTIAGO                      SANTISTEBAN                   RICHARD JHONY                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000170047052SAEZ                          VARGAS                        NICOLAS ALFONSO               M001062019062019AFP0300000                    D000000000000000000000000N05
+000124456223SANTA MARIA                   OLIVARES                      JORGE ANDRES                  M001062019062019AFP0300000                    D000000000000000000000000N34
+000165451821SEGUEL                        SAAVEDRA                      BLANCA JOHANNA                F001062019062019AFP0300000                    D000000000000000000000000N33
+00017564623kSEGURA                        ANTILEO                       RUTH BETZABETH                F001062019062019AFP0300000                    D000000000000000000000000N34
+000186934652ROJAS                         MELGAREJO                     CRISTOPHER  ANTONIO           M001062019062019AFP0300000                    D000000000000000000000000N34
+000091598833TAPIA                         GALLARDO                      LILIANA IVETTE                F001062019062019AFP0300000                    D000000000000000000000000N03
+000187636515ROJAS                         TRONCOSO                      ESTEFANI SOLEDAD              F001062019062019AFP0300000                    D000000000000000000000000N05
+000153509042RUBILAR                       DIAZ                          MARCELA CRISTINA              F001062019062019AFP0300000                    D000000000000000000000000N34
+00007897155kTORRES                        CIAPPA                        MARIO EDUARDO                 M001062019062019AFP0300000                    D000000000000000000000000N08
+000113723041TOLOZA                        VERDUGO                       LEONARDO ALFONSO              M001062019062019AFP030000801-06-201700-00-0000D000000000000000000000000S05
+000118551273URZUA                         GONZALEZ                      PAOLA                         F001062019062019AFP0300000                    D000000000000000000000000N05
+000126527853NUÑEZ                         ARAYA                         ARTURO PATRICIO               M001062019062019AFP0300000                    D000000000000000000000000N05
+00018064492kValenzuela                    Munizaga                      Daniela Andrea                F001062019062019AFP0300000                    D000000000000000000000000N08
+000096718381VERGARA                       QUIROZ                        ROBERTO LEONARDO              M001062019062019AFP0300000                    D000000000000000000000000N03
+000108817240VALDIVIA                      ESPINOZA                      ABIGAIL JIMENA                F001062019062019AFP0300000                    D000000000000000000000000N05
+000185480275YAÑEZ                         GUTIERREZ                     PEDRO ALBERTO                 M001062019062019AFP0300000                    D000000000000000000000000N34
+000152425317VASQUEZ                       LEIVA                         DANILO ESTEBAN                M001062019062019AFP0300000                    D000000000000000000000000N05
+000050347346ALARCON                       ALBORNOZ                      CUSTODIO EDUARDO              M001062019062019AFP2300000                    D000000000000000000000000N05
+000178574884Arriagada                     Hurtado                       Victor Manuel                 M001062019062019AFP0300000                    D000000000000000000000000N03
+000139993616BAEZ                          GONZALEZ                      HENRY JONATHAN                M001062019062019AFP0300000                    D000000000000000000000000N33
+000083472693ESQUIVEL                      FERNANDEZ                     PATRICIA MARIA                F001062019062019AFP0300000                    D000000000000000000000000N05
+000164269906Fernandez                     Barrios                       Milton Matias                 M001062019062019AFP0300000                    D000000000000000000000000N33
+000118857208LOPEZ                         JARA                          ARAMIL ENRIQUE                M001062019062019AFP0300000                    D000000000000000000000000N05
+000124818117MEDINA                        CORNEJO                       ALEJANDRA DE LOURDES          F001062019062019AFP0300000                    D000000000000000000000000N08
+000139040805MENESES                       RIVERA                        ATILIO RODRIGO                M001062019062019AFP0300000                    D000000000000000000000000N33
+000190541738Morales                       Parada                        Jose Gabriel                  M001062019062019AFP0300000                    D000000000000000000000000N29
+00009091538KRIVERA                        CERDA                         ERIKA ISABEL                  F001062019062019AFP0300000                    D000000000000000000000000N05
+000130629113RIVERA                        ESQUIVEL                      MIGUEL ANGEL                  M001062019062019AFP0300000                    D000000000000000000000000N05
+000172547206VALENZUELA                    MUNIZAGA                      FABIAN                        M001062019062019AFP0300000                    D000000000000000000000000N05
+000106162786VALENZUELA                    PADILLA                       MIGUEL OSCAR                  M001062019062019AFP0300000                    D000000000000000000000000N05
+000178351834VERA                          FREDES                        CLAUDIO CAMILO                M001062019062019AFP0300000                    D000000000000000000000000N33
+000170709926ZUÑIGA                        MORALES                       RAUL                          M001062019062019AFP0300000                    D000000000000000000000000N08
+000115772562MUÑOZ                         DIAZ                          ENZO SALVADOR                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000118627016FUENTES                       CIFUENTES                     FRANCISCO JAVIER              M001062019062019AFP0300000                    D000000000000000000000000N05
+000124060494VALDIVIA                      JOFRE                         PATRICIO IVAN                 M001062019062019AFP0300000                    D000000000000000000000000N03
+000078475897QUIJADA                       PAREDES                       VICTOR MANUEL                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000134801506CATALAN                       MARTINEZ                      JOSE ISAIAS                   M001062019062019AFP030000807-03-201600-00-0000D000000000000000000000000N03
+000101888576MUÑOZ                         CAMPOS                        JORGE ADOLFO                  M001062019062019AFP0300000                    D000000000000000000000000N05
+000187382599ANDRADE                       CARRASCO                      LEONARDO ESTEBAN              M001062019062019AFP030000801-01-201616-12-2016D000000000000000000000000N34
+000132450323SALAZAR                       CERPA                         KARINA ELIZABETH              F001062019062019AFP030000804-01-201600-00-0000D000000000000000000000000S05
+000184447789BADILLO                       PEDRAZA                       MATIAS JAVIER                 M001062019062019AFP030000801-01-201615-03-2017D000000000000000000000000N34
+000167153232BADILLO                       PEDRAZA                       PABLO ANDRES                  M001062019062019AFP0300000                    D000000000000000000000000N05
+000128650717VERGARA                       ACEVEDO                       WILLY FABIAN                  M001062019062019AFP0300000                    D000000000000000000000000N05
+000123549465DEVIA                         RIOS                          DAVID MARCELO                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000195013683FUENTES                       PEREIRA                       OSVALDO IGNACIO               M001062019062019AFP030000806-06-201631-03-2017D000000000000000000000000N29
+00016027915KMELLADO                       DIEZ DE MEDINA                DIEGO ANDRÃ‰                  M001062019062019AFP030000801-09-201600-00-0000D000000000000000000000000N05
+00012113490KALVAREZ                       MAUREIRA                      JORGE DEL CARMEN              M001062019062019AFP0300000                    D000000000000000000000000N05
+000158442868GONZALEZ                      MARCHANT                      MARCELO ANDRES                M001062019062019AFP030000807-07-201607-09-2016D000000000000000000000000N05
+000156141305VIDAL                         MOLINA                        LEONARDO FABIAN               M001062019062019AFP0300000                    D000000000000000000000000N33
+000121058197CANESSA                       MUÑOZ                         JUAN PABLO                    M001062019062019AFP0300000                    D000000000000000000000000N05
+000131484720HOJAS                         MORALES                       PAMELA SOLEDAD                F001062019062019AFP0300000                    D000000000000000000000000N05
+000172809723BUSTOS                        ORELLANA                      CINDY ESTEFANI                F001062019062019AFP0300000                    D000000000000000000000000N05
+000163805928SANCHEZ                       VALENCIA                      JOSE EDUARDO                  M001062019062019AFP0300000                    D000000000000000000000000N08
+000167504817ESCARATE                      GOMEZ                         PEDRO HUMBERTO                M001062019062019AFP0300000                    D000000000000000000000000N05
+000173915004HUENCHUPAN                    BECERRA                       MAGDALENA RUT                 F001062019062019AFP030000801-05-201600-00-0000D000000000000000000000000N05
+000155840501MORALES                       CORRETEA                      YISVI ALEJANDRA               F001062019062019AFP030000806-09-201630-11-2016D000000000000000000000000N33
+000130280447ARIAS                         GODOY                         MARIO ANDRES                  M001062019062019AFP0300000                    D000000000000000000000000N03
+000143812375BAEZ                          ZULOAGA                       ARIEL ANTONIO                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000121340240ZAMORANO                      ORDENES                       RUBEN BENJAMIN                M001062019062019AFP0300000                    D000000000000000000000000N05
+000125618901RIVAS                         SOTO                          CLAUDIO ALEXIS                M001062019062019AFP0300000                    D000000000000000000000000N05
+000119832659MORALES                       ANDRADES                      JULIO ENRIQUE                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000084753505FERNANDEZ                     GUTIERREZ                     MARK MARCEL                   M001062019062019AFP0300000                    D000000000000000000000000N03
+000143709825AVALOS                        GONZALEZ                      MARIO ARMANDO                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000104388027ARAYA                         ALLENDES                      FELIX ALBERTO                 M001062019062019AFP0300000                    D000000000000000000000000N03
+00018086394KRIQUELME                      RIQUELME                      VALERY ROMINA                 F001062019062019AFP030000820-07-201600-00-0000D000000000000000000000000S34
+000195279020FERNANDEZ                     CANELO                        DARYL MICHELLE                F001062019062019AFP030000811-07-201631-10-2016D000000000000000000000000N29
+000123928466NOVOA                         GUTIERREZ                     ALEX PATRICIO                 M001062019062019AFP030000803-08-201602-04-2017D000000000000000000000000N08
+00014152254KSALAZAR                       CERPA                         JOSE RODRIGO                  M001062019062019AFP030000804-08-201600-00-0000D000000000000000000000000S08
+000125141463LOPEZ                         LOPEZ                         CARLOS PATRICIO               M001062019062019AFP0300000                    D000000000000000000000000N33
+000194816227CATALAN                       MARTINEZ                      FRANCO ANTONIO                M001062019062019AFP030000824-08-201600-00-0000D000000000000000000000000N34
+000093885368HERNANDEZ                     TORRES                        PATRICIO ANTONIO              M001062019062019AFP030000829-08-201600-00-0000D000000000000000000000000N05
+000159323811RIVERA                        ESQUIVEL                      YENIFER ANDREA                F001062019062019AFP0300000                    D000000000000000000000000N33
+000054312849PALMA                         PULGAR                        ELENA BEATRIZ                 F001062019062019INP030000804-10-201610-01-2017D000000000000000000000000N00
+000130381219GONZALEZ                      QUEZADA                       JUAN ANDRES                   M001062019062019AFP030000801-10-201600-00-0000D000000000000000000000000S08
+000136736426LAGOS                         VALENZUELA                    GERMAN MARCELO                M001062019062019AFP030000817-10-201607-04-2017D000000000000000000000000N29
+000142131226PLACENCIA                     OLATE                         HANS CRISTOBAL                M001062019062019AFP030000824-10-201600-00-0000D000000000000000000000000N03
+000151467954QUINTANA                      MOYA                          OSCAR EDUARDO                 M001062019062019AFP030000824-10-201600-00-0000D000000000000000000000000N08
+000181617942GAMBOA                        FIGUEROA                      JOAQUIN IGNACIO               M001062019062019AFP030000801-12-201731-03-2019D000000000000000000000000N34
+000173423012CABEZAS                       ARAYA                         MICHELL GUSTAVO               M001062019062019AFP0300000                    D000000000000000000000000N34
+000174118078OLMEDO                        BRIONES                       SEGUNDO TEMISTOCLES           M001062019062019AFP030000814-11-201600-00-0000D000000000000000000000000N05
+000160439793PEREZ                         ROJAS                         ILIAN CHRISTOPHER             M001062019062019AFP030000815-11-201600-00-0000D000000000000000000000000N34
+00019284309KCARRIZO                       AVILES                        NICOLAS ANDRES                M001062019062019AFP030000803-02-201705-08-2018D000000000000000000000000N29
+000169083711NEIPAN                        NEIPAN                        CARLOS ANDRES                 M001062019062019AFP030000824-11-201600-00-0000D000000000000000000000000N34
+000186147359ARROS                         GODOY                         ROCIO PAOLA                   F001062019062019AFP0300000                    D000000000000000000000000N34
+000101114341ANDREWARTHA                   ZURITA                        HENRY ANDRES                  M001062019062019AFP030000801-12-201608-05-2017D000000000000000000000000N05
+000253397500PEREZ                         SILVA                         JHONATHAN DANIEL              M001062019062019AFP030000801-12-201630-11-2018D000000000000000000000000N29
+000156652814PARDO                         POBLETE                       JIMMY ALFREDO                 M001062019062019AFP030000803-01-201700-00-0000D000000000000000000000000N08
+000167425046ROA                           MOYA                          FELIPE ANDRES                 M001062019062019AFP030000803-01-201700-00-0000D000000000000000000000000N05
+000156076465MONTERO                       MORENO                        LEONARDO ESTEBAN              M001062019062019AFP030000809-01-201700-00-0000D000000000000000000000000N34
+000114917346CHAPARRO                      ROJAS                         MAURICIO CARLOS               M001062019062019AFP030000809-01-201700-00-0000D000000000000000000000000N05
+000104469485VARGAS                        CABRERA                       JEANNETTE TATIANA             F001062019062019AFP030000816-01-201700-00-0000D000000000000000000000000N29
+000108408103CORDOVA                       PALOMINOS                     MARCELO OSVALDO               M001062019062019AFP030000801-05-201700-00-0000D000000000000000000000000N05
+000126106505PLAZA                         ILLANES                       CRISTIAN MAURICIO             M001062019062019AFP030000806-02-201700-00-0000D000000000000000000000000N05
+000243268125GUTIERREZ                     HERRERA                       JULIANA MARIA                 F001062019062019AFP030000820-03-201719-10-2017D000000000000000000000000N34
+000157030507CHAPARRO                      GALLARDO                      CLAUDIO ANDRES                M001062019062019AFP0300000                    D000000000000000000000000N08
+000195438412GONZALEZ                      AHUMADA                       CRISTOPHER ANDRES             M001062019062019AFP030000816-03-201727-04-2018D000000000000000000000000N29
+000245088922JAIME                         GARCIA                        ELSA CAROLINA                 M001062019062019AFP030000803-04-201705-07-2017D000000000000000000000000N34
+000153069964VERGARA                       ORMEÑO                        BORIS HECTOR                  M001062019062019AFP030000810-04-201705-08-2018D000000000000000000000000N33
+000176669853ALIAGA                        TRIVIÑO                       CLAUDIO ARMANDO               M001062019062019AFP0300000                    D000000000000000000000000N34
+000153616515RIVERA                        GONZALEZ                      CARLOS PATRICIO               M001062019062019AFP030000811-04-201700-00-0000D000000000000000000000000N05
+000172894577BAEZ                          ZULOAGA                       SEBASTIAN LEONARDO            M001062019062019AFP030000811-04-201720-12-2018D000000000000000000000000N34
+000057449616RAMIREZ                       VILLALOBOS                    WIDESMUNDO PLACIDO            M001062019062019INP2300000                    D000000000000000000000000N00
+000064913840CASTILLO                      JORQUERA                      MARCOS EUGENIO                M001062019062019AFP030000817-04-201725-03-2018D000000000000000000000000N29
+000144504232DELGADO                       REYES                         ALEJANDRO ABRAHAM             M001062019062019AFP030000808-05-201704-10-2017D000000000000000000000000N33
+000132649995VILLASECA                     OLGUIN                        KAREN ELIZABETH               F001062019062019AFP030000815-05-201716-05-2018D000000000000000000000000N34
+000260691902CHACON                        JIMENEZ                       ALEXANDER JESUS               M001062019062019AFP030000815-05-201700-00-0000D000000000000000000000000N29
+000259778050VIZCAYA                       ROBERTIS                      ERASMO ALBERTO                M001062019062019AFP030000816-06-201711-11-2018D000000000000000000000000N29
+000185374270LAGOS                         LOPEZ                         NICOLAS MAURICIO              M001062019062019AFP030000812-07-201700-00-0000D000000000000000000000000N34
+000158932091MARTINEZ                      REYES                         JEAN PAUL                     M001062019062019AFP0300000                    D000000000000000000000000N29
+000153720428CHAVEZ                        ORTEGA                        FERNANDO ENRIQUE              M001062019062019AFP030000813-07-201700-00-0000D000000000000000000000000N34
+000401231676COTE                          CASTRO                        HEBERT JESUS                  M001062019062019AFP030000817-07-201731-10-2017D000000000000000000000000N29
+00013497513KGODOY                         ARRAÑO                        PABLO ANSELMO                 M001062019062019AFP030000817-07-201700-00-0000D000000000000000000000000N05
+00012636766KFARIAS                        ESCOBAR                       MABEL DE LOS ANGELES          F001062019062019AFP030000801-08-201700-00-0000D000000000000000000000000N05
+000190709841BOWEN                         CHAVEZ                        CRISTIAN FERNANDO             M001062019062019AFP030000802-08-201700-00-0000D000000000000000000000000N03
+000164287084JIMENEZ                       FERNANDEZ                     RODRIGO ALFONSO               M001062019062019AFP0300000                    D000000000000000000000000N34
+00025977800KMUÑOZ                         IBARRETO                      ANNIE YENIRE                  F001062019062019AFP030000821-07-201727-05-2018D000000000000000000000000N29
+000259081181PEREZ                         SILVA                         JHULY TATIANA                 F001062019062019AFP030000803-07-201725-02-2018D000000000000000000000000N29
+000139387562GUEVARA                       VARGAS                        JIMMY HECTOR                  M001062019062019AFP0300000                    D000000000000000000000000N08
+000095777155VARAS                         MELLA                         LEONEL OSVALDO                M001062019062019AFP030000318-05-201916-06-2019D000000000000000000000000S05
+000184629852RIGUERO                       RODRIGUEZ                     ANDINO                        M001062019062019AFP030000804-09-201722-01-2018D000000000000000000000000N29
+000256129949ALEMAN                        MARTINEZ                      EDUARDO JOSE                  M001062019062019AFP030000806-09-201700-00-0000D000000000000000000000000N08
+000137708396URRUTIA                       ALEGRIA                       JORGE ESTEBAN                 M001062019062019AFP0300000                    D000000000000000000000000N03
+000164584852REAL                          ROA                           RAYMONTH RODRIGO              M001062019062019AFP030000802-10-201700-00-0000D000000000000000000000000N05
+000074377823MORAGA                        RIVERA                        RAMON IGNACIO                 M001062019062019AFP230000802-10-201700-00-0000D000000000000000000000000N05
+000108482222GALLARDO                      GALDAMES                      CARLOS DANIEL                 M001062019062019AFP030000810-10-201700-00-0000D000000000000000000000000N03
+000094807379BACHUR                        BRAVO                         JOSE FERNANDO                 M001062019062019AFP030000816-10-201700-00-0000D000000000000000000000000N05
+000192217342BECAR                         BRAVO                         BASTIAN ALEJANDRO             M001062019062019AFP0300000                    D000000000000000000000000N34
+000197549793MIRANDA                       GONZALEZ                      GIANINNA ESTEFANIA            F001062019062019AFP030000802-11-201700-00-0000D000000000000000000000000N08
+000170515986TORO                          ZAPATA                        JONATHAN ENRIQUE              M001062019062019AFP030000802-11-201700-00-0000D000000000000000000000000N33
+000183385461DIAZ                          GATICA                        CRISTOPHER MATIAS             M001062019062019AFP030000815-11-201700-00-0000D000000000000000000000000N34
+000170248341SANDOVAL                      DÍAZ                          TAMARA IVONNE                 F001062019062019AFP0300000                    D000000000000000000000000N05
+000132586756RUS                           RIMMELIN                      TAMARA EUGENIA                M001062019062019AFP0300000                    D000000000000000000000000N05
+000198434876GOMEZ                         ALARCON                       GABRIEL ANTONIO               M001062019062019AFP030000803-11-201700-00-0000D000000000000000000000000N29
+000132931836MATURANA                      PIMENTEL                      ARIEL ALEJANDRO               M001062019062019AFP030000801-12-201700-00-0000D000000000000000000000000N05
+000192327180JARA                          SALVATIERRA                   CARLOS ESTEBAN                M001062019062019AFP030000818-12-201700-00-0000D000000000000000000000000S29
+000192285763ORTIZ                         FAUNDEZ                       BASTIAN ANDRES                M001062019062019AFP030000818-12-201700-00-0000D000000000000000000000000N29
+000119037336CONTRERAS                     OPORTO                        NESTOR JAVIER                 M001062019062019AFP0300000                    D000000000000000000000000N05
+000077192336MARIN                         GALLO                         JORGE CHRISTIAN               M001062019062019AFP030000807-03-201800-00-0000D000000000000000000000000N03
+000202223028CACERES                       CARRASCO                      ISAC ALEJANDRO                M001062019062019AFP030000812-03-201800-00-0000D000000000000000000000000N29
+000169188513GONZALEZ                      FIGUEROA                      MARIA JOSE                    F001062019062019AFP030000806-04-201800-00-0000D000000000000000000000000N33
+000153891699TAMAYO                        NAVARRO                       JUAN DOMINGO                  M001062019062019AFP0300000                    D000000000000000000000000N08
+000261126850ZAMBRANO                      ESSAC                         MARIA FERNANDA                F001062019062019AFP0300000                    D000000000000000000000000N29
+000115510819Pérez                         Pérez                         Juan                          M001062019062019AFP0300000                    D000000000000000000000000N08
+000200512545ROSALES                       MORALES                       RONALDO ESTEBEN               M001062019062019AFP030000819-04-201800-00-0000D000000000000000000000000N29
+000221164261NAVARRO                       SANCHEZ                       GUSTAVO RAFAEL                M001062019062019AFP030000830-04-201805-10-2018D000000000000000000000000N29
+000175658947SOTO                          MATUS                         JUAN FRANCISCO                M001062019062019AFP030000802-05-201816-04-2019D000000000000000000000000N08
+000172559859ROJAS                         BRIONES                       EDUARDO ANTONIO               M001062019062019AFP0300000                    D000000000000000000000000N08
+000262588858RONDON                        PEREZ                         NELDANY DEL CARMEN            F001062019062019AFP030000811-06-201800-00-0000D000000000000000000000000N29
+000261430282GONZALEZ                      PEREZ                         ADRIAN ARTURO                 M001062019062019AFP0300000                    D000000000000000000000000N34
+000185940721ESQUIVEL                      ARROS                         ANDREA FERNANDA               F001062019062019AFP030000803-07-201821-01-2019D000000000000000000000000N05
+000136114271ROJAS                         ROCA                          YOSELYN SOLANGE               F001062019062019AFP0300000                    D000000000000000000000000N33
+000263473639TAPIA                         XX                            ORLANDO MARCELO               M001062019062019AFP0300000                    D000000000000000000000000N29
+000164716643TORRES                        VEGA                          CAROLINA JASMIN               F001062019062019AFP030000813-08-201800-00-0000D000000000000000000000000N34
+000259892279BRAVO                         CAMACHO                       FERNANDO JOSE                 M001062019062019AFP030000813-08-201800-00-0000D000000000000000000000000N29
+00026143749KCHACON                        RUIZ                          MAURICIO ALEJANDRO            M001062019062019AFP0300000                    D000000000000000000000000N34
+000126760914SEPULVEDA                     CARO                          YANET LORENA                  M001062019062019AFP030000822-08-201800-00-0000D000000000000000000000000N05
+000264369967YEPEZ                         OVIEDO                        RAFAEL ANTONIO                M001062019062019AFP030000809-10-201800-00-0000D000000000000000000000000N34
+000169113092DUARTE                        CASTRO                        ALEJANDRO ENRIQUE             M001062019062019AFP030000803-12-201800-00-0000D000000000000000000000000N33
+000177073520DIAZ                          MONDACA                       DIEGO ANTONIO                 M001062019062019AFP030000817-12-201800-00-0000D000000000000000000000000N34
+000174176299VILLAGRAN                     ZUÑIGA                        JAIME SEBASTIAN               M001062019062019AFP030000808-01-201908-07-2019D000000000000000000000000N33
+000166671248CESPEDES                      MORALES                       VANIA ALEJANDRA               F001062019062019AFP030000701-02-201901-08-2019D000000000000000000000000N05
+000154467599CANIUMIL                      ROSALES                       AURELIO ALEXIS                M001062019062019AFP030000713-02-201913-08-2019D000000000000000000000000N05
+000104650724ARCE                          VASQUEZ                       VERONICA DEL CARMEN           F001062019062019AFP030000718-02-201918-08-2019D000000000000000000000000N05
+000204174962VALENZUELA                    ROJAS                         BYRON RODRIGO                 M001062019062019AFP030000706-03-201906-06-2019D000000000000000000000000N34
+00016270348KMUÑOZ                         CEPEDA                        CECILIA ALEJANDRA             F001062019062019AFP030000718-04-201918-07-2019D000000000000000000000000N05
+000164408132MANCILLA                      JARA                          SOLEDAD HAIDEE                F001062019062019AFP0300000                    D000000000000000000000000N05
+000174888582ALVAREZ                       LEGUINA                       OMAR CRISTIAN                 M001062019062019AFP030000701-05-201901-06-2019D000000000000000000000000N34
+000157908537ORELLANA                      MIRANDA                       DANIEL ANDRES                 M001062019062019AFP030000701-05-201901-06-2019D000000000000000000000000N29
+000205796436LEIVA                         DIAZ                          MIGUEL ANGEL                  M001062019062019AFP030000706-05-201906-08-2019D000000000000000000000000N34

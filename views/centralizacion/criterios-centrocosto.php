@@ -25,7 +25,7 @@
                     </thead>
                     <tbody>
                         <?php 
-                            foreach( $registros as $reg ){ 
+                            foreach( $registros_criterios_centrocosto as $reg ){ 
                             ?>
                         <tr>
                             <td> <?php echo $reg['id']; ?> </td>
@@ -34,7 +34,7 @@
                             <td> <?php echo $reg['nombre_cta']; ?> </td>
                             <td> <?php echo getNombre($reg['id_ccosto'],'m_centrocosto'); ?> </td>
                             <td>
-                                <button class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
+                                <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/<?php echo $action ?>/editar/<?php echo $reg['id'] ?>" class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </a>
                                 <button class="btn btn-xs btn-danger btnDelete" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>
                             </td>
                         </tr>
