@@ -770,10 +770,27 @@
                                             </select>
                                             <script>$("#afpTrabajadorPrev").val('<?php echo $datos_prev['afp_id'] ?>') </script>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="cargasSimplesTrabajadorPrev">Cargas Simples</label>
-                                            <input name="cargasSimplesTrabajadorPrev" id="cargasSimplesTrabajadorPrev" value="<?php echo $datos_prev['cargasSimples'] ?>" class="form-control required" />
+                                        <div class="row">
+                                            <div class="col-lg-9">
+                                                <div class="form-group">
+                                                    <label for="cargasSimplesTrabajadorPrev">Cargas Simples</label>
+                                                    <input name="cargasSimplesTrabajadorPrev" id="cargasSimplesTrabajadorPrev" value="<?php echo $datos_prev['cargasSimples'] ?>" class="form-control required" />
+                                                </div>    
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="tramoCargasTrabajadorPrev">Tramo Cargas</label>
+                                                    <select class="form-control" name="tramoCargasTrabajadorPrev" id="tramoCargasTrabajadorPrev" required>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                        <option value="C">C</option>
+                                                        <option value="D">D</option>
+                                                    </select>
+                                                    <script>$("#tramoCargasTrabajadorPrev").val('<?php echo $datos_prev['tramoCargas'] ?>') </script>
+                                                </div>
+                                            </div>
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label for="cargasMaternalesTrabajadorPrev">Cargas Maternales</label>
                                             <input name="cargasMaternalesTrabajadorPrev" id="cargasMaternalesTrabajadorPrev" value="<?php echo $datos_prev['cargasMaternales'] ?>" class="form-control required" />

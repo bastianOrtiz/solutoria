@@ -299,6 +299,7 @@ if( $_POST ){
                 'cargasMaternales' => $cargasMaternalesTrabajadorPrev,
                 'cargasSimples' => $cargasSimplesTrabajadorPrev,
                 'cargasInvalidez' => $cargasInvalidezTrabajadorPrev,
+                'tramoCargas' => $tramoCargasTrabajadorPrev,
                 'afp_id' => $afpTrabajadorPrev
             );
         } else {
@@ -315,6 +316,7 @@ if( $_POST ){
                 'cargasMaternales' => $cargasMaternalesTrabajadorPrev,
                 'cargasSimples' => $cargasSimplesTrabajadorPrev,
                 'cargasInvalidez' => $cargasInvalidezTrabajadorPrev,
+                'tramoCargas' => $tramoCargasTrabajadorPrev,
                 'afp_id' => $afpTrabajadorPrev
             );
         }
