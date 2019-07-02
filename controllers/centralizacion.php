@@ -141,7 +141,7 @@ if( $parametros ){
         $criterio = $db->getOne('c_crixindividual');
     }
 
-    show_array($criterio,0);
+
 
 }
 
