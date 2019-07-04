@@ -35,6 +35,12 @@
                           <label for="nombreInstitucion">Nombre</label>
                           <input type="text" class="form-control required" value="<?php echo $institucion['nombre'] ?>" id="nombreInstitucion" name="nombreInstitucion" placeholder="Nombre Institucion" />
                         </div>  
+                          
+                      <div class="form-group">
+                          <label for="codigoInstitucion">Código Previred</label>
+                          <input type="text" class="form-control required" value="<?php echo $institucion['codigo'] ?>" id="codigoInstitucion" name="codigoInstitucion" placeholder="Código Previred" />
+                        </div>
+                          
                         <div class="form-group">
                           <label for="estadoInstitucion">Estado</label>
                           <select class="form-control" name="estadoInstitucion" id="estadoInstitucion">

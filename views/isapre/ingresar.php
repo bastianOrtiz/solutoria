@@ -36,6 +36,10 @@
                           <input type="text" class="form-control required" value="" id="nombreIsapre" name="nombreIsapre" placeholder="Nombre Isapre" />
                         </div>
                         <div class="form-group">
+                          <label for="codigoIsapre">Código Previred</label>
+                          <input type="text" class="form-control required" value="" id="codigoIsapre" name="codigoIsapre" placeholder="Codigo Previred" />
+                        </div>
+                        <div class="form-group">
                           <label for="estadoIsapre">Estado</label>
                           <select class="form-control" name="estadoIsapre" id="estadoIsapre">
                             <option value="1">Activo</option>

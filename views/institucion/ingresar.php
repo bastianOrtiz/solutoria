@@ -35,14 +35,13 @@
                           <label for="nombreInstitucion">Nombre</label>
                           <input type="text" class="form-control required" value="" id="nombreInstitucion" name="nombreInstitucion" placeholder="Nombre Institucion" />
                         </div>
+                          
                         <div class="form-group">
-                          <label for="tipoInstitucion">Nombre</label>
-                          <select class="form-control required" id="tipoInstitucion" name="tipoInstitucion">
-                            <option value="">Seleccione</option>
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                          </select>                          
+                          <label for="codigoInstitucion">Código Previred</label>
+                          <input type="text" class="form-control required" value="" id="codigoInstitucion" name="codigoInstitucion" placeholder="Código Previred" />
                         </div>
+                          
+                        
                         <div class="form-group">
                           <label for="estadoInstitucion">Estado</label>
                           <select class="form-control" name="estadoInstitucion" id="estadoInstitucion">
