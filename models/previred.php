@@ -205,7 +205,7 @@ function obtenerDiasLicencia($mes = "", $ano = ""){
         $ano = (int)getAnoMostrarCorte();
     }
 
-    $db->where("mes", 4);
+    $db->where("mes", $mes);
     $db->where("ano", $ano);
     $db->where("diaLicencia",0,">");
     $dias_licencia = $db->get("liquidacion",null,"trabajador_id");
@@ -215,6 +215,60 @@ function obtenerDiasLicencia($mes = "", $ano = ""){
     }
 
     return $arreglo_licencia;
+}
+
+function sqlLiquidacion($mes = "", $ano = ""){
+    global $db;
+
+    $ids_trabajadores_liquidacion = [];
+    $datos_retorno_liquidacion = [];
+    $super_array = [];
+
+    if( $mes == '' ){
+        $mes = (int)getMesMostrarCorte();
+    }
+    if( $ano == '' ){
+        $ano = (int)getAnoMostrarCorte();
+    }
+
+    $db->where("mes", $mes);
+    $db->where("ano", $ano);
+    $liquidaciones = $db->get("liquidacion");
+    foreach ($liquidaciones as $liquidacion) {
+        $ids_trabajadores_liquidacion[] = $liquidacion["trabajador_id"];
+        $datos_retorno_liquidacion[$liquidacion["trabajador_id"]] = [
+            'totalImponible' => $liquidacion["totalImponible"],
+            'afpMonto' => $liquidacion["afpMonto"],
+            'sis' => $liquidacion["sis"],
+            'cuenta2Monto' => $liquidacion["cuenta2Monto"]
+        ];
+    }
+
+    $super_array["liquidaciones"] = [
+        'ids' => $ids_trabajadores_liquidacion,
+        'datos' => $datos_retorno_liquidacion
+    ];
+    return $super_array;
+}
+
+function tieneImponible($trabajador_id, $super_array){
+    $array_return = [
+        'monto' => 0,
+        'cotizacion' => 0,
+        'sis' => 0,
+        'cuenta2Monto' => 0
+    ];
+
+    if (in_array($trabajador_id, $super_array["liquidaciones"]["ids"])) {
+        $array_return = [
+            'monto' => $super_array["liquidaciones"]["datos"][$trabajador_id]["totalImponible"],
+            'cotizacion' => $super_array["liquidaciones"]["datos"][$trabajador_id]["afpMonto"],
+            'sis' => $super_array["liquidaciones"]["datos"][$trabajador_id]["sis"],
+            'cuenta2Monto' => $super_array["liquidaciones"]["datos"][$trabajador_id]["cuenta2Monto"]
+        ];
+    }
+
+    return $array_return;
 }
 
 function getCodigoAfp($trabajador_id){
@@ -235,6 +289,7 @@ function crearTxt($post){
     $arreglo_asignacion_familiar = sqlAsignacionFamiliar();
     $arreglo_asignacion_familiar_retroactiva = sqlAsignacionFamiliarRetroactiva();
     $arreglo_ids_licencia = obtenerDiasLicencia();
+    $arreglo_liquidaciones = sqlLiquidacion();
     $empleados = [];
     foreach ($post['rut'] as $key => $empleado) {
        $empleados[] = [
@@ -395,6 +450,34 @@ function crearTxt($post){
         $codigo_afp_convertido = leadZero($codigo_afp["codigo"]);
         $codigo_afp_rellenar = rellenar($codigo_afp_convertido,2,"i");
         fwrite($fch, $codigo_afp_rellenar); // Grabas
+
+        $imponible = tieneImponible($empleado["id"],$arreglo_liquidaciones);
+        $montoImponible = rellenar($imponible["monto"],8,"i");
+        fwrite($fch, $montoImponible); // Grabas
+        $monto_obligatorio_afp = rellenar($imponible["cotizacion"],8,"i");
+        fwrite($fch, $monto_obligatorio_afp); // Grabas
+        $monto_sis = rellenar($imponible["sis"],8,"i");
+        fwrite($fch, $monto_sis); // Grabas
+        $cuenta2Monto = rellenar($imponible["cuenta2Monto"],8,"i");
+        fwrite($fch, $cuenta2Monto); // Grabas
+        $renta_imp_sust_afp = rellenar(0,8,"i");
+        fwrite($fch, $renta_imp_sust_afp); // Grabas
+        $tasa_pactada = rellenar(0,5,"i");
+        fwrite($fch, $tasa_pactada); // Grabas
+        $aporte_indemn = rellenar(0,9,"i");
+        fwrite($fch, $aporte_indemn); // Grabas
+        $n_periodos = rellenar(0,2,"i");
+        fwrite($fch, $n_periodos); // Grabas
+        $periodo_desde = rellenar("",10,"s");
+        fwrite($fch, $periodo_desde); // Grabas
+        $periodo_hasta = rellenar("",10,"s");
+        fwrite($fch, $periodo_hasta); // Grabas
+        $puesto_trabajo_pesado = rellenar("",40,"s");
+        fwrite($fch, $puesto_trabajo_pesado); // Grabas
+        $porcentaje_cotizacion_trabajo_pesado = rellenar(0,5,"i");
+        fwrite($fch, $porcentaje_cotizacion_trabajo_pesado); // Grabas
+        $cotizacion_trabajo_pesado = rellenar(0,6,"i");
+        fwrite($fch, $cotizacion_trabajo_pesado); // Grabas
 
         fwrite($fch, PHP_EOL);
     }
