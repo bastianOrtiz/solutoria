@@ -1627,6 +1627,11 @@ function mainMenu(){
                 'entidad' => 'centralizacion',
                 'accion' => 'criterios-individual',
                 'label' => 'Criterios por Individual'
+            ),
+            array(
+                'entidad' => 'centralizacion',
+                'accion' => 'malla-liquidacion-list',
+                'label' => 'Malla Liquidaciones'
             )
         )
     );

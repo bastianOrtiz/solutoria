@@ -16,32 +16,31 @@
                     <thead>
                         <tr>
                             <th> # </th>
-                            <th>Criterio</th>
-                            <th>Debe o Haber</th>
-                            <th>Cuenta Contable</th>
-                            <th style="width: 100px"> Opciones </th>
+                            <th>Origen</th>
+                            <th>Campo</th>
+                            <th>Tipo Criterio</th>
+                            <th style="width: 70px"> Eliminar </th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th> # </th>
-                            <th>Criterio</th>
-                            <th>Debe o Haber</th>
-                            <th>Cuenta Contable</th>
-                            <th style="width: 100px"> Opciones </th>
+                            <th>Origen</th>
+                            <th>Campo</th>
+                            <th>Tipo Criterio</th>
+                            <th style="width: 70px"> Eliminar </th>
                         </tr>
                     </tfoot>
                     <tbody>
                         <?php 
-                            foreach( $registros as $reg ){ 
+                            foreach( $registros_malla as $reg ){ 
                             ?>
                         <tr>
                             <td> <?php echo $reg['id']; ?> </td>
-                            <td> <?php echo $reg['criterio']; ?> </td>
-                            <td> <?php echo getDebeHaber($reg['DH']); ?> </td>
-                            <td> <?php echo $reg['nombre_cta']; ?> </td>
-                            <td>
-                                <button class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
+                            <td> <?php echo convertToName('origen',$reg['origen']); ?> </td>
+                            <td> <?php echo $reg['campo']; ?> </td>
+                            <td> <?php echo convertToName('tipo_criterio',$reg['tipo_criterio']); ?> </td>
+                            <td class="text-center">
                                 <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>
                             </td>
                         </tr>

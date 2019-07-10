@@ -1,5 +1,8 @@
 <?php
 
+echo urlencode('Hola! quisiera consultar por un curso');
+exit();
+
 if( $_POST ){
     
     switch ($_POST['action']) {
@@ -101,6 +104,27 @@ if( $_POST ){
             break;
         
 
+        case 'new_malla_liq':
+            
+            foreach ($_POST['campos'] as $campo) {
+                $data_insert = [
+                    'fk_empreid' => $_SESSION[PREFIX.'login_eid'],
+                    'origen' => $_POST['origenMalla'],
+                    'campo' => $campo,
+                    'tipo_criterio' => $_POST['tipoCriterioMalla']
+                ];
+                $create_id = $db->insert('c_mallaliq',$data_insert);
+                logit( $_SESSION[PREFIX.'login_name'],'agregar','Malla liquidacion',$create_id,$db->getLastQuery() );
+            }  
+
+            
+            $response = encrypt('status=success&mensaje=Los registros se han creado correctamente&id='.null);
+            redirect(BASE_URL . '/centralizacion/malla-liquidacion-list/response/' . $response );
+            exit(); 
+
+            break;
+
+
         default:
             break;
     }
@@ -120,6 +144,9 @@ if( $parametros ){
     
     $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
     $registros_individual = $db->get('c_crixindividual');
+    
+    $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
+    $registros_malla = $db->get('c_mallaliq');
     
 
 
