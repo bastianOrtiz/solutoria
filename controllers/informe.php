@@ -95,7 +95,8 @@ if( $_POST ){
         '<br><br><p> <strong> CERTIFICADO Nº' . $arr_indice_trabajadores[$trabajador_id]['indice'] . ' SOBRE SUELDOS Y OTRAS RENTAS SIMILARES </strong> </p><br><br>' . 
         ' <p>El empleador, <strong>' . $empresa['razonSocial'] . '</strong> certifica que ' . $presentacion_genero . getNombreTrabajador($trabajador_id, true) . 
         ' RUT ' . $trabajador['rut'] . 
-        ' en su calidad de empleado dependiente <br> durante el año ' . $ano_certificado . ' se le han pagado las rentas que se indican y sobre las cuales se le practicaron las retenciones de impuestos que se señalan: ' . 
+        ' en su calidad de empleado dependiente <br> durante el año ' . $ano_certificado . ' se le han pagado las rentas que se indican y sobre las cuales se le practicaron las retenciones de 
+        s que se señalan: ' . 
         ' </p> ' . 
         ' <p>Situación Tributaria: </p> ';
 
@@ -979,16 +980,7 @@ if( $_POST ){
         if( $tipoTrabajadorImpuesto == 'agricolas' )
             $tipoImpuesto = 'impuestoAgricola';
         
-
-        $db->where('comisiones_pendientes',1);
-        $trabajadores_com_pend = $db->get('m_trabajador',null,['id']);
-        $comisiones_pend_IN = '';
-        foreach ($trabajadores_com_pend as $value) {
-            $comisiones_pend_IN .= $value['id'].',';
-        }
-        $comisiones_pend_IN = trim($comisiones_pend_IN,',');
-
-
+        
         $sql_impuesto = "
         SELECT T.rut, CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, L.$tipoImpuesto 
         FROM m_trabajador T, liquidacion L
@@ -1001,30 +993,45 @@ if( $_POST ){
 
 
         if( !@$_POST['mostrarZero'] ){
-            $sql_impuesto .= " AND L.$tipoImpuesto > 0 ";
+            $sql_impuesto .= " AND L.$tipoImpuesto > 0" . PHP_EOL;
         }
                 
-        $sql_impuesto .= " ORDER BY T.apellidoPaterno ASC ";
+        $sql_impuesto .= "ORDER BY T.apellidoPaterno ASC ";
         
         $impuestos_list = $db->rawQuery( $sql_impuesto );
-
-
-
-
-        $sql_impuesto_comisiones_pendientes = "
-        SELECT T.rut, CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, L.$tipoImpuesto 
-        FROM m_trabajador T, liquidacion L
-        WHERE T.id = L.trabajador_id
-        AND L.mes = $mes 
-        AND L.ano = $ano
-        AND T.empresa_id = $empresa_id
-        AND T.id IN ($comisiones_pend_IN)
-        ORDER BY T.apellidoPaterno ASC
-        ";
+    
+    
+        // Proceso para incluir a los vendedores que se le estan pagando comisiones pendientes.
+        $db->where('comisiones_pendientes',1);
+        $trabajadores_com_pend = $db->get('m_trabajador',null,['id']);
         
-        $impuestos_comisiones_pendientes = $db->rawQuery( $sql_impuesto_comisiones_pendientes );
-        foreach ($impuestos_comisiones_pendientes as $comisiones_pend) {
-            $impuestos_list[] = $comisiones_pend;
+        if( $trabajadores_com_pend ){
+            $comisiones_pend_IN = '';
+            foreach ($trabajadores_com_pend as $value) {
+                $comisiones_pend_IN .= $value['id'].',';
+            }
+            $comisiones_pend_IN = trim($comisiones_pend_IN,',');
+            
+            $sql_impuesto_comisiones_pendientes = "
+            SELECT T.rut, CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, L.$tipoImpuesto 
+            FROM m_trabajador T, liquidacion L
+            WHERE T.id = L.trabajador_id
+            AND L.mes = $mes 
+            AND L.ano = $ano
+            AND T.empresa_id = $empresa_id";
+            
+            if( $trabajadores_com_pend ){
+                $sql_impuesto_comisiones_pendientes .= "AND T.id IN ($comisiones_pend_IN)";
+            }
+            $sql_impuesto_comisiones_pendientes .= "ORDER BY T.apellidoPaterno ASC
+            ";
+            
+           
+            
+            $impuestos_comisiones_pendientes = $db->rawQuery( $sql_impuesto_comisiones_pendientes );
+            foreach ($impuestos_comisiones_pendientes as $comisiones_pend) {
+                $impuestos_list[] = $comisiones_pend;
+            }
         }
 
         
