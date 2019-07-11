@@ -1004,6 +1004,7 @@ if( $_POST ){
         // Proceso para incluir a los vendedores que se le estan pagando comisiones pendientes.
         $db->where('comisiones_pendientes',1);
         $trabajadores_com_pend = $db->get('m_trabajador',null,['id']);
+
         
         if( $trabajadores_com_pend ){
             $comisiones_pend_IN = '';
@@ -1018,15 +1019,12 @@ if( $_POST ){
             WHERE T.id = L.trabajador_id
             AND L.mes = $mes 
             AND L.ano = $ano
-            AND T.empresa_id = $empresa_id";
+            AND T.empresa_id = $empresa_id" . PHP_EOL;
             
             if( $trabajadores_com_pend ){
-                $sql_impuesto_comisiones_pendientes .= "AND T.id IN ($comisiones_pend_IN)";
+                $sql_impuesto_comisiones_pendientes .= "AND T.id IN ($comisiones_pend_IN)" . PHP_EOL;
             }
-            $sql_impuesto_comisiones_pendientes .= "ORDER BY T.apellidoPaterno ASC
-            ";
-            
-           
+            $sql_impuesto_comisiones_pendientes .= "ORDER BY T.apellidoPaterno ASC" . PHP_EOL;
             
             $impuestos_comisiones_pendientes = $db->rawQuery( $sql_impuesto_comisiones_pendientes );
             foreach ($impuestos_comisiones_pendientes as $comisiones_pend) {
