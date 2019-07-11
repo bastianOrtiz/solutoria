@@ -1,9 +1,7 @@
 <?php
 
-echo urlencode('Hola! quisiera consultar por un curso');
-exit();
-
 if( $_POST ){
+
     
     switch ($_POST['action']) {
         case 'new_criterio_centrocosto':

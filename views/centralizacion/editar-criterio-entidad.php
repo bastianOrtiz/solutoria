@@ -6,6 +6,7 @@
         <?php include ROOT . '/views/comun/alertas.php';  ?>
     </section>
     <section class="content">
+        <?php show_array($criterio,0); ?>
         <form role="form" id="frmCrear" method="post">
             <input type="hidden" name="action" value="edit_criterio_entidad" />
             <div class="box box-primary">
@@ -23,7 +24,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="nombreCriterio">Nombre del Criterio</label>
-                                <input type="text" class="form-control required" name="nombreCriterio" placeholder="Nombre Criterio" required />
+                                <input type="text" class="form-control required" name="nombreCriterio" value="<?php echo $criterio['criterio'] ?>" placeholder="Nombre Criterio" required />
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -34,12 +35,13 @@
                                     <option value="d">Debe</option>
                                     <option value="h">Haber</option>
                                 </select>
+                                <script> $("[name=dh]").val('<?php echo $criterio['DH'] ?>') </script>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="dh">Cuenta Contable <small>(Obtenida desde el ERP)</small></label>
-                                <input type="hidden" name="nombreCuentaContable">
+                                <input type="hidden" name="nombreCuentaContable" value="<?php echo $criterio['nombre_cta'] ?>">
                                 <select name="cuentaContable" class="form-control" required>
                                     <option value="">Seleccione una opción</option>
                                     <option value="12"> MAUPUTELEN EDO.MATTE</option>
@@ -404,17 +406,7 @@
                                     <option value="62"> COSTO VENTA DIV. INGENIERIA</option>
                                     <option value="976">    PROYECTO - GERIATRICO</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                                <label for="dh">Centro Costo</label>
-                                <select name="centroCosto" class="form-control" required>
-                                    <option value="">Seleccione una opción</option>
-                                    <?php foreach ($ccostos as $ccosto) { ?>
-                                    <option value="<?php echo $ccosto['id'] ?>"><?php echo $ccosto['nombre'] ?></option>
-                                    <?php } ?>
-                                </select>
+                                <script> $("[name=cuentaContable]").val('<?php echo $criterio['ctacont'] ?>') </script>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -426,6 +418,7 @@
                                     <option value="m_isapre">ISAPRES</option>
                                     <option value="m_institucion">Instituciones Aseguradoras</option>
                                 </select>
+                                <script> $("[name=tablaEntidad]").val('<?php echo $criterio['tabla_entidad'] ?>') </script>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -448,6 +441,17 @@
 
 
 <script>
+loaded = false;
+$(document).ready(function(){
+    llenarEntidades('<?php echo $criterio['tabla_entidad'] ?>');
+    setEntidad = setInterval(function(){ 
+        $("[name=entidad]").val(<?php echo $criterio['id_entidad'] ?>); 
+        if( loaded == true ){
+            clearInterval(setEntidad);
+        }
+    }, 500);
+});
+
 $("[name=cuentaContable]").change(function(){
     var nombreCtaCont = $(this).find('option:selected').text();
     $("[name=nombreCuentaContable]").val(nombreCtaCont);
@@ -456,30 +460,37 @@ $("[name=cuentaContable]").change(function(){
 $("#tablaEntidad").change(function(){
     if( $(this).val() != "" ){
         nombre_tabla = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: "<?php echo BASE_URL . '/controllers/ajax/centralizacion.ajax.php'?>",
-            data: "ajax_action=get_entidades&nombre_tabla=" + nombre_tabla,
-            dataType: 'json',
-            beforeSend: function(){
-                $(".overlayer").show();
-            },
-            success: function (json) {
-                $('[name=entidad]').empty();
-                $('[name=entidad]').append($('<option>', { 
-                    value: "",
-                    text : "Seleccione una opción"
-                }));
-                $.each(json.registros, function (i, item) {
-                    $('[name=entidad]').append($('<option>', { 
-                        value: item.id,
-                        text : item.nombre 
-                    }));
-                });
-                $(".overlayer").hide();
-            }
-        })
+        llenarEntidades(nombre_tabla);
     }
 })
+
+
+function llenarEntidades(nombre_tabla){
+    $.ajax({
+        type: "POST",
+        url: "<?php echo BASE_URL . '/controllers/ajax/centralizacion.ajax.php'?>",
+        data: "ajax_action=get_entidades&nombre_tabla=" + nombre_tabla,
+        dataType: 'json',
+        beforeSend: function(){
+            $(".overlayer").show();
+        },
+        success: function (json) {
+            $('[name=entidad]').empty();
+            $('[name=entidad]').append($('<option>', { 
+                value: "",
+                text : "Seleccione una opción"
+            }));
+            $.each(json.registros, function (i, item) {
+                $('[name=entidad]').append($('<option>', { 
+                    value: item.id,
+                    text : item.nombre 
+                }));
+            });
+            $(".overlayer").hide();
+            loaded = true;
+        }
+    })
+}
+
 
 </script>

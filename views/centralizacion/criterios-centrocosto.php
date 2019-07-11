@@ -24,8 +24,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                            foreach( $registros_criterios_centrocosto as $reg ){ 
+                        <?php foreach( $registros_criterios_centrocosto as $reg ){ 
                             ?>
                         <tr>
                             <td> <?php echo $reg['id']; ?> </td>

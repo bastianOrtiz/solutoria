@@ -48,7 +48,7 @@
                             <td> <?php echo $reg['tabla_entidad']; ?> </td>
                             <td>
                                 <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/<?php echo $action ?>/editar/<?php echo $reg['id'] ?>" class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </a>
-                                <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>
+                                <button class="btn btn-xs btn-danger btnDelete" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>
                             </td>
                         </tr>
                         <?php } ?>                        
@@ -66,15 +66,37 @@
 </div>
 <!-- /.content-wrapper -->            
 <script>
-    $(function () {        
-        $('#tabla_cargo').dataTable({
-          "bPaginate": true,
-          "bLengthChange": false,
-          "bFilter": true,
-          "bSort": true,
-          "bInfo": true,
-          "bAutoWidth": false,
-          "pageLength": 100
-        });
-      });
+$(function () {        
+    $('#tabla_cargo').dataTable({
+      "bPaginate": true,
+      "bLengthChange": false,
+      "bFilter": true,
+      "bSort": true,
+      "bInfo": true,
+      "bAutoWidth": false,
+      "pageLength": 100
+    });
+});
+
+
+$(".btnDelete").click(function(){
+    if( confirm("¿Desea eliminar el registro seleccionado?") ){
+        id = $(this).data('regid');
+        tr = $(this).closest('tr');
+        $.ajax({
+            type: "POST",
+            url: "<?php echo BASE_URL . '/controllers/ajax/centralizacion.ajax.php'?>",
+            data: "ajax_action=eliminarCriterio&id=" + id + '&criterio=c_crixentidad',
+            dataType: 'json',
+            beforeSend: function(){
+                $(".overlayer").show();
+            },
+            success: function (json) {
+                tr.fadeOut(300);
+                $(".overlayer").hide();
+            }
+        })
+    }
+})
+
 </script>
