@@ -22,7 +22,19 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                                <label for="origenMalla">Origen</label>
+                                <label for="tipoCriterioMalla">Tipo Criterio</label>
+                                <select class="form-control" name="tipoCriterioMalla" id="tipoCriterioMalla" required>
+                                    <option value="">Seleccione</option>
+                                    <option value="1">Criterio por Centro Costo</option>
+                                    <option value="2">Criterio por Entidad</option>
+                                    <option value="3">Criterio por Individual</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label for="origenMalla">Tabla Origen</label>
                                 <select class="form-control" name="origenMalla" id="origenMalla" required>
                                     <option value="">Seleccione</option>
                                     <option value="1">Liquidacion</option>
@@ -34,21 +46,11 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                                <label for="campoMalla">Campo</label>
-                                <input type="text" name="campoMalla" class="form-control" required>
+                                <label>Campos</label>
+                                <div class="form-group" id="campos_list"></div>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                                <label for="tipoCriterioMalla">Tipo Criterio</label>
-                                <select class="form-control" name="tipoCriterioMalla" id="tipoCriterioMalla" required>
-                                    <option value="">Seleccione</option>
-                                    <option value="1">Criterio por Centro Costo</option>
-                                    <option value="2">Criterio por Entidad</option>
-                                    <option value="3">Criterio por Individual</option>
-                                </select>
-                            </div>
-                        </div>
+                        
                         
                     </div>
                     <div class="box-footer">
@@ -67,32 +69,33 @@ $("[name=cuentaContable]").change(function(){
     $("[name=nombreCuentaContable]").val(nombreCtaCont);
 });
 
-$("#tablaEntidad").change(function(){
+$("#origenMalla").change(function(){
     if( $(this).val() != "" ){
-        nombre_tabla = $(this).val();
+        id_tabla = $(this).val();
         $.ajax({
             type: "POST",
             url: "<?php echo BASE_URL . '/controllers/ajax/centralizacion.ajax.php'?>",
-            data: "ajax_action=get_entidades&nombre_tabla=" + nombre_tabla,
+            data: "ajax_action=get_campos&id_tabla=" + id_tabla,
             dataType: 'json',
             beforeSend: function(){
                 $(".overlayer").show();
             },
             success: function (json) {
-                $('[name=entidad]').empty();
-                $('[name=entidad]').append($('<option>', { 
-                    value: "",
-                    text : "Seleccione una opción"
-                }));
-                $.each(json.registros, function (i, item) {
-                    $('[name=entidad]').append($('<option>', { 
-                        value: item.id,
-                        text : item.nombre 
-                    }));
-                });
+                html_chk = ''
+                $.each(json.campos, function(i,v){
+                    html_chk += '<div class="checkbox">' +
+                                '    <label>' +
+                                '      <input type="checkbox" name="campos[]" value="'+ v +'">' +
+                                '      '+ v +
+                                '    </label>' +
+                                '  </div>';
+                })
+                $("#campos_list").html(html_chk);
                 $(".overlayer").hide();
             }
         })
+    } else {
+        $("#campos_list").html('');
     }
 })
 

@@ -41,7 +41,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="dh">Cuenta Contable <small>(Obtenida desde el ERP)</small></label>
-                                <input type="hidden" name="nombreCuentaContable">
+                                <input type="hidden" name="nombreCuentaContable" value="<?php echo $criterio['nombre_cta'] ?>">
                                 <select name="cuentaContable" class="form-control" required>
                                     <option value="">Seleccione una opción</option>
                                     <option value="12"> MAUPUTELEN EDO.MATTE</option>

@@ -16,6 +16,9 @@
             <a href="<?php echo BASE_URL . '/' . $entity ?>/criterios-individual" class="btn btn-primary">
                 Criterios por Individual
             </a>
+            <a href="<?php echo BASE_URL . '/' . $entity ?>/malla-liquidacion-list" class="btn btn-primary">
+                Malla Liquidaciones
+            </a>
         </section>
         
       </div><!-- /.content-wrapper -->

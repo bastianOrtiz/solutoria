@@ -408,17 +408,6 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
-                                <label for="dh">Centro Costo</label>
-                                <select name="centroCosto" class="form-control" required>
-                                    <option value="">Seleccione una opción</option>
-                                    <?php foreach ($ccostos as $ccosto) { ?>
-                                    <option value="<?php echo $ccosto['id'] ?>"><?php echo $ccosto['nombre'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <div class="form-group">
                                 <label for="tablaEntidad">Tipo Entidad Previsional</label>
                                 <select id="tablaEntidad" name="tablaEntidad" class="form-control" required>
                                     <option value="">Seleccione una opción</option>
