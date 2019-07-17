@@ -14,7 +14,8 @@ if( $_POST ){
 }
 
 if( $parametros ){
-    $empleados = buscarEmpleados($id_empresa);
+    $var = sql_ausencia();
+    tieneAusencia(1,$var);
     $periodoDesde = date("m").date("Y");
     $periodoHasta = date("m").date("Y");
 }

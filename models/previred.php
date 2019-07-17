@@ -214,6 +214,8 @@ function obtenerDiasLicencia($mes = "", $ano = ""){
         $arreglo_licencia[] = $licencia["trabajador_id"];
     }
 
+    show_array($arreglo_licencia);
+
     return $arreglo_licencia;
 }
 
@@ -488,6 +490,60 @@ function crearTxt($post){
     header('Content-Disposition: attachment; filename="previred.txt"');
     readfile($archivo);
     exit();
+}
+
+function sql_ausencia($mes = "", $ano = ""){
+    global $db;
+
+    if( $mes == '' ){
+        $mes = getMesMostrarCorte();
+    }
+    if( $ano == '' ){
+        $ano = getAnoMostrarCorte();
+    }
+
+    $sql = "
+    SELECT *
+    FROM t_ausencia
+    WHERE month(fecha_inicio) = $mes
+    AND year(fecha_inicio) = $ano
+    ";
+
+    $results= $db->rawQuery($sql);
+
+    $ids_sql_ausencia = [];
+    $datos_retorno_sql_ausencia = [];
+    foreach ($results as $result) {
+        $ids_sql_ausencia[] = $result["trabajador_id"];
+        $datos_retorno_sql_ausencia[$result["trabajador_id"]] = [
+            'todo' => $result
+        ];
+    }
+
+    $super_array["ausencia"] = [
+        'trabajadores_ids' => $ids_sql_ausencia,
+        'datos' => $datos_retorno_sql_ausencia
+    ];
+
+    return $super_array;
+}
+
+function tieneAusencia($trabajador_id, $super_array){
+
+    show_array($super_array);
+    $array_return = [
+        'todo' => 0
+    ];
+
+    if (in_array($trabajador_id, $super_array["ausencia"]["trabajadores_ids"])) {
+        $array_return = [
+            'todo' => $super_array["ausencia"]["datos"][$trabajador_id]["todo"]
+        ];
+    }
+
+    show_array($array_return);
+
+    return $array_return;
 }
 
 /**
