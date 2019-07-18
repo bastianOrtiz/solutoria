@@ -14,10 +14,12 @@ if( $_POST ){
 }
 
 if( $parametros ){
-    $var = sql_ausencia();
-    tieneAusencia(1,$var);
-    $periodoDesde = date("m").date("Y");
-    $periodoHasta = date("m").date("Y");
+    $var = sqlAusencia();
+    show_array($var);
+    show_array(insidencias("apv",120));
+    $empleados = buscarEmpleados($id_empresa); 
+    $periodoDesde = date("m").date("Y"); 
+    $periodoHasta = date("m").date("Y"); 
 }
 
 include ROOT . '/views/comun/header.php';
