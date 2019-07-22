@@ -214,8 +214,6 @@ function obtenerDiasLicencia($mes = "", $ano = ""){
         $arreglo_licencia[] = $licencia["trabajador_id"];
     }
 
-    show_array($arreglo_licencia);
-
     return $arreglo_licencia;
 }
 
@@ -253,6 +251,23 @@ function sqlLiquidacion($mes = "", $ano = ""){
     return $super_array;
 }
 
+function getApv($trabajador_id){
+    global $db;
+
+    $datos_retorno = [];
+
+    $db->join("t_apv", "m_institucion.id=t_apv.institucion_id");
+    $db->where("t_apv.trabajador_id",$trabajador_id);
+    $results = $db->get("m_institucion",null, "m_institucion.nombre, m_institucion.codigo");
+
+    $arreglo = [];
+
+    $arreglo["count"] = count($results);
+    $arreglo["results"] = $results;
+
+    return $arreglo;
+}
+
 function tieneImponible($trabajador_id, $super_array){
     $array_return = [
         'monto' => 0,
@@ -283,12 +298,54 @@ function getCodigoAfp($trabajador_id){
     return $results;
 }
 
+function insidencias($tipo, $trabajador_id){
+
+    $arreglo = [];
+
+    if ($tipo == 'ausencia') {
+
+        $ausencia = 0;
+
+        if( in_array($trabajador_id, $super_array['ausencia']['trabajadores_ids']) ){
+            $ocurrencias = array_count_values($super_array['ausencia']['trabajadores_ids']);
+
+            if( $ocurrencias[$trabajador_id] >= 1 ){
+                $ausencia = $ocurrencias[$trabajador_id];
+            }
+
+        } else {
+            return $ausencia;
+        }
+
+        $arreglo["ausencia"]["count"] = $ocurrencias;
+        $arreglo["ausencia"]["results"] = $ausencia;
+
+        return $arreglo;
+
+    }elseif ($tipo == 'apv') {
+        
+        global $db;
+
+        $datos_retorno = [];
+
+        $db->join("t_apv", "m_institucion.id=t_apv.institucion_id");
+        $db->where("t_apv.trabajador_id",$trabajador_id);
+        $results = $db->get("m_institucion",null, "m_institucion.nombre, m_institucion.codigo");
+
+        $arreglo["apv"]["count"] = count($results);
+        $arreglo["apv"]["results"] = $results;
+
+        return $arreglo;
+    }
+}
+
 function crearTxt($post){
     global $db;
 
     $super_array = sqlMovimientos();
     $super_arreglo = sqlTramoCarga();
     $arreglo_asignacion_familiar = sqlAsignacionFamiliar();
+    $arreglo_ausencias = sqlAusencia();
     $arreglo_asignacion_familiar_retroactiva = sqlAsignacionFamiliarRetroactiva();
     $arreglo_ids_licencia = obtenerDiasLicencia();
     $arreglo_liquidaciones = sqlLiquidacion();
@@ -313,7 +370,6 @@ function crearTxt($post){
 
     $fch= fopen($archivo, "w"); // Abres el archivo para escribir en él
     foreach ($empleados as $empleado) {
-
 
         $separador = explode("-",$empleado["rut"]);
         $rut = rellenar($separador[0], 11, "i");
@@ -480,8 +536,32 @@ function crearTxt($post){
         fwrite($fch, $porcentaje_cotizacion_trabajo_pesado); // Grabas
         $cotizacion_trabajo_pesado = rellenar(0,6,"i");
         fwrite($fch, $cotizacion_trabajo_pesado); // Grabas
+        /*------ Datos Ahorro Previsional Voluntario Individual ------(Falta completar)*/
 
+        /*------ Datos Ahorro Previsional Voluntario Colentivo ------(Falta completar)*/
+        $codigo_institucion_autorizada_apvc = rellenar(0,3,"i");
+        fwrite($fch, $codigo_institucion_autorizada_apvc); // Grabas
+        $numero_contrato_apvc = rellenar("",20,"s");
+        fwrite($fch, $numero_contrato_apvc); // Grabas
+        $forma_pago_apvc = rellenar(0,1,"i");
+        fwrite($fch, $forma_pago_apvc); // Grabas
+        $cotizacion_trabajador_apvc = rellenar(0,8,"i");
+        fwrite($fch, $cotizacion_trabajador_apvc); // Grabas
+        $cotizacion_empleador_apvc = rellenar(0,8,"i");
+        fwrite($fch, $cotizacion_empleador_apvc); // Grabas
+        $cantidad_ausencia = tieneAusencia($empleado["id"],$arreglo_ausencias);
+        if ($cantidad_ausencia > 0) {
+            for ($i=0; $i < $cantidad_ausencia ; $i++) { 
+                fwrite($fch, PHP_EOL);
+                fwrite($fch, 'prueba'); // Grabas
+                fwrite($fch, 'prueba'); // Grabas
+                fwrite($fch, 'prueba'); // Grabas
+                fwrite($fch, 'prueba'); // Grabas
+            }
+            $i++;
+        }
         fwrite($fch, PHP_EOL);
+
     }
     fclose($fch); // Cierras el archivo.
 
@@ -492,7 +572,7 @@ function crearTxt($post){
     exit();
 }
 
-function sql_ausencia($mes = "", $ano = ""){
+function sqlAusencia($mes = "", $ano = ""){
     global $db;
 
     if( $mes == '' ){
@@ -503,9 +583,10 @@ function sql_ausencia($mes = "", $ano = ""){
     }
 
     $sql = "
-    SELECT *
-    FROM t_ausencia
-    WHERE month(fecha_inicio) = $mes
+    SELECT TA.trabajador_id, TA.fecha_inicio, TA.fecha_fin, TA.totalDias, A.licencia, A.nombre
+    FROM t_ausencia TA, m_ausencia A
+    WHERE TA.ausencia_id = A.id
+    AND month(fecha_inicio) = $mes
     AND year(fecha_inicio) = $ano
     ";
 
@@ -530,20 +611,21 @@ function sql_ausencia($mes = "", $ano = ""){
 
 function tieneAusencia($trabajador_id, $super_array){
 
-    show_array($super_array);
-    $array_return = [
-        'todo' => 0
-    ];
+    $ausencia = 0;
 
-    if (in_array($trabajador_id, $super_array["ausencia"]["trabajadores_ids"])) {
-        $array_return = [
-            'todo' => $super_array["ausencia"]["datos"][$trabajador_id]["todo"]
-        ];
+    if( in_array($trabajador_id, $super_array['ausencia']['trabajadores_ids']) ){
+        $ocurrencias = array_count_values($super_array['ausencia']['trabajadores_ids']);
+
+        if( $ocurrencias[$trabajador_id] >= 1 ){
+            $ausencia = $ocurrencias[$trabajador_id];
+        }
+
+    } else {
+        return $ausencia;
     }
 
-    show_array($array_return);
-
-    return $array_return;
+    
+    return $ausencia;
 }
 
 /**
