@@ -7,7 +7,7 @@ $json = array();
 extract($_POST);
 
 
-switch ($_POST['ajax_action']) {
+switch ($_POST['ajax_action']) :
 	case 'get_entidades':
 		$entidades = $db->get($_POST['nombre_tabla']);
     
@@ -35,24 +35,21 @@ switch ($_POST['ajax_action']) {
 
 
 	case 'get_campos':
-		switch ($_POST['id_tabla']) {
-			case 1:
-				$json['tabla'] = 'liquidacion';
+		$json['tabla'] = $_POST['tabla'];
+		switch ($_POST['tabla']) {
+			case 'liquidacion':
 				$json['campos'] = ['diaAusencia','diaLicencia','sueldoBase','gratificacion','horaExtra','horaExtraMonto','horaExtraFestivo','horaExtraFestivoMonto','horaAtraso','horaAtrasoMonto','semanaCorrida','totalImponible','totalNoImponible','remuneracionTributable','afp_id','afpMonto','afpPorcentaje','isapre_id','saludMonto','isaprePactado','monedaIsaprePactado','afcMonto','apvMonto','cuenta2Id','cuenta2Monto','descuentoPrevisional','totalTributable','impuestoTotal','impuestoRebajar','impuestoPagar','impuestoAgricola','totalDescuento','alcanceLiquido','totalPagar','topeAfc','rentaNoGravada','sis','sces'];
 				break;
 			
-			case 2:
-				$json['tabla'] = 'l_haber';
+			case 'l_haber':
 				$json['campos'] = ['haber_id','glosa', 'monto', 'cuotaActual', 'cuotaTotal', 'imponible'];
 				break;
 			
-			case 3:
-				$json['tabla'] = 'l_descuento';
+			case 'l_descuento':
 				$json['campos'] = ['descuento_id','glosa', 'monto', 'cuotaActual', 'cuotaTotal', 'imponible'];
 				break;
 			
-			case 4:
-				$json['tabla'] = 'l_apv';
+			case 'l_apv':
 				$json['campos'] = ['institucion_id', 'monto', 'tipo'];
 				break;
 			
@@ -63,10 +60,36 @@ switch ($_POST['ajax_action']) {
 		}
 	break;
 
+	case 'get_criterios':
+		switch ($_POST['tipo_criterio']) {
+			case 1:
+				$table = 'c_crixccostos';
+				break;
+			case 2:
+				$table = 'c_crixentidad';
+				break;
+			case 3:
+				$table = 'c_crixindividual';
+				break;
+		}
+
+
+		$criterios = $db->get($table,null,['id','criterio']);
+    
+	    if( $criterios ){
+	        $json['status'] = 'success';
+	        $json['mensaje'] = 'OK';    
+	        $json['criterios'] = $criterios;
+	    } else {
+	        $json['status'] = 'error';
+	        $json['mensaje'] = $db->getLastError();;   
+	    }
+	break;
+
 		
 	default:
 		break;
-}
+endswitch;
 
 $json = json_encode($json);
 echo $json;

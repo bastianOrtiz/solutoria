@@ -1,7 +1,6 @@
 <?php
 
 if( $_POST ){
-
     
     switch ($_POST['action']) {
         case 'new_criterio_centrocosto':
@@ -76,6 +75,29 @@ if( $_POST ){
             redirect(BASE_URL . '/centralizacion/criterios-entidad/response/' . $response );
             exit();
             break;
+
+
+        case 'edit_criterio_entidad':
+
+            $data_update = [
+                'fk_empreid' => $_SESSION[PREFIX.'login_eid'],
+                'criterio' => $_POST['nombreCriterio'],
+                'DH' => $_POST['dh'],
+                'ctacont' => $_POST['cuentaContable'],
+                'nombre_cta' => $_POST['nombreCuentaContable'],
+                'id_entidad' => $_POST['entidad'],
+                'tabla_entidad' => $_POST['tablaEntidad']
+            ];
+            $db->where('id',$_POST['regid']);
+            $db->update('c_crixentidad',$data_update);
+
+            logit( $_SESSION[PREFIX.'login_name'],'editar','criterio x entidad',$_POST['regid'],$db->getLastQuery() );
+        
+            $response = encrypt('status=success&mensaje=El registro se ha editado correctamente&id='.$_POST['regid']);
+            redirect(BASE_URL . '/centralizacion/criterios-entidad/response/' . $response );
+            exit();
+
+            break;
         
 
         case 'new_criterio_idividual';
@@ -102,14 +124,37 @@ if( $_POST ){
             break;
         
 
+        case 'edit_criterio_idividual';
+            $data_update = [
+                'fk_empreid' => $_SESSION[PREFIX.'login_eid'],
+                'criterio' => $_POST['nombreCriterio'],
+                'DH' => $_POST['dh'],
+                'ctacont' => $_POST['cuentaContable'],
+                'nombre_cta' => $_POST['nombreCuentaContable'],
+            ];
+
+            $db->where('id',$_POST['regid']);
+            $db->update('c_crixindividual',$data_update);
+
+            logit( $_SESSION[PREFIX.'login_name'],'editar','criterio x individual',$_POST['regid'],$db->getLastQuery() );
+        
+            $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$_POST['regid']);            
+            redirect(BASE_URL . '/centralizacion/criterios-individual/response/' . $response );
+            exit();
+            break;
+        
+
+
+
         case 'new_malla_liq':
-            
+
             foreach ($_POST['campos'] as $campo) {
                 $data_insert = [
                     'fk_empreid' => $_SESSION[PREFIX.'login_eid'],
                     'origen' => $_POST['origenMalla'],
                     'campo' => $campo,
-                    'tipo_criterio' => $_POST['tipoCriterioMalla']
+                    'tipo_criterio' => $_POST['tipoCriterioMalla'],
+                    'fk_criterioid' => $_POST['criterioMalla']
                 ];
                 $create_id = $db->insert('c_mallaliq',$data_insert);
                 logit( $_SESSION[PREFIX.'login_name'],'agregar','Malla liquidacion',$create_id,$db->getLastQuery() );
@@ -117,6 +162,25 @@ if( $_POST ){
 
             
             $response = encrypt('status=success&mensaje=Los registros se han creado correctamente&id='.null);
+            redirect(BASE_URL . '/centralizacion/malla-liquidacion-list/response/' . $response );
+            exit(); 
+
+            break;
+
+
+        case 'eliminar_malla_batch':
+
+            $in = '';
+            foreach ($_POST['batch'] as $id) {
+                $in .= $id . ',';
+                logit( $_SESSION[PREFIX.'login_name'],'Eliminar','Malla liquidacion',$id,$db->getLastQuery() );
+            }  
+            $in = trim($in,',');
+
+            $sql = "DELETE FROM c_mallaliq WHERE id IN ($in)";
+            $db->rawQuery($sql);
+            
+            $response = encrypt('status=success&mensaje=Los registros se han eliminado correctamente&id='.null);
             redirect(BASE_URL . '/centralizacion/malla-liquidacion-list/response/' . $response );
             exit(); 
 

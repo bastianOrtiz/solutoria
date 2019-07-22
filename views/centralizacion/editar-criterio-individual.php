@@ -8,7 +8,7 @@
     <section class="content">
         <form role="form" id="frmCrear" method="post">
             <input type="hidden" name="action" value="edit_criterio_idividual" />
-            <input type="hidden" name="idEmpresa" value="<?php echo $_SESSION[PREFIX.'login_eid'] ?>" />
+            <input type="hidden" name="regid" value="<?php echo $parametros[2] ?>" />
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Datos del Criterio</h3>
@@ -24,7 +24,7 @@
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label for="nombreCriterio">Nombre del Criterio</label>
-                                <input type="text" class="form-control required" name="nombreCriterio" placeholder="Nombre Criterio" required />
+                                <input type="text" class="form-control required" name="nombreCriterio" placeholder="Nombre Criterio" value="<?php echo $criterio['criterio'] ?>" required />
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -35,6 +35,7 @@
                                     <option value="d">Debe</option>
                                     <option value="h">Haber</option>
                                 </select>
+                                <script> $("[name=dh]").val('<?php echo $criterio['DH'] ?>') </script>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -405,6 +406,7 @@
                                     <option value="62"> COSTO VENTA DIV. INGENIERIA</option>
                                     <option value="976">    PROYECTO - GERIATRICO</option>
                                 </select>
+                                <script> $("[name=cuentaContable]").val('<?php echo $criterio['ctacont'] ?>') </script>
                             </div>
                         </div>
                     </div>
