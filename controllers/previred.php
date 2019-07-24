@@ -14,9 +14,7 @@ if( $_POST ){
 }
 
 if( $parametros ){
-    $var = sqlAusencia();
-    show_array($var);
-    show_array(insidencias("apv",120));
+    show_array(tipoSalud(1));
     $empleados = buscarEmpleados($id_empresa); 
     $periodoDesde = date("m").date("Y"); 
     $periodoHasta = date("m").date("Y"); 
