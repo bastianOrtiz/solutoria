@@ -6,9 +6,9 @@
         <?php include ROOT . '/views/comun/alertas.php';  ?>
     </section>
     <section class="content">
-        <?php show_array($criterio,0); ?>
         <form role="form" id="frmCrear" method="post">
             <input type="hidden" name="action" value="edit_criterio_entidad" />
+            <input type="hidden" name="regid" value="<?php echo $parametros[2] ?>" />
             <div class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title">Datos del Criterio</h3>
