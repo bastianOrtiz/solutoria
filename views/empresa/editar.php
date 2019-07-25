@@ -197,6 +197,18 @@
                                 <?php } ?>
                             </select>
                             <script> $("#tipoAusenciaVacaciones").val('<?php echo $empresa['ausenciaVacaciones'] ?>'); </script>                          
+                        </div> 
+
+
+                        <div class="form-group">
+                          <label for="institucionAseguradora">Institución Aseguradora</label>
+                          <select class="form-control" id="institucionAseguradora" name="institucionAseguradora" required>
+                              <option value="">Seleccione</option>
+                              <?php foreach( $instituciones_aseguradoras as $aus ){ ?>
+                              <option value="<?php echo $aus['id'] ?>"><?php echo $aus['nombre'] ?></option>
+                              <?php } ?>
+                          </select>
+                          <script> $("#institucionAseguradora").val('<?php echo $empresa['mutual_id'] ?>'); </script>                          
                         </div>                                                
                         
                     </div>

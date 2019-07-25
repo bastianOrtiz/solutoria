@@ -1334,6 +1334,11 @@ function mainMenu(){
                 'entidad' => 'institucion',
                 'accion' => 'listar',
                 'label' => 'Institución APV'
+            ),
+            array(
+                'entidad' => 'mutual',
+                'accion' => 'listar',
+                'label' => 'Inst. de Seguridad'
             )
         )
     );

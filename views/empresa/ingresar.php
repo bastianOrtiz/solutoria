@@ -183,6 +183,16 @@
                                     <?php } ?>
                                 </select>                                                          
                             </div>
+
+                            <div class="form-group">
+                              <label for="institucionAseguradora">Institución Aseguradora</label>
+                              <select class="form-control" id="institucionAseguradora" name="institucionAseguradora" required>
+                                  <option value="">Seleccione</option>
+                                  <?php foreach( $instituciones_aseguradoras as $aus ){ ?>
+                                  <option value="<?php echo $aus['id'] ?>"><?php echo $aus['nombre'] ?></option>
+                                  <?php } ?>
+                              </select>
+                            </div> 
                             
                                                                              
                         </div>  

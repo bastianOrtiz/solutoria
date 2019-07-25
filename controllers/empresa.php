@@ -175,6 +175,8 @@ if( $parametros ){
     $umbral = explode(":",$umbral);    
     $umbralHora = $umbral[0];
     $umbralMinuto = $umbral[1];
+
+    $instituciones_aseguradoras = $db->get('m_mutual');
     
 }
 
