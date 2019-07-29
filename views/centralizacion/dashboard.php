@@ -17,7 +17,10 @@
                 Criterios por Individual
             </a>
             <a href="<?php echo BASE_URL . '/' . $entity ?>/malla-liquidacion-list" class="btn btn-primary">
-                Malla Liquidaciones
+                Mallas Centralización
+            </a>
+            <a href="<?php echo BASE_URL . '/' . $entity ?>/centralizar" class="btn btn-primary">
+                Centralizar
             </a>
         </section>
         

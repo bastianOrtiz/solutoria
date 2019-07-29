@@ -1,5 +1,17 @@
 <?php
 
+
+function getTipoEntidad($tabla){
+	$arr = [
+		'm_afp' => 'AFP',
+		'm_isapre' => 'Isapre',
+		'm_institucion' => 'Instituciones Aseguradoras'
+	];
+
+	return $arr[$tabla];
+}
+
+
 function convertToName($entidad,$id_or_table){
 	$arr_entidades = [
 		'origen' => [

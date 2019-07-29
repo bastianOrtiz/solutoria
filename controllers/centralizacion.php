@@ -230,7 +230,51 @@ if( $parametros ){
         $criterio = $db->getOne('c_crixindividual');
     }
 
+    if( $parametros[0] == 'centralizar' ){
 
+        $mes = (int)getMesMostrarCorte();
+        $ano = (int)getAnoMostrarCorte();
+
+        $campos_get = [
+            'T.id as trabajador_id',
+            'T.rut',
+            'T.centrocosto_id',
+            'L.sueldoBase',
+            'L.gratificacion',
+            'L.diaLicencia',
+            'L.diaAusencia',
+            'L.totalImponible'
+        ];
+
+        $db->join("m_trabajador T", "L.trabajador_id = T.id");
+        $db->where('L.mes',6);
+        $db->where('L.ano',$ano);
+        $results = $db->get('liquidacion L',null,$campos_get);
+
+    }
+
+
+    if( $parametros[0] == 'totales_x_criterios' ){
+        
+        $array_data = [];
+
+        $crit_x_ccosto = $db->get('c_crixccostos');
+        $crit_x_entidad = $db->get('c_crixentidad');
+        $crit_x_individual = $db->get('c_crixindividual');
+
+
+        foreach ($crit_x_ccosto as $crixccosto) {
+            $db->where('fk_criterioid',$crixccosto['id']);
+            $campos = $db->get('c_mallaliq');
+            $array_data[] = [
+                'criterio' => $crixccosto['criterio'],
+                'centro_costo' => getNombre($crixccosto['id_ccosto'], 'm_centrocosto', true),
+                'campos' => $campos
+            ];
+        }
+
+
+    }
 
 }
 

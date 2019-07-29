@@ -11,7 +11,7 @@
             $array_reponse = fnParseResponse($parametros[ ( count($parametros) - 1 ) ]);
             ?>
             <div class="alert alert-<?php echo $array_reponse['status'] ?> alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> <h4>	<i class="icon fa fa-check"></i> Mensaje:</h4>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> <h4> <i class="icon fa fa-check"></i> Mensaje:</h4>
                 <?php echo $array_reponse['mensaje'] ?>. <?php if( $array_reponse['id'] ){ echo "ID: " . $array_reponse['id']; } ?>
             </div>
             <?php } ?> 
@@ -33,6 +33,10 @@
                         <div class="form-group">
                           <label for="nombreCentrocosto">Nombre</label>
                           <input type="text" class="form-control required" value="" id="nombreCentrocosto" name="nombreCentrocosto" placeholder="Nombre Centrocosto" />
+                        </div>                        
+                        <div class="form-group">
+                          <label for="nombreCortoCentrocosto">Nombre Corto</label>
+                          <input type="text" class="form-control required" value="" id="nombreCortoCentrocosto" name="nombreCortoCentrocosto"  maxlength="3" placeholder="Nombre Corto" />
                         </div>                        
                       </div><!-- /.box-body -->
     

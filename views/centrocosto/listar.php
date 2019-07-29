@@ -11,7 +11,7 @@
             $array_reponse = fnParseResponse($parametros[ ( count($parametros) - 1 ) ]);
             ?>          
             <div class="alert alert-<?php echo $array_reponse['status'] ?> alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> <h4>	<i class="icon fa fa-check"></i> Mensaje:</h4>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> <h4> <i class="icon fa fa-check"></i> Mensaje:</h4>
                 <?php echo $array_reponse['mensaje'] ?>. <?php if( $array_reponse['id'] ){ echo "ID: " . $array_reponse['id']; } ?>
             </div>
             <?php } ?> 
@@ -29,6 +29,7 @@
                       <tr>
                         <th> ID </th>
                         <th>Nombre</th>
+                        <th>Nombre Corto</th>
                         <th>Empresa</th>                        
                         <th> Opciones </th>
                       </tr>
@@ -38,6 +39,7 @@
                             <tr>
                                 <td> <?php echo $reg['id']?> </td>
                                 <td> <?php echo $reg['nombre']?> </td>
+                                <td> <?php echo $reg['nombre_corto']?> </td>
                                 <td> <?php echo fnNombreEmpresa($reg['empresa_id']) ?> </td>                                
                                 <td>
                                     <button class="btn btn-flat btn-info" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Detalles"> <i class="fa fa-search"></i> </button>
@@ -51,6 +53,7 @@
                       <tr>
                         <th> ID </th>
                         <th>Nombre</th>
+                        <th>Nombre Corto</th>
                         <th>Empresa</th>                        
                         <th> Opciones </th>
                       </tr>
@@ -118,18 +121,18 @@
         if( $(this).hasClass('btn-info') ){
             // Ajax pasando parametro regid.
             $.ajax({
-				type: "POST",
-				url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
-				data: 'regid=' + regid + '&action=detalle',
+                type: "POST",
+                url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+                data: 'regid=' + regid + '&action=detalle',
                 dataType: 'json',
                 beforeSend: function(){
                     $(".overlayer").show();
                 },
-				success: function (json) {
-				    if(json.status == 'success'){
-				        
+                success: function (json) {
+                    if(json.status == 'success'){
+                        
                         //LLenar el div con datos retornados por JSON
-				        $(".modal .modal-body").empty();
+                        $(".modal .modal-body").empty();
                         $.each(json.registros, function(k,v) {
                             html_iterante = '<div class="_contenedor">';                            
                             html_iterante += '      <span class="_label">'+k+'</span>';
@@ -143,12 +146,12 @@
                         //Mostrar el Modal, cargado
                         
                         $(".bs-example-modal-lg").modal('show');
-				    } else {
-				        alert(json.mensaje);                        
-				    }
-                    $(".overlayer").hide();                    		        
+                    } else {
+                        alert(json.mensaje);                        
+                    }
+                    $(".overlayer").hide();                                 
                 }
-			})                                    
+            })                                    
         }        
     })
     </script>

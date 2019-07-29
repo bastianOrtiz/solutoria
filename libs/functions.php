@@ -3,6 +3,53 @@
 
 
 
+/** 
+ * Retorna un numero en formato dinero 
+ *  
+ * @param (string) $var_sess, Nombre de la variable de session 
+ * @return (string) 
+ */ 
+function dinero($monto,$signo_peso=false){ 
+    $string = ( $signo_peso == true ) ? "$ " : ""; 
+    $string .= number_format($monto,0,',','.'); 
+ 
+    return $string; 
+} 
+ 
+ 
+/** 
+ * Retorna el nombre del centro de costo al que pertenece un trabajador 
+ *  
+ * @param (string) $var_sess, Nombre de la variable de session 
+ * @return (string) 
+ */ 
+function getCCosto($centrocosto_id,$acortar=true){ 
+    global $db; 
+ 
+    $db->where('id',$centrocosto_id); 
+    $ccosto = $db->getOne('m_centrocosto'); 
+     
+    if( $acortar ){ 
+        return $ccosto['nombre_corto']; 
+    } else{ 
+        return $ccosto['nombre']; 
+    } 
+} 
+ 
+ 
+ 
+/** 
+ * Retorna el valor de una variable de session 
+ *  
+ * @param (string) $var_sess, Nombre de la variable de session 
+ * @return (string) 
+ */ 
+function session($var_sess){ 
+    return $_SESSION[PREFIX.$var_sess]; 
+} 
+
+
+
 /**
  * Retorna "Haber" o "Descuento" segun caracter D o H
  * 
