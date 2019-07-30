@@ -47,7 +47,7 @@
                                 <td> <?php echo convertToName('origen',$reg['origen']); ?> </td>
                                 <td> <?php echo $reg['campo']; ?> </td>
                                 <td> <?php echo convertToName('tipo_criterio',$reg['tipo_criterio']); ?> </td>
-                                <td> <?php echo $registros_mallag['fk_criterioid']; ?> </td>
+                                <td> <?php echo getNombreCriterio($reg['fk_criterioid'], $reg['tipo_criterio']) ?> </td>
                                 <td class="text-center">
                                     <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>
                                 </td>
@@ -75,6 +75,27 @@
 </div>
 <!-- /.content-wrapper -->            
 <script>
+
+$(document).ready(function() {
+    var $chkboxes = $('.chk_batch');
+    var lastChecked = null;
+
+    $chkboxes.click(function(e) {
+        if (!lastChecked) {
+            lastChecked = this;
+            return;
+        }
+
+        if (e.shiftKey) {
+            var start = $chkboxes.index(this);
+            var end = $chkboxes.index(lastChecked);
+
+            $chkboxes.slice(Math.min(start,end), Math.max(start,end)+ 1).prop('checked', lastChecked.checked);
+        }
+
+        lastChecked = this;
+    });
+});
 
 $("#mallaList").submit(function(e){
     e.preventDefault();

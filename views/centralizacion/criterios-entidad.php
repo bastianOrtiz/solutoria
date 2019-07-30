@@ -45,7 +45,7 @@
                             <td> <?php echo getDebeHaber($reg['DH']); ?> </td>
                             <td> <?php echo $reg['nombre_cta']; ?> </td>
                             <td> <?php echo getNombre($reg['id_entidad'],$reg['tabla_entidad'], false); ?> </td>
-                            <td> <?php echo $reg['tabla_entidad']; ?> </td>
+                            <td> <?php echo getTipoEntidad($reg['tabla_entidad']); ?> </td>
                             <td>
                                 <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/<?php echo $action ?>/editar/<?php echo $reg['id'] ?>" class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </a>
                                 <button class="btn btn-xs btn-danger btnDelete" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>

@@ -33,6 +33,7 @@ if( $_POST ){
         $activo = $centrocostoActivo[0];
         $data = Array (
             "nombre" => $nombreCentrocosto,
+            "nombre_corto" => $nombreCortoCentrocosto,
             "empresa_id" => $_SESSION[ PREFIX . 'login_eid']
         );
 
@@ -65,6 +66,7 @@ if( $_POST ){
         
         $data = Array (
             "nombre" => $nombreCentrocosto,
+            "nombre_corto" => $nombreCortoCentrocosto,
             "empresa_id" => $_SESSION[ PREFIX . 'login_eid']
         );
         
