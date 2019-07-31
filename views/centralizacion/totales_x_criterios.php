@@ -25,7 +25,9 @@ tbody td{
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <?php show_array($array_data,0); ?>
+                <?php foreach ($array_data['crit_x_ccosto'] as $key => $value) { ?>
+                    <h3> <?php echo $value['criterio'] ?>: <?php echo dinero($value['subtotal'],true) ?> </h3>
+                <?php } ?>
             </div>
             <!-- /.box-body -->
         </div>

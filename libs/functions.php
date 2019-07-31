@@ -1608,6 +1608,11 @@ function mainMenu(){
                 'entidad' => 'centralizacion',
                 'accion' => 'malla-liquidacion-list',
                 'label' => 'Malla Liquidaciones'
+            ),
+            array(
+                'entidad' => 'centralizacion',
+                'accion' => 'centralizar',
+                'label' => 'Centralizar'
             )
         )
     );
