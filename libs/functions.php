@@ -1386,6 +1386,11 @@ function mainMenu(){
                 'entidad' => 'mutual',
                 'accion' => 'listar',
                 'label' => 'Inst. de Seguridad'
+            ),
+            array(
+                'entidad' => 'cajacompensacion',
+                'accion' => 'listar',
+                'label' => 'Cajas de compensación'
             )
         )
     );
