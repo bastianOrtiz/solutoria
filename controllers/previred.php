@@ -14,7 +14,6 @@ if( $_POST ){
 }
 
 if( $parametros ){
-    show_array(tipoSalud(1));
     $empleados = buscarEmpleados($id_empresa); 
     $periodoDesde = date("m").date("Y"); 
     $periodoHasta = date("m").date("Y"); 

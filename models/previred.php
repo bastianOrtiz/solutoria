@@ -614,9 +614,9 @@ function crearTxt($post){
             fwrite($fch, $forma_pago_apvi); // Grabas
             $tip_moneda = tipoMoneda($apvi['apv']['results'][0]['tipomoneda_id']);
             $val_moneda = valorMoneda($tip_moneda['id']);
-            $val_monto_apvi = $apvi['apv']['results'][0]['monto'] * $val_moneda['valor'];
-            $val_monto_sin_punto = str_replace(".","",$val_monto_apvi);/* No se remplaza el punto */
-            $cotizacion_apvi = rellenar($val_monto_sin_punto,8,'i');
+            $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda['valor']);
+            //$val_monto_sin_punto = str_replace(".","",$val_monto_apvi);/* No se remplaza el punto */
+            $cotizacion_apvi = rellenar($val_monto_apvi,8,'i');
             fwrite($fch, $cotizacion_apvi); // Grabas
             $cotizacion_depositos_convenidos = rellenar(0,8,'i');
             fwrite($fch, $cotizacion_depositos_convenidos); // Grabas
@@ -630,9 +630,9 @@ function crearTxt($post){
             fwrite($fch, $forma_pago_apvi); // Grabas
             $tip_moneda = tipoMoneda($apvi['apv']['results'][0]['tipomoneda_id']);
             $val_moneda = valorMoneda($tip_moneda['id']);
-            $val_monto_apvi = $apvi['apv']['results'][0]['monto'] * $val_moneda['valor'];
-            $val_monto_sin_punto = str_replace(".","",$val_monto_apvi);/* No se remplaza el punto */
-            $cotizacion_apvi = rellenar($val_monto_sin_punto,8,'i');
+            $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda['valor']);
+            //$val_monto_sin_punto = str_replace(".","",$val_monto_apvi);/* No se remplaza el punto */
+            $cotizacion_apvi = rellenar($val_monto_apvi,8,'i');
             fwrite($fch, $cotizacion_apvi); // Grabas
             $cotizacion_depositos_convenidos = rellenar(0,8,'i');
             fwrite($fch, $cotizacion_depositos_convenidos); // Grabas
@@ -684,6 +684,100 @@ function crearTxt($post){
         fwrite($fch, $monto_ahorro_voluntario); // Grabas
         $numero_periodos_cotizacion = rellenar(0,2,"i");
         fwrite($fch, $numero_periodos_cotizacion); // Grabas
+        $codigo_ex_caga_regimen = rellenar(0,4,"i");
+        fwrite($fch, $codigo_ex_caga_regimen); // Grabas
+        $tasa_cotizacion_ex_caja_prevision = rellenar(0,5,"i");
+        fwrite($fch, $tasa_cotizacion_ex_caja_prevision); // Grabas
+        $renta_imponible_ips = rellenar(0,8,"i");
+        fwrite($fch, $renta_imponible_ips); // Grabas
+        $cotizacion_obligatoria_ips = rellenar(0,8,"i");
+        fwrite($fch, $cotizacion_obligatoria_ips); // Grabas
+        $renta_imponible_desahucio = rellenar(0,8,"i");
+        fwrite($fch, $renta_imponible_desahucio); // Grabas
+        $codigo_ex_caja_regimen_desahucio = rellenar(0,4,"i");
+        fwrite($fch, $codigo_ex_caja_regimen_desahucio); // Grabas
+        $tasa_cotizacion_desahucio_excaja_prevision = rellenar(0,5,"i");
+        fwrite($fch, $tasa_cotizacion_desahucio_excaja_prevision); // Grabas
+        $cotizacion_desaucio = rellenar(0,8,"i");
+        fwrite($fch, $cotizacion_desaucio); // Grabas
+        $fonasa = tipoSalud($empleado["id"]);
+        if ($fonasa['isapre_id'] == 0) {
+            $cotizacion_fonasa = rellenar($fonasa['saludMonto'],8,"i");
+        }else{
+            $cotizacion_fonasa = rellenar(0,8,"i");
+        }
+        fwrite($fch, $cotizacion_fonasa); // Grabas
+        $cotizacion_acc_trabajo = rellenar(0,8,"i");
+        fwrite($fch, $cotizacion_acc_trabajo); // Grabas
+        $bonificacion_ley = rellenar(0,8,"i");
+        fwrite($fch, $bonificacion_ley); // Grabas
+        $descuento_x_cargas_familiares_isl = rellenar(0,8,"i");
+        fwrite($fch, $descuento_x_cargas_familiares_isl); // Grabas
+        $bonos_gobierno = rellenar(0,8,"i");
+        fwrite($fch, $bonos_gobierno); // Grabas
+        $salud = datosSalud($empleado["id"]);
+        $codigo_institucion_salud = rellenar($salud['codigo'],2,"i");
+        fwrite($fch, $codigo_institucion_salud); // Grabas
+        $numero_fun = rellenar("",16,"s");
+        fwrite($fch, $numero_fun); // Grabas
+        $renta = tipoSalud($empleado["id"]);
+        if ($renta['isapre_id'] == 0) {
+            $renta_imponible_isapre = rellenar(0,8,"i");
+        }else{
+            $renta_imponible_isapre = rellenar($renta['totalImponible'],8,"i");
+        }
+        fwrite($fch, $renta_imponible_isapre); // Grabas
+
+        $datos_salud_moneda = tipoSalud($empleado["id"]);
+        if ($datos_salud_moneda['isapre_id'] !== 0) {/* Si esta dentro de una Isapre */
+            $datos_sal_mon = monedaSalud($empleado["id"]);
+            if ($datos_sal_mon['tipo_moneda'] == 1) {
+                $tipo_moneda_isapre = rellenar($datos_sal_mon['tipo_moneda'],1,"i");
+                $red_cotizacion_pactada = round($datos_sal_mon['montoPlan']);
+                $cotizacion_pactada = rellenar($red_cotizacion_pactada,8,"i");
+
+                fwrite($fch, $tipo_moneda_isapre); // Grabas
+                fwrite($fch, $cotizacion_pactada); // Grabas
+            }else{
+                $tipo_moneda_isapre = rellenar($datos_sal_mon['tipo_moneda'],1,"i");
+                $red_cotizacion_pactada = round($datos_sal_mon['montoPlan']);
+                $cotizacion_pactada = rellenar($red_cotizacion_pactada,8,"i");
+
+                fwrite($fch, $tipo_moneda_isapre); // Grabas
+                fwrite($fch, $cotizacion_pactada); // Grabas
+            }
+
+            $liquidacion_isapre = liquidacion($empleado["id"]);
+            $round_cotizacion_obligatoria_isapre = round($liquidacion_isapre['cotizacion_obligatoria_isapre']);
+            $cotizacion_obligatoria_isapre = rellenar($round_cotizacion_obligatoria_isapre,8,"i");
+
+            $round_cotizacion_adicional_voluntaria = round($liquidacion_isapre['aporte_voluntario']);
+            $cotizacion_adicional_voluntaria = rellenar($round_cotizacion_adicional_voluntaria,8,"i");
+
+            fwrite($fch, $cotizacion_obligatoria_isapre); // Grabas
+            fwrite($fch, $cotizacion_adicional_voluntaria); // Grabas
+            
+        }else{
+            $tipo_moneda_isapre = rellenar(0,1,"i");
+            $cotizacion_pactada = rellenar(0,8,"i");
+            $cotizacion_obligatoria_isapre = rellenar(0,8,"i");
+            $cotizacion_adicional_voluntaria = rellenar(0,8,"i");
+
+            fwrite($fch, $tipo_moneda_isapre); // Grabas
+            fwrite($fch, $cotizacion_pactada); // Grabas
+            fwrite($fch, $cotizacion_obligatoria_isapre); // Grabas
+            fwrite($fch, $cotizacion_adicional_voluntaria); // Grabas
+        }
+
+        $monto_g_e_salud = rellenar(0,8,"i");
+        fwrite($fch, $monto_g_e_salud); // Grabas*/
+
+        $codigo_CCAF = rellenar(3,2,"i");
+        fwrite($fch, $codigo_CCAF); // Grabas*/
+
+        $imponible = liquidacion($empleado["id"]);
+        $renta_imponible_CCAF = rellenar($imponible['totalImponible'],8,"i");
+        fwrite($fch, $renta_imponible_CCAF); // Grabas*/
         /*------ Despues de todo ------*/
         fwrite($fch, PHP_EOL);
 
@@ -697,14 +791,102 @@ function crearTxt($post){
     exit();
 }
 
+function liquidacion ($trabajador_id, $mes = "", $ano = ""){
+    global $db;
+
+    if( $mes == '' ){
+        $mes = (int)getMesMostrarCorte();
+    }
+    if( $ano == '' ){
+        $ano = (int)getAnoMostrarCorte();
+    }
+
+    $db->where("trabajador_id", $trabajador_id);
+    $db->where("mes", $mes);
+    $db->where("ano", $ano);
+    //$db->where("apellidoPaterno","FARIAS");
+    $liquidacion = $db->getOne("liquidacion");
+    $cotizacion_obligatoria_isapre = ($liquidacion['totalImponible'] * 0.07);
+    $floor_cotizacion_obligatoria_isapre = floor($cotizacion_obligatoria_isapre);
+    $aporte_voluntario = ($liquidacion['saludMonto']-$floor_cotizacion_obligatoria_isapre);
+    $monto_imponible = $liquidacion['totalImponible'];
+
+    $datos_liquidacion = [];
+    $datos_liquidacion = [
+        'cotizacion_obligatoria_isapre' => $cotizacion_obligatoria_isapre,
+        'aporte_voluntario' => $aporte_voluntario,
+        'totalImponible' => $monto_imponible
+    ];
+
+    return $datos_liquidacion;
+}
+
+function monedaSalud($trabajador_id){
+    global $db;
+
+    $return_datos = [];
+
+    $db->where("trabajador_id", $trabajador_id);
+    $mon_salud = $db->getOne("t_prevision");
+
+    if ($mon_salud['isapre_id'] !== 0) {
+
+        $db->where("id", $mon_salud['tipomoneda_id']);
+        $db->where("empresa_id", $_SESSION[PREFIX.'login_eid']);
+        $tipo_mon = $db->getOne("m_tipomoneda");
+
+        $return_datos = [
+            'tipo_moneda' => $tipo_mon['id'],
+            'montoPlan' => $mon_salud['montoPlan']
+        ];
+    }
+    return $return_datos;
+}
+
 function tipoSalud($trabajador_id){
     global $db;
 
     $db->where("trabajador_id", $trabajador_id);
-    //$db->where("apellidoPaterno","FARIAS");
-    $tipo_moneda = $db->getOne("t_prevision");
+    $tipo_salud = $db->getOne("t_prevision");
 
-    return $tipo_moneda;
+    if ($tipo_salud['fonosa'] == 1) {
+
+        $db->where("trabajador_id", $trabajador_id);
+        $liquidacion_fonasa = $db->getOne("liquidacion");
+        return $liquidacion_fonasa;
+
+    }elseif ($tipo_salud['isapre_id'] !== 0) {
+
+        $db->where("trabajador_id", $trabajador_id);
+        $db->where("isapre_id", $tipo_salud['isapre_id']);
+        $liquidacion_isapre = $db->getOne("liquidacion");
+        return $liquidacion_isapre;
+    }
+}
+
+function datosSalud($trabajador_id){
+    global $db;
+
+    $db->where("trabajador_id", $trabajador_id);
+    $tipo_salud = $db->getOne("t_prevision");
+
+    if ($tipo_salud['fonosa'] == 1) {
+        $institucion = [];
+
+        $institucion = [
+            'id' => 0,
+            'nombre' => 'fonasa',
+            'codigo' => 07,
+            'activo' => 0
+        ];
+        return $institucion;
+
+    }elseif ($tipo_salud['isapre_id'] !== 0) {
+
+        $db->where("id", $tipo_salud['isapre_id']);
+        $institucion = $db->getOne("m_isapre");
+        return $institucion;
+    }
 }
 
 function tipoMoneda($tipomoneda_id){
