@@ -8,6 +8,7 @@
     <section class="content">
         <form method="post" id="mallaList">
             <input type="hidden" name="action" value="eliminar_malla_batch">
+            <input type="hidden" name="malla_id" value="">
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Registros</h3>
@@ -49,7 +50,7 @@
                                 <td> <?php echo convertToName('tipo_criterio',$reg['tipo_criterio']); ?> </td>
                                 <td> <?php echo getNombreCriterio($reg['fk_criterioid'], $reg['tipo_criterio']) ?> </td>
                                 <td class="text-center">
-                                    <button class="btn btn-xs btn-danger" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>
+                                    <button class="btn btn-xs btn-danger btnEliminar" type="button" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>
                                 </td>
                             </tr>
                             <?php } ?>                        
@@ -96,6 +97,16 @@ $(document).ready(function() {
         lastChecked = this;
     });
 });
+
+$(".btnEliminar").click(function(e){
+    e.preventDefault();
+    malla_id = $(this).data('regid');
+    if( confirm('¿Desea elminar el registro seleccionado?') ){
+        $("[name=action]").val('eliminar_one');
+        $("[name=malla_id]").val(malla_id);
+        $("#mallaList")[0].submit();
+    }
+})
 
 $("#mallaList").submit(function(e){
     e.preventDefault();

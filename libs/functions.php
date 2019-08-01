@@ -1386,6 +1386,11 @@ function mainMenu(){
                 'entidad' => 'mutual',
                 'accion' => 'listar',
                 'label' => 'Inst. de Seguridad'
+            ),
+            array(
+                'entidad' => 'cajacompensacion',
+                'accion' => 'listar',
+                'label' => 'Cajas de compensación'
             )
         )
     );
@@ -1608,6 +1613,11 @@ function mainMenu(){
                 'entidad' => 'centralizacion',
                 'accion' => 'malla-liquidacion-list',
                 'label' => 'Malla Liquidaciones'
+            ),
+            array(
+                'entidad' => 'centralizacion',
+                'accion' => 'centralizar',
+                'label' => 'Centralizar'
             )
         )
     );

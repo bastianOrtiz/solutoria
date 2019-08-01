@@ -1,7 +1,7 @@
 <?php
 
 if( $_POST ){
-    
+
     switch ($_POST['action']) {
         case 'new_criterio_centrocosto':
 
@@ -187,6 +187,18 @@ if( $_POST ){
             break;
 
 
+        case 'eliminar_one':
+
+            $db->where('id',$_POST['malla_id']);
+            $db->delete('c_mallaliq');
+            
+            $response = encrypt('status=success&mensaje=Registros eliminado correctamente&id='.null);
+            redirect(BASE_URL . '/centralizacion/malla-liquidacion-list/response/' . $response );
+            exit(); 
+
+            break;
+
+
         default:
             break;
     }
@@ -194,6 +206,10 @@ if( $_POST ){
 }
 
 if( $parametros ){
+
+    //$mes = (int)getMesMostrarCorte();
+    $mes = 6;
+    $ano = (int)getAnoMostrarCorte();
         
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
     $ccostos = $db->get('m_centrocosto');
@@ -232,9 +248,6 @@ if( $parametros ){
 
     if( $parametros[0] == 'centralizar' ){
 
-        $mes = (int)getMesMostrarCorte();
-        $ano = (int)getAnoMostrarCorte();
-
         $campos_get = [
             'T.id as trabajador_id',
             'T.rut',
@@ -247,8 +260,9 @@ if( $parametros ){
         ];
 
         $db->join("m_trabajador T", "L.trabajador_id = T.id");
-        $db->where('L.mes',6);
+        $db->where('L.mes',$mes);
         $db->where('L.ano',$ano);
+        $db->where('T.empresa_id',session('login_eid'));
         $results = $db->get('liquidacion L',null,$campos_get);
 
     }
@@ -256,6 +270,7 @@ if( $parametros ){
 
     if( $parametros[0] == 'totales_x_criterios' ){
         
+        $tables_not_liq = ['l_haber','l_descuento','l_apv'];
         $array_data = [];
 
         $crit_x_ccosto = $db->get('c_crixccostos');
@@ -266,12 +281,39 @@ if( $parametros ){
         foreach ($crit_x_ccosto as $crixccosto) {
             $db->where('fk_criterioid',$crixccosto['id']);
             $campos = $db->get('c_mallaliq');
-            $array_data[] = [
+
+            $subtotal = 0;
+            foreach ($campos as $key => $campo) {
+                if( !in_array($campo['origen'],$tables_not_liq) ){
+                    $sql = "
+                    SELECT SUM(SRC.". $campo['campo'] .") AS tot FROM ". $campo['origen'] ." SRC
+                    WHERE SRC.mes = $mes
+                    AND SRC.ano = $ano
+                    AND SRC.empresa_id = ".session('login_eid')."
+                    ";
+                } else {
+                    $sql = "
+                    SELECT SUM(".$campo['origen']. "." . $campo['campo'] .") AS tot FROM ". $campo['origen'] .", liquidacion SRC
+                    WHERE SRC.mes = $mes
+                    AND SRC.ano = $ano
+                    AND SRC.empresa_id = ".session('login_eid')."
+                    AND ".$campo['origen'].".liquidacion_id = SRC.id
+                    ";
+                }
+
+                $result = $db->rawQuery($sql);
+                $subtotal += $result[0]['tot'];
+
+            }
+
+            $array_data['crit_x_ccosto'][] = [
                 'criterio' => $crixccosto['criterio'],
                 'centro_costo' => getNombre($crixccosto['id_ccosto'], 'm_centrocosto', true),
-                'campos' => $campos
+                'centro_costo_id' => $crixccosto['id_ccosto'],
+                'subtotal' => $subtotal
             ];
         }
+
 
 
     }
