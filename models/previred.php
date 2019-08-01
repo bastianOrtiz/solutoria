@@ -504,19 +504,19 @@ function crearTxt($post){
         }else{
             $codigo_movimiento = rellenar($movimientos[0]["codigo_movimiento"],2,"i");
             fwrite($fch, $codigo_movimiento); // Grabas
-            if ($$movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
-                $fecha_formateada_inicio = rellenar($$movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
+            if ($movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
+                $fecha_formateada_inicio = rellenar($movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
             }else{
-                $separador_fecha_inicio = explode("-",$$movimientos[0]["fechas_limites"]["fecha_inicio"]);
+                $separador_fecha_inicio = explode("-",$movimientos[0]["fechas_limites"]["fecha_inicio"]);
                 $fecha_formateada_inicio = $separador_fecha_inicio[2]."-".$separador_fecha_inicio[1]."-".$separador_fecha_inicio[0];
                 $fecha_formateada_inicio = rellenar($fecha_formateada_inicio,10,"s");
             }
             fwrite($fch, $fecha_formateada_inicio); // Grabas
 
-            if ($$movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
-                $fecha_formateada_fin = rellenar($$movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
+            if ($movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
+                $fecha_formateada_fin = rellenar($movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
             }else{
-                $separador_fecha_fin = explode("-",$$movimientos[0]["fechas_limites"]["fecha_fin"]);
+                $separador_fecha_fin = explode("-",$movimientos[0]["fechas_limites"]["fecha_fin"]);
                 $fecha_formateada_fin = $separador_fecha_fin[2]."-".$separador_fecha_fin[1]."-".$separador_fecha_fin[0];
                 $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
             }
