@@ -1292,10 +1292,12 @@ if( $parametros[0] == 'imposiciones' ){
         $int_fecha_fin_licencia = explode("-",$licencia['fecha_fin']);
         $int_fecha_fin_licencia = $int_fecha_fin_licencia[0].$int_fecha_fin_licencia[1].$int_fecha_fin_licencia[2];
         
-        $int_fecha_inicio_informe = getAnoMostrarCorte().getMesMostrarCorte().'01';
+        $int_fecha_inicio_informe = getAnoMostrarCorte().leadZero(getMesMostrarCorte()).'01';
         
-        $int_fecha_fin_informe = getAnoMostrarCorte().getMesMostrarCorte().getLimiteMes((int)getMesMostrarCorte());
+        $int_fecha_fin_informe = getAnoMostrarCorte().leadZero(getMesMostrarCorte()).getLimiteMes((int)getMesMostrarCorte());
         
+
+
         if( $int_fecha_fin_licencia < $int_fecha_inicio_informe ){
         } elseif ($int_fecha_inicio_licencia > $int_fecha_fin_informe) {
         } elseif ( $int_fecha_inicio_licencia >= $int_fecha_inicio_informe && $int_fecha_fin_licencia <= $int_fecha_fin_informe ) {
