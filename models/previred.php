@@ -772,12 +772,29 @@ function crearTxt($post){
         $monto_g_e_salud = rellenar(0,8,"i");
         fwrite($fch, $monto_g_e_salud); // Grabas*/
 
-        $codigo_CCAF = rellenar(3,2,"i");
+        $ccaf = CCAF();
+        $cod_ccaf = $ccaf['codigo'];
+        $codigo_CCAF = rellenar($cod_ccaf,2,"i");
         fwrite($fch, $codigo_CCAF); // Grabas*/
 
         $imponible = liquidacion($empleado["id"]);
         $renta_imponible_CCAF = rellenar($imponible['totalImponible'],8,"i");
         fwrite($fch, $renta_imponible_CCAF); // Grabas*/
+
+      /* esta variable hasta */  
+        $credito_personales_ccaf = rellenar(0,8,"i");
+        fwrite($fch, $credito_personales_ccaf); // Grabas*/
+
+        /* esta variable, termina los CCAF */
+        $m_mutual = mutualidad();
+        $cod_mutual = $m_mutual['codigo'];
+        $codigo_mutual = rellenar($cod_mutual,2,"i");
+        fwrite($fch, $codigo_mutual); // Grabas*/
+
+        $renta_imponible_mutual = rellenar($imponible['totalImponible'],8,"i");
+        fwrite($fch, $renta_imponible_mutual); // Grabas*/
+
+
         /*------ Despues de todo ------*/
         fwrite($fch, PHP_EOL);
 
@@ -789,6 +806,57 @@ function crearTxt($post){
     header('Content-Disposition: attachment; filename="previred.txt"');
     readfile($archivo);
     exit();
+}
+
+function mutualidad(){
+    global $db;
+
+    $db->join("m_empresa", "m_mutual.id=m_empresa.mutual_id");
+    $db->where("m_empresa.id", session('login_eid'));
+    $result = $db->getOne("m_mutual");
+
+    return $result;
+
+}
+
+function CCAF (){
+    global $db;
+
+    $db->join("m_empresa", "m_cajacompensacion.id=m_empresa.cajacompensacion_id");
+    $db->where("m_empresa.id", session('login_eid'));
+    $result = $db->getOne("m_cajacompensacion","m_cajacompensacion.codigo, m_cajacompensacion.nombre");
+    return $result;
+    
+}
+
+function descuentosCCAF($trabajador_id, $mes = "", $ano = ""){
+    global $db;
+
+    if( $mes == '' ){
+        $mes = (int)getMesMostrarCorte();
+    }
+    if( $ano == '' ){
+        $ano = (int)getAnoMostrarCorte();
+    }
+
+    $db->where("ccaf_id",0,">");
+    $db->where("empresa_id", session('login_eid'));
+    $ids = $db->get("m_descuento",null,"id");
+
+    $ids_sql_descuentosCCAF = [];
+
+    foreach ($ids as $result) {
+        $ids_sql_descuentosCCAF[] = $result['id'];
+    }
+
+    $db->join("l_descuento", "liquidacion.id=l_descuento.liquidacion_id");
+    $db->where("liquidacion.mes", $mes);
+    $db->where("liquidacion.ano", $ano);
+    $db->where("liquidacion.trabajador_id", $trabajador_id);
+    $db->where('l_descuento.descuento_id', $ids_sql_descuentosCCAF, 'IN');
+    $results = $db->get("l_descuento");
+    show_array($db->getLastQuery());
+
 }
 
 function liquidacion ($trabajador_id, $mes = "", $ano = ""){
