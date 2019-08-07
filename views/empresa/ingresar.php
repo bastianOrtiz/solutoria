@@ -193,6 +193,16 @@
                                   <?php } ?>
                               </select>
                             </div> 
+
+                            <div class="form-group">
+                              <label for="cajaCompensacion">Caja de compensación</label>
+                              <select class="form-control" id="cajaCompensacion" name="cajaCompensacion" required>
+                                  <option value="">Seleccione</option>
+                                  <?php foreach( $cajas as $caja ){ ?>
+                                  <option value="<?php echo $caja['id'] ?>"><?php echo $caja['nombre'] ?></option>
+                                  <?php } ?>
+                              </select>
+                            </div>
                             
                                                                              
                         </div>  

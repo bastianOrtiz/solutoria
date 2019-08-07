@@ -68,10 +68,11 @@ if( $_POST ){
             "representante" => $representante,
             "rut_representante" => $rut_representante,
             "comuna_id" => $empresaComuna,
-            "cuenta_id" => $_SESSION[ PREFIX . 'login_cid']
+            "cuenta_id" => $_SESSION[ PREFIX . 'login_cid'],
+            "mutual_id" => $institucionAseguradora,
+            "cajacompensacion_id" => $cajaCompensacion
         );
-                
-                
+      
         
         if( $_FILES['logoEmpresa']['name'] != "" ){
             $return = upload_image('logoEmpresa', ROOT . '/private/uploads/images/');            
@@ -137,7 +138,9 @@ if( $_POST ){
                 "representante" => $representante,
                 "rut_representante" => $rut_representante,
                 "comuna_id" => $empresaComuna,
-                "cuenta_id" => $_SESSION[ PREFIX . 'login_cid']
+                "cuenta_id" => $_SESSION[ PREFIX . 'login_cid'],
+                "mutual_id" => $institucionAseguradora,
+                "cajacompensacion_id" => $cajaCompensacion
             );
             
             $create_id = crearEmpresa($data);
@@ -177,6 +180,7 @@ if( $parametros ){
     $umbralMinuto = $umbral[1];
 
     $instituciones_aseguradoras = $db->get('m_mutual');
+    $cajas = $db->get('m_cajacompensacion');
     
 }
 
