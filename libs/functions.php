@@ -1391,6 +1391,11 @@ function mainMenu(){
                 'entidad' => 'cajacompensacion',
                 'accion' => 'listar',
                 'label' => 'Cajas de compensación'
+            ),
+            array(
+                'entidad' => 'pagalicencia',
+                'accion' => 'listar',
+                'label' => 'Entidades pagadoras Licencias'
             )
         )
     );

@@ -72,8 +72,7 @@ if( $_POST['action'] == 'buscarlive' ){
     }        
 }
 
-if( $_POST['action'] == 'valida_relojcontrol_id' ){        
-    $db->setTrace(1);
+if( $_POST['action'] == 'valida_relojcontrol_id' ){
     $db->where ("relojcontrol_id", $relojid);
     $db->where ("empresa_id", $_SESSION[PREFIX.'login_eid']);
     $existe = $db->getValue("m_trabajador", 'relojcontrol_id');        
@@ -84,6 +83,27 @@ if( $_POST['action'] == 'valida_relojcontrol_id' ){
     } else {
         $json['exist'] = 'FALSE';        
     }
+}
+
+
+if( $_POST['action'] == 'get_if_licencia' ){
+    $db->where ("id", $_POST['idMotivo']);
+    $db->where ("licencia", 1);
+    $db->where ("empresa_id", $_SESSION[PREFIX.'login_eid']);
+    $esLicencia = $db->getValue("m_ausencia", 'licencia');        
+    
+    $entidades = $db->get('m_pagalicencia');
+
+    $json['sql'] = $db->getLastQuery();
+    if ($db->count > 0){        
+        $json['es_licencia'] = 'TRUE';        
+        $json['entidades'] = $entidades;
+    } else {
+        $json['es_licencia'] = 'FALSE'; 
+        $json['entidades'] = '';       
+    }
+
+    
 }
 
 
@@ -166,7 +186,8 @@ if( $action == 'add_ausencia' ){
         "fecha_inicio" => $fechaAusenciaInicio,            
         "fecha_fin" => $fechaAusenciaFin,        
         "ausencia_id" => $motivoAusencia,
-        "trabajador_id" => $regid_ausencias
+        "trabajador_id" => $regid_ausencias,
+        "pagalicencia_id" => $pagadora_licencia
     );
         
     $last_id = $db->insert('t_ausencia' , $data);    
