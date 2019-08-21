@@ -10,6 +10,7 @@ if( $_POST ){
     if( @$_POST['action'] == 'edit' ){        
         $data = Array (
             "nombre" => $nombreIsapre,
+            "rut" => $rutIsapre,
             "codigo" => $codigoIsapre,
             "activo" => $estadoIsapre
         );
@@ -41,6 +42,7 @@ if( $_POST ){
     if( @$_POST['action'] == 'new' ){        
         $data = Array (
             "nombre" => $nombreIsapre,
+            "rut" => $rutIsapre,
             "codigo" => $codigoIsapre,
             "activo" => $estadoIsapre
         );

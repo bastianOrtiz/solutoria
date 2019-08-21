@@ -34,6 +34,10 @@
                         <div class="form-group">
                           <label for="nombreIsapre">Nombre</label>
                           <input type="text" class="form-control required" value="<?php echo $isapre['nombre'] ?>" id="nombreIsapre" name="nombreIsapre" placeholder="Nombre Isapre" />
+                        </div>
+                        <div class="form-group">
+                          <label for="rutIsapre">RUT</label>
+                          <input type="text" class="form-control required" value="<?php echo $isapre['rut'] ?>" id="rutIsapre" name="rutIsapre" placeholder="RUT Isapre" required />
                         </div>  
                           <div class="form-group">
                           <label for="codigoIsapre">Código Previred</label>

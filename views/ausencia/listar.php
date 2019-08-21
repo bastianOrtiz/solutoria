@@ -31,6 +31,7 @@
                         <th>Nombre</th>                        
                         <th>Descuenta</th>
                         <th>Es licencia</th>                                                
+                        <th>Cod. Previred</th>
                         <th> Opciones </th>
                       </tr>
                     </thead>
@@ -41,6 +42,7 @@
                                 <td> <?php echo $reg['nombre']?> </td>
                                 <td> <?php echo booleano($reg['descuenta']) ?> </td>
                                 <td> <?php echo booleano($reg['licencia']) ?> </td>                                                                
+                                <td> <?php echo $reg['codigoPrevired'] ?> </td>                                                                
                                 <td>                                      
                                     <button class="btn btn-flat btn-info" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Detalles"> <i class="fa fa-search"></i> </button>
                                     <button class="btn btn-flat btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
@@ -54,7 +56,8 @@
                         <th> ID </th>
                         <th>Nombre</th>                        
                         <th>Descuenta</th>   
-                        <th>Es licencia</th>                                             
+                        <th>Es licencia</th>
+                        <th>Cod. Previred</th>                                            
                         <th> Opciones </th>
                       </tr>
                     </tfoot>

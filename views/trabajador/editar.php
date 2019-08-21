@@ -1876,15 +1876,7 @@
                                                                                 &nbsp; 
                                                                                 <i class="fa fa-info-circle info_ausencias" data-toggle="tooltip" title="Se cuenta el total de dias, independiente del corte"></i>
                                                                             </td>
-                                                                            <td>
-                                                                                <select class="form-control cbo_justificativo_" id="cbo_justificativo_<?php echo $at['id'] ?>" data-id-ausencia-trabajador="<?php echo $at['id'] ?>">
-                                                                                    <option value="">Seleccione</option>
-                                                                                    <?php foreach( $ausencias as $j ){ ?>
-                                                                                    <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
-                                                                                    <?php } ?>
-                                                                                </select>
-                                                                                <script>$("#cbo_justificativo_<?php echo $at['id'] ?>").val('<?php echo $at['ausencia_id'] ?>');</script>
-                                                                            </td>
+                                                                            <td> <?php echo $at['ausencia_id'] . getNombre($at['ausencia_id'], 'm_ausencia', false) ?> </td>
                                                                             <td> <button data-id="<?php echo $at['id'] ?>" type="button" id="delete_from_list" class="delete_ausencia_trabajador btn btn-xs btn-default"><i class="fa fa-trash"></i></button> </td>
                                                                         </tr>
                                                                         <?php
@@ -1905,15 +1897,7 @@
                                                                                 &nbsp; 
                                                                                 <i class="fa fa-info-circle info_ausencias" data-toggle="tooltip" title="Se cuenta el total de dias, independiente del corte"></i>
                                                                             </td>
-                                                                            <td>
-                                                                                <select class="form-control cbo_justificativo_" id="cbo_justificativo_<?php echo $lic['id'] ?>" data-id-ausencia-trabajador="<?php echo $lic['id'] ?>">
-                                                                                    <option value="">Seleccione</option>
-                                                                                    <?php foreach( $ausencias as $j ){ ?>
-                                                                                    <option value="<?php echo $j['id'] ?>"><?php echo $j['nombre'] ?></option>
-                                                                                    <?php } ?>
-                                                                                </select>
-                                                                                <script>$("#cbo_justificativo_<?php echo $lic['id'] ?>").val('<?php echo $lic['ausencia_id'] ?>');</script>
-                                                                            </td>
+                                                                            <td><?php echo $at['ausencia_id'] .  getNombre($at['ausencia_id'], 'm_ausencia', false) ?> </td>
                                                                             <td> <button data-id="<?php echo $lic['id'] ?>" type="button" id="delete_from_list" class="delete_ausencia_trabajador btn btn-xs btn-default"><i class="fa fa-trash"></i></button> </td>
                                                                         </tr>
                                                                         <?php
@@ -2185,9 +2169,19 @@
                         html = '<label for="pagadora_licencia">Entidad Pagadora de Licencia</label>';
                         html += '<select class="form-control required" name="pagadora_licencia" id="pagadora_licencia">';
                         html += '<option value="">Seleccione</option>';
+                        html += '<optgroup label="Entidades pagadoras">';
                         $.each(json.entidades,function(k,entidad){
-                            html += '<option value="'+ entidad.id +'">'+ entidad.nombre +'</option>';
+                            html += '<option value="'+ entidad.codigo +'">'+ entidad.nombre +'</option>';
                         })
+
+                        html += '</optgroup>';
+                        html += '<optgroup label="Isapres">';
+                        $.each(json.isapres,function(k,isapre){
+                            html += '<option value="'+ isapre.codigo +'">'+ isapre.nombre +'</option>';
+                        })
+                        html += '</optgroup>';
+
+
                         html += '</select>';
                         $("#pagadoras").html(html);
                     } else {

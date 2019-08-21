@@ -28,6 +28,7 @@
                       <tr>
                         <th> ID </th>
                         <th>Nombre</th>
+                        <th>RUT</th>
                         <th>Codigo Previred</th>
                         <th> Opciones </th>
                       </tr>
@@ -37,6 +38,7 @@
                             <tr>
                                 <td> <?php echo $reg['id']?> </td>
                                 <td> <?php echo $reg['nombre']?> </td>
+                                <td> <?php echo $reg['rut']?> </td>
                                 <td> <?php echo $reg['codigo']?> </td>
                                 <td>                                                                        
                                     <button class="btn btn-flat btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
@@ -45,14 +47,7 @@
                             </tr>
                         <?php } ?>                        
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <th> ID </th>
-                        <th>Nombre</th>
-                        <th>Codigo Previred</th>
-                        <th> Opciones </th>
-                      </tr>
-                    </tfoot>
+                    
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
