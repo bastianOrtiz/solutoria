@@ -28,33 +28,26 @@
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <form role="form" id="frmCrear" method="post">
-                    <input type="hidden" name="isapre_id" value="<?php echo $isapre['id'] ?>" />
+                    <input type="hidden" name="pagalicencia_id" value="<?php echo $pagalicencia['id'] ?>" />
                     <input type="hidden" name="action" value="edit" />
                       <div class="box-body">
                         <div class="form-group">
-                          <label for="nombreIsapre">Nombre</label>
-                          <input type="text" class="form-control required" value="<?php echo $isapre['nombre'] ?>" id="nombreIsapre" name="nombreIsapre" placeholder="Nombre Isapre" />
-                        </div>
+                          <label for="nombrePagaLicencia">Nombre</label>
+                          <input type="text" class="form-control required" value="<?php echo $pagalicencia['nombre'] ?>" id="nombrePagaLicencia" name="nombrePagaLicencia" placeholder="Nombre PagaLicencia" />
+                        </div>                        
                         <div class="form-group">
-                          <label for="rutIsapre">RUT</label>
-                          <input type="text" class="form-control required" value="<?php echo $isapre['rut'] ?>" id="rutIsapre" name="rutIsapre" placeholder="RUT Isapre" required />
-                        </div>  
-                          <div class="form-group">
-                          <label for="codigoIsapre">Código Previred</label>
-                          <input type="text" class="form-control required" value="<?php echo $isapre['codigo'] ?>" id="codigoIsapre" name="codigoIsapre" placeholder="Codigo Previred" />
-                        </div>
+                          <label for="codigoPagaLicencia">Codigo Previred</label>
+                          <input type="text" class="form-control required" value="<?php echo $pagalicencia['codigo'] ?>" id="codigoPagaLicencia" name="codigoPagaLicencia" placeholder="Código PagaLicencia" />
+                        </div> 
                         <div class="form-group">
-                          <label for="estadoIsapre">Estado</label>
-                          <select class="form-control" name="estadoIsapre" id="estadoIsapre">
-                            <option value="1">Activo</option>
-                            <option value="0">Inactivo</option>
-                          </select>
-                          <script> $("#estadoIsapre").val('<?php echo $isapre['activo'] ?>') </script>
-                        </div>                                                                      
+                          <label for="rutPagaLicencia">RUT</label>
+                          <input type="text" class="form-control required" value="<?php echo $pagalicencia['rut'] ?>" id="rutPagaLicencia" name="rutPagaLicencia" placeholder="Nombre PagaLicencia" />
+                        </div>                                                                        
                       </div><!-- /.box-body -->
     
                       <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Enviar</button>                        
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <a href="<?php echo BASE_URL ?>/pagalicenciavalor/ingresar/<?php echo $pagalicencia['id'] ?>" class="btn pull-right btn-info">Agregar Valores</a>
                       </div>
                     </form>
               </div><!-- /.box -->

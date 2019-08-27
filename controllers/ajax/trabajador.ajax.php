@@ -4,6 +4,7 @@ include '../../libs/config.php';
 include ROOT . '/libs/functions.php';
 include ROOT . '/models/common.php';
 include ROOT . '/models/trabajador.php';
+include ROOT . '/models/liquidacion.php';
 
 $json = array();
 extract($_POST);
@@ -72,8 +73,7 @@ if( $_POST['action'] == 'buscarlive' ){
     }        
 }
 
-if( $_POST['action'] == 'valida_relojcontrol_id' ){        
-    $db->setTrace(1);
+if( $_POST['action'] == 'valida_relojcontrol_id' ){
     $db->where ("relojcontrol_id", $relojid);
     $db->where ("empresa_id", $_SESSION[PREFIX.'login_eid']);
     $existe = $db->getValue("m_trabajador", 'relojcontrol_id');        
@@ -84,6 +84,25 @@ if( $_POST['action'] == 'valida_relojcontrol_id' ){
     } else {
         $json['exist'] = 'FALSE';        
     }
+}
+
+
+if( $_POST['action'] == 'get_if_licencia' ){
+    
+    $entidades = $db->get('m_pagalicencia');
+    $isapres = $db->get('m_isapre');
+
+    if (isLicencia($_POST['idMotivo']) > 0){        
+        $json['es_licencia'] = 'TRUE';        
+        $json['entidades'] = $entidades;
+        $json['isapres'] = $isapres;
+    } else {
+        $json['es_licencia'] = 'FALSE'; 
+        $json['entidades'] = '';       
+        $json['isapres'] = '';
+    }
+
+    
 }
 
 
@@ -161,12 +180,14 @@ if( $action == 'add_minutos' ){
 
 
 if( $action == 'add_ausencia' ){
+
     $trabajador_id = $regid_ausencias;
     $data = Array (
         "fecha_inicio" => $fechaAusenciaInicio,            
         "fecha_fin" => $fechaAusenciaFin,        
         "ausencia_id" => $motivoAusencia,
-        "trabajador_id" => $regid_ausencias
+        "trabajador_id" => $regid_ausencias,
+        "cod_previred_pagadora" => $pagadora_licencia
     );
         
     $last_id = $db->insert('t_ausencia' , $data);    

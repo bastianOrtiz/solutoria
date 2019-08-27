@@ -268,7 +268,8 @@ if( $_POST ){
             'tipopagodato' => $customFields,
             'relojcontrol_id' => $relojControlIdTrabajador,
             'forzar_plan_completo' => $forzarPlanCompleto,
-            'estadoCivil' => $estadoCivil 
+            'estadoCivil' => $estadoCivil,
+            'centrocosto_externo' => $ccostoExterno
         );
 
         
@@ -433,8 +434,10 @@ if( $_POST ){
             'tipopago_id' => $tipoPagoTrabajador,
             'tipopagodato' => $customFields,
             'relojcontrol_id' => $relojControlIdTrabajador,
-            'estadoCivil' => $estadoCivil 
+            'estadoCivil' => $estadoCivil,
+            'centrocosto_externo' => $ccostoExterno
         );
+
         
         
         if( !existeIdRelojcontrol( $relojControlIdTrabajador ) ){
@@ -923,6 +926,9 @@ if( $parametros ){
         }
 
     }
+
+    $ccostos_externo = $db->get('m_centrocosto_externo');
+
 
     /*if( $parametros[0] == "marcaje" ){
         

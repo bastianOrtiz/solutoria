@@ -32,7 +32,8 @@
                         <th>Fijo</th>
                         <th>Predet.</th>
                         <th>Valor</th>
-                        <th>Activo</th>                                                
+                        <th>Activo</th> 
+                        <th>Crédito Caja</th>
                         <th> Opciones </th>
                       </tr>
                     </thead>
@@ -45,6 +46,7 @@
                                 <td> <?php echo booleano($reg['valorPredeterminado']) ?> </td>
                                 <td> <?php echo ($reg['valorPredeterminado']==1) ? $reg['valor'] : 'n/a' ?> </td>
                                 <td> <?php echo booleano($reg['activo']) ?> </td>                                                                
+                                <td> <?php echo getNombre($reg['ccaf_id'], 'm_cajacompensacion', false) ?> </td>                                                                
                                 <td>                                      
                                     <button class="btn btn-xs btn-info" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Detalles"> <i class="fa fa-search"></i> </button>
                                     <button class="btn btn-xs btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
@@ -59,7 +61,8 @@
                         <th>Nombre</th>                        
                         <th>Fijo</th>
                         <th>Valor</th>
-                        <th>Activo</th>                                                
+                        <th>Activo</th> 
+                        <th>Crédito Caja</th>                                               
                         <th> Opciones </th>
                       </tr>
                     </tfoot>

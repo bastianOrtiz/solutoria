@@ -3,7 +3,7 @@
       <div class="content-wrapper">
         
         <section class="content-header">
-          <h1> INGRESAR <?php echo strtoupper($entity) ?> </h1>
+          <h1> Ingresar Entidad pagadora de licencia </h1>
           <?php include ROOT . '/views/comun/breadcrumbs.php';  ?>
           
             <?php 
@@ -28,27 +28,20 @@
                     <!-- form start -->
                     <form role="form" id="frmCrear" method="post">
                         <input type="hidden" name="action" value="new" />
-                        <input type="hidden" name="isapreEmpresa" value="<?php echo $_SESSION[ PREFIX . 'login_eid'] ?>" />
+                        <input type="hidden" name="pagalicenciaEmpresa" value="<?php echo $_SESSION[ PREFIX . 'login_eid'] ?>" />
                                                 
                       <div class="box-body">
                         <div class="form-group">
-                          <label for="nombreIsapre">Nombre</label>
-                          <input type="text" class="form-control required" value="" id="nombreIsapre" name="nombreIsapre" placeholder="Nombre Isapre" />
+                          <label for="nombrePagaLicencia">Nombre</label>
+                          <input type="text" class="form-control required" value="" id="nombrePagaLicencia" name="nombrePagaLicencia" placeholder="Nombre PagaLicencia" />
                         </div>
                         <div class="form-group">
-                          <label for="rutIsapre">RUT</label>
-                          <input type="text" class="form-control required" value="" id="rutIsapre" name="rutIsapre" placeholder="RUT Isapre" required />
-                        </div>
+                          <label for="rutPagaLicencia">RUT</label>
+                          <input type="text" class="form-control required" value="" id="rutPagaLicencia" name="rutPagaLicencia" placeholder="Nombre PagaLicencia" />
+                        </div>  
                         <div class="form-group">
-                          <label for="codigoIsapre">Código Previred</label>
-                          <input type="text" class="form-control required" value="" id="codigoIsapre" name="codigoIsapre" placeholder="Codigo Previred" />
-                        </div>
-                        <div class="form-group">
-                          <label for="estadoIsapre">Estado</label>
-                          <select class="form-control" name="estadoIsapre" id="estadoIsapre">
-                            <option value="1">Activo</option>
-                            <option value="0">Inactivo</option>
-                          </select>
+                          <label for="codigoPagaLicencia">Codigo Previred</label>
+                          <input type="text" class="form-control required" value="" id="codigoPagaLicencia" name="codigoPagaLicencia" placeholder="Código PagaLicencia" />
                         </div>                                                                        
                       </div><!-- /.box-body -->
     
@@ -67,7 +60,7 @@
       
       <script>
       
-      $("#rutIsapre").blur(function(){
+      $("#rutPagaLicencia").blur(function(){
         if( !formateaRut( $(this) ) ){
             if( !$(this).parent().hasClass('has-error') ){
                 $(this).parent().addClass('has-error');

@@ -21,7 +21,8 @@ if( $_POST ){
             "valor" => $valorDescuento,            
             "activo" => $activoDescuento,
             "empresa_id" => $_SESSION[PREFIX.'login_eid'],
-            "mostrarAbajo" => $mostrarAbajoDescuento
+            "mostrarAbajo" => $mostrarAbajoDescuento,
+            "ccaf_id" => $cajaDescuento
         );
 
         if( editarDescuento($descuento_id, $data) ){
@@ -60,7 +61,8 @@ if( $_POST ){
             "valor" => $valorDescuento,            
             "activo" => $activoDescuento,
             "empresa_id" => $_SESSION[PREFIX.'login_eid'],
-            "mostrarAbajo" => $mostrarAbajoDescuento
+            "mostrarAbajo" => $mostrarAbajoDescuento,
+            "ccaf_id" => $cajaDescuento
         );
         
         $create_id = crearDescuento($data);
@@ -82,8 +84,10 @@ if( $parametros ){
     /** Consultar datos de descuento **/
     if( isset($parametros[1]) ){
         $db->where ("id", $parametros[1]);
-        $descuento = $db->getOne("m_descuento");        
+        $descuento = $db->getOne("m_descuento");
     }
+
+    $cajas = $db->get('m_cajacompensacion');
 }
 
 include ROOT . '/views/comun/header.php';

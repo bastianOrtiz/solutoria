@@ -23,12 +23,11 @@
                   <h3 class="box-title"><?php echo ucfirst($entity) ?></h3>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive">
-                  <table id="tabla_isapre" class="table table-bordered table-striped">
+                  <table id="tabla_pagalicencia" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th> ID </th>
                         <th>Nombre</th>
-                        <th>RUT</th>
                         <th>Codigo Previred</th>
                         <th> Opciones </th>
                       </tr>
@@ -38,16 +37,15 @@
                             <tr>
                                 <td> <?php echo $reg['id']?> </td>
                                 <td> <?php echo $reg['nombre']?> </td>
-                                <td> <?php echo $reg['rut']?> </td>
                                 <td> <?php echo $reg['codigo']?> </td>
-                                <td>                                                                        
+                                <td>                                    
+                                    <button class="btn btn-flat btn-info" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Detalles"> <i class="fa fa-search"></i> </button>
                                     <button class="btn btn-flat btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
                                     <button class="btn btn-flat btn-danger" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>                                    
                                 </td>                                                                                                                                                                                                
                             </tr>
                         <?php } ?>                        
                     </tbody>
-                    
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -90,7 +88,7 @@
       
     <script>
     $(function () {        
-        $('#tabla_isapre').dataTable({
+        $('#tabla_pagalicencia').dataTable({
           "bPaginate": true,
           "bLengthChange": false,
           "bFilter": true,
@@ -107,6 +105,88 @@
         }
         if( $(this).hasClass('btn-warning') ){
             location.href = '<?php echo BASE_URL . '/' . $entity . '/editar/'?>' + regid;
+        }
+        if( $(this).hasClass('btn-info') ){
+            // Ajax pasando parametro regid.
+            $.ajax({
+				type: "POST",
+				url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+				data: 'regid=' + regid + '&action=detalle',
+                dataType: 'json',
+                beforeSend: function(){
+                    $(".overlayer").show();
+                },
+				success: function (json) {		
+				    if(json.status == 'success'){				       
+                        //LLenar el div con datos retornados por JSON
+				        $(".modal .modal-body").empty();
+                        
+                        html_iterante = '<div class="col-md-4">';
+                        $.each(json.registros, function(k,v) {
+                            html_iterante += '<div class="_contenedor">';                            
+                            html_iterante += '      <span class="_label">'+k+'</span>';
+                            html_iterante += '      <span class="_input">'+v+'</span>';                            
+                            html_iterante += '</div>';    
+                        });                        
+                        html_iterante += '</div>';
+                                            
+                        html_iterante += '<div class="col-md-8">';
+                        html_iterante += '<div class="box">';
+                        html_iterante += '<div class="box-header">';
+                        html_iterante += '  <h3 class="box-title">Lista de valores</h3>';
+                        html_iterante += '</div>';
+                        html_iterante += '<div class="box-body no-padding table-responsive">';
+                        html_iterante += '  <table class="table table-striped">';
+                        html_iterante += '    <tbody><tr>';
+                        html_iterante += '      <th style="width: 10px">#</th>';
+                        html_iterante += '      <th>% Pension</th>';
+                        html_iterante += '      <th>% Seguro</th>';
+                        html_iterante += '      <th>% Sis</th>';
+                        html_iterante += '      <th>% Pensionado</th>';
+                        html_iterante += '      <th>Mes</th>';
+                        html_iterante += '      <th style="width: 40px">Año</th>';
+                        html_iterante += '    </tr>';    
+                        
+                        if( json.pagalicenciavalores != 'vacio' ){                    
+                            var j = 1;
+                            $.each(json.pagalicenciavalores, function(k,v){
+                                html_iterante += '<tr>';
+                                html_iterante += '<td>'+j+'</td>';
+                                $.each(v, function(key,val){                                
+                                    html_iterante += '<td>';
+                                    html_iterante += '' + val + '';
+                                    html_iterante += '</td>';
+                                })                                    
+                                j++;
+                            })
+                            html_iterante += '</tr>';
+                        } else {
+                            html_iterante += '<tr>';
+                            html_iterante += '<td colspan="8">No hay registros</td>';
+                            html_iterante += '</tr>';
+                        }
+                        
+                        html_iterante += '  </tbody></table>';
+                        html_iterante += '</div>';
+                        html_iterante += '</div>';
+                        html_iterante += '</div>';
+                        
+                        
+                        $(".modal .modal-body").append( html_iterante );
+                         
+                        $(".modal h4").text(json.titulo);
+                        $(".modal .btn.btn-info").attr('href','<?php echo BASE_URL ?>/pagalicenciavalor/ingresar/' + regid);
+                        $(".modal .modal-footer .btn-warning").attr('href','<?php echo BASE_URL ?>/<?php echo $entity ?>/editar/' + regid );
+                        $(".modal .modal-footer .btn-danger").attr('href','<?php echo BASE_URL ?>/<?php echo $entity ?>/eliminar/' + regid );
+                        //Mostrar el Modal, cargado
+                        
+                        $(".bs-example-modal-lg").modal('show');
+				    } else {
+				        alert(json.mensaje);                        
+				    }
+                    $(".overlayer").hide();                    		        
+                }
+			})                                    
         }        
     })
     </script>
