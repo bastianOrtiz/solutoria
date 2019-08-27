@@ -88,7 +88,7 @@
                                 <?php endforeach; ?>
                             </tbody>
                             <div class="box-footer">
-                                <button type="submit" id="" class="btn btn-primary btn-lg pull-right">prueba</button>
+                                <button type="submit" id="" class="btn btn-primary btn-lg pull-right">Generar Archivo Previred</button>
                             </div>
                         </table>
                     </div>

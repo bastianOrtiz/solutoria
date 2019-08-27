@@ -6,6 +6,7 @@ function buscarEmpleados($id_empresa){
     $super_arreglo = [];
 
     $db->where("empresa_id", $id_empresa);
+    $db->where('tipocontrato_id',array(3,4),'NOT IN');
     //$db->where("apellidoPaterno","FARIAS");
     $empleados = $db->get("m_trabajador");
 
@@ -390,41 +391,61 @@ function crearTxt($post){
     $empleados= $empleados; // Recibez el formulario
 
     $fch= fopen($archivo, "w"); // Abres el archivo para escribir en él
+    //$var = "";
     foreach ($empleados as $empleado) {
 
         $separador = explode("-",$empleado["rut"]);
         $rut = rellenar($separador[0], 11, "i");
+
+        //$var.=$rut;
         fwrite($fch, $rut); // Grabas
 
         $dv = $separador[1];
         $dv = rellenar($dv, 1, "s");
+
+        //$var.=$dv;
         fwrite($fch, $dv); // Grabas
 
         $apellidoPater = utf8_decode($empleado["apellidoPaterno"]);
         $apellidoPaterno = rellenar($apellidoPater, 30, "s");
+
+        //$var.=$apellidoPaterno;
         fwrite($fch, $apellidoPaterno); // Grabas
 
         $apellidoMater = utf8_decode($empleado["apellidoMaterno"]);
         $apellidoMaterno = rellenar($apellidoMater, 30, "s");
+
+        //$var.=$apellidoMaterno;
         fwrite($fch, $apellidoMaterno); // Grabas
 
         $nomb = utf8_decode($empleado["nombre"]);
         $nombres = rellenar($nomb, 30, "s");
+
+        //$var.=$nombres;
+
         fwrite($fch, $nombres); // Grabas
 
         if ($empleado["sexo"] == 1) {
             $empleado_sexo = rellenar("M",1,"s");
+
+            //$var.=$empleado_sexo;
             fwrite($fch, $empleado_sexo); // Grabas
         }else{
             $empleado_sexo = rellenar("F",1,"s");
+
+            //$var.=$empleado_sexo;
             fwrite($fch, $empleado_sexo); // Grabas
         }
 
         if ($empleado["idNacionalidad"] = 46) {
             $nacionalidad = rellenar("0",1,"i");
+
+            //$var.=$nacionalidad;
             fwrite($fch, $nacionalidad); // Grabas
         }else{
             $nacionalidad = rellenar("1",1,"i");
+
+            //$var.=$nacionalidad;
             fwrite($fch, $nacionalidad); // Grabas
         }
 
@@ -530,10 +551,10 @@ function crearTxt($post){
         $num_cargas_simples = rellenar($asignacion["cargas"]["cargasSimples"],2,"i");
         fwrite($fch, $num_cargas_simples); // Grabas
         
-        $num_cargas_maternales = rellenar($asignacion["cargas"]["cargasMaternales"],2,"i");
+        $num_cargas_maternales = rellenar($asignacion["cargas"]["cargasMaternales"],1,"i");
         fwrite($fch, $num_cargas_maternales); // Grabas
         
-        $num_cargas_invalidas = rellenar($asignacion["cargas"]["cargasInvalidez"],2,"i");
+        $num_cargas_invalidas = rellenar($asignacion["cargas"]["cargasInvalidez"],1,"i");
         fwrite($fch, $num_cargas_invalidas); // Grabas
 
         $asig_familiar = tieneAsignacion($empleado["id"],$arreglo_asignacion_familiar);
@@ -550,14 +571,17 @@ function crearTxt($post){
         $monto_reintegro_cargas_familiares = rellenar($reintegro_cargas_familiares,6,"i");
         fwrite($fch, $monto_reintegro_cargas_familiares); // Grabas
 
-        $licencia = obtenerDiasLicencia($empleado["id"]);
+        $solicitud_trabajador_joven = rellenar("N",1,"s");
+        fwrite($fch, $solicitud_trabajador_joven); // Grabas
+
+        /*$licencia = obtenerDiasLicencia($empleado["id"]);
         $dias_de_licencia = rellenar($licencia,1,"s");
 
         if (in_array($empleado["id"], $arreglo_ids_licencia)) {
             fwrite($fch, "S"); // Grabas
         }else{
             fwrite($fch, "N"); // Grabas
-        }
+        }*/
 
         $codigo_afp = getCodigoAfp($empleado["id"]);
         $codigo_afp_convertido = leadZero($codigo_afp["codigo"]);
@@ -785,6 +809,36 @@ function crearTxt($post){
         $credito_personales_ccaf = rellenar(0,8,"i");
         fwrite($fch, $credito_personales_ccaf); // Grabas*/
 
+        $descuento_dental = rellenar(0,8,"i");
+        fwrite($fch, $descuento_dental); // Grabas*/
+
+        $descuento_leasing = rellenar(0,8,"i");
+        fwrite($fch, $descuento_leasing); // Grabas*/
+
+        $descuento_x_seguro = rellenar(0,8,"i");
+        fwrite($fch, $descuento_x_seguro); // Grabas*/
+
+        $otros_descuentos = rellenar(0,8,"i");
+        fwrite($fch, $otros_descuentos); // Grabas*/
+
+        $cotizacion_ccaf_no_isapres = rellenar(0,8,"i");
+        fwrite($fch, $cotizacion_ccaf_no_isapres); // Grabas*/
+
+        $descuento_cargas_familiares_ccaf = rellenar(0,8,"i");
+        fwrite($fch, $descuento_cargas_familiares_ccaf); // Grabas*/
+
+        $otros_descuentos_ccaf = rellenar(0,8,"i");
+        fwrite($fch, $otros_descuentos_ccaf); // Grabas*/
+
+        $otros_descuentos_ccaf_2 = rellenar(0,8,"i");
+        fwrite($fch, $otros_descuentos_ccaf_2); // Grabas*/
+
+        $bono_gobierno = rellenar(0,8,"i");
+        fwrite($fch, $bono_gobierno); // Grabas*/
+
+        $codigo_sucursal = rellenar("",20,"s");
+        fwrite($fch, $codigo_sucursal); // Grabas*/
+
         /* esta variable, termina los CCAF */
         $m_mutual = mutualidad();
         $cod_mutual = $m_mutual['codigo'];
@@ -793,6 +847,35 @@ function crearTxt($post){
 
         $renta_imponible_mutual = rellenar($imponible['totalImponible'],8,"i");
         fwrite($fch, $renta_imponible_mutual); // Grabas*/
+
+        $suma_mutual = ($m_mutual['tasaBase'] + $m_mutual['tasaAdicional']);
+        $multiplicacion_mutual = ($suma_mutual * $imponible['totalImponible']);
+        $multiplicacion_redondeo_mutual = round($multiplicacion_mutual);
+        $cotizacion_accidente_trabajo = rellenar($multiplicacion_redondeo_mutual,8,"i");
+        fwrite($fch, $cotizacion_accidente_trabajo); // Grabas*/
+
+        $sucursal_pago_mutual = rellenar(0,3,"i");
+        fwrite($fch, $sucursal_pago_mutual); // Grabas*/
+
+        $renta_imponible_seguro_cesantia = rellenar($imponible['totalImponible'],8,"i");
+        $aporte_trabajador = $imponible['afcMonto'];
+        $aporte_trabajador_seguro_cesantia = rellenar($aporte_trabajador,8,"i");
+        fwrite($fch, $aporte_trabajador_seguro_cesantia); // Grabas*/
+
+        $aporte_empleador_seguro_cesantia = rellenar(0,8,"i");
+        fwrite($fch, $aporte_empleador_seguro_cesantia); // Grabas*/
+
+        $pagadorSubsidios = pagadorSubsidios($empleado["id"]);
+        $rut_pagador = explode("-",$pagadorSubsidios["rut"]);
+        $rut_pagador_previred = rellenar($rut_pagador[0],11,"i");
+        fwrite($fch, $rut_pagador_previred); // Grabas
+
+        $dv_pagador = $rut_pagador[1];
+        $dv_pagador_previred = rellenar($dv_pagador,1,"s");
+        fwrite($fch, $dv_pagador_previred); // Grabas
+
+        $otros_datos = rellenar("",20,"s");
+        fwrite($fch, $otros_datos); // Grabas
 
 
         /*------ Despues de todo ------*/
@@ -808,6 +891,36 @@ function crearTxt($post){
     exit();
 }
 
+function pagadorSubsidios($trabajador_id, $mes = "", $ano = ""){
+    global $db;
+
+    if( $mes == '' ){
+        $mes = (int)getMesMostrarCorte();
+    }
+    if( $ano == '' ){
+        $ano = (int)getAnoMostrarCorte();
+    }
+
+    $sql = "SELECT * FROM t_ausencia TA WHERE month(fecha_inicio) = $mes AND year(fecha_inicio) = $ano and TA.trabajador_id = $trabajador_id";
+
+    $result= $db->rawQueryOne($sql);
+
+    $db->where("codigo", $result['cod_previred_pagadora']);
+    $result_mpagalicencia = $db->getOne('m_pagalicencia');
+
+    $db->where("codigo", $result['cod_previred_pagadora']);
+    $result_isapre = $db->getOne('m_isapre');
+
+    if($result_mpagalicencia !== null){
+        return $result_mpagalicencia;
+    }elseif($result_isapre !== null){
+        return $result_isapre;
+    }else{
+        return 0;
+    }
+    
+}
+
 function mutualidad(){
     global $db;
 
@@ -819,7 +932,7 @@ function mutualidad(){
 
 }
 
-function CCAF (){
+function CCAF(){
     global $db;
 
     $db->join("m_empresa", "m_cajacompensacion.id=m_empresa.cajacompensacion_id");
@@ -855,7 +968,8 @@ function descuentosCCAF($trabajador_id, $mes = "", $ano = ""){
     $db->where("liquidacion.trabajador_id", $trabajador_id);
     $db->where('l_descuento.descuento_id', $ids_sql_descuentosCCAF, 'IN');
     $results = $db->get("l_descuento");
-    show_array($db->getLastQuery());
+
+    return $results;
 
 }
 
@@ -1195,8 +1309,6 @@ function sqlAsignacionFamiliar($mes = "", $ano = ""){
         'ids' => $ids_asignacion_familiar,
         'datos' => $datos_retorno_asignacion_familiar
     ];
-
-
 
     return $super_array;
 }
