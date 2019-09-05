@@ -1396,6 +1396,11 @@ function mainMenu(){
                 'entidad' => 'pagalicencia',
                 'accion' => 'listar',
                 'label' => 'Entidades pagadoras Licencias'
+            ),
+            array(
+                'entidad' => 'previred',
+                'accion' => 'previsualizacion',
+                'label' => 'Archivo Previred'
             )
         )
     );
@@ -2576,19 +2581,14 @@ function fnTipPago($id){
     return $tipo_pago['nombre'];
 }
 
-function fnPais($dato, $bool){
-    if ($dato == 46) {
-        if ($bool == 1) {
-            return "Chileno";
-        }else{
-            return "Chilena";
-        }
+function fnPais($dato, $idNacionalidad){
+    global $db;
+
+    if ($dato == 0) {
+        return "Chilena";
     }else{
-        if ($bool == 1) {
-            return "Extranjero";
-        }else{
-            return "Extranjera";
-        }
+        $nacionalidad = getNombre($idNacionalidad,"m_pais",false);
+        return $nacionalidad;
     }
 }
 

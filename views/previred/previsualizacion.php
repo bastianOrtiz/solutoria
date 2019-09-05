@@ -54,7 +54,7 @@
                                     <td><?php echo $empleado['apellidoMaterno']; ?></td>
                                     <td><?php echo $empleado['nombres']; ?></td>
                                     <td><?php echo fnSexo($empleado['sexo']); ?></td>
-                                    <td><?php echo fnPais($empleado['idNacionalidad'], $empleado['sexo']); ?></td>
+                                    <td><?php echo fnPais($empleado['extranjero'], $empleado['idNacionalidad']); ?></td>
                                     <td><?php echo fnTipPago($empleado['tipopago_id']); ?></td>
                                     <td><?php echo $periodoDesde; ?></td>
                                     <td><?php echo $periodoHasta; ?></td>
@@ -78,6 +78,7 @@
                                     <input type="hidden" name="apellidoMaterno[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['apellidoMaterno']; ?>">
                                     <input type="hidden" name="nombres[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['nombres']; ?>">
                                     <input type="hidden" name="sexo[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['sexo']; ?>">
+                                    <input type="hidden" name="extranjero[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['extranjero']; ?>">
                                     <input type="hidden" name="nacionalidad[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['idNacionalidad']; ?>">
                                     <input type="hidden" name="tipo_pago[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['tipopago_id']; ?>">
                                     <input type="hidden" name="periodoDesde[<?php echo $empleado['rut']; ?>]" value="<?php echo $periodoDesde; ?>">
@@ -88,7 +89,42 @@
                                 <?php endforeach; ?>
                             </tbody>
                             <div class="box-footer">
-                                <button type="submit" id="" class="btn btn-primary btn-lg pull-right">Generar Archivo Previred</button>
+                                <div class="row">
+
+                                    <div class="col-lg-4">
+                                        <div class="input-group input-group-lg">
+                                            <input type="hidden" name="mesAtraso" class="hdnValue">
+                                            <div class="input-group-btn">
+                                              <button type="button" class="btn btn-warning" data-toggle="dropdown">Seleccione mes
+                                                <span class="fa fa-caret-down"></span></button>
+                                              <ul class="dropdown-menu" id="cboMes">
+                                                <li><a href="#">Seleccione mes</a></li>
+                                                <?php for($i=1;$i<=12;$i++){ ?>
+                                                <li><a href="#" data-val="<?php echo $i ?>"> <?php echo getNombreMes($i) ?> </a></li>
+                                                <?php } ?>
+                                              </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="input-group input-group-lg">
+                                            <input type="hidden" name="anoAtraso" class="hdnValue">
+                                            <div class="input-group-btn">
+                                              <button type="button" class="btn btn-warning" data-toggle="dropdown">Seleccione Año
+                                                <span class="fa fa-caret-down"></span></button>
+                                                  <ul class="dropdown-menu" id="cboAno">
+                                                    <li><a href="#">Seleccione Año</a></li>
+                                                    <?php for($i=date('Y');$i>=2015;$i--){ ?>
+                                                    <li><a href="#" data-val="<?php echo $i ?>"> <?php echo $i ?> </a></li>
+                                                    <?php } ?>
+                                                  </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <button type="submit" id="" class="btn btn-primary btn-lg pull-right">Generar Archivo Previred</button>
+                                    </div>
+                                </div>
                             </div>
                         </table>
                     </div>
@@ -106,5 +142,32 @@
             autoclose : true,
             format : 'yyyy-mm-dd'
         });
+
+        $(".dropdown-menu a").click(function(e){
+            e.preventDefault();
+            var txt = $(this).text();
+            var val = $(this).data('val');
+            $(this).closest('.input-group-btn').find('button.btn').html(txt + '<span class="fa fa-caret-down"></span>');
+            $(this).closest('.input-group').find('.hdnValue').val(val);
+        })
+
+        $("#frmVerAtrasosMensual").submit(function(e){
+            e.preventDefault();
+            err=0;
+            $(".overlayer").show();
+            $(".hdnValue").each(function(){
+                if($(this).val()==""){
+                    err++;
+                }
+            })
+            if( err == 0 ){
+                $("#frmVerAtrasosMensual")[0].submit();
+            } else {
+                alert('Seleccione mes y Año');
+                $(".overlayer").hide();
+                return false;
+            }
+        })
+        
     });
-</script>
+    </script>
