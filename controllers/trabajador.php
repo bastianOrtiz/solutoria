@@ -574,12 +574,13 @@ if( $parametros ){
 
         /* Nueva SQL, ausencias desde el inicio del corte hacia adelante sin limite */
         $sql = "
-        SELECT * FROM t_ausencia
+        SELECT id, fecha_inicio, fecha_fin,  DATEDIFF(fecha_fin,fecha_inicio)+1 as dias, ausencia_id 
+        FROM t_ausencia
         WHERE trabajador_id = $trabajador_id 
         AND fecha_inicio >= '".$periodo['desde']."' 
         AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 0 )         
         ";        
-        $ausencias_trabajador = $db->rawQuery( $sql );
+        $ausencias_trabajador = $db->rawQuery( $sql, null, false );
 
 
         
@@ -626,7 +627,8 @@ if( $parametros ){
         AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 1 )  
         ";
         $licencias_trabajador = $db->rawQuery( $sql_licencias,null,false );
-        //show_array($licencias_trabajador);
+
+
                        
         $ausencias = getRegistrosCompartidos('Ausencia','m_ausencia');
         

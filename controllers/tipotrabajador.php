@@ -19,6 +19,14 @@ if( $_POST ){
         foreach( $previsionTipoTrabajador as $key => $chk ){
             $data[$key] = 1;
         }
+
+        $data['sis'] = 0;
+        $data['sces'] = 0;
+        $data['sces_full_empresa'] = 0;
+        foreach( $costoEmpresaTipoTrabajador as $key => $chk ){
+            $data[$key] = 1;
+        }
+
         
         if( editarTipotrabajador($tipotrabajador_id, $data) ){
             logit( $_SESSION[PREFIX.'login_name'],$_POST['action'],'Tipotrabajador',$tipotrabajador_id,$db->getLastQuery() );
@@ -49,9 +57,14 @@ if( $_POST ){
             "nombre" => $nombreTipotrabajador,
             "activo" => $estadoTipotrabajador
         );
+
         foreach( $previsionTipoTrabajador as $key => $chk ){
             $data[$key] = 1;
         }                
+        
+        foreach( $costoEmpresaTipoTrabajador as $key => $chk ){
+            $data[$key] = 1;
+        }
         
         $create_id = crearTipotrabajador($data);
         

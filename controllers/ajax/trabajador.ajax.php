@@ -180,7 +180,6 @@ if( $action == 'add_minutos' ){
 
 
 if( $action == 'add_ausencia' ){
-
     $trabajador_id = $regid_ausencias;
     $data = Array (
         "fecha_inicio" => $fechaAusenciaInicio,            

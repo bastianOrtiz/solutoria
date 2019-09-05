@@ -1876,7 +1876,7 @@
                                                                                 &nbsp; 
                                                                                 <i class="fa fa-info-circle info_ausencias" data-toggle="tooltip" title="Se cuenta el total de dias, independiente del corte"></i>
                                                                             </td>
-                                                                            <td> <?php echo $at['ausencia_id'] . getNombre($at['ausencia_id'], 'm_ausencia', false) ?> </td>
+                                                                            <td> <?php echo getNombre($at['ausencia_id'], 'm_ausencia', false) ?> </td>
                                                                             <td> <button data-id="<?php echo $at['id'] ?>" type="button" id="delete_from_list" class="delete_ausencia_trabajador btn btn-xs btn-default"><i class="fa fa-trash"></i></button> </td>
                                                                         </tr>
                                                                         <?php
@@ -1897,7 +1897,7 @@
                                                                                 &nbsp; 
                                                                                 <i class="fa fa-info-circle info_ausencias" data-toggle="tooltip" title="Se cuenta el total de dias, independiente del corte"></i>
                                                                             </td>
-                                                                            <td><?php echo $at['ausencia_id'] .  getNombre($at['ausencia_id'], 'm_ausencia', false) ?> </td>
+                                                                            <td><?php echo getNombre($lic['ausencia_id'], 'm_ausencia', false) ?> </td>
                                                                             <td> <button data-id="<?php echo $lic['id'] ?>" type="button" id="delete_from_list" class="delete_ausencia_trabajador btn btn-xs btn-default"><i class="fa fa-trash"></i></button> </td>
                                                                         </tr>
                                                                         <?php
@@ -2164,7 +2164,6 @@
                     $(".overlayer").show();
                 },
                 success: function (json) {
-                    console.log(json);
                     if( json.es_licencia == "TRUE" ){
                         html = '<label for="pagadora_licencia">Entidad Pagadora de Licencia</label>';
                         html += '<select class="form-control required" name="pagadora_licencia" id="pagadora_licencia">';
@@ -2647,12 +2646,16 @@
             
             if( err == 0 ){
                 
-                    var dat = '';
-                    $('#trabajadorAusencias input, #trabajadorAusencias select').each(function(){
-                        dat += $(this).attr('id') + "=" + $(this).val() + "&";
-                    });
-        
-                    $.ajax({
+                var dat = '';
+                $('#trabajadorAusencias input, #trabajadorAusencias select').each(function(){
+                    dat += $(this).attr('id') + "=" + $(this).val() + "&";
+                });
+
+                if( $("#pagadora_licencia").length == 0 ){
+                    dat += 'pagadora_licencia=0&';
+                }
+                
+                $.ajax({
                   type: "POST",
                   url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
                   data: dat + "action=add_ausencia",
@@ -2660,8 +2663,8 @@
                         beforeSend: function(){
                             $(".overlayer").show();
                         },
-                  success: function (json) {
-                       if( json.status == 'OK' ){
+                        success: function (json) {
+                        if( json.status == 'OK' ){
                            row = '';
                            $.each(json.registro, function(k,v){
                                row += '<td>'+v+'</td>';
@@ -2695,6 +2698,8 @@
                 $('#box_add_ausencias_sync input, #box_add_ausencias_sync select').each(function(){
                     dat += $(this).attr('id') + "=" + $(this).val() + "&";
                 });                    
+
+
             $.ajax({
                 type: "POST",
                 url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
@@ -2711,6 +2716,9 @@
                                 dat += $(this).attr('id') + "=" + $(this).val() + "&";
                             });
                             dat += 'regid_ausencias=<?php echo $trabajador['id'] ?>&';
+                            if( $("#pagadora_licencia").length == 0 ){
+                                dat += 'pagadora_licencia=0&';
+                            }
                             $.ajax({
                                 type: "POST",
                                 url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
@@ -2735,6 +2743,10 @@
                                 dat += $(this).attr('id') + "=" + $(this).val() + "&";
                             });
                             dat += 'regid_ausencias=<?php echo $trabajador['id'] ?>&';
+                            if( $("#pagadora_licencia").length == 0 ){
+                                dat += 'pagadora_licencia=0&';
+                            }
+
                             $.ajax({
                                 type: "POST",
                                 url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
