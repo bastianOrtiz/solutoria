@@ -9,27 +9,76 @@
 function calcularSis($rentaImponible, $trabajador_id = 0){
     global $db;
 
-    $db->where ("costoempresa_id", 1);
-    $db->orderBy('ano',"desc");
-    $db->orderBy('mes',"desc");
-    $valores = $db->getOne("m_costoempresa");
+    $mes_corte = getMesMostrarCorte();
+    $ano_corte = getAnoMostrarCorte();
 
-    $porcentajeCostoEmpresa = $valores['valor'];
+    //Tipos de trabajadores pensionados a quienes no se paga SIS
+    $no_sis = [];
+    $db->where ("sis", 0);
+    $result_no_sis = $db->get('m_tipotrabajador');
+    foreach ($result_no_sis as $res) {
+        $no_sis[] = $res['id'];
+    }
+    
+    //Trabajador cuyo "tipo_trabajador" NO paga SIS
+    $db->where('tipotrabajador_id', $no_sis, 'IN');
+    $db->where('id', $trabajador_id);
+    $trabajador_no_sis = $db->get('m_trabajador');
 
-    //Renta imponible del mes anterior, por ahaaora se usa la misma del mes actual
-    $rentaImponibleMesAnterior = $rentaImponible;
 
-    $porcentajeSis = ( $porcentajeCostoEmpresa / 100 );
+    if(count($trabajador_no_sis) > 0){
+        return 0;
+    } else {
 
-    $diasLicencias = obtenerLicencias($trabajador_id);
+        $dias_ausencias = obtenerAusencias($trabajador_id);
 
-    $costo_empresa_dias_trabajados = ( $rentaImponible * $porcentajeSis );
+        $dias_a_pago = (30 - $dias_ausencias['total']);
 
-    $costo_empresa_dias_licencia = ( ( $rentaImponibleMesAnterior / 30 ) *  $diasLicencias );
+        if( $dias_ausencias['dias_licencia'] > 0 ){ // Si tiene licencias tomamos el imponible del mes anterior
+            $mes_consultar = ($mes_corte - 1);
+            $ano_consultar = $ano_corte;
 
-    $sis = ($costo_empresa_dias_trabajados + $costo_empresa_dias_licencia);
+            if( $mes_consultar == 0 ){
+                $mes_consultar = 12;
+                $ano_consultar = ($ano_corte - 1);
+            }
 
-    return $sis;
+            $db->where('trabajador_id',$trabajador_id);
+            $db->where('mes',$mes_consultar);
+            $db->where('ano',$ano_consultar);
+            $imponible = $db->getOne('liquidacion');
+            $imponible = $imponible['totalImponible'];
+        } else {
+            $db->where('trabajador_id',$trabajador_id);
+            $db->where('mes',$mes_corte);
+            $db->where('ano',$ano_corte);
+            $imponible = $db->getOne('liquidacion');
+            $imponible = $imponible['totalImponible'];
+        }
+
+
+        $db->where ("costoempresa_id", 1);
+        $db->orderBy('ano',"desc");
+        $db->orderBy('mes',"desc");
+        $valores = $db->getOne("m_costoempresa");
+
+        $porcentajeCostoEmpresa = ($valores['valor'] / 100);
+
+
+        // Renta imponible Mes
+        $renta_imponible_mes = ( ($imponible / 30) * $dias_a_pago );
+        $sis__renta = ($renta_imponible_mes * $porcentajeCostoEmpresa);
+         
+
+        // Renta Imponible licencia médica
+        $renta_imponible_licencia = ( ($imponible / 30) * $dias_ausencias['dias_licencia'] );
+        $sis__licencia = ($renta_imponible_licencia * $porcentajeCostoEmpresa);
+
+        $total_cotizacion_sis = ($sis__renta + $sis__licencia);
+
+        return $total_cotizacion_sis;
+
+    }
 }
 
 
@@ -43,36 +92,107 @@ function calcularSis($rentaImponible, $trabajador_id = 0){
 function calcularSCes($rentaImponible, $trabajador_id = 0){
     global $db;
 
-    $db->where('id',$trabajador_id);
-    $tipocontratoId = $db->getValue('m_trabajador','tipocontrato_id');
+    $mes_corte = getMesMostrarCorte();
+    $ano_corte = getAnoMostrarCorte();
 
-    $idCostoEmpresa = 4;
-    if($tipocontratoId==1){
-        $idCostoEmpresa = 3;
+    //Tipos de trabajadores que solo la empresa paga, pero el 0.8%
+    $no_sces_full_empresa = [];
+    $db->where ("sces_full_empresa", 1);
+    $result_no_sces = $db->get('m_tipotrabajador');
+    foreach ($result_no_sces as $res) {
+        $no_sces_full_empresa[] = $res['id'];
     }
 
-    $db->where ("costoempresa_id", $idCostoEmpresa);
-    $db->orderBy('ano',"desc");
-    $db->orderBy('mes',"desc");
-    $valores = $db->getOne("m_costoempresa");
 
-    $porcentajeCostoEmpresa = $valores['valor'];
+    //Tipos de trabajadores sin SCES
+    $no_sces = [];
+    $db->where ("sces", 0);
+    $db->where ("sces_full_empresa", 0);
+    $result_no_sces = $db->get('m_tipotrabajador');
+    foreach ($result_no_sces as $res) {
+        $no_sces[] = $res['id'];
+    }
 
 
-    //Renta imponible del mes anterior, por ahora se usa la misma del mes actual
-    $rentaImponibleMesAnterior = $rentaImponible;
+    
+    //Consulta si el "tipo_trabajador" es Empresa que paga el 0.8%
+    $db->where('tipotrabajador_id', $no_sces_full_empresa, 'IN');
+    $db->where('id', $trabajador_id);
+    $trabajador_sces_full_empresa = $db->get('m_trabajador');
 
-    $porcentajeSCes = ( $porcentajeCostoEmpresa / 100 );
+    
+    //Consulta si el "tipo_trabajador" NO paga SCES
+    $db->where('tipotrabajador_id', $no_sces, 'IN');
+    $db->where('id', $trabajador_id);
+    $trabajador_no_sces = $db->get('m_trabajador');
 
-    $diasLicencias = obtenerLicencias($trabajador_id);
 
-    $costo_empresa_dias_trabajados = ( $rentaImponible * $porcentajeSCes );
+    if(count($trabajador_no_sces) > 0){
+        return 0;
+    } else {
 
-    $costo_empresa_dias_licencia = ( ( $rentaImponibleMesAnterior / 30 ) *  $diasLicencias );
+        $dias_ausencias = obtenerAusencias($trabajador_id);
 
-    $sces = ($costo_empresa_dias_trabajados + $costo_empresa_dias_licencia);
+        $dias_a_pago = (30 - $dias_ausencias['total']);
 
-    return $sces;
+        if( $dias_ausencias['dias_licencia'] > 0 ){ // Si tiene licencias tomamos el imponible del mes anterior
+            $mes_consultar = ($mes_corte - 1);
+            $ano_consultar = $ano_corte;
+
+            if( $mes_consultar == 0 ){
+                $mes_consultar = 12;
+                $ano_consultar = ($ano_corte - 1);
+            }
+
+            $db->where('trabajador_id',$trabajador_id);
+            $db->where('mes',$mes_consultar);
+            $db->where('ano',$ano_consultar);
+            $imponible = $db->getOne('liquidacion');
+            $imponible = $imponible['totalImponible'];
+        } else {
+            $db->where('trabajador_id',$trabajador_id);
+            $db->where('mes',$mes_corte);
+            $db->where('ano',$ano_corte);
+            $imponible = $db->getOne('liquidacion');
+            $imponible = $imponible['totalImponible'];
+        }
+
+        //Obtener el tipo de contrato del trabajadaor para saber que Taza utilizar
+        $db->where('id',$trabajador_id);
+        $tipocontrato_id = $db->getValue("m_trabajador",'tipocontrato_id');
+
+        switch( $tipocontrato_id ){
+            case 1: $costoempresa_id = 3; break;
+            case 2: $costoempresa_id = 4; break;
+            default:  $costoempresa_id = 0; break;
+        }
+
+        $db->where ("costoempresa_id", $costoempresa_id);
+        $db->orderBy('ano',"desc");
+        $db->orderBy('mes',"desc");
+        $valor = $db->getValue("m_costoempresa","valor");
+
+        if( count( $trabajador_sces_full_empresa ) > 0 ){
+            $valor = 0.8;
+        }
+
+        $porcentajeCostoEmpresa = ($valor / 100);
+
+
+        // Renta imponible Mes
+        $renta_imponible_mes = ( ($imponible / 30) * $dias_a_pago );
+        $sces_renta = ($renta_imponible_mes * $porcentajeCostoEmpresa);
+         
+
+        // Renta Imponible licencia médica
+        $renta_imponible_licencia = ( ($imponible / 30) * $dias_ausencias['dias_licencia'] );
+        $sces_licencia = ($renta_imponible_licencia * $porcentajeCostoEmpresa);
+
+        $total_cotizacion_sces = ($sces_renta + $sces_licencia);
+
+        return $total_cotizacion_sces;
+
+    }
 }
 
 
@@ -898,7 +1018,6 @@ function obtenerAtrasosAusenciasTrabajador($id_trabajador, $tipoMarcadoTarjeta='
                         if( fnCheckAusencia( $relojcontrol_id, $fechas_no_marcadas ) ){
                             if( ( empresaUsaRelojControl() ) && ( relojControlSync() ) && ( marcaTarjeta($id_trabajador) ) ){                                                                
                                 if( !estaFiniquitado($id_trabajador, $fechas_no_marcadas) ){
-                                    //show_array("agregarAusencia($fechas_no_marcadas,$id_trabajador)",0);
                                     /* 
                                     consultar si hay algun registro en t_atrasohoraestra
                                     Para determinar si se justifico elguna entrada o salida

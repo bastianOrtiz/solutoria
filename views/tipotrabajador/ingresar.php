@@ -77,6 +77,36 @@
                             </div>                                                                                                
                           </div><!-- /.box-body -->                                                      
                   </div><!-- /.box -->
+
+                  <div class="box box-primary">
+                <!-- form start -->
+                      <div class="box-body">
+                        <div class="form-group">
+                            <strong> Prevision (Costo empresa) </strong>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" class="chk_prev" name="costoEmpresaTipoTrabajador[sis]"  >
+                                SIS
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" class="chk_prev" name="costoEmpresaTipoTrabajador[sces]">
+                                SCES
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" class="chk_prev" name="costoEmpresaTipoTrabajador[sces_full_empresa]">
+                                SCES Solo empresa (0.8%)
+                                </label>
+                            </div>                          
+                        </div>                                                                                                
+                      </div><!-- /.box-body -->
+                                              
+              </div>
+
+
                 </div>                
             </div>   <!-- /.row -->
             

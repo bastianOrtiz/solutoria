@@ -23,14 +23,26 @@
                   <h3 class="box-title"><?php echo ucfirst($entity) ?></h3>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive">
-                  <table id="tabla_tipotrabajador" class="table table-bordered table-striped">
+                  <table id="tabla_tipotrabajador" class="table table-bordered table-striped table-hover">
                     <thead>
+                      <tr>
+                        <th colspan="2"></th>
+                        <th colspan="3" class="text-center">Costos Trabajador</th>
+                        <th colspan="3" class="text-center" style="border-left: 2px solid #ababab;">Costos Empresa</th>
+                        <th colspan="2"></th>
+                      </tr>
                       <tr>
                         <th> ID </th>
                         <th>Nombre</th>
                         <th> AFP </th>
                         <th> SALUD </th>
-                        <th> AFC </th> 
+                        <th> AFC </th>
+
+                        <th class="text-center" style="border-left: 2px solid #ababab;"> SIS </th> 
+                        <th> SCES </th> 
+                        <th class="text-center"> SCES (Solo empresa 0.8%) </th> 
+
+
                         <th> Opciones </th>
                       </tr>
                     </thead>
@@ -43,6 +55,11 @@
                                 <td> <?php echo booleano($reg['afp']) ?> </td>
                                 <td> <?php echo booleano($reg['salud']) ?> </td>
                                 <td> <?php echo booleano($reg['afc']) ?> </td>
+
+                                <td  class="text-center" style="border-left: 2px solid #ababab;"> <?php echo booleano($reg['sis']) ?> </td>
+                                <td> <?php echo booleano($reg['sces']) ?> </td>
+                                <td class="text-center"> <?php echo booleano($reg['sces_full_empresa']) ?> </td>
+
                                 <td>                                                                        
                                     <button class="btn btn-flat btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
                                     <button class="btn btn-flat btn-danger" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Eliminar"><i class="fa fa-remove"></i></button>                                    
@@ -50,13 +67,7 @@
                             </tr>
                         <?php } ?>                        
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <th> ID </th>
-                        <th>Nombre</th>
-                        <th> Opciones </th>
-                      </tr>
-                    </tfoot>
+                    
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
