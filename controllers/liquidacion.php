@@ -23,6 +23,41 @@ if( $_SESSION[PREFIX.'is_trabajador'] ){
 if( $_POST ){
     
     extract($_POST);
+
+
+    if( $action == "actualizar_sis_sces" ){
+
+        $db->orderBy('apellidoPaterno','ASC');
+        $trabajadores_todos = $db->get('m_trabajador');
+
+        foreach ($trabajadores_todos as $key => $trabajador) {
+            $db->where('mes',$_POST['mes']);
+            $db->where('ano',$_POST['ano']);
+            $db->where('trabajador_id',$trabajador['id']);
+            $data_trabajador = $db->getOne('liquidacion');
+
+            if( $data_trabajador ){
+
+                $sis = calcularSis($data_trabajador['totalImponible'],$trabajador['id'], $_POST['mes'], $_POST['ano']);
+                $sces = calcularSCes($data_trabajador['totalImponible'],$trabajador['id'],$_POST['mes'],$_POST['ano']);
+
+                $data_array = [
+                    'sis' => $sis,
+                    'sces' => $sces
+                ];
+
+                $db->where('mes',$_POST['mes']);
+                $db->where('ano',$_POST['ano']);
+                $db->where('trabajador_id',$trabajador['id']);
+                if($db->update('liquidacion', $data_array))
+                     show_array($trabajador['apellidoPaterno'] . ' ' . $trabajador['nombres'] . ' ........................................... Actualizado OK! <br>',0);
+                else 
+                    show_array($trabajador['apellidoPaterno'] . ' ' . $trabajador['nombres'] . ' ........................................... Actualizado ERROR! <br>',0);
+            }
+        }
+
+
+    }
     
     if( @$action == 'liquidar' ){                
         
@@ -102,8 +137,8 @@ if( $_POST ){
         } 
         
         //Guardar SIS y SCes
-        $sis = calcularSis($totalImponible,$trabajador_id);
-        $sces = calcularSCes($totalImponible,$trabajador_id);
+        $sis = calcularSis($totalImponible,$trabajador_id,$mes);
+        $sces = calcularSCes($totalImponible,$trabajador_id,$year);
         
 
         $data_seguros = array(

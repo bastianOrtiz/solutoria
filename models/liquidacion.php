@@ -6,11 +6,11 @@
  * @param (int) $trabajador_id ID del trabajador a calcular
  * @return (floar) $sis Total SIS calculado
  */
-function calcularSis($rentaImponible, $trabajador_id = 0){
+function calcularSis($rentaImponible, $trabajador_id = 0, $mes, $ano){
     global $db;
 
-    $mes_corte = getMesMostrarCorte();
-    $ano_corte = getAnoMostrarCorte();
+    $mes_corte = $mes;
+    $ano_corte = $ano;
 
     //Tipos de trabajadores pensionados a quienes no se paga SIS
     $no_sis = [];
@@ -89,11 +89,12 @@ function calcularSis($rentaImponible, $trabajador_id = 0){
  * @param (int) $trabajador_id ID del trabajador a calcular
  * @return (floar) Total SIS calculado
  */
-function calcularSCes($rentaImponible, $trabajador_id = 0){
+function calcularSCes($rentaImponible, $trabajador_id = 0, $mes, $ano){
     global $db;
 
-    $mes_corte = getMesMostrarCorte();
-    $ano_corte = getAnoMostrarCorte();
+    $mes_corte = $mes;
+    $ano_corte = $ano;
+
 
     //Tipos de trabajadores que solo la empresa paga, pero el 0.8%
     $no_sces_full_empresa = [];
@@ -107,12 +108,10 @@ function calcularSCes($rentaImponible, $trabajador_id = 0){
     //Tipos de trabajadores sin SCES
     $no_sces = [];
     $db->where ("sces", 0);
-    $db->where ("sces_full_empresa", 0);
     $result_no_sces = $db->get('m_tipotrabajador');
     foreach ($result_no_sces as $res) {
         $no_sces[] = $res['id'];
     }
-
 
     
     //Consulta si el "tipo_trabajador" es Empresa que paga el 0.8%
@@ -134,6 +133,7 @@ function calcularSCes($rentaImponible, $trabajador_id = 0){
         $dias_ausencias = obtenerAusencias($trabajador_id);
 
         $dias_a_pago = (30 - $dias_ausencias['total']);
+
 
         if( $dias_ausencias['dias_licencia'] > 0 ){ // Si tiene licencias tomamos el imponible del mes anterior
             $mes_consultar = ($mes_corte - 1);
@@ -157,6 +157,8 @@ function calcularSCes($rentaImponible, $trabajador_id = 0){
             $imponible = $imponible['totalImponible'];
         }
 
+
+
         //Obtener el tipo de contrato del trabajadaor para saber que Taza utilizar
         $db->where('id',$trabajador_id);
         $tipocontrato_id = $db->getValue("m_trabajador",'tipocontrato_id');
@@ -178,11 +180,12 @@ function calcularSCes($rentaImponible, $trabajador_id = 0){
 
         $porcentajeCostoEmpresa = ($valor / 100);
 
-
         // Renta imponible Mes
         $renta_imponible_mes = ( ($imponible / 30) * $dias_a_pago );
+
         $sces_renta = ($renta_imponible_mes * $porcentajeCostoEmpresa);
-         
+        
+
 
         // Renta Imponible licencia médica
         $renta_imponible_licencia = ( ($imponible / 30) * $dias_ausencias['dias_licencia'] );
@@ -192,6 +195,8 @@ function calcularSCes($rentaImponible, $trabajador_id = 0){
 
         return $total_cotizacion_sces;
 
+
+        
     }
 }
 
