@@ -985,7 +985,7 @@
                                                     <br>
                                                     <div class="form-group">
                                                         <label for="ccostoExterno">Centro Costo para empresa externa</label>
-                                                        <select name="ccostoExterno" id="ccostoExterno" class="form-control required">
+                                                        <select name="ccostoExterno" id="ccostoExterno" class="form-control">
                                                             <option value="">NO APLICA</option>
                                                             <?php foreach( $ccostos_externo as $a ){ ?>
                                                             <option value="<?php echo $a['codigo'] ?>"><?php echo $a['nombre'] ?></option>
