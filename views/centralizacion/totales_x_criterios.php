@@ -40,6 +40,9 @@ tbody td{
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+                <?php foreach ($array_data['crit_x_entidad'] as $key => $value) { ?>
+                    <h3> <?php echo $value['entidad'] ?>: <?php echo dinero($value['subtotal'],true) ?> </h3>
+                <?php } ?>
             </div>
             <!-- /.box-body -->
         </div>
@@ -48,7 +51,7 @@ tbody td{
         <div class="box box-warning">
             <div class="box-header with-border">
               <i class="fa fa-cog"></i>
-              <h3 class="box-title">Alerts</h3>
+              <h3 class="box-title">Totales por Individual</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
