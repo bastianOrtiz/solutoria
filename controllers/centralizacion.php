@@ -208,7 +208,7 @@ if( $_POST ){
 if( $parametros ){
 
     //$mes = (int)getMesMostrarCorte();
-    $mes = 6;
+    $mes = 8;
     $ano = (int)getAnoMostrarCorte();
         
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
@@ -351,6 +351,20 @@ if( $parametros ){
             ];
 
         }
+
+
+        $sql = "
+        select T.apellidoPaterno, T.apellidoMaterno, T.nombres, L.sueldoBase, L.gratificacion, (L.sueldoBase + L.gratificacion) as imponible, L.horaExtraMonto, L.horaExtraFestivoMonto, L.totalHaberesImponibles
+        from m_trabajador T, liquidacion L
+        WHERE L.mes = 8
+        AND L.ano = 2019
+        AND T.empresa_id = 2
+        AND T.centrocosto_id = 2
+        and L.trabajador_id = T.id  
+        ORDER BY `T`.`apellidoPaterno` ASC
+        ";
+        $result = $db->rawQuery($sql);
+
 
     }
 

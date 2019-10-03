@@ -58,7 +58,8 @@ if( $_POST ){
 
 
     }
-    
+
+                  
     if( @$action == 'liquidar' ){                
         
         extract($_SESSION[PREFIX.'totales_liquidar']);                
@@ -422,7 +423,8 @@ if( isset($parametros[1]) ){
         AND H.id = TH.haber_id 
     )              
     ORDER BY mesInicio DESC ";
-    $haberes_no_imponibles = $db->rawQuery($sql_haberes_no_imp);        
+    $haberes_no_imponibles = $db->rawQuery($sql_haberes_no_imp);
+
             
     
     if( ( empresaUsaRelojControl() ) && ( relojControlSync() ) && ( marcaTarjeta($trabajador_id) ) ){        
@@ -672,6 +674,72 @@ if( isset($parametros[1]) ){
     }
      
 }
+
+
+if( $parametros[0] == 'reliquidar' ){
+    
+    $db->orderBy('apellidoPaterno','ASC');
+    $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+    $db->where('tipocontrato_id',array(3,4),'NOT IN');
+    $db->where('marcaTarjeta',1);
+    $db->where('centrocosto_id',2);
+    @$trabajadores_todos = $db->get('m_trabajador');
+
+    $fecha_inicio_sql = $year."-".leadZero($mes)."-".getLimiteMes($mes);
+
+    foreach ($trabajadores_todos as $trabjador) {
+
+        $trabajador_id = $trabjador['id'];
+
+        $query_habers = "
+        SELECT T.valor FROM t_haber T, m_haber H
+        WHERE T.trabajador_id = $trabajador_id
+        AND T.fechaInicio <= '$fecha_inicio_sql'
+        AND T.activo = 1 
+        AND T.haber_id = H.id
+        AND H.imponible = 1
+        OR
+            (
+                T.activo = 0 
+                and T.fechaFinalizacion = '$mes-$year' 
+                AND T.trabajador_id = $trabajador_id
+                AND T.haber_id = H.id
+                AND H.imponible = 1
+            )  
+        ORDER BY mesInicio DESC
+        ";
+        $haberes_trabajador = $db->rawQuery($query_habers);
+        
+       
+        $tot_habers_imponibles = 0;
+        foreach ($haberes_trabajador as $h) {
+            $tot_habers_imponibles += $h['valor'];
+        }
+
+        $db->where("trabajador_id",$trabajador_id);
+        $db->where("mes",$mes);
+        $db->where("ano",$year);
+        $liq = $db->getOne('liquidacion');
+
+
+        $array_data = [
+            'totalHaberesImponibles' => $tot_habers_imponibles
+        ];
+
+        show_array(getNombreTrabajador($trabajador_id, 0) . ":" . $tot_habers_imponibles, 0);
+
+        if( $db->count > 0 ){            
+            $liquidacion_id = $liq['id'];
+            $db->where('id',$liquidacion_id);
+            $db->update('liquidacion', $array_data );
+            $liquidacion_action = "UPDATE";
+        } 
+
+
+    }
+
+}
+
 
 if( ( $parametros[0] == 'ver' ) && ( !isset($parametros[1]) ) ){
     redirect(BASE_URL . '/trabajador/listar');

@@ -525,10 +525,10 @@ if( $parametros ){
         */
         $max_days = cal_days_in_month(CAL_GREGORIAN, $mes, $ano);
         $query_habers = "SELECT * FROM `t_haber` 
-        WHERE trabajador_id=$trabajador_id 
-        AND fechaInicio <= '$ano-$mes-$max_days'
-        AND activo =1 or
-        (activo = 0 and fechaFinalizacion = '".leadZero($mes)."-$year' AND trabajador_id=$trabajador_id)  ORDER BY mesInicio DESC ";
+            WHERE trabajador_id=$trabajador_id 
+            AND fechaInicio <= '$ano-$mes-$max_days'
+            AND activo =1 or
+            (activo = 0 and fechaFinalizacion = '".leadZero($mes)."-$year' AND trabajador_id=$trabajador_id)  ORDER BY mesInicio DESC ";
         $haberes_trabajador = $db->rawQuery( $query_habers,'',false );
 
         $periodo = getPeriodoCorte();        

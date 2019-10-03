@@ -38,7 +38,7 @@ switch ($_POST['ajax_action']) :
 		$json['tabla'] = $_POST['tabla'];
 		switch ($_POST['tabla']) {
 			case 'liquidacion':
-				$json['campos'] = ['diaAusencia','diaLicencia','sueldoBase','gratificacion','horaExtra','horaExtraMonto','horaExtraFestivo','horaExtraFestivoMonto','horaAtraso','horaAtrasoMonto','semanaCorrida','totalImponible','totalNoImponible','remuneracionTributable','afp_id','afpMonto','afpPorcentaje','isapre_id','saludMonto','isaprePactado','monedaIsaprePactado','afcMonto','apvMonto','cuenta2Id','cuenta2Monto','descuentoPrevisional','totalTributable','impuestoTotal','impuestoRebajar','impuestoPagar','impuestoAgricola','totalDescuento','alcanceLiquido','totalPagar','topeAfc','rentaNoGravada','sis','sces'];
+				$json['campos'] = ['diaAusencia','diaLicencia','sueldoBase','gratificacion','horaExtra','horaExtraMonto','horaExtraFestivo','horaExtraFestivoMonto','horaAtraso','horaAtrasoMonto','semanaCorrida','totalImponible','totalHaberesImponibles','totalNoImponible','remuneracionTributable','afp_id','afpMonto','afpPorcentaje','isapre_id','saludMonto','isaprePactado','monedaIsaprePactado','afcMonto','apvMonto','cuenta2Id','cuenta2Monto','descuentoPrevisional','totalTributable','impuestoTotal','impuestoRebajar','impuestoPagar','impuestoAgricola','totalDescuento','alcanceLiquido','totalPagar','topeAfc','rentaNoGravada','sis','sces'];
 				break;
 			
 			case 'l_haber':
