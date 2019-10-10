@@ -28,6 +28,65 @@ tbody td{
                 <?php foreach ($array_data['crit_x_ccosto'] as $key => $value) { ?>
                     <h3> <?php echo $value['criterio'] ?>: <?php echo dinero($value['subtotal'],true) ?> </h3>
                 <?php } ?>
+            
+                <br><br>
+
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>apellidoPaterno</th>
+                            <th>apellidoMaterno</th>
+                            <th>nombres</th>
+                            <th>sueldoBase</th>
+                            <th>gratificacion</th>
+                            <th>imponible</th>
+                            <th>horaExtraMonto</th>
+                            <th>horaExtraFestivoMonto</th>
+                            <th>totalHaberesImponibles</th>
+                            <th> Subtotal </th>
+                        </tr>                        
+                    </thead>
+                        <?php 
+                        $tot_imponible = 0;
+                        $tot_he = 0;
+                        $tot_he_100 = 0;
+                        $tot_bonos = 0;
+                        foreach ($result as $key => $value) { 
+                            $tot_imponible += $value['imponible'];
+                            $tot_he += $value['horaExtraMonto'];
+                            $tot_he_100 += $value['horaExtraFestivoMonto'];
+                            $tot_bonos += $value['totalHaberesImponibles'];
+                        ?>
+                        <tr>
+
+                            <td><?php echo $value['apellidoPaterno']; ?></td>
+                            <td><?php echo $value['apellidoMaterno']; ?></td>
+                            <td><?php echo $value['nombres']; ?></td>
+                            <td class="text-right"><?php echo number_format($value['sueldoBase'],0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($value['gratificacion'],0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($value['imponible'],0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($value['horaExtraMonto'],0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($value['horaExtraFestivoMonto'],0,',','.'); ?></td>
+                            <td class="text-right"><?php echo number_format($value['totalHaberesImponibles'],0,',','.'); ?>
+                            <td class="text-right">
+                                <?php  echo ( $value['imponible'] + $value['horaExtraMonto'] + $value['horaExtraFestivoMonto'] + $value['totalHaberesImponibles'] ); ?>
+
+                            </td>
+                        </tr>
+                    <?php } ?>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5">Totales</td>
+                            
+                            <th><?php echo $tot_imponible; ?> </th>
+                            <th><?php echo $tot_he; ?> </th>
+                            <th><?php echo $tot_he_100; ?> </th>
+                            <th><?php echo $tot_bonos; ?> </th>
+
+                        </tr>
+                    </tfoot>
+                </table>
+
             </div>
             <!-- /.box-body -->
         </div>
@@ -40,6 +99,9 @@ tbody td{
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+                <?php foreach ($array_data['crit_x_entidad'] as $key => $value) { ?>
+                    <h3> <?php echo $value['entidad'] ?>: <?php echo dinero($value['subtotal'],true) ?> </h3>
+                <?php } ?>
             </div>
             <!-- /.box-body -->
         </div>
@@ -48,7 +110,7 @@ tbody td{
         <div class="box box-warning">
             <div class="box-header with-border">
               <i class="fa fa-cog"></i>
-              <h3 class="box-title">Alerts</h3>
+              <h3 class="box-title">Totales por Individual</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">

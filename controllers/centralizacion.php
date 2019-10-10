@@ -208,7 +208,7 @@ if( $_POST ){
 if( $parametros ){
 
     //$mes = (int)getMesMostrarCorte();
-    $mes = 6;
+    $mes = 8;
     $ano = (int)getAnoMostrarCorte();
         
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
@@ -277,27 +277,32 @@ if( $parametros ){
         $crit_x_entidad = $db->get('c_crixentidad');
         $crit_x_individual = $db->get('c_crixindividual');
 
-
         foreach ($crit_x_ccosto as $crixccosto) {
             $db->where('fk_criterioid',$crixccosto['id']);
             $campos = $db->get('c_mallaliq');
 
             $subtotal = 0;
             foreach ($campos as $key => $campo) {
+
+                $db->where('id',$campo['fk_criterioid']);
+                $id_ccosto = $db->getValue("c_crixccostos",'id_ccosto');
+
                 if( !in_array($campo['origen'],$tables_not_liq) ){
                     $sql = "
-                    SELECT SUM(SRC.". $campo['campo'] .") AS tot FROM ". $campo['origen'] ." SRC
-                    WHERE SRC.mes = $mes
-                    AND SRC.ano = $ano
-                    AND SRC.empresa_id = ".session('login_eid')."
+                    SELECT SUM(LIQ.". $campo['campo'] .") AS tot FROM liquidacion LIQ, m_trabajador T
+                    WHERE LIQ.mes = $mes
+                    AND LIQ.ano = $ano
+                    AND LIQ.empresa_id = ".session('login_eid')."
+                    AND LIQ.trabajador_id = T.id
+                    AND T.centrocosto_id = " . $id_ccosto . "
                     ";
                 } else {
                     $sql = "
-                    SELECT SUM(".$campo['origen']. "." . $campo['campo'] .") AS tot FROM ". $campo['origen'] .", liquidacion SRC
-                    WHERE SRC.mes = $mes
-                    AND SRC.ano = $ano
-                    AND SRC.empresa_id = ".session('login_eid')."
-                    AND ".$campo['origen'].".liquidacion_id = SRC.id
+                    SELECT SUM(".$campo['origen']. "." . $campo['campo'] .") AS tot FROM ". $campo['origen'] .", liquidacion LIQ
+                    WHERE LIQ.mes = $mes
+                    AND LIQ.ano = $ano
+                    AND LIQ.empresa_id = ".session('login_eid')."
+                    AND ".$campo['origen'].".liquidacion_id = LIQ.id
                     ";
                 }
 
@@ -305,6 +310,7 @@ if( $parametros ){
                 $subtotal += $result[0]['tot'];
 
             }
+
 
             $array_data['crit_x_ccosto'][] = [
                 'criterio' => $crixccosto['criterio'],
@@ -314,6 +320,50 @@ if( $parametros ){
             ];
         }
 
+
+
+
+        $query_field = [
+            'm_afp' => ['campo_monto' => 'afpMonto','campo_id' => 'afp_id'],
+            'm_isapre' => ['campo_monto' => 'saludMonto','campo_id' => 'isapre_id'],
+            'm_institucion' => ['campo_monto' => 'apvMonto','campo_id' => 'cuenta2Id']
+        ];
+
+        foreach ($crit_x_entidad as $crixentidad) {
+
+            $sql = "
+            SELECT SUM(L.". $query_field[$crixentidad['tabla_entidad']]['campo_monto'] .") AS tot 
+            FROM liquidacion L
+            WHERE L." . $query_field[$crixentidad['tabla_entidad']]['campo_id'] . " = ". $crixentidad['id_entidad'] ."
+            AND L.mes = ". $mes ."
+            AND L.ano = ". $ano ."
+            ";
+
+            $result = $db->rawQuery($sql);
+            $subtotal += $result[0]['tot'];
+
+            $array_data['crit_x_entidad'][] = [
+                'criterio' => $crixentidad['criterio'],
+                'entidad' => getNombre($crixentidad['id_entidad'], $crixentidad['tabla_entidad'], false),
+                'entidad_id' => $crixentidad['id_entidad'],
+                'subtotal' => $subtotal,
+                'tipo_entidad' => $crixentidad['tabla_entidad']
+            ];
+
+        }
+
+
+        $sql = "
+        select T.apellidoPaterno, T.apellidoMaterno, T.nombres, L.sueldoBase, L.gratificacion, (L.sueldoBase + L.gratificacion) as imponible, L.horaExtraMonto, L.horaExtraFestivoMonto, L.totalHaberesImponibles
+        from m_trabajador T, liquidacion L
+        WHERE L.mes = 8
+        AND L.ano = 2019
+        AND T.empresa_id = 2
+        AND T.centrocosto_id = 2
+        and L.trabajador_id = T.id  
+        ORDER BY `T`.`apellidoPaterno` ASC
+        ";
+        $result = $db->rawQuery($sql);
 
 
     }
