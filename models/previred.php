@@ -1660,13 +1660,11 @@ function pagadorSubsidios($trabajador_id, $mes = "", $ano = ""){
 
     $sql = "SELECT * FROM t_ausencia TA WHERE month(fecha_inicio) = $mes AND year(fecha_inicio) = $ano and TA.trabajador_id = $trabajador_id";
 
-    $result= $db->rawQueryOne($sql);
+    $result = $db->rawQueryOne($sql);
 
     $db->where("codigo", $result['cod_previred_pagadora']);
     $result_mpagalicencia = $db->getOne('m_pagalicencia');
 
-    $db->where("codigo", $result['cod_previred_pagadora']);
-    $result_isapre = $db->getOne('m_isapre');
 
     if($result_mpagalicencia !== null){
         return $result_mpagalicencia;

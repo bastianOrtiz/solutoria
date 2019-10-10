@@ -90,12 +90,10 @@ if( $_POST['action'] == 'valida_relojcontrol_id' ){
 if( $_POST['action'] == 'get_if_licencia' ){
     
     $entidades = $db->get('m_pagalicencia');
-    $isapres = $db->get('m_isapre');
 
     if (isLicencia($_POST['idMotivo']) > 0){        
         $json['es_licencia'] = 'TRUE';        
         $json['entidades'] = $entidades;
-        $json['isapres'] = $isapres;
     } else {
         $json['es_licencia'] = 'FALSE'; 
         $json['entidades'] = '';       

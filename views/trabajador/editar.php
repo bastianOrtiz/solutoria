@@ -2174,13 +2174,6 @@
                         })
 
                         html += '</optgroup>';
-                        html += '<optgroup label="Isapres">';
-                        $.each(json.isapres,function(k,isapre){
-                            html += '<option value="'+ isapre.codigo +'">'+ isapre.nombre +'</option>';
-                        })
-                        html += '</optgroup>';
-
-
                         html += '</select>';
                         $("#pagadoras").html(html);
                     } else {
