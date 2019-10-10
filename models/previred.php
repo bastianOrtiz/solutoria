@@ -413,119 +413,119 @@ function crearTxt($post){
         $separador = explode("-",$empleado["rut"]);
         $rut = rellenar($separador[0], 11, "i");
 
-        $var.= $rut;
-        //fwrite($fch, $rut); // Grabas
+        //$var.= $rut;
+        fwrite($fch, $rut); // Grabas
 
         $dv = $separador[1];
         $dv = rellenar($dv, 1, "s");
 
-        $var.= $dv;
-        //fwrite($fch, $dv); // Grabas
+        //$var.= $dv;
+        fwrite($fch, $dv); // Grabas
 
         $apellidoPater = utf8_decode($empleado["apellidoPaterno"]);
         $apellidoPaterno = rellenar($apellidoPater, 30, "s");
 
-        $var.= $apellidoPaterno;
-        //fwrite($fch, $apellidoPaterno); // Grabas
+        //$var.= $apellidoPaterno;
+        fwrite($fch, $apellidoPaterno); // Grabas
 
         $apellidoMater = utf8_decode($empleado["apellidoMaterno"]);
         $apellidoMaterno = rellenar($apellidoMater, 30, "s");
 
-        $var.= $apellidoMaterno;
-        //fwrite($fch, $apellidoMaterno); // Grabas
+        //$var.= $apellidoMaterno;
+        fwrite($fch, $apellidoMaterno); // Grabas
 
         $nomb = utf8_decode($empleado["nombre"]);
         $nombres = rellenar($nomb, 30, "s");
 
-        $var.= $nombres;
+        //$var.= $nombres;
 
-        //fwrite($fch, $nombres); // Grabas
+        fwrite($fch, $nombres); // Grabas
 
         if ($empleado["sexo"] == 1) {
             $empleado_sexo = rellenar("M",1,"s");
 
-            $var.= $empleado_sexo;
-            //fwrite($fch, $empleado_sexo); // Grabas
+            //$var.= $empleado_sexo;
+            fwrite($fch, $empleado_sexo); // Grabas
         }else{
             $empleado_sexo = rellenar("F",1,"s");
 
-            $var.= $empleado_sexo;
-            //fwrite($fch, $empleado_sexo); // Grabas
+            //$var.= $empleado_sexo;
+            fwrite($fch, $empleado_sexo); // Grabas
         }
 
         if ($empleado['extranjero'] == 1) {
             $nacionalidad = rellenar("1",1,"i");
 
-            $var.= $nacionalidad;
-            //fwrite($fch, $nacionalidad); // Grabas
+            //$var.= $nacionalidad;
+            fwrite($fch, $nacionalidad); // Grabas
         }else{
             $nacionalidad = rellenar("0",1,"i");
 
-            $var.= $nacionalidad;
-            //fwrite($fch, $nacionalidad); // Grabas
+            //$var.= $nacionalidad;
+            fwrite($fch, $nacionalidad); // Grabas
         }
 
         /*if ($empleado["idNacionalidad"] = 46) {
             $nacionalidad = rellenar("0",1,"i");
 
-            $var.= $nacionalidad;
-            //fwrite($fch, $nacionalidad); // Grabas
+            //$var.= $nacionalidad;
+            fwrite($fch, $nacionalidad); // Grabas
         }else{
             $nacionalidad = rellenar("1",1,"i");
 
-            $var.= $nacionalidad;
-            //fwrite($fch, $nacionalidad); // Grabas
+            //$var.= $nacionalidad;
+            fwrite($fch, $nacionalidad); // Grabas
         }*/
 
         $tipo_pago = rellenar("01",2,"i");
-        $var.= $tipo_pago;
-        //fwrite($fch, $tipo_pago); // Grabas
+        //$var.= $tipo_pago;
+        fwrite($fch, $tipo_pago); // Grabas
 
-        $periodoDesde = date("m").date("Y");
+        $periodoDesde = getMesMostrarCorte().getAnoMostrarCorte();
         $periodoDesde = rellenar($periodoDesde,6,"i");
-        $var.= $periodoDesde;
-        //fwrite($fch, $periodoDesde); // Grabas
+        //$var.= $periodoDesde;
+        fwrite($fch, $periodoDesde); // Grabas
 
-        $periodoHasta = date("m").date("Y");
+        $periodoHasta = getMesMostrarCorte().getAnoMostrarCorte();
         $periodoHasta = rellenar($periodoHasta,6,"i");
-        $var.= $periodoHasta;
-        //fwrite($fch, $periodoHasta); // Grabas
+        //$var.= $periodoHasta;
+        fwrite($fch, $periodoHasta); // Grabas
 
         $tip_afp = previTrabajador($empleado["id"]);
         if ($tip_afp["id"] !== 7) {
             $tip_afp = rellenar("AFP",3,"s");
-            $var.= $tip_afp;
-            //fwrite($fch, $tip_afp); // Grabas
+            //$var.= $tip_afp;
+            fwrite($fch, $tip_afp); // Grabas
         }else{
             $tip_afp = rellenar("INP",3,"s");
-            $var.= $tip_afp;
-            //fwrite($fch, $tip_afp); // Grabas
+            //$var.= $tip_afp;
+            fwrite($fch, $tip_afp); // Grabas
         }
 
         $tipo_trabajador = tipoEmpleado($empleado["tipo_trabajador"]);
         if ($tipo_trabajador["id"] == 1 || $tipo_trabajador["id"] == 5 || $tipo_trabajador["id"] == 6 || $tipo_trabajador["id"] == 7) {
             $tip_trabajador = rellenar("0",1,"i");
-            $var.= $tip_trabajador;
-            //fwrite($fch, $tip_trabajador); // Grabas
+            //$var.= $tip_trabajador;
+            fwrite($fch, $tip_trabajador); // Grabas
         }elseif ($tipo_trabajador["id"] == 2 || $tipo_trabajador["id"] == 8) {
             $tip_trabajador = rellenar("1",1,"i");
-            $var.= $tip_trabajador;
-            //fwrite($fch, $tip_trabajador); // Grabas
+            //$var.= $tip_trabajador;
+            fwrite($fch, $tip_trabajador); // Grabas
         }elseif ($tipo_trabajador["id"] == 4 || $tipo_trabajador["id"] == 3) {
             $tip_trabajador = rellenar("2",1,"i");
-            $var.= $tip_trabajador;
-            //fwrite($fch, $tip_trabajador); // Grabas
+            //$var.= $tip_trabajador;
+            fwrite($fch, $tip_trabajador); // Grabas
         }
 
         $dias_trabajados = getDiasTrabajados($empleado["id"]);
         $dias_trabajados = rellenar($dias_trabajados,2,"i");
-        $var.= $dias_trabajados;
-        //fwrite($fch, $dias_trabajados); // Grabas
+        //$var.= $dias_trabajados;
+        fwrite($fch, $dias_trabajados); // Grabas
 
         $tipo_linea = "00";
         $tipo_linea = rellenar($tipo_linea,2,"s");
-        $var.= $tipo_linea;
-        //fwrite($fch, $tipo_linea); // Grabas
+        //$var.= $tipo_linea;
+        fwrite($fch, $tipo_linea); // Grabas
 
         $movimientos = tieneMovimientos($empleado["id"],$super_array);
         $n_movimientos = count($movimientos);
@@ -542,8 +542,8 @@ function crearTxt($post){
                 $indice++;
             }
             $codigo_movimiento = rellenar($movimientos[0]["codigo_movimiento"],2,"i");
-            $var.= $codigo_movimiento;
-            //fwrite($fch, $codigo_movimiento); // Grabas
+            //$var.= $codigo_movimiento;
+            fwrite($fch, $codigo_movimiento); // Grabas
             if ($movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
                 $fecha_formateada_inicio = rellenar($movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
             }else{
@@ -551,8 +551,8 @@ function crearTxt($post){
                 $fecha_formateada_inicio = $separador_fecha_inicio[2]."-".$separador_fecha_inicio[1]."-".$separador_fecha_inicio[0];
                 $fecha_formateada_inicio = rellenar($fecha_formateada_inicio,10,"s");
             }
-            $var.= $fecha_formateada_inicio;
-            //fwrite($fch, $fecha_formateada_inicio); // Grabas
+            //$var.= $fecha_formateada_inicio;
+            fwrite($fch, $fecha_formateada_inicio); // Grabas
 
             if ($movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
                 $fecha_formateada_fin = rellenar($movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
@@ -561,12 +561,12 @@ function crearTxt($post){
                 $fecha_formateada_fin = $separador_fecha_fin[2]."-".$separador_fecha_fin[1]."-".$separador_fecha_fin[0];
                 $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
             }
-            $var.= $fecha_formateada_fin;
-            //fwrite($fch, $fecha_formateada_fin); // Grabas
+            //$var.= $fecha_formateada_fin;
+            fwrite($fch, $fecha_formateada_fin); // Grabas
         }else{
             $codigo_movimiento = rellenar($movimientos[0]["codigo_movimiento"],2,"i");
-            $var.= $codigo_movimiento;
-            //fwrite($fch, $codigo_movimiento); // Grabas
+            //$var.= $codigo_movimiento;
+            fwrite($fch, $codigo_movimiento); // Grabas
             if ($movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
                 $fecha_formateada_inicio = rellenar($movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
             }else{
@@ -574,8 +574,8 @@ function crearTxt($post){
                 $fecha_formateada_inicio = $separador_fecha_inicio[2]."-".$separador_fecha_inicio[1]."-".$separador_fecha_inicio[0];
                 $fecha_formateada_inicio = rellenar($fecha_formateada_inicio,10,"s");
             }
-            $var.= $fecha_formateada_inicio;
-            //fwrite($fch, $fecha_formateada_inicio); // Grabas
+            //$var.= $fecha_formateada_inicio;
+            fwrite($fch, $fecha_formateada_inicio); // Grabas
 
             if ($movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
                 $fecha_formateada_fin = rellenar($movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
@@ -584,103 +584,103 @@ function crearTxt($post){
                 $fecha_formateada_fin = $separador_fecha_fin[2]."-".$separador_fecha_fin[1]."-".$separador_fecha_fin[0];
                 $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
             }
-            $var.= $fecha_formateada_fin;
-            //fwrite($fch, $fecha_formateada_fin); // Grabas
+            //$var.= $fecha_formateada_fin;
+            fwrite($fch, $fecha_formateada_fin); // Grabas
         }
         
         $asignacion = tieneTramo($empleado["id"],$super_arreglo);
         $tramo = rellenar($asignacion["tipo_tramo"],1,"s");
-        $var.= $tramo;
-        //fwrite($fch, $tramo); // Grabas
+        //$var.= $tramo;
+        fwrite($fch, $tramo); // Grabas
         
         $num_cargas_simples = rellenar($asignacion["cargas"]["cargasSimples"],2,"i");
-        $var.= $num_cargas_simples;
-        //fwrite($fch, $num_cargas_simples); // Grabas
+        //$var.= $num_cargas_simples;
+        fwrite($fch, $num_cargas_simples); // Grabas
         
         $num_cargas_maternales = rellenar($asignacion["cargas"]["cargasMaternales"],1,"i");
-        $var.= $num_cargas_maternales;
-        //fwrite($fch, $num_cargas_maternales); // Grabas
+        //$var.= $num_cargas_maternales;
+        fwrite($fch, $num_cargas_maternales); // Grabas
         
         $num_cargas_invalidas = rellenar($asignacion["cargas"]["cargasInvalidez"],1,"i");
-        $var.= $num_cargas_invalidas;
-        //fwrite($fch, $num_cargas_invalidas); // Grabas
+        //$var.= $num_cargas_invalidas;
+        fwrite($fch, $num_cargas_invalidas); // Grabas
 
         $asig_familiar = tieneAsignacion($empleado["id"],$arreglo_asignacion_familiar);
         $monto_asignacion = $asig_familiar["monto"];
         $monto = rellenar($monto_asignacion,6,"i");
-        $var.= $monto;
-        //fwrite($fch, $monto); // Grabas
+        //$var.= $monto;
+        fwrite($fch, $monto); // Grabas
 
         $asig_familiar_retroactiva = tieneAsignacion($empleado["id"],$arreglo_asignacion_familiar_retroactiva);
         $monto_asignacion_retroactiva = $asig_familiar_retroactiva["monto"];
         $monto_retroactiva = rellenar($monto_asignacion_retroactiva,6,"i");
-        $var.= $monto_retroactiva;
-        //fwrite($fch, $monto_retroactiva); // Grabas
+        //$var.= $monto_retroactiva;
+        fwrite($fch, $monto_retroactiva); // Grabas
 
         $reintegro_cargas_familiares = 0;
         $monto_reintegro_cargas_familiares = rellenar($reintegro_cargas_familiares,6,"i");
-        $var.= $monto_reintegro_cargas_familiares;
-        //fwrite($fch, $monto_reintegro_cargas_familiares); // Grabas
+        //$var.= $monto_reintegro_cargas_familiares;
+        fwrite($fch, $monto_reintegro_cargas_familiares); // Grabas
 
         $solicitud_trabajador_joven = rellenar("N",1,"s");
-        $var.= $solicitud_trabajador_joven;
-        //fwrite($fch, $solicitud_trabajador_joven); // Grabas
+        //$var.= $solicitud_trabajador_joven;
+        fwrite($fch, $solicitud_trabajador_joven); // Grabas
 
         /*$licencia = obtenerDiasLicencia($empleado["id"]);
         $dias_de_licencia = rellenar($licencia,1,"s");
 
         if (in_array($empleado["id"], $arreglo_ids_licencia)) {
-            //fwrite($fch, "S"); // Grabas
+            fwrite($fch, "S"); // Grabas
         }else{
-            //fwrite($fch, "N"); // Grabas
+            fwrite($fch, "N"); // Grabas
         }*/
 
         $codigo_afp = getCodigoAfp($empleado["id"]);
         $codigo_afp_convertido = leadZero($codigo_afp["codigo"]);
         $codigo_afp_rellenar = rellenar($codigo_afp_convertido,2,"i");
-        $var.= $codigo_afp_rellenar;
-        //fwrite($fch, $codigo_afp_rellenar); // Grabas
+        //$var.= $codigo_afp_rellenar;
+        fwrite($fch, $codigo_afp_rellenar); // Grabas
 
         $imponible = tieneImponible($empleado["id"],$arreglo_liquidaciones);
         $montoImponible = rellenar($imponible["monto"],8,"i");
-        $var.= $montoImponible;
-        //fwrite($fch, $montoImponible); // Grabas
+        //$var.= $montoImponible;
+        fwrite($fch, $montoImponible); // Grabas
         $monto_obligatorio_afp = rellenar($imponible["cotizacion"],8,"i");
-        $var.= $monto_obligatorio_afp;
-        //fwrite($fch, $monto_obligatorio_afp); // Grabas
+        //$var.= $monto_obligatorio_afp;
+        fwrite($fch, $monto_obligatorio_afp); // Grabas
         $monto_sis = rellenar($imponible["sis"],8,"i");
-        $var.= $monto_sis;
-        //fwrite($fch, $monto_sis); // Grabas
+        //$var.= $monto_sis;
+        fwrite($fch, $monto_sis); // Grabas
         $cuenta2Monto = rellenar($imponible["cuenta2Monto"],8,"i");
-        $var.= $cuenta2Monto;
-        //fwrite($fch, $cuenta2Monto); // Grabas
+        //$var.= $cuenta2Monto;
+        fwrite($fch, $cuenta2Monto); // Grabas
         $renta_imp_sust_afp = rellenar(0,8,"i");
-        $var.= $renta_imp_sust_afp;
-        //fwrite($fch, $renta_imp_sust_afp); // Grabas
-        $tasa_pactada = rellenar(0,5,"i");
-        $var.= $tasa_pactada;
-        //fwrite($fch, $tasa_pactada); // Grabas
+        //$var.= $renta_imp_sust_afp;
+        fwrite($fch, $renta_imp_sust_afp); // Grabas
+        $tasa_pactada = "00,00";
+        //$var.= $tasa_pac00,tada;
+        fwrite($fch, $tasa_pactada); // Grabas
         $aporte_indemn = rellenar(0,9,"i");
-        $var.= $aporte_indemn;
-        //fwrite($fch, $aporte_indemn); // Grabas
+        //$var.= $aporte_indemn;
+        fwrite($fch, $aporte_indemn); // Grabas
         $n_periodos = rellenar(0,2,"i");
-        $var.= $n_periodos;
-        //fwrite($fch, $n_periodos); // Grabas
+        //$var.= $n_periodos;
+        fwrite($fch, $n_periodos); // Grabas
         $periodo_desde = rellenar("",10,"s");
-        $var.= $periodo_desde;
-        //fwrite($fch, $periodo_desde); // Grabas
+        //$var.= $periodo_desde;
+        fwrite($fch, $periodo_desde); // Grabas
         $periodo_hasta = rellenar("",10,"s");
-        $var.= $periodo_hasta;
-        //fwrite($fch, $periodo_hasta); // Grabas
+        //$var.= $periodo_hasta;
+        fwrite($fch, $periodo_hasta); // Grabas
         $puesto_trabajo_pesado = rellenar("",40,"s");
-        $var.= $puesto_trabajo_pesado;
-        //fwrite($fch, $puesto_trabajo_pesado); // Grabas
+        //$var.= $puesto_trabajo_pesado;
+        fwrite($fch, $puesto_trabajo_pesado); // Grabas
         $porcentaje_cotizacion_trabajo_pesado = rellenar(0,5,"i");
-        $var.= $porcentaje_cotizacion_trabajo_pesado;
-        //fwrite($fch, $porcentaje_cotizacion_trabajo_pesado); // Grabas
+        //$var.= $porcentaje_cotizacion_trabajo_pesado;
+        fwrite($fch, $porcentaje_cotizacion_trabajo_pesado); // Grabas
         $cotizacion_trabajo_pesado = rellenar(0,6,"i");
-        $var.= $cotizacion_trabajo_pesado;
-        //fwrite($fch, $cotizacion_trabajo_pesado); // Grabas
+        //$var.= $cotizacion_trabajo_pesado;
+        fwrite($fch, $cotizacion_trabajo_pesado); // Grabas
         /*------ Datos Ahorro Previsional Voluntario Individual ------(Falta completar)*/
         $apvi = insidencias('apv',$empleado["id"]);
         if ($apvi['apv']['count'] > 1) {
@@ -697,174 +697,175 @@ function crearTxt($post){
             }
             $codigo_institucion_apvi = $apvi['apv']['results'][0]['codigo'];
             $codigo_institucion_apvi = rellenar($codigo_institucion_apvi,3,'i');
-            $var.= $codigo_institucion_apvi;
-            //fwrite($fch, $codigo_institucion_apvi); // Grabas
+            //$var.= $codigo_institucion_apvi;
+            fwrite($fch, $codigo_institucion_apvi); // Grabas
             $numero_contrato_apvi = rellenar("",20,"s");
-            $var.= $numero_contrato_apvi;
-            //fwrite($fch, $numero_contrato_apvi); // Grabas
+            //$var.= $numero_contrato_apvi;
+            fwrite($fch, $numero_contrato_apvi); // Grabas
             $forma_pago_apvi = rellenar(1,1,'i');
-            $var.= $forma_pago_apvi;
-            //fwrite($fch, $forma_pago_apvi); // Grabas
+            //$var.= $forma_pago_apvi;
+            fwrite($fch, $forma_pago_apvi); // Grabas
             $tip_moneda = tipoMoneda($apvi['apv']['results'][0]['tipomoneda_id']);
             $val_moneda = valorMoneda($tip_moneda['id'],$post['mesAtraso'],$post['anoAtraso']);
             $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda['valor']);
             //$val_monto_sin_punto = str_replace(".","",$val_monto_apvi);/* No se remplaza el punto */
             $cotizacion_apvi = rellenar($val_monto_apvi,8,'i');
-            $var.= $cotizacion_apvi;
-            //fwrite($fch, $cotizacion_apvi); // Grabas
+            //$var.= $cotizacion_apvi;
+            fwrite($fch, $cotizacion_apvi); // Grabas
             $cotizacion_depositos_convenidos = rellenar(0,8,'i');
-            $var.= $cotizacion_depositos_convenidos;
-            //fwrite($fch, $cotizacion_depositos_convenidos); // Grabas
+            //$var.= $cotizacion_depositos_convenidos;
+            fwrite($fch, $cotizacion_depositos_convenidos); // Grabas
         }elseif ($apvi['apv']['count'] == 1) {
             $codigo_institucion_apvi = $apvi['apv']['results'][0]['codigo'];
             $codigo_institucion_apvi = rellenar($codigo_institucion_apvi,3,'i');
-            $var.= $codigo_institucion_apvi;
-            //fwrite($fch, $codigo_institucion_apvi); // Grabas
+            //$var.= $codigo_institucion_apvi;
+            fwrite($fch, $codigo_institucion_apvi); // Grabas
             $numero_contrato_apvi = rellenar("",20,"s");
-            $var.= $numero_contrato_apvi;
-            //fwrite($fch, $numero_contrato_apvi); // Grabas
+            //$var.= $numero_contrato_apvi;
+            fwrite($fch, $numero_contrato_apvi); // Grabas
             $forma_pago_apvi = rellenar(1,1,'i');
-            $var.= $forma_pago_apvi;
-            //fwrite($fch, $forma_pago_apvi); // Grabas
+            //$var.= $forma_pago_apvi;
+            fwrite($fch, $forma_pago_apvi); // Grabas
             $tip_moneda = tipoMoneda($apvi['apv']['results'][0]['tipomoneda_id']);
             $val_moneda = valorMoneda($tip_moneda['id'],$post['mesAtraso'],$post['anoAtraso']);
             $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda['valor']);
             //$val_monto_sin_punto = str_replace(".","",$val_monto_apvi);/* No se remplaza el punto */
             $cotizacion_apvi = rellenar($val_monto_apvi,8,'i');
-            $var.= $cotizacion_apvi;
-            //fwrite($fch, $cotizacion_apvi); // Grabas
+            //$var.= $cotizacion_apvi;
+            fwrite($fch, $cotizacion_apvi); // Grabas
             $cotizacion_depositos_convenidos = rellenar(0,8,'i');
-            $var.= $cotizacion_depositos_convenidos;
-            //fwrite($fch, $cotizacion_depositos_convenidos); // Grabas
+            //$var.= $cotizacion_depositos_convenidos;
+            fwrite($fch, $cotizacion_depositos_convenidos); // Grabas
         }else{
             /*---- Completar con 0 ----*/
             $codigo_institucion_apvi = rellenar(0,3,'i');
-            $var.= $codigo_institucion_apvi;
-            //fwrite($fch, $codigo_institucion_apvi); // Grabas
+            //$var.= $codigo_institucion_apvi;
+            fwrite($fch, $codigo_institucion_apvi); // Grabas
             $numero_contrato_apvi = rellenar("",20,"s");
-            $var.= $numero_contrato_apvi;
-            //fwrite($fch, $numero_contrato_apvi); // Grabas
+            //$var.= $numero_contrato_apvi;
+            fwrite($fch, $numero_contrato_apvi); // Grabas
             $forma_pago_apvi = rellenar(1,1,'i');
-            $var.= $forma_pago_apvi;
-            //fwrite($fch, $forma_pago_apvi); // Grabas
+            //$var.= $forma_pago_apvi;
+            fwrite($fch, $forma_pago_apvi); // Grabas
             $cotizacion_apvi = rellenar(0,8,'i');
-            $var.= $cotizacion_apvi;
-            //fwrite($fch, $cotizacion_apvi); // Grabas
+            //$var.= $cotizacion_apvi;
+            fwrite($fch, $cotizacion_apvi); // Grabas
             $cotizacion_depositos_convenidos = rellenar(0,8,'i');
-            $var.= $cotizacion_depositos_convenidos;
-            //fwrite($fch, $cotizacion_depositos_convenidos); // Grabas
+            //$var.= $cotizacion_depositos_convenidos;
+            fwrite($fch, $cotizacion_depositos_convenidos); // Grabas
         }
         /*------ Datos Ahorro Previsional Voluntario Colentivo ------*/
         $codigo_institucion_autorizada_apvc = rellenar(0,3,"i");
-        $var.= $codigo_institucion_autorizada_apvc;
-        //fwrite($fch, $codigo_institucion_autorizada_apvc); // Grabas
+        //$var.= $codigo_institucion_autorizada_apvc;
+        fwrite($fch, $codigo_institucion_autorizada_apvc); // Grabas
         $numero_contrato_apvc = rellenar("",20,"s");
-        $var.= $numero_contrato_apvc;
-        //fwrite($fch, $numero_contrato_apvc); // Grabas
+        //$var.= $numero_contrato_apvc;
+        fwrite($fch, $numero_contrato_apvc); // Grabas
         $forma_pago_apvc = rellenar(0,1,"i");
-        $var.= $forma_pago_apvc;
-        //fwrite($fch, $forma_pago_apvc); // Grabas
+        //$var.= $forma_pago_apvc;
+        fwrite($fch, $forma_pago_apvc); // Grabas
         $cotizacion_trabajador_apvc = rellenar(0,8,"i");
-        $var.= $cotizacion_trabajador_apvc;
-        //fwrite($fch, $cotizacion_trabajador_apvc); // Grabas
+        //$var.= $cotizacion_trabajador_apvc;
+        fwrite($fch, $cotizacion_trabajador_apvc); // Grabas
         $cotizacion_empleador_apvc = rellenar(0,8,"i");
-        $var.= $cotizacion_empleador_apvc;
-        //fwrite($fch, $cotizacion_empleador_apvc); // Grabas
+        //$var.= $cotizacion_empleador_apvc;
+        fwrite($fch, $cotizacion_empleador_apvc); // Grabas
         $rut_afiliado_voluntario = rellenar(0,11,"i");
-        $var.= $rut_afiliado_voluntario;
-        //fwrite($fch, $rut_afiliado_voluntario); // Grabas
+        //$var.= $rut_afiliado_voluntario;
+        fwrite($fch, $rut_afiliado_voluntario); // Grabas
         $dv_afiliado_voluntario = rellenar("",1,"s");
-        $var.= $dv_afiliado_voluntario;
-        //fwrite($fch, $dv_afiliado_voluntario); // Grabas
+        //$var.= $dv_afiliado_voluntario;
+        fwrite($fch, $dv_afiliado_voluntario); // Grabas
         $apellidoPaterno_afiliado_voluntario = rellenar("",30,"s");
-        $var.= $apellidoPaterno_afiliado_voluntario;
-        //fwrite($fch, $apellidoPaterno_afiliado_voluntario); // Grabas
+        //$var.= $apellidoPaterno_afiliado_voluntario;
+        fwrite($fch, $apellidoPaterno_afiliado_voluntario); // Grabas
         $apellidoMaterno_afiliado_voluntario = rellenar("",30,"s");
-        $var.= $apellidoMaterno_afiliado_voluntario;
-        //fwrite($fch, $apellidoMaterno_afiliado_voluntario); // Grabas
+        //$var.= $apellidoMaterno_afiliado_voluntario;
+        fwrite($fch, $apellidoMaterno_afiliado_voluntario); // Grabas
         $nombre_afiliado_voluntario = rellenar("",30,"s");
-        $var.= $nombre_afiliado_voluntario;
-        //fwrite($fch, $nombre_afiliado_voluntario); // Grabas
+        //$var.= $nombre_afiliado_voluntario;
+        fwrite($fch, $nombre_afiliado_voluntario); // Grabas
         $codigo_movimiento_personal = rellenar(0,2,"i");
-        $var.= $codigo_movimiento_personal;
-        //fwrite($fch, $codigo_movimiento_personal); // Grabas
+        //$var.= $codigo_movimiento_personal;
+        fwrite($fch, $codigo_movimiento_personal); // Grabas
         $fecha_desde_afiliado = rellenar("",10,"s");
-        $var.= $fecha_desde_afiliado;
-        //fwrite($fch, $fecha_desde_afiliado); // Grabas
+        //$var.= $fecha_desde_afiliado;
+        fwrite($fch, $fecha_desde_afiliado); // Grabas
         $fecha_hasta_afiliado = rellenar("",10,"s");
-        $var.= $fecha_hasta_afiliado;
-        //fwrite($fch, $fecha_hasta_afiliado); // Grabas
+        //$var.= $fecha_hasta_afiliado;
+        fwrite($fch, $fecha_hasta_afiliado); // Grabas
         $codigo_afp_afiliado = rellenar(0,2,"i");
-        $var.= $codigo_afp_afiliado;
-        //fwrite($fch, $codigo_afp_afiliado); // Grabas
+        //$var.= $codigo_afp_afiliado;
+        fwrite($fch, $codigo_afp_afiliado); // Grabas
         $monto_capitalizacion_voluntaria = rellenar(0,8,"i");
-        $var.= $monto_capitalizacion_voluntaria;
-        //fwrite($fch, $monto_capitalizacion_voluntaria); // Grabas
+        //$var.= $monto_capitalizacion_voluntaria;
+        fwrite($fch, $monto_capitalizacion_voluntaria); // Grabas
         $monto_ahorro_voluntario = rellenar(0,8,"i");
-        $var.= $monto_ahorro_voluntario;
-        //fwrite($fch, $monto_ahorro_voluntario); // Grabas
+        //$var.= $monto_ahorro_voluntario;
+        fwrite($fch, $monto_ahorro_voluntario); // Grabas
         $numero_periodos_cotizacion = rellenar(0,2,"i");
-        $var.= $numero_periodos_cotizacion;
-        //fwrite($fch, $numero_periodos_cotizacion); // Grabas
+        //$var.= $numero_periodos_cotizacion;
+        fwrite($fch, $numero_periodos_cotizacion); // Grabas
         $codigo_ex_caga_regimen = rellenar(0,4,"i");
-        $var.= $codigo_ex_caga_regimen;
-        //fwrite($fch, $codigo_ex_caga_regimen); // Grabas
-        $tasa_cotizacion_ex_caja_prevision = rellenar(0,5,"i");
-        $var.= $tasa_cotizacion_ex_caja_prevision;
-        //fwrite($fch, $tasa_cotizacion_ex_caja_prevision); // Grabas
+        //$var.= $codigo_ex_caga_regimen;
+        fwrite($fch, $codigo_ex_caga_regimen); // Grabas
+        $tasa_cotizacion_ex_caja_prevision = "00,00";
+        //$var.= $tasa_cotizacion_ex_caja_prevision;
+        fwrite($fch, $tasa_cotizacion_ex_caja_prevision); // Grabas
         $renta_imponible_ips = rellenar(0,8,"i");
-        $var.= $renta_imponible_ips;
-        //fwrite($fch, $renta_imponible_ips); // Grabas
+        //$var.= $renta_imponible_ips;
+        fwrite($fch, $renta_imponible_ips); // Grabas
         $cotizacion_obligatoria_ips = rellenar(0,8,"i");
-        $var.= $cotizacion_obligatoria_ips;
-        //fwrite($fch, $cotizacion_obligatoria_ips); // Grabas
+        //$var.= $cotizacion_obligatoria_ips;
+        fwrite($fch, $cotizacion_obligatoria_ips); // Grabas
         $renta_imponible_desahucio = rellenar(0,8,"i");
-        $var.= $renta_imponible_desahucio;
-        //fwrite($fch, $renta_imponible_desahucio); // Grabas
+        //$var.= $renta_imponible_desahucio;
+        fwrite($fch, $renta_imponible_desahucio); // Grabas
         $codigo_ex_caja_regimen_desahucio = rellenar(0,4,"i");
-        $var.= $codigo_ex_caja_regimen_desahucio;
-        //fwrite($fch, $codigo_ex_caja_regimen_desahucio); // Grabas
-        $tasa_cotizacion_desahucio_excaja_prevision = rellenar(0,5,"i");
-        $var.= $tasa_cotizacion_desahucio_excaja_prevision;
-        //fwrite($fch, $tasa_cotizacion_desahucio_excaja_prevision); // Grabas
+        //$var.= $codigo_ex_caja_regimen_desahucio;
+        fwrite($fch, $codigo_ex_caja_regimen_desahucio); // Grabas
+        $tasa_cotizacion_desahucio_excaja_prevision = "00,00";
+        //$tasa_cotizacion_desahucio_excaja_prevision = rellenar(0,5,"i");
+        //$var.= $tasa_cotizacion_desahucio_excaja_prevision;
+        fwrite($fch, $tasa_cotizacion_desahucio_excaja_prevision); // Grabas
         $cotizacion_desaucio = rellenar(0,8,"i");
-        $var.= $cotizacion_desaucio;
-        //fwrite($fch, $cotizacion_desaucio); // Grabas
+        //$var.= $cotizacion_desaucio;
+        fwrite($fch, $cotizacion_desaucio); // Grabas
         $fonasa = tipoSalud($empleado["id"]);
         if ($fonasa['isapre_id'] == 0) {
             $cotizacion_fonasa = rellenar($fonasa['saludMonto'],8,"i");
         }else{
             $cotizacion_fonasa = rellenar(0,8,"i");
         }
-        $var.= $cotizacion_fonasa;
-        //fwrite($fch, $cotizacion_fonasa); // Grabas
+        //$var.= $cotizacion_fonasa;
+        fwrite($fch, $cotizacion_fonasa); // Grabas
         $cotizacion_acc_trabajo = rellenar(0,8,"i");
-        $var.= $cotizacion_acc_trabajo;
-        //fwrite($fch, $cotizacion_acc_trabajo); // Grabas
+        //$var.= $cotizacion_acc_trabajo;
+        fwrite($fch, $cotizacion_acc_trabajo); // Grabas
         $bonificacion_ley = rellenar(0,8,"i");
-        $var.= $bonificacion_ley;
-        //fwrite($fch, $bonificacion_ley); // Grabas
+        //$var.= $bonificacion_ley;
+        fwrite($fch, $bonificacion_ley); // Grabas
         $descuento_x_cargas_familiares_isl = rellenar(0,8,"i");
-        $var.= $descuento_x_cargas_familiares_isl;
-        //fwrite($fch, $descuento_x_cargas_familiares_isl); // Grabas
+        //$var.= $descuento_x_cargas_familiares_isl;
+        fwrite($fch, $descuento_x_cargas_familiares_isl); // Grabas
         $bonos_gobierno = rellenar(0,8,"i");
-        $var.= $bonos_gobierno;
-        //fwrite($fch, $bonos_gobierno); // Grabas
+        //$var.= $bonos_gobierno;
+        fwrite($fch, $bonos_gobierno); // Grabas
         $salud = datosSalud($empleado["id"]);
         $codigo_institucion_salud = rellenar($salud['codigo'],2,"i");
-        $var.= $codigo_institucion_salud;
-        //fwrite($fch, $codigo_institucion_salud); // Grabas
+        //$var.= $codigo_institucion_salud;
+        fwrite($fch, $codigo_institucion_salud); // Grabas
         $numero_fun = rellenar("",16,"s");
-        $var.= $numero_fun;
-        //fwrite($fch, $numero_fun); // Grabas
+        //$var.= $numero_fun;
+        fwrite($fch, $numero_fun); // Grabas
         $renta = tipoSalud($empleado["id"]);
         if ($renta['isapre_id'] == 0) {
             $renta_imponible_isapre = rellenar(0,8,"i");
         }else{
             $renta_imponible_isapre = rellenar($renta['totalImponible'],8,"i");
         }
-        $var.= $renta_imponible_isapre;
-        //fwrite($fch, $renta_imponible_isapre); // Grabas
+        //$var.= $renta_imponible_isapre;
+        fwrite($fch, $renta_imponible_isapre); // Grabas
 
         $datos_salud_moneda = tipoSalud($empleado["id"]);
         if ($datos_salud_moneda['isapre_id'] !== 0) {/* Si esta dentro de una Isapre */
@@ -874,20 +875,20 @@ function crearTxt($post){
                 $red_cotizacion_pactada = round($datos_sal_mon['montoPlan']);
                 $cotizacion_pactada = rellenar($red_cotizacion_pactada,8,"i");
 
-                $var.= $tipo_moneda_isapre;
-                $var.= $cotizacion_pactada;
-                //fwrite($fch, $tipo_moneda_isapre); // Grabas
-                //fwrite($fch, $cotizacion_pactada); // Grabas
+                //$var.= $tipo_moneda_isapre;
+                //$var.= $cotizacion_pactada;
+                fwrite($fch, $tipo_moneda_isapre); // Grabas
+                fwrite($fch, $cotizacion_pactada); // Grabas
             }else{
                 $tipo_moneda_isapre = rellenar($datos_sal_mon['tipo_moneda'],1,"i");
                 $separador = explode(".",$datos_sal_mon['montoPlan']);
                 $var_cotizacion_pactada = $separador[0].",".$separador[1];
                 $cotizacion_pactada = rellenar($var_cotizacion_pactada,8,"i");
 
-                $var.= $tipo_moneda_isapre;
-                $var.= $cotizacion_pactada;
-                //fwrite($fch, $tipo_moneda_isapre); // Grabas
-                //fwrite($fch, $cotizacion_pactada); // Grabas
+                //$var.= $tipo_moneda_isapre;
+                //$var.= $cotizacion_pactada;
+                fwrite($fch, $tipo_moneda_isapre); // Grabas
+                fwrite($fch, $cotizacion_pactada); // Grabas
             }
 
             $liquidacion_isapre = liquidacion($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
@@ -897,10 +898,10 @@ function crearTxt($post){
             $round_cotizacion_adicional_voluntaria = round($liquidacion_isapre['aporte_voluntario']);
             $cotizacion_adicional_voluntaria = rellenar($round_cotizacion_adicional_voluntaria,8,"i");
 
-            $var.= $cotizacion_obligatoria_isapre;
-            $var.= $cotizacion_adicional_voluntaria;
-            //fwrite($fch, $cotizacion_obligatoria_isapre); // Grabas
-            //fwrite($fch, $cotizacion_adicional_voluntaria); // Grabas
+            //$var.= $cotizacion_obligatoria_isapre;
+            //$var.= $cotizacion_adicional_voluntaria;
+            fwrite($fch, $cotizacion_obligatoria_isapre); // Grabas
+            fwrite($fch, $cotizacion_adicional_voluntaria); // Grabas
             
         }else{
             $tipo_moneda_isapre = rellenar(0,1,"i");
@@ -908,129 +909,736 @@ function crearTxt($post){
             $cotizacion_obligatoria_isapre = rellenar(0,8,"i");
             $cotizacion_adicional_voluntaria = rellenar(0,8,"i");
 
-            $var.= $tipo_moneda_isapre;
-            $var.= $cotizacion_pactada;
-            $var.= $cotizacion_obligatoria_isapre;
-            $var.= $cotizacion_adicional_voluntaria;
-            //fwrite($fch, $tipo_moneda_isapre); // Grabas
-            //fwrite($fch, $cotizacion_pactada); // Grabas
-            //fwrite($fch, $cotizacion_obligatoria_isapre); // Grabas
-            //fwrite($fch, $cotizacion_adicional_voluntaria); // Grabas
+            //$var.= $tipo_moneda_isapre;
+            //$var.= $cotizacion_pactada;
+            //$var.= $cotizacion_obligatoria_isapre;
+            //$var.= $cotizacion_adicional_voluntaria;
+            fwrite($fch, $tipo_moneda_isapre); // Grabas
+            fwrite($fch, $cotizacion_pactada); // Grabas
+            fwrite($fch, $cotizacion_obligatoria_isapre); // Grabas
+            fwrite($fch, $cotizacion_adicional_voluntaria); // Grabas
         }
 
         $monto_g_e_salud = rellenar(0,8,"i");
-        $var.= $monto_g_e_salud;
-        //fwrite($fch, $monto_g_e_salud); // Grabas*/
+        //$var.= $monto_g_e_salud;
+        fwrite($fch, $monto_g_e_salud); // Grabas*/
 
         $ccaf = CCAF();
         $cod_ccaf = $ccaf['codigo'];
         $codigo_CCAF = rellenar($cod_ccaf,2,"i");
-        $var.= $codigo_CCAF;
-        //fwrite($fch, $codigo_CCAF); // Grabas*/
+        //$var.= $codigo_CCAF;
+        fwrite($fch, $codigo_CCAF); // Grabas*/
 
         $imponible = liquidacion($empleado["id"]);
         $renta_imponible_CCAF = rellenar($imponible['totalImponible'],8,"i");
-        $var.= $renta_imponible_CCAF;
-        //fwrite($fch, $renta_imponible_CCAF); // Grabas*/
+        //$var.= $renta_imponible_CCAF;
+        fwrite($fch, $renta_imponible_CCAF); // Grabas*/
 
       /* esta variable hasta */  
         $credito_personales_ccaf = rellenar(0,8,"i");
-        $var.= $credito_personales_ccaf;
-        //fwrite($fch, $credito_personales_ccaf); // Grabas*/
+        //$var.= $credito_personales_ccaf;
+        fwrite($fch, $credito_personales_ccaf); // Grabas*/
 
         $descuento_dental = rellenar(0,8,"i");
-        $var.= $descuento_dental;
-        //fwrite($fch, $descuento_dental); // Grabas*/
+        //$var.= $descuento_dental;
+        fwrite($fch, $descuento_dental); // Grabas*/
 
         $descuento_leasing = rellenar(0,8,"i");
-        $var.= $descuento_leasing;
-        //fwrite($fch, $descuento_leasing); // Grabas*/
+        //$var.= $descuento_leasing;
+        fwrite($fch, $descuento_leasing); // Grabas*/
 
         $descuento_x_seguro = rellenar(0,8,"i");
-        $var.= $descuento_x_seguro;
-        //fwrite($fch, $descuento_x_seguro); // Grabas*/
+        //$var.= $descuento_x_seguro;
+        fwrite($fch, $descuento_x_seguro); // Grabas*/
 
         $otros_descuentos = rellenar(0,8,"i");
-        $var.= $otros_descuentos;
-        //fwrite($fch, $otros_descuentos); // Grabas*/
+        //$var.= $otros_descuentos;
+        fwrite($fch, $otros_descuentos); // Grabas*/
 
         $cotizacion_ccaf_no_isapres = rellenar(0,8,"i");
-        $var.= $cotizacion_ccaf_no_isapres;
-        //fwrite($fch, $cotizacion_ccaf_no_isapres); // Grabas*/
+        //$var.= $cotizacion_ccaf_no_isapres;
+        fwrite($fch, $cotizacion_ccaf_no_isapres); // Grabas*/
 
         $descuento_cargas_familiares_ccaf = rellenar(0,8,"i");
-        $var.= $descuento_cargas_familiares_ccaf;
-        //fwrite($fch, $descuento_cargas_familiares_ccaf); // Grabas*/
+        //$var.= $descuento_cargas_familiares_ccaf;
+        fwrite($fch, $descuento_cargas_familiares_ccaf); // Grabas*/
 
         $otros_descuentos_ccaf = rellenar(0,8,"i");
-        $var.= $otros_descuentos_ccaf;
-        //fwrite($fch, $otros_descuentos_ccaf); // Grabas*/
+        //$var.= $otros_descuentos_ccaf;
+        fwrite($fch, $otros_descuentos_ccaf); // Grabas*/
 
         $otros_descuentos_ccaf_2 = rellenar(0,8,"i");
-        $var.= $otros_descuentos_ccaf_2;
-        //fwrite($fch, $otros_descuentos_ccaf_2); // Grabas*/
+        //$var.= $otros_descuentos_ccaf_2;
+        fwrite($fch, $otros_descuentos_ccaf_2); // Grabas*/
 
         $bono_gobierno = rellenar(0,8,"i");
-        $var.= $bono_gobierno;
-        //fwrite($fch, $bono_gobierno); // Grabas*/
+        //$var.= $bono_gobierno;
+        fwrite($fch, $bono_gobierno); // Grabas*/
 
         $codigo_sucursal = rellenar("",20,"s");
-        $var.= $codigo_sucursal;
-        //fwrite($fch, $codigo_sucursal); // Grabas*/
+        //$var.= $codigo_sucursal;
+        fwrite($fch, $codigo_sucursal); // Grabas*/
 
         /* esta variable, termina los CCAF */
         $m_mutual = mutualidad();
         $cod_mutual = $m_mutual['codigo'];
         $codigo_mutual = rellenar($cod_mutual,2,"i");
-        $var.= $codigo_mutual;
-        //fwrite($fch, $codigo_mutual); // Grabas*/
+        //$var.= $codigo_mutual;
+        fwrite($fch, $codigo_mutual); // Grabas*/
 
         $renta_imponible_mutual = rellenar($imponible['totalImponible'],8,"i");
-        $var.= $renta_imponible_mutual;
-        //fwrite($fch, $renta_imponible_mutual); // Grabas*/
+        //$var.= $renta_imponible_mutual;
+        fwrite($fch, $renta_imponible_mutual); // Grabas*/
 
         $suma_mutual = ($m_mutual['tasaBase'] + $m_mutual['tasaAdicional']);
         $multiplicacion_mutual = (($suma_mutual * $imponible['totalImponible'])/100);
         $multiplicacion_redondeo_mutual = round($multiplicacion_mutual);
         $cotizacion_accidente_trabajo = rellenar($multiplicacion_redondeo_mutual,8,"i");
-        $var.= $cotizacion_accidente_trabajo;
-        //fwrite($fch, $cotizacion_accidente_trabajo); // Grabas*/
+        //$var.= $cotizacion_accidente_trabajo;
+        fwrite($fch, $cotizacion_accidente_trabajo); // Grabas*/
 
         $sucursal_pago_mutual = rellenar(0,3,"i");
-        $var.= $sucursal_pago_mutual;
-        //fwrite($fch, $sucursal_pago_mutual); // Grabas*/
+        //$var.= $sucursal_pago_mutual;
+        fwrite($fch, $sucursal_pago_mutual); // Grabas*/
 
         $renta_imponible_seguro_cesantia = rellenar($imponible['totalImponible'],8,"i");
-        $var.= $renta_imponible_seguro_cesantia;
-        //fwrite($fch, $renta_imponible_seguro_cesantia); // Grabas*/
+        //$var.= $renta_imponible_seguro_cesantia;
+        fwrite($fch, $renta_imponible_seguro_cesantia); // Grabas*/
         $aporte_trabajador = $imponible['afcMonto'];
         $aporte_trabajador_seguro_cesantia = rellenar($aporte_trabajador,8,"i");
-        $var.= $aporte_trabajador_seguro_cesantia;
-        //fwrite($fch, $aporte_trabajador_seguro_cesantia); // Grabas*/
+        //$var.= $aporte_trabajador_seguro_cesantia;
+        fwrite($fch, $aporte_trabajador_seguro_cesantia); // Grabas*/
 
         $aporte_empleador_seguro_cesantia = rellenar(0,8,"i");
-        $var.= $aporte_empleador_seguro_cesantia;
-        //fwrite($fch, $aporte_empleador_seguro_cesantia); // Grabas*/
+        //$var.= $aporte_empleador_seguro_cesantia;
+        fwrite($fch, $aporte_empleador_seguro_cesantia); // Grabas*/
 
         $pagadorSubsidios = pagadorSubsidios($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
         $rut_pagador = explode("-",$pagadorSubsidios["rut"]);
         $rut_pagador_previred = rellenar($rut_pagador[0],11,"i");
-        $var.= $rut_pagador_previred;
-        //fwrite($fch, $rut_pagador_previred); // Grabas
+        //$var.= $rut_pagador_previred;
+        fwrite($fch, $rut_pagador_previred); // Grabas
 
         $dv_pagador = $rut_pagador[1];
         $dv_pagador_previred = rellenar($dv_pagador,1,"s");
-        $var.= $dv_pagador_previred;
-        //fwrite($fch, $dv_pagador_previred); // Grabas
+        //$var.= $dv_pagador_previred;
+        fwrite($fch, $dv_pagador_previred); // Grabas
 
         $otros_datos = rellenar("",20,"s");
-        $var.= $otros_datos;
-        //fwrite($fch, $otros_datos); // Grabas
+        //$var.= $otros_datos;
+        fwrite($fch, $otros_datos); // Grabas
+        //show_array($arr_trabajadores_con_incidencia[0]['data']['fechas_limites']);
+        fwrite($fch, PHP_EOL); // Grabas
+        foreach ($arr_trabajadores_con_incidencia as $array_trabajadores) {
+            if ($array_trabajadores['trabajador_id'] == $empleado["id"]) {
+                if ($array_trabajadores['tipo_incidencia'] == 'movimientos') {
+                    fwrite($fch, $rut); // Grabas
+                    fwrite($fch, $dv); // Grabas
+                    fwrite($fch, $apellidoPaterno); // Grabas
+                    fwrite($fch, $apellidoMaterno); // Grabas
+                    fwrite($fch, $nombres); // Grabas
+                    fwrite($fch, $empleado_sexo); // Grabas
+                    fwrite($fch, $nacionalidad); // Grabas
+                    fwrite($fch, $tipo_pago); // Grabas
+                    fwrite($fch, $periodoDesde); // Grabas
+                    fwrite($fch, $periodoHasta); // Grabas
+                    fwrite($fch, $tip_afp); // Grabas
+                    fwrite($fch, $tip_trabajador); // Grabas
 
-        $var.= PHP_EOL;
+                    $dias_trabajado_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $dias_trabajado_movimientos); // Grabas
+
+                    $tipo_linea_movimientos = "01";
+                    $tipo_linea = rellenar($tipo_linea_movimientos,2,"s");
+                    fwrite($fch, $tipo_linea); // Grabas
+
+                    $codigo_movimientos = rellenar($array_trabajadores['data']['codigo_movimiento'],2,"i");
+                    fwrite($fch, $codigo_movimientos); // Grabas
+
+                    $separador_fecha_inicio_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_inicio']);
+                    $fecha_formateada_inicio_movimientos = $separador_fecha_inicio_movimientos[2]."-".$separador_fecha_inicio_movimientos[1]."-".$separador_fecha_inicio_movimientos[0];
+                    $fecha_formateada_inicio_movimientos = rellenar($fecha_formateada_inicio_movimientos,10,"s");
+                    fwrite($fch, $fecha_formateada_inicio_movimientos); // Grabas
+
+                    $separador_fecha_fin_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_fin']);
+                    $fecha_formateada_fin_movimientos = $separador_fecha_fin_movimientos[2]."-".$separador_fecha_fin_movimientos[1]."-".$separador_fecha_fin_movimientos[0];
+                    $fecha_formateada_fin_movimientos = rellenar($fecha_formateada_fin_movimientos,10,"s");
+                    fwrite($fch, $fecha_formateada_fin_movimientos); // Grabas
+
+                    $tramo = rellenar("",1,"s");
+                    fwrite($fch, $tramo); // Grabas
+
+                    $num_cargas_simples_movimientos = rellenar("0",2,"i");
+                    fwrite($fch, $num_cargas_simples_movimientos); // Grabas
+
+                    $num_cargas_maternales_movimientos = rellenar("0",1,"i");
+                    fwrite($fch, $num_cargas_maternales_movimientos); // Grabas
+
+                    $num_cargas_invalidas_movimientos = rellenar("0",1,"i");
+                    fwrite($fch, $num_cargas_invalidas_movimientos); // Grabas
+
+                    $asignacion_familiar_movimientos = rellenar("0",6,"i");
+                    fwrite($fch, $asignacion_familiar_movimientos); // Grabas
+
+                    $asignacion_familiar_retroactiva_movimientos = rellenar("0",6,"i");
+                    fwrite($fch, $asignacion_familiar_retroactiva_movimientos); // Grabas
+
+                    $reintegro_cargas_familiares_movimientos = rellenar("0",6,"i");
+                    fwrite($fch, $reintegro_cargas_familiares_movimientos); // Grabas
+
+                    $solicitud_trabajador_joven_movimientos = rellenar("",1,"s");
+                    fwrite($fch, $solicitud_trabajador_joven_movimientos); // Grabas
+
+                    $codigo_afp_movimientos = getCodigoAfp($empleado["id"]);
+                    $codigo_afp_convertido = leadZero($codigo_afp_movimientos["codigo"]);
+                    $codigo_afp_rellenar = rellenar($codigo_afp_convertido,2,"i");
+                    fwrite($fch, $codigo_afp_rellenar); // Grabas
+
+                    $renta_imponible_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $renta_imponible_movimientos); // Grabas
+
+                    $cotizacion_obligatoria_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $cotizacion_obligatoria_movimientos); // Grabas
+
+                    $cotizacion_seguro_invalides_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $cotizacion_seguro_invalides_movimientos); // Grabas
+
+                    $cuenta_ahorro_afp_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $cuenta_ahorro_afp_movimientos); // Grabas
+
+                    $renta_imponible_sust_afp_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $renta_imponible_sust_afp_movimientos); // Grabas
+
+                    $tasa_pactada_movimientos = $tasa_pactada;
+                    fwrite($fch, $tasa_pactada_movimientos); // Grabas
+
+                    $aporte_indemn_movimientos = $aporte_indemn;
+                    fwrite($fch, $aporte_indemn_movimientos); // Grabas
+
+                    $num_periodos = rellenar(0,2,"i");
+                    fwrite($fch, $num_periodos); // Grabas
+
+                    $periodoDesde_movimientos = rellenar("",10,"s");
+                    fwrite($fch, $periodoDesde_movimientos); // Grabas
+
+                    $periodoHasta_movimientos = rellenar("",10,"s");
+                    fwrite($fch, $periodoHasta_movimientos); // Grabas
+
+                    $puesto_trabajo_pesado_movimientos = rellenar("",40,"s");
+                    fwrite($fch, $puesto_trabajo_pesado_movimientos); // Grabas
+
+                    $porcentaje_cotizacion_trabajo_pesado_movimientos = $porcentaje_cotizacion_trabajo_pesado;
+                    fwrite($fch, $porcentaje_cotizacion_trabajo_pesado_movimientos); // Grabas 
+
+                    $cotizacion_trabajo_pesado_movimientos = rellenar(0,6,"i");
+                    fwrite($fch, $cotizacion_trabajo_pesado_movimientos); // Grabas 
+
+                    $codigo_institucion_apvi_movimientos = $codigo_institucion_apvi;
+                    fwrite($fch, $codigo_institucion_apvi_movimientos); // Grabas
+
+                    $numero_contrato_apvi_movimientos = $numero_contrato_apvi;
+                    fwrite($fch, $numero_contrato_apvi_movimientos); // Grabas
+
+                    $forma_pago_apvi_movimientos = $forma_pago_apvi;
+                    fwrite($fch, $forma_pago_apvi_movimientos); // Grabas
+
+                    $cotizacion_apvi_movimientos = $cotizacion_apvi;
+                    fwrite($fch, $cotizacion_apvi_movimientos); // Grabas
+
+                    $cotizacion_depositos_convenidos_movimientos = $cotizacion_depositos_convenidos;
+                    fwrite($fch, $cotizacion_depositos_convenidos_movimientos); // Grabas
+
+                    $codigo_institucion_autorizada_apvc_movimientos = $codigo_institucion_autorizada_apvc;
+                    fwrite($fch, $codigo_institucion_autorizada_apvc_movimientos); // Grabas
+
+                    $numero_contrato_apvc_movimientos = $numero_contrato_apvc;
+                    fwrite($fch, $numero_contrato_apvc_movimientos); // Grabas
+
+                    $forma_pago_apvc_movimientos = $forma_pago_apvc;
+                    fwrite($fch, $forma_pago_apvc_movimientos); // Grabas
+
+                    $cotizacion_trabajador_apvc_movimientos = $cotizacion_trabajador_apvc;
+                    fwrite($fch, $cotizacion_trabajador_apvc_movimientos); // Grabas
+
+                    $cotizacion_empleador_apvc_movimientos = $cotizacion_empleador_apvc;
+                    fwrite($fch, $cotizacion_empleador_apvc_movimientos); // Grabas
+
+                    $rut_afiliado_voluntario_movimientos = rellenar(0,11,"i");
+                    fwrite($fch, $rut_afiliado_voluntario_movimientos); // Grabas
+
+                    $dv_afiliado_voluntario_movimientos = rellenar("",1,"s");
+                    fwrite($fch, $dv_afiliado_voluntario_movimientos); // Grabas
+
+                    $apellidoPaterno_afiliado_voluntario_movimientos = rellenar("",30,"s");
+                    fwrite($fch, $apellidoPaterno_afiliado_voluntario_movimientos); // Grabas
+
+                    $apellidoMaterno_afiliado_voluntario_movimientos = rellenar("",30,"s");
+                    fwrite($fch, $apellidoMaterno_afiliado_voluntario_movimientos); // Grabas
+
+                    $nombres_afiliado_movimientos = rellenar("",30,"s");
+                    fwrite($fch, $nombres_afiliado_movimientos); // Grabas
+
+                    $codigo_movimiento_personal_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $codigo_movimiento_personal_movimientos); // Grabas
+
+                    $fecha_desde_afiliado_movimientos = rellenar("",10,"s");
+                    fwrite($fch, $fecha_desde_afiliado_movimientos); // Grabas
+
+                    $fecha_hasta_afiliado_movimientos = rellenar("",10,"s");
+                    fwrite($fch, $fecha_hasta_afiliado_movimientos); // Grabas
+
+                    $codigo_afp_afiliado_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $codigo_afp_afiliado_movimientos); // Grabas
+
+                    $monto_capitalizacion_voluntaria_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $monto_capitalizacion_voluntaria_movimientos); // Grabas
+
+                    $monto_ahorro_voluntario_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $monto_ahorro_voluntario_movimientos); // Grabas
+
+                    $numero_periodos_cotizacion_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $numero_periodos_cotizacion_movimientos); // Grabas
+
+                    $codigo_ex_caga_regimen_movimientos = rellenar(0,4,"i");
+                    fwrite($fch, $codigo_ex_caga_regimen_movimientos); // Grabas
+
+                    $tasa_cotizacion_ex_caja_prevision_movimientos = "00,00";
+                    fwrite($fch, $tasa_cotizacion_ex_caja_prevision_movimientos); // Grabas
+
+                    $renta_imponible_ips_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $renta_imponible_ips_movimientos); // Grabas
+
+                    $cotizacion_obligatoria_ips_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_obligatoria_ips_movimientos); // Grabas
+
+                    $renta_imponible_desahucio_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $renta_imponible_desahucio_movimientos); // Grabas
+
+                    $codigo_ex_caja_regimen_desahucio_movimientos = rellenar(0,4,"i");
+                    fwrite($fch, $codigo_ex_caja_regimen_desahucio_movimientos); // Grabas
+
+                    $tasa_cotizacion_desahucio_excaja_prevision_movimientos = "00,00";
+                    fwrite($fch, $tasa_cotizacion_desahucio_excaja_prevision_movimientos); // Grabas
+
+                    $cotizacion_desaucio_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_desaucio_movimientos); // Grabas
+
+                    $cotizacion_fonasa_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_fonasa_movimientos); // Grabas
+
+                    $cotizacion_acc_trabajo_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_acc_trabajo_movimientos); // Grabas
+
+                    $bonificacion_ley_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $bonificacion_ley_movimientos); // Grabas
+
+                    $descuento_x_cargas_familiares_isl_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_x_cargas_familiares_isl_movimientos); // Grabas
+
+                    $bonos_gobierno_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $bonos_gobierno_movimientos); // Grabas
+
+                    $codigo_institucion_salud_movimientos = $codigo_institucion_salud;
+                    fwrite($fch, $codigo_institucion_salud_movimientos); // Grabas
+
+                    $numero_fun_movimientos = rellenar(0,16,"i");
+                    fwrite($fch, $numero_fun_movimientos); // Grabas
+
+                    $renta_imponible_isapre_movimientos = $renta_imponible_isapre;
+                    fwrite($fch, $renta_imponible_isapre_movimientos); // Grabas
+
+                    $moneda_plan_isapre_movimientos = rellenar(0,1,"i");
+                    fwrite($fch, $moneda_plan_isapre_movimientos); // Grabas
+
+                    $cotizacion_pactada = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_pactada); // Grabas
+
+                    $cotizacion_obligatoria_isapre_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_obligatoria_isapre_movimientos); // Grabas
+
+                    $cotizacion_adicional_voluntaria_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_adicional_voluntaria_movimientos); // Grabas
+
+                    $monto_g_e_salud_movimientos = $monto_g_e_salud;
+                    fwrite($fch, $monto_g_e_salud_movimientos); // Grabas
+
+                    $codigo_CCAF_movimientos = $codigo_CCAF;
+                    fwrite($fch, $codigo_CCAF_movimientos); // Grabas
+
+                    $renta_imponible_CCAF_movimientos = $renta_imponible_CCAF;
+                    fwrite($fch, $renta_imponible_CCAF_movimientos); // Grabas
+
+                    $credito_personales_ccaf_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $credito_personales_ccaf_movimientos); // Grabas
+
+                    $descuento_dental_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_dental_movimientos); // Grabas
+
+                    $descuento_leasing_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_leasing_movimientos); // Grabas
+
+                    $descuento_x_seguro_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_x_seguro_movimientos); // Grabas
+
+                    $otros_descuentos_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $otros_descuentos_movimientos); // Grabas
+
+                    $cotizacion_ccaf_no_isapres_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_ccaf_no_isapres_movimientos); // Grabas
+
+                    $descuento_cargas_familiares_ccaf_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_cargas_familiares_ccaf_movimientos); // Grabas
+
+                    $otros_descuentos_ccaf_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $otros_descuentos_ccaf_movimientos); // Grabas
+
+                    $otros_descuentos_ccaf_2_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $otros_descuentos_ccaf_2_movimientos); // Grabas
+
+                    $bonos_gobierno_movimientos_2 = rellenar(0,8,"i");
+                    fwrite($fch, $bonos_gobierno_movimientos_2); // Grabas
+
+                    $codigo_sucursal_movimientos = rellenar(0,20,"i");
+                    fwrite($fch, $codigo_sucursal_movimientos); // Grabas
+
+                    $codigo_mutual_movimientos = $codigo_mutual;
+                    fwrite($fch, $codigo_mutual_movimientos); // Grabas
+
+                    $renta_imponible_mutual_movimientos = $renta_imponible_mutual;
+                    fwrite($fch, $renta_imponible_mutual_movimientos); // Grabas
+
+                    $cotizacion_accidente_trabajo_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_accidente_trabajo_movimientos); // Grabas
+
+                    $sucursal_pago_mutual_movimientos = $sucursal_pago_mutual;
+                    fwrite($fch, $sucursal_pago_mutual_movimientos); // Grabas
+
+                    $renta_imponible_seguro_cesantia_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $renta_imponible_seguro_cesantia_movimientos); // Grabas
+
+                    $aporte_trabajador_seguro_cesantia_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $aporte_trabajador_seguro_cesantia_movimientos); // Grabas
+
+                    $aporte_empleador_seguro_cesantia_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $aporte_empleador_seguro_cesantia_movimientos); // Grabas
+
+                    $rut_pagador_previred_movimientos = $rut_pagador_previred;
+                    fwrite($fch, $rut_pagador_previred_movimientos); // Grabas
+
+                    $dv_pagador_previred_movimientos = $dv_pagador_previred;
+                    fwrite($fch, $dv_pagador_previred_movimientos); // Grabas
+
+                    $otros_datos_movimientos = rellenar("",20,"s");
+                    fwrite($fch, $otros_datos_movimientos); // Grabas
+                    fwrite($fch, PHP_EOL); // Grabas
+                }
+                elseif ($array_trabajadores['tipo_incidencia'] == 'apv') 
+                {
+
+                    fwrite($fch, $rut); // Grabas
+                    fwrite($fch, $dv); // Grabas
+                    fwrite($fch, $apellidoPaterno); // Grabas
+                    fwrite($fch, $apellidoMaterno); // Grabas
+                    fwrite($fch, $nombres); // Grabas
+                    fwrite($fch, $empleado_sexo); // Grabas
+                    fwrite($fch, $nacionalidad); // Grabas
+                    fwrite($fch, $tipo_pago); // Grabas
+                    fwrite($fch, $periodoDesde); // Grabas
+                    fwrite($fch, $periodoHasta); // Grabas
+                    fwrite($fch, $tip_afp); // Grabas
+                    fwrite($fch, $tip_trabajador); // Grabas
+
+                    $dias_trabajado_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $dias_trabajado_movimientos); // Grabas
+
+                    $tipo_linea_movimientos = "01";
+                    $tipo_linea = rellenar($tipo_linea_movimientos,2,"s");
+                    fwrite($fch, $tipo_linea); // Grabas
+
+                    $codigo_movimientos = rellenar($array_trabajadores['data']['codigo_movimiento'],2,"i");
+                    fwrite($fch, $codigo_movimientos); // Grabas
+
+                    $separador_fecha_inicio_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_inicio']);
+                    $fecha_formateada_inicio_movimientos = $separador_fecha_inicio_movimientos[2]."-".$separador_fecha_inicio_movimientos[1]."-".$separador_fecha_inicio_movimientos[0];
+                    $fecha_formateada_inicio_movimientos = rellenar($fecha_formateada_inicio_movimientos,10,"s");
+                    fwrite($fch, $fecha_formateada_inicio_movimientos); // Grabas
+
+                    $separador_fecha_fin_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_fin']);
+                    $fecha_formateada_fin_movimientos = $separador_fecha_fin_movimientos[2]."-".$separador_fecha_fin_movimientos[1]."-".$separador_fecha_fin_movimientos[0];
+                    $fecha_formateada_fin_movimientos = rellenar($fecha_formateada_fin_movimientos,10,"s");
+                    fwrite($fch, $fecha_formateada_fin_movimientos); // Grabas
+
+                    $tramo = rellenar("",1,"s");
+                    fwrite($fch, $tramo); // Grabas
+
+                    $num_cargas_simples_movimientos = rellenar("0",2,"i");
+                    fwrite($fch, $num_cargas_simples_movimientos); // Grabas
+
+                    $num_cargas_maternales_movimientos = rellenar("0",1,"i");
+                    fwrite($fch, $num_cargas_maternales_movimientos); // Grabas
+
+                    $num_cargas_invalidas_movimientos = rellenar("0",1,"i");
+                    fwrite($fch, $num_cargas_invalidas_movimientos); // Grabas
+
+                    $asignacion_familiar_movimientos = rellenar("0",6,"i");
+                    fwrite($fch, $asignacion_familiar_movimientos); // Grabas
+
+                    $asignacion_familiar_retroactiva_movimientos = rellenar("0",6,"i");
+                    fwrite($fch, $asignacion_familiar_retroactiva_movimientos); // Grabas
+
+                    $reintegro_cargas_familiares_movimientos = rellenar("0",6,"i");
+                    fwrite($fch, $reintegro_cargas_familiares_movimientos); // Grabas
+
+                    $solicitud_trabajador_joven_movimientos = rellenar("",1,"s");
+                    fwrite($fch, $solicitud_trabajador_joven_movimientos); // Grabas
+
+                    $codigo_afp_rellenar = rellenar(0,2,"i");
+                    fwrite($fch, $codigo_afp_rellenar); // Grabas
+
+                    $renta_imponible_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $renta_imponible_movimientos); // Grabas
+
+                    $cotizacion_obligatoria_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $cotizacion_obligatoria_movimientos); // Grabas
+
+                    $cotizacion_seguro_invalides_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $cotizacion_seguro_invalides_movimientos); // Grabas
+
+                    $cuenta_ahorro_afp_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $cuenta_ahorro_afp_movimientos); // Grabas
+
+                    $renta_imponible_sust_afp_movimientos = rellenar("0",8,"i");
+                    fwrite($fch, $renta_imponible_sust_afp_movimientos); // Grabas
+
+                    $tasa_pactada_movimientos = $tasa_pactada;
+                    fwrite($fch, $tasa_pactada_movimientos); // Grabas
+
+                    $aporte_indemn_movimientos = $aporte_indemn;
+                    fwrite($fch, $aporte_indemn_movimientos); // Grabas
+
+                    $num_periodos = rellenar(0,2,"i");
+                    fwrite($fch, $num_periodos); // Grabas
+
+                    $periodoDesde_movimientos = rellenar("",10,"s");
+                    fwrite($fch, $periodoDesde_movimientos); // Grabas
+
+                    $periodoHasta_movimientos = rellenar("",10,"s");
+                    fwrite($fch, $periodoHasta_movimientos); // Grabas
+
+                    $puesto_trabajo_pesado_movimientos = rellenar("",40,"s");
+                    fwrite($fch, $puesto_trabajo_pesado_movimientos); // Grabas
+
+                    $porcentaje_cotizacion_trabajo_pesado_movimientos = $porcentaje_cotizacion_trabajo_pesado;
+                    fwrite($fch, $porcentaje_cotizacion_trabajo_pesado_movimientos); // Grabas 
+
+                    $cotizacion_trabajo_pesado_movimientos = rellenar(0,6,"i");
+                    fwrite($fch, $cotizacion_trabajo_pesado_movimientos); // Grabas 
+
+                    $codigo_institucion_apvi_movimientos = $codigo_institucion_apvi;
+                    fwrite($fch, $codigo_institucion_apvi_movimientos); // Grabas
+
+                    $numero_contrato_apvi_movimientos = $numero_contrato_apvi;
+                    fwrite($fch, $numero_contrato_apvi_movimientos); // Grabas
+
+                    $forma_pago_apvi_movimientos = $forma_pago_apvi;
+                    fwrite($fch, $forma_pago_apvi_movimientos); // Grabas
+
+                    $cotizacion_apvi_movimientos = $cotizacion_apvi;
+                    fwrite($fch, $cotizacion_apvi_movimientos); // Grabas
+
+                    $cotizacion_depositos_convenidos_movimientos = $cotizacion_depositos_convenidos;
+                    fwrite($fch, $cotizacion_depositos_convenidos_movimientos); // Grabas
+
+                    $codigo_institucion_autorizada_apvc_movimientos = $codigo_institucion_autorizada_apvc;
+                    fwrite($fch, $codigo_institucion_autorizada_apvc_movimientos); // Grabas
+
+                    $numero_contrato_apvc_movimientos = $numero_contrato_apvc;
+                    fwrite($fch, $numero_contrato_apvc_movimientos); // Grabas
+
+                    $forma_pago_apvc_movimientos = $forma_pago_apvc;
+                    fwrite($fch, $forma_pago_apvc_movimientos); // Grabas
+
+                    $cotizacion_trabajador_apvc_movimientos = $cotizacion_trabajador_apvc;
+                    fwrite($fch, $cotizacion_trabajador_apvc_movimientos); // Grabas
+
+                    $cotizacion_empleador_apvc_movimientos = $cotizacion_empleador_apvc;
+                    fwrite($fch, $cotizacion_empleador_apvc_movimientos); // Grabas
+
+                    $rut_afiliado_voluntario_movimientos = rellenar(0,11,"i");
+                    fwrite($fch, $rut_afiliado_voluntario_movimientos); // Grabas
+
+                    $dv_afiliado_voluntario_movimientos = rellenar("",1,"s");
+                    fwrite($fch, $dv_afiliado_voluntario_movimientos); // Grabas
+
+                    $apellidoPaterno_afiliado_voluntario_movimientos = rellenar("",30,"s");
+                    fwrite($fch, $apellidoPaterno_afiliado_voluntario_movimientos); // Grabas
+
+                    $apellidoMaterno_afiliado_voluntario_movimientos = rellenar("",30,"s");
+                    fwrite($fch, $apellidoMaterno_afiliado_voluntario_movimientos); // Grabas
+
+                    $nombres_afiliado_movimientos = rellenar("",30,"s");
+                    fwrite($fch, $nombres_afiliado_movimientos); // Grabas
+
+                    $codigo_movimiento_personal_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $codigo_movimiento_personal_movimientos); // Grabas
+
+                    $fecha_desde_afiliado_movimientos = rellenar("",10,"s");
+                    fwrite($fch, $fecha_desde_afiliado_movimientos); // Grabas
+
+                    $fecha_hasta_afiliado_movimientos = rellenar("",10,"s");
+                    fwrite($fch, $fecha_hasta_afiliado_movimientos); // Grabas
+
+                    $codigo_afp_afiliado_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $codigo_afp_afiliado_movimientos); // Grabas
+
+                    $monto_capitalizacion_voluntaria_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $monto_capitalizacion_voluntaria_movimientos); // Grabas
+
+                    $monto_ahorro_voluntario_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $monto_ahorro_voluntario_movimientos); // Grabas
+
+                    $numero_periodos_cotizacion_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $numero_periodos_cotizacion_movimientos); // Grabas
+
+                    $codigo_ex_caga_regimen_movimientos = rellenar(0,4,"i");
+                    fwrite($fch, $codigo_ex_caga_regimen_movimientos); // Grabas
+
+                    $tasa_cotizacion_ex_caja_prevision_movimientos = "00,00";
+                    fwrite($fch, $tasa_cotizacion_ex_caja_prevision_movimientos); // Grabas
+
+                    $renta_imponible_ips_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $renta_imponible_ips_movimientos); // Grabas
+
+                    $cotizacion_obligatoria_ips_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_obligatoria_ips_movimientos); // Grabas
+
+                    $renta_imponible_desahucio_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $renta_imponible_desahucio_movimientos); // Grabas
+
+                    $codigo_ex_caja_regimen_desahucio_movimientos = rellenar(0,4,"i");
+                    fwrite($fch, $codigo_ex_caja_regimen_desahucio_movimientos); // Grabas
+
+                    $tasa_cotizacion_desahucio_excaja_prevision_movimientos = "00,00";
+                    fwrite($fch, $tasa_cotizacion_desahucio_excaja_prevision_movimientos); // Grabas
+
+                    $cotizacion_desaucio_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_desaucio_movimientos); // Grabas
+
+                    $cotizacion_fonasa_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_fonasa_movimientos); // Grabas
+
+                    $cotizacion_acc_trabajo_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_acc_trabajo_movimientos); // Grabas
+
+                    $bonificacion_ley_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $bonificacion_ley_movimientos); // Grabas
+
+                    $descuento_x_cargas_familiares_isl_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_x_cargas_familiares_isl_movimientos); // Grabas
+
+                    $bonos_gobierno_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $bonos_gobierno_movimientos); // Grabas
+
+                    $codigo_institucion_salud_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $codigo_institucion_salud_movimientos); // Grabas
+
+                    $numero_fun_movimientos = rellenar(0,16,"i");
+                    fwrite($fch, $numero_fun_movimientos); // Grabas
+
+                    $renta_imponible_isapre_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $renta_imponible_isapre_movimientos); // Grabas
+
+                    $moneda_plan_isapre_movimientos = rellenar(0,1,"i");
+                    fwrite($fch, $moneda_plan_isapre_movimientos); // Grabas
+
+                    $cotizacion_pactada = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_pactada); // Grabas
+
+                    $cotizacion_obligatoria_isapre_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_obligatoria_isapre_movimientos); // Grabas
+
+                    $cotizacion_adicional_voluntaria_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_adicional_voluntaria_movimientos); // Grabas
+
+                    $monto_g_e_salud_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $monto_g_e_salud_movimientos); // Grabas
+
+                    $codigo_CCAF_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $codigo_CCAF_movimientos); // Grabas
+
+                    $renta_imponible_CCAF_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $renta_imponible_CCAF_movimientos); // Grabas
+
+                    $credito_personales_ccaf_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $credito_personales_ccaf_movimientos); // Grabas
+
+                    $descuento_dental_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_dental_movimientos); // Grabas
+
+                    $descuento_leasing_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_leasing_movimientos); // Grabas
+
+                    $descuento_x_seguro_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_x_seguro_movimientos); // Grabas
+
+                    $otros_descuentos_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $otros_descuentos_movimientos); // Grabas
+
+                    $cotizacion_ccaf_no_isapres_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_ccaf_no_isapres_movimientos); // Grabas
+
+                    $descuento_cargas_familiares_ccaf_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $descuento_cargas_familiares_ccaf_movimientos); // Grabas
+
+                    $otros_descuentos_ccaf_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $otros_descuentos_ccaf_movimientos); // Grabas
+
+                    $otros_descuentos_ccaf_2_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $otros_descuentos_ccaf_2_movimientos); // Grabas
+
+                    $bonos_gobierno_movimientos_2 = rellenar(0,8,"i");
+                    fwrite($fch, $bonos_gobierno_movimientos_2); // Grabas
+
+                    $codigo_sucursal_movimientos = rellenar(0,20,"i");
+                    fwrite($fch, $codigo_sucursal_movimientos); // Grabas
+
+                    $codigo_mutual_movimientos = rellenar(0,2,"i");
+                    fwrite($fch, $codigo_mutual_movimientos); // Grabas
+
+                    $renta_imponible_mutual_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $renta_imponible_mutual_movimientos); // Grabas
+
+                    $cotizacion_accidente_trabajo_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $cotizacion_accidente_trabajo_movimientos); // Grabas
+
+                    $sucursal_pago_mutual_movimientos = rellenar(0,3,"i");
+                    fwrite($fch, $sucursal_pago_mutual_movimientos); // Grabas
+
+                    $renta_imponible_seguro_cesantia_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $renta_imponible_seguro_cesantia_movimientos); // Grabas
+
+                    $aporte_trabajador_seguro_cesantia_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $aporte_trabajador_seguro_cesantia_movimientos); // Grabas
+
+                    $aporte_empleador_seguro_cesantia_movimientos = rellenar(0,8,"i");
+                    fwrite($fch, $aporte_empleador_seguro_cesantia_movimientos); // Grabas
+
+                    $rut_pagador_previred_movimientos = rellenar(0,11,"i");
+                    fwrite($fch, $rut_pagador_previred_movimientos); // Grabas
+
+                    $dv_pagador_previred_movimientos = rellenar("",1,"s");
+                    fwrite($fch, $dv_pagador_previred_movimientos); // Grabas
+
+                    $otros_datos_movimientos = rellenar("",20,"s");
+                    fwrite($fch, $otros_datos_movimientos); // Grabas
+                    fwrite($fch, PHP_EOL); // Grabas
+                }
+            }
+        }
+
+        //$var.= PHP_EOL;
 
     }
-    fwrite($fch, $var); // Grabas
     fclose($fch); // Cierras el archivo.
 
     // Headers for an download:

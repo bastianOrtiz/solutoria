@@ -15,8 +15,8 @@ if( $_POST ){
 
 if( $parametros ){
     $empleados = buscarEmpleados($id_empresa); 
-    $periodoDesde = date("m").date("Y"); 
-    $periodoHasta = date("m").date("Y"); 
+    $periodoDesde = getMesMostrarCorte().getAnoMostrarCorte(); 
+    $periodoHasta = getMesMostrarCorte().getAnoMostrarCorte();
 }
 
 include ROOT . '/views/comun/header.php';
