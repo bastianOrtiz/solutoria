@@ -138,8 +138,8 @@ if( $_POST ){
         } 
         
         //Guardar SIS y SCes
-        $sis = calcularSis($totalImponible,$trabajador_id,$mes);
-        $sces = calcularSCes($totalImponible,$trabajador_id,$year);
+        $sis = calcularSis($totalImponible,$trabajador_id,$mes,$year);
+        $sces = calcularSCes($totalImponible,$trabajador_id,$mes,$year);
         
 
         $data_seguros = array(
