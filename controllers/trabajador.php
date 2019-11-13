@@ -473,6 +473,33 @@ if( $_POST ){
 }
 
 if( $parametros ){
+
+    if( $parametros[0] == 'api' ){
+        
+        header('Content-type: application/json');
+        
+        if( $_POST['secret'] == md5('arriba los que luchan') ){
+            $db->where('rut',$_POST['rut']);
+            $foto = $db->getValue('m_trabajador','foto');
+
+            $path = ROOT . '/private/uploads/images/' . $foto;
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+            $data = [
+                'thumbnail' => $base64
+            ];
+
+            echo json_encode( $data );
+        } else {
+            echo json_encode(['msg' => 'no permitido']);
+        }
+
+        exit();
+    }
+
+
     /** Consultar datos de trabajador **/
     if( isset($parametros[1]) ){
         
