@@ -732,8 +732,8 @@ if( $parametros[0] == 'reliquidar' ){
 
         if( $db->count > 0 ){            
             $liquidacion_id = $liq['id'];
-            $db->where('id',$liquidacion_id);
-            $db->update('liquidacion', $array_data );
+            //$db->where('id',$liquidacion_id);
+            //$db->update('liquidacion', $array_data );
             $liquidacion_action = "UPDATE";
         } 
 
@@ -746,52 +746,69 @@ if( $parametros[0] == 'reliquidar' ){
 
 
 
-if( $parametros[0] == 'reliquidar2' ){
+if( $parametros[0] == 'reliquidar_bonos' ){
 
     $mes = 8;
 
-    $db->where("mes",$mes);
-    $db->where("ano",$year);
-    $liqs = $db->get('liquidacion');
+    $db->orderBy('apellidoPaterno','ASC');
+    $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+    $db->where('tipocontrato_id',array(3,4),'NOT IN');
+    $db->where('centrocosto_id',3);
+    @$trabajadores_todos = $db->get('m_trabajador');
 
 
-    foreach ($liqs as $key => $value) {
+    echo "<table class='table table-striped' style='width: 500px'>";
 
-        $db->where('id',$value['trabajador_id']);
-        $trab = $db->getOne('m_trabajador');
+    foreach ($trabajadores_todos as $key => $trab) {
 
-        if($trab['centrocosto_id'] == 4){
-        
-            $liquidacion_id = $value['id'];
+            $trabajador_id = $trab['id'];
 
-            $sql_haberes = "
-            SELECT H.nombre, LH.monto, H.comision AS es_comision, LH.glosa
-            FROM m_haber H, l_haber LH
-            WHERE liquidacion_id = $liquidacion_id
-            AND H.imponible = 1
-            AND H.id = LH.haber_id
-            ORDER BY LH.id ASC ";
-            $haberes_imponibles = $db->rawQuery($sql_haberes);
+            $db->where("trabajador_id",$trabajador_id);
+            $db->where("mes",$mes);
+            $db->where("ano",$year);
+            $liq = $db->getOne('liquidacion');
+
+            if( $liq ){
+
+                $liquidacion_id = $liq['id'];
             
-           
-            $total_haberes_imponibles = 0;
-            foreach( $haberes_imponibles as $dt ){
-                if( $dt['es_comision'] == 0 ){
-                    $valor_subtotal = $dt['monto'] ;
-                    $total_haberes_imponibles += $valor_subtotal;
+                $sql_haberes = "
+                SELECT H.nombre, LH.monto, H.comision AS es_comision, LH.glosa
+                FROM m_haber H, l_haber LH
+                WHERE liquidacion_id = $liquidacion_id
+                AND H.imponible = 1
+                AND H.nombre like 'bono%'
+                AND H.id = LH.haber_id
+                ORDER BY LH.id ASC ";
+                $haberes_imponibles = $db->rawQuery($sql_haberes);
+               
+                $total_haberes_imponibles = 0;
+                foreach( $haberes_imponibles as $dt ){
+                    if( $dt['es_comision'] == 0 ){
+                        $valor_subtotal = $dt['monto'] ;
+                        $total_haberes_imponibles += $valor_subtotal;
+                    }
                 }
+
+                $array_data = [
+                    'totalHaberesImponibles' => $total_haberes_imponibles
+                ];
+
+                $db->where('id',$liquidacion_id);
+                $db->update('liquidacion', $array_data );
+
             }
 
-            $array_data = [
-                'totalHaberesImponibles' => $total_haberes_imponibles
-            ];
 
-            $db->where('id',$liquidacion_id);
-            $db->update('liquidacion', $array_data );
+            echo '
+            <tr>
+                <td>'.getNombreTrabajador($trab['id'], false).'</td>
+                <td>'.$total_haberes_imponibles.'</td>
+            </tr>';
 
-            show_array(getNombreTrabajador($value['trabajador_id'], false) . " : " . $total_haberes_imponibles . "<hr><br>",0);
-        }
-    }   
+    } 
+
+    echo "</table>";  
 }
 
 
