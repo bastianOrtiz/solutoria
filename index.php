@@ -61,6 +61,17 @@ if( ( isset($_SESSION[ PREFIX . 'logged']) ) && ( $_SESSION[ PREFIX . 'logged'] 
 
 /** Si NO está logueado procesa la vista "login" **/
 else {
+    if($parametros[0] == 'api'){
+        $db->where ("user", $_GET['u']);
+        $db->where ("password", $_GET['secret']);
+        $user = $db->getOne ("m_usuario");
+        if( $user ){
+            include ROOT . '/public/api/index.php'; 
+        } else {
+            echo json_encode(['msg'=>'login fail']);
+        }
+        exit();
+    }
     if( $entity == "login_trabajador" ){
         include ROOT . '/models/login_trabajador.php';
         include ROOT . '/controllers/login_trabajador.php'; 
