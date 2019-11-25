@@ -353,17 +353,52 @@ if( $parametros ){
         }
 
 
-        $sql = "
+        $sql_adm = "
         select T.apellidoPaterno, T.apellidoMaterno, T.nombres, L.sueldoBase, L.gratificacion, (L.sueldoBase + L.gratificacion) as imponible, L.horaExtraMonto, L.horaExtraFestivoMonto, L.totalHaberesImponibles
         from m_trabajador T, liquidacion L
-        WHERE L.mes = 8
-        AND L.ano = 2019
+        WHERE L.mes = $mes
+        AND L.ano = $ano
         AND T.empresa_id = 2
         AND T.centrocosto_id = 2
         and L.trabajador_id = T.id  
         ORDER BY `T`.`apellidoPaterno` ASC
         ";
-        $result = $db->rawQuery($sql);
+        $result_adm = $db->rawQuery($sql_adm);
+
+        $sql_com = "
+        select T.apellidoPaterno, T.apellidoMaterno, T.nombres, L.sueldoBase, L.gratificacion, (L.sueldoBase + L.gratificacion) as imponible, L.horaExtraMonto, L.horaExtraFestivoMonto, L.totalHaberesImponibles
+        from m_trabajador T, liquidacion L
+        WHERE L.mes = $mes
+        AND L.ano = $ano
+        AND T.empresa_id = 2
+        AND T.centrocosto_id = 4
+        and L.trabajador_id = T.id  
+        ORDER BY `T`.`apellidoPaterno` ASC
+        ";
+        $result_com = $db->rawQuery($sql_com);
+
+        $arr_results = [
+            2 => $result_adm,
+            4 => $result_com
+        ];
+
+        $sql_tec = "
+        select T.apellidoPaterno, T.apellidoMaterno, T.nombres, L.sueldoBase, L.gratificacion, (L.sueldoBase + L.gratificacion) as imponible, L.horaExtraMonto, L.horaExtraFestivoMonto, L.totalHaberesImponibles
+        from m_trabajador T, liquidacion L
+        WHERE L.mes = $mes
+        AND L.ano = $ano
+        AND T.empresa_id = 2
+        AND T.centrocosto_id = 3
+        and L.trabajador_id = T.id  
+        ORDER BY `T`.`apellidoPaterno` ASC
+        ";
+        $result_tec = $db->rawQuery($sql_tec);
+
+        $arr_results = [
+            2 => $result_adm,
+            4 => $result_com,
+            3 => $result_tec
+        ];
 
 
     }

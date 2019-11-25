@@ -473,6 +473,7 @@ if( $_POST ){
 }
 
 if( $parametros ){
+
     /** Consultar datos de trabajador **/
     if( isset($parametros[1]) ){
         

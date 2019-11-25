@@ -138,8 +138,8 @@ if( $_POST ){
         } 
         
         //Guardar SIS y SCes
-        $sis = calcularSis($totalImponible,$trabajador_id,$mes);
-        $sces = calcularSCes($totalImponible,$trabajador_id,$year);
+        $sis = calcularSis($totalImponible,$trabajador_id,$mes,$year);
+        $sces = calcularSCes($totalImponible,$trabajador_id,$mes,$year);
         
 
         $data_seguros = array(
@@ -677,17 +677,19 @@ if( isset($parametros[1]) ){
 
 
 if( $parametros[0] == 'reliquidar' ){
+
+    $mes = 8;
     
     $db->orderBy('apellidoPaterno','ASC');
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
     $db->where('tipocontrato_id',array(3,4),'NOT IN');
     $db->where('marcaTarjeta',1);
-    $db->where('centrocosto_id',2);
     @$trabajadores_todos = $db->get('m_trabajador');
 
     $fecha_inicio_sql = $year."-".leadZero($mes)."-".getLimiteMes($mes);
 
     foreach ($trabajadores_todos as $trabjador) {
+
 
         $trabajador_id = $trabjador['id'];
 
@@ -730,14 +732,83 @@ if( $parametros[0] == 'reliquidar' ){
 
         if( $db->count > 0 ){            
             $liquidacion_id = $liq['id'];
-            $db->where('id',$liquidacion_id);
-            $db->update('liquidacion', $array_data );
+            //$db->where('id',$liquidacion_id);
+            //$db->update('liquidacion', $array_data );
             $liquidacion_action = "UPDATE";
         } 
 
 
     }
 
+}
+
+
+
+
+
+if( $parametros[0] == 'reliquidar_bonos' ){
+
+    $mes = 8;
+
+    $db->orderBy('apellidoPaterno','ASC');
+    $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+    $db->where('tipocontrato_id',array(3,4),'NOT IN');
+    $db->where('centrocosto_id',3);
+    @$trabajadores_todos = $db->get('m_trabajador');
+
+
+    echo "<table class='table table-striped' style='width: 500px'>";
+
+    foreach ($trabajadores_todos as $key => $trab) {
+
+            $trabajador_id = $trab['id'];
+
+            $db->where("trabajador_id",$trabajador_id);
+            $db->where("mes",$mes);
+            $db->where("ano",$year);
+            $liq = $db->getOne('liquidacion');
+
+            if( $liq ){
+
+                $liquidacion_id = $liq['id'];
+            
+                $sql_haberes = "
+                SELECT H.nombre, LH.monto, H.comision AS es_comision, LH.glosa
+                FROM m_haber H, l_haber LH
+                WHERE liquidacion_id = $liquidacion_id
+                AND H.imponible = 1
+                AND H.nombre like 'bono%'
+                AND H.id = LH.haber_id
+                ORDER BY LH.id ASC ";
+                $haberes_imponibles = $db->rawQuery($sql_haberes);
+               
+                $total_haberes_imponibles = 0;
+                foreach( $haberes_imponibles as $dt ){
+                    if( $dt['es_comision'] == 0 ){
+                        $valor_subtotal = $dt['monto'] ;
+                        $total_haberes_imponibles += $valor_subtotal;
+                    }
+                }
+
+                $array_data = [
+                    'totalHaberesImponibles' => $total_haberes_imponibles
+                ];
+
+                $db->where('id',$liquidacion_id);
+                $db->update('liquidacion', $array_data );
+
+            }
+
+
+            echo '
+            <tr>
+                <td>'.getNombreTrabajador($trab['id'], false).'</td>
+                <td>'.$total_haberes_imponibles.'</td>
+            </tr>';
+
+    } 
+
+    echo "</table>";  
 }
 
 
