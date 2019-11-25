@@ -403,7 +403,7 @@ function crearTxt($post){
        ];
     }
 
-    $archivo= ROOT."/private/uploads/docs/previred.txt"; // el nombre de tu archivo
+    $archivo= ROOT."previred.txt"; // el nombre de tu archivo
     $empleados= $empleados; // Recibez el formulario
 
     $fch= fopen($archivo, "w"); // Abres el archivo para escribir en él
@@ -564,26 +564,13 @@ function crearTxt($post){
             //$var.= $fecha_formateada_fin;
             fwrite($fch, $fecha_formateada_fin); // Grabas
         }else{
-            $codigo_movimiento = rellenar($movimientos[0]["codigo_movimiento"],2,"i");
+            $codigo_movimiento = rellenar(0,2,"i");
             //$var.= $codigo_movimiento;
             fwrite($fch, $codigo_movimiento); // Grabas
-            if ($movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
-                $fecha_formateada_inicio = rellenar($movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
-            }else{
-                $separador_fecha_inicio = explode("-",$movimientos[0]["fechas_limites"]["fecha_inicio"]);
-                $fecha_formateada_inicio = $separador_fecha_inicio[2]."-".$separador_fecha_inicio[1]."-".$separador_fecha_inicio[0];
-                $fecha_formateada_inicio = rellenar($fecha_formateada_inicio,10,"s");
-            }
-            //$var.= $fecha_formateada_inicio;
+            $fecha_formateada_inicio = rellenar("",10,"s");
             fwrite($fch, $fecha_formateada_inicio); // Grabas
-
-            if ($movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
-                $fecha_formateada_fin = rellenar($movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
-            }else{
-                $separador_fecha_fin = explode("-",$movimientos[0]["fechas_limites"]["fecha_fin"]);
-                $fecha_formateada_fin = $separador_fecha_fin[2]."-".$separador_fecha_fin[1]."-".$separador_fecha_fin[0];
-                $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
-            }
+            
+            $fecha_formateada_fin = rellenar("",10,"s");
             //$var.= $fecha_formateada_fin;
             fwrite($fch, $fecha_formateada_fin); // Grabas
         }
@@ -1027,7 +1014,7 @@ function crearTxt($post){
         $otros_datos = rellenar("",20,"s");
         //$var.= $otros_datos;
         fwrite($fch, $otros_datos); // Grabas
-        //show_array($arr_trabajadores_con_incidencia[0]['data']['fechas_limites']);
+        //show_array($arr_trabajadores_con_incidencia);
         fwrite($fch, PHP_EOL); // Grabas
         foreach ($arr_trabajadores_con_incidencia as $array_trabajadores) {
             if ($array_trabajadores['trabajador_id'] == $empleado["id"]) {
@@ -2392,7 +2379,10 @@ function sqlMovimientos($mes = "", $year = ""){
         FROM t_contrato C, m_trabajador T
         WHERE C.trabajador_id = " . $p['trabajador_id']."
         AND C.activo = 1
-        AND C.trabajador_id = T.id    
+        AND C.trabajador_id = T.id 
+        AND month(T.fechaContratoInicio) = $mes
+        AND year(T.fechaContratoInicio) = $year   
+        AND T.fechaContratoFin != '0000-00-00'
         ORDER BY nombre ASC    
         ";
         $subres = $db->rawQuery( $sub_sql );
