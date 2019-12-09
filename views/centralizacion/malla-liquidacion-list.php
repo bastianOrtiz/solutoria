@@ -12,7 +12,13 @@
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Registros</h3>
+                    <div class="clearfix"></div>
+                    <br>
+                    <a href="<?php echo BASE_URL . '/' . $entity ?>/ingresar-malla-liquidacion" class="btn btn-primary">
+                    <i class="fa fa-plus-circle"></i> Nueva malla
+                    </a>
                 </div>
+
                 <!-- /.box-header -->
                 <div class="box-body table-responsive">
                     <table id="tabla_cargo" class="table table-bordered table-striped">
@@ -27,17 +33,6 @@
                                 <th style="width: 70px"> Eliminar </th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th> # </th>
-                                <th></th>
-                                <th>Origen</th>
-                                <th>Campo</th>
-                                <th>Tipo Criterio</th>
-                                <th>Criterio</th>
-                                <th style="width: 70px"> Eliminar </th>
-                            </tr>
-                        </tfoot>
                         <tbody>
                             <?php 
                                 foreach( $registros_malla as $reg ){ 
@@ -55,17 +50,15 @@
                             </tr>
                             <?php } ?>                        
                         </tbody>
-                        
                     </table>
+                    <br><br>
+
                 </div>
                 <!-- /.box-body -->
             </div>
             <button style="display: none;" id="btnSubmitBatch" type="submit" data-toggle="tooltip" title="Eliminar todos los elementos seleccionados" class="btn btn-danger">
                 Eliminar Batch
             </button>
-
-            <br>
-            <br>
 
             <!-- /.box -->
             <a href="<?php echo BASE_URL . '/' . $entity ?>/ingresar-malla-liquidacion" class="btn btn-primary">
@@ -123,15 +116,4 @@ $(document).on('click','.chk_batch', function(){
     }
 })
 
-$(function () {        
-    $('#tabla_cargo').dataTable({
-      "bPaginate": true,
-      "bLengthChange": false,
-      "bFilter": true,
-      "bSort": true,
-      "bInfo": true,
-      "bAutoWidth": false,
-      "pageLength": 100
-    });
-  });
 </script>

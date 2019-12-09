@@ -1,14 +1,29 @@
 <?php
 
+function getNombreEntidad($id,$tabla){
+	global $db;
+	if( $tabla != "fonasa" ){
+	    $db->where('id',$id);
+	    $dpto = $db->getOne($tabla,'nombre');
+	    return $dpto['nombre']; 
+	} else {
+		return 'FONASA';
+	}
+}
+
 
 function getTipoEntidad($tabla){
-	$arr = [
-		'm_afp' => 'AFP',
-		'm_isapre' => 'Isapre',
-		'm_institucion' => 'Instituciones Aseguradoras'
-	];
+	if( $tabla == 'fonasa' ){
+		return 'SALUD';
+	} else {
+		$arr = [
+			'm_afp' => 'AFP',
+			'm_isapre' => 'Isapre',
+			'm_institucion' => 'Instituciones Aseguradoras'
+		];
 
-	return $arr[$tabla];
+		return $arr[$tabla];
+	}
 }
 
 
