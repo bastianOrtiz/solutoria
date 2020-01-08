@@ -403,7 +403,7 @@ function crearTxt($post){
        ];
     }
 
-    $archivo= ROOT."/private/uploads/docs/previred.txt"; // el nombre de tu archivo
+    $archivo= ROOT."previred.txt"; // el nombre de tu archivo
     $empleados= $empleados; // Recibez el formulario
 
     $fch= fopen($archivo, "w"); // Abres el archivo para escribir en él
@@ -414,55 +414,55 @@ function crearTxt($post){
         $rut = rellenar($separador[0], 11, "i");
 
         //$var.= $rut;
-        fwrite($fch, $rut); // Grabas
+        fwrite($fch, $rut); // Grabas -- 1
 
         $dv = $separador[1];
         $dv = rellenar($dv, 1, "s");
 
         //$var.= $dv;
-        fwrite($fch, $dv); // Grabas
+        fwrite($fch, $dv); // Grabas -- 2
 
         $apellidoPater = utf8_decode($empleado["apellidoPaterno"]);
         $apellidoPaterno = rellenar($apellidoPater, 30, "s");
 
         //$var.= $apellidoPaterno;
-        fwrite($fch, $apellidoPaterno); // Grabas
+        fwrite($fch, $apellidoPaterno); // Grabas -- 3
 
         $apellidoMater = utf8_decode($empleado["apellidoMaterno"]);
         $apellidoMaterno = rellenar($apellidoMater, 30, "s");
 
         //$var.= $apellidoMaterno;
-        fwrite($fch, $apellidoMaterno); // Grabas
+        fwrite($fch, $apellidoMaterno); // Grabas -- 4
 
         $nomb = utf8_decode($empleado["nombre"]);
         $nombres = rellenar($nomb, 30, "s");
 
         //$var.= $nombres;
 
-        fwrite($fch, $nombres); // Grabas
+        fwrite($fch, $nombres); // Grabas -- 5
 
         if ($empleado["sexo"] == 1) {
             $empleado_sexo = rellenar("M",1,"s");
 
             //$var.= $empleado_sexo;
-            fwrite($fch, $empleado_sexo); // Grabas
+            fwrite($fch, $empleado_sexo); // Grabas -- 6
         }else{
             $empleado_sexo = rellenar("F",1,"s");
 
             //$var.= $empleado_sexo;
-            fwrite($fch, $empleado_sexo); // Grabas
+            fwrite($fch, $empleado_sexo); // Grabas -- 6
         }
 
         if ($empleado['extranjero'] == 1) {
             $nacionalidad = rellenar("1",1,"i");
 
             //$var.= $nacionalidad;
-            fwrite($fch, $nacionalidad); // Grabas
+            fwrite($fch, $nacionalidad); // Grabas -- 7
         }else{
             $nacionalidad = rellenar("0",1,"i");
 
             //$var.= $nacionalidad;
-            fwrite($fch, $nacionalidad); // Grabas
+            fwrite($fch, $nacionalidad); // Grabas -- 7
         }
 
         /*if ($empleado["idNacionalidad"] = 46) {
@@ -479,56 +479,58 @@ function crearTxt($post){
 
         $tipo_pago = rellenar("01",2,"i");
         //$var.= $tipo_pago;
-        fwrite($fch, $tipo_pago); // Grabas
+        fwrite($fch, $tipo_pago); // Grabas -- 8
 
         $periodoDesde = getMesMostrarCorte().getAnoMostrarCorte();
         $periodoDesde = rellenar($periodoDesde,6,"i");
         //$var.= $periodoDesde;
-        fwrite($fch, $periodoDesde); // Grabas
+        fwrite($fch, $periodoDesde); // Grabas -- 9
 
         $periodoHasta = getMesMostrarCorte().getAnoMostrarCorte();
         $periodoHasta = rellenar($periodoHasta,6,"i");
         //$var.= $periodoHasta;
-        fwrite($fch, $periodoHasta); // Grabas
+        fwrite($fch, $periodoHasta); // Grabas -- 10
 
         $tip_afp = previTrabajador($empleado["id"]);
         if ($tip_afp["id"] !== 7) {
             $tip_afp = rellenar("AFP",3,"s");
             //$var.= $tip_afp;
-            fwrite($fch, $tip_afp); // Grabas
+            fwrite($fch, $tip_afp); // Grabas -- 11
         }else{
             $tip_afp = rellenar("INP",3,"s");
             //$var.= $tip_afp;
-            fwrite($fch, $tip_afp); // Grabas
+            fwrite($fch, $tip_afp); // Grabas -- 11
         }
 
         $tipo_trabajador = tipoEmpleado($empleado["tipo_trabajador"]);
         if ($tipo_trabajador["id"] == 1 || $tipo_trabajador["id"] == 5 || $tipo_trabajador["id"] == 6 || $tipo_trabajador["id"] == 7) {
             $tip_trabajador = rellenar("0",1,"i");
             //$var.= $tip_trabajador;
-            fwrite($fch, $tip_trabajador); // Grabas
+            fwrite($fch, $tip_trabajador); // Grabas -- 12
         }elseif ($tipo_trabajador["id"] == 2 || $tipo_trabajador["id"] == 8) {
             $tip_trabajador = rellenar("1",1,"i");
             //$var.= $tip_trabajador;
-            fwrite($fch, $tip_trabajador); // Grabas
+            fwrite($fch, $tip_trabajador); // Grabas -- 12
         }elseif ($tipo_trabajador["id"] == 4 || $tipo_trabajador["id"] == 3) {
             $tip_trabajador = rellenar("2",1,"i");
             //$var.= $tip_trabajador;
-            fwrite($fch, $tip_trabajador); // Grabas
+            fwrite($fch, $tip_trabajador); // Grabas -- 12
         }
 
         $dias_trabajados = getDiasTrabajados($empleado["id"]);
         $dias_trabajados = rellenar($dias_trabajados,2,"i");
         //$var.= $dias_trabajados;
-        fwrite($fch, $dias_trabajados); // Grabas
+        fwrite($fch, $dias_trabajados); // Grabas -- 13
 
         $tipo_linea = "00";
         $tipo_linea = rellenar($tipo_linea,2,"s");
         //$var.= $tipo_linea;
-        fwrite($fch, $tipo_linea); // Grabas
+        fwrite($fch, $tipo_linea); // Grabas -- 14
 
         $movimientos = tieneMovimientos($empleado["id"],$super_array);
         $n_movimientos = count($movimientos);
+        $fecha_formateada_inicio = "";
+        $fecha_formateada_fin = "";
         if ($n_movimientos > 1) {
             $indice = 0;
             foreach ($movimientos as $movimiento) {
@@ -543,7 +545,7 @@ function crearTxt($post){
             }
             $codigo_movimiento = rellenar($movimientos[0]["codigo_movimiento"],2,"i");
             //$var.= $codigo_movimiento;
-            fwrite($fch, $codigo_movimiento); // Grabas
+            fwrite($fch, $codigo_movimiento); // Grabas -- 15
             if ($movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
                 $fecha_formateada_inicio = rellenar($movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
             }else{
@@ -552,7 +554,7 @@ function crearTxt($post){
                 $fecha_formateada_inicio = rellenar($fecha_formateada_inicio,10,"s");
             }
             //$var.= $fecha_formateada_inicio;
-            fwrite($fch, $fecha_formateada_inicio); // Grabas
+            fwrite($fch, $fecha_formateada_inicio); // Grabas -- 16
 
             if ($movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
                 $fecha_formateada_fin = rellenar($movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
@@ -562,60 +564,47 @@ function crearTxt($post){
                 $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
             }
             //$var.= $fecha_formateada_fin;
-            fwrite($fch, $fecha_formateada_fin); // Grabas
+            fwrite($fch, $fecha_formateada_fin); // Grabas -- 17
         }else{
-            $codigo_movimiento = rellenar($movimientos[0]["codigo_movimiento"],2,"i");
+            $codigo_movimiento = rellenar(0,2,"i");
             //$var.= $codigo_movimiento;
-            fwrite($fch, $codigo_movimiento); // Grabas
-            if ($movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
-                $fecha_formateada_inicio = rellenar($movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
-            }else{
-                $separador_fecha_inicio = explode("-",$movimientos[0]["fechas_limites"]["fecha_inicio"]);
-                $fecha_formateada_inicio = $separador_fecha_inicio[2]."-".$separador_fecha_inicio[1]."-".$separador_fecha_inicio[0];
-                $fecha_formateada_inicio = rellenar($fecha_formateada_inicio,10,"s");
-            }
-            //$var.= $fecha_formateada_inicio;
-            fwrite($fch, $fecha_formateada_inicio); // Grabas
-
-            if ($movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
-                $fecha_formateada_fin = rellenar($movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
-            }else{
-                $separador_fecha_fin = explode("-",$movimientos[0]["fechas_limites"]["fecha_fin"]);
-                $fecha_formateada_fin = $separador_fecha_fin[2]."-".$separador_fecha_fin[1]."-".$separador_fecha_fin[0];
-                $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
-            }
+            fwrite($fch, $codigo_movimiento); // Grabas -- 15
+            $fecha_formateada_inicio = rellenar("",10,"s");
+            fwrite($fch, $fecha_formateada_inicio); // Grabas -- 16
+            
+            $fecha_formateada_fin = rellenar("",10,"s");
             //$var.= $fecha_formateada_fin;
-            fwrite($fch, $fecha_formateada_fin); // Grabas
+            fwrite($fch, $fecha_formateada_fin); // Grabas -- 17
         }
         
         $asignacion = tieneTramo($empleado["id"],$super_arreglo);
         $tramo = rellenar($asignacion["tipo_tramo"],1,"s");
         //$var.= $tramo;
-        fwrite($fch, $tramo); // Grabas
+        fwrite($fch, $tramo); // Grabas -- 18
         
         $num_cargas_simples = rellenar($asignacion["cargas"]["cargasSimples"],2,"i");
         //$var.= $num_cargas_simples;
-        fwrite($fch, $num_cargas_simples); // Grabas
+        fwrite($fch, $num_cargas_simples); // Grabas -- 19
         
         $num_cargas_maternales = rellenar($asignacion["cargas"]["cargasMaternales"],1,"i");
         //$var.= $num_cargas_maternales;
-        fwrite($fch, $num_cargas_maternales); // Grabas
+        fwrite($fch, $num_cargas_maternales); // Grabas -- 20
         
         $num_cargas_invalidas = rellenar($asignacion["cargas"]["cargasInvalidez"],1,"i");
         //$var.= $num_cargas_invalidas;
-        fwrite($fch, $num_cargas_invalidas); // Grabas
+        fwrite($fch, $num_cargas_invalidas); // Grabas -- 21
 
         $asig_familiar = tieneAsignacion($empleado["id"],$arreglo_asignacion_familiar);
         $monto_asignacion = $asig_familiar["monto"];
         $monto = rellenar($monto_asignacion,6,"i");
         //$var.= $monto;
-        fwrite($fch, $monto); // Grabas
+        fwrite($fch, $monto); // Grabas -- 22
 
         $asig_familiar_retroactiva = tieneAsignacion($empleado["id"],$arreglo_asignacion_familiar_retroactiva);
         $monto_asignacion_retroactiva = $asig_familiar_retroactiva["monto"];
         $monto_retroactiva = rellenar($monto_asignacion_retroactiva,6,"i");
         //$var.= $monto_retroactiva;
-        fwrite($fch, $monto_retroactiva); // Grabas
+        fwrite($fch, $monto_retroactiva); // Grabas -- 23
 
         $reintegro_cargas_familiares = 0;
         $monto_reintegro_cargas_familiares = rellenar($reintegro_cargas_familiares,6,"i");
@@ -812,30 +801,38 @@ function crearTxt($post){
         $tasa_cotizacion_ex_caja_prevision = "00,00";
         //$var.= $tasa_cotizacion_ex_caja_prevision;
         fwrite($fch, $tasa_cotizacion_ex_caja_prevision); // Grabas
-        $renta_imponible_ips = rellenar(0,8,"i");
+        $renta_imponible_ips = rellenar($imponible["monto"],8,"i");
         //$var.= $renta_imponible_ips;
-        fwrite($fch, $renta_imponible_ips); // Grabas
+        fwrite($fch, $renta_imponible_ips); // Grabas -- 64
         $cotizacion_obligatoria_ips = rellenar(0,8,"i");
         //$var.= $cotizacion_obligatoria_ips;
-        fwrite($fch, $cotizacion_obligatoria_ips); // Grabas
+        fwrite($fch, $cotizacion_obligatoria_ips); // Grabas -- 65
         $renta_imponible_desahucio = rellenar(0,8,"i");
         //$var.= $renta_imponible_desahucio;
-        fwrite($fch, $renta_imponible_desahucio); // Grabas
+        fwrite($fch, $renta_imponible_desahucio); // Grabas -- 66
         $codigo_ex_caja_regimen_desahucio = rellenar(0,4,"i");
         //$var.= $codigo_ex_caja_regimen_desahucio;
-        fwrite($fch, $codigo_ex_caja_regimen_desahucio); // Grabas
+        fwrite($fch, $codigo_ex_caja_regimen_desahucio); // Grabas -- 67
         $tasa_cotizacion_desahucio_excaja_prevision = "00,00";
         //$tasa_cotizacion_desahucio_excaja_prevision = rellenar(0,5,"i");
         //$var.= $tasa_cotizacion_desahucio_excaja_prevision;
-        fwrite($fch, $tasa_cotizacion_desahucio_excaja_prevision); // Grabas
+        fwrite($fch, $tasa_cotizacion_desahucio_excaja_prevision); // Grabas -- 68
         $cotizacion_desaucio = rellenar(0,8,"i");
         //$var.= $cotizacion_desaucio;
-        fwrite($fch, $cotizacion_desaucio); // Grabas
-        $fonasa = tipoSalud($empleado["id"]);
+        fwrite($fch, $cotizacion_desaucio); // Grabas -- 69
+        $fonasa = tipoSalud($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
         if ($fonasa['isapre_id'] == 0) {
-            $cotizacion_fonasa = rellenar($fonasa['saludMonto'],8,"i");
+            $imponible_calculo = $imponible["monto"]*0.064;
+            $imponible_calculo = number_format($imponible_calculo,0,",","");
+            $cotizacion_fonasa = rellenar($imponible_calculo,8,"i");
+
+            $imponible_CCAF = $imponible["monto"]*0.006;
+            $imponible_CCAF = number_format($imponible_CCAF,0,",","");
+            $cotizacion_ccaf = $imponible_CCAF;
+
         }else{
             $cotizacion_fonasa = rellenar(0,8,"i");
+            $cotizacion_ccaf = rellenar(0,8,"i");
         }
         //$var.= $cotizacion_fonasa;
         fwrite($fch, $cotizacion_fonasa); // Grabas
@@ -852,13 +849,13 @@ function crearTxt($post){
         //$var.= $bonos_gobierno;
         fwrite($fch, $bonos_gobierno); // Grabas
         $salud = datosSalud($empleado["id"]);
-        $codigo_institucion_salud = rellenar($salud['codigo'],2,"i");
+        $codigo_institucion_salud = rellenar($salud['codigo'],2,"i"); // es el 07
         //$var.= $codigo_institucion_salud;
         fwrite($fch, $codigo_institucion_salud); // Grabas
         $numero_fun = rellenar("",16,"s");
         //$var.= $numero_fun;
         fwrite($fch, $numero_fun); // Grabas
-        $renta = tipoSalud($empleado["id"]);
+        $renta = tipoSalud($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
         if ($renta['isapre_id'] == 0) {
             $renta_imponible_isapre = rellenar(0,8,"i");
         }else{
@@ -867,7 +864,7 @@ function crearTxt($post){
         //$var.= $renta_imponible_isapre;
         fwrite($fch, $renta_imponible_isapre); // Grabas
 
-        $datos_salud_moneda = tipoSalud($empleado["id"]);
+        $datos_salud_moneda = tipoSalud($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
         if ($datos_salud_moneda['isapre_id'] !== 0) {/* Si esta dentro de una Isapre */
             $datos_sal_mon = monedaSalud($empleado["id"]);
             if ($datos_sal_mon['tipo_moneda'] == 1) {
@@ -929,7 +926,7 @@ function crearTxt($post){
         //$var.= $codigo_CCAF;
         fwrite($fch, $codigo_CCAF); // Grabas*/
 
-        $imponible = liquidacion($empleado["id"]);
+        $imponible = liquidacion($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
         $renta_imponible_CCAF = rellenar($imponible['totalImponible'],8,"i");
         //$var.= $renta_imponible_CCAF;
         fwrite($fch, $renta_imponible_CCAF); // Grabas*/
@@ -955,7 +952,7 @@ function crearTxt($post){
         //$var.= $otros_descuentos;
         fwrite($fch, $otros_descuentos); // Grabas*/
 
-        $cotizacion_ccaf_no_isapres = rellenar(0,8,"i");
+        $cotizacion_ccaf_no_isapres = rellenar($cotizacion_ccaf,8,"i");
         //$var.= $cotizacion_ccaf_no_isapres;
         fwrite($fch, $cotizacion_ccaf_no_isapres); // Grabas*/
 
@@ -1001,15 +998,30 @@ function crearTxt($post){
         //$var.= $sucursal_pago_mutual;
         fwrite($fch, $sucursal_pago_mutual); // Grabas*/
 
-        $renta_imponible_seguro_cesantia = rellenar($imponible['totalImponible'],8,"i");
+        $renta_imponible_seguro_cesantia = rellenar($imponible['afcMonto'],8,"i");
         //$var.= $renta_imponible_seguro_cesantia;
         fwrite($fch, $renta_imponible_seguro_cesantia); // Grabas*/
+
+        $monto_porcentaje_trabajador = 0;
+        $monto_porcentaje_empleador = 0;
         $aporte_trabajador = $imponible['afcMonto'];
-        $aporte_trabajador_seguro_cesantia = rellenar($aporte_trabajador,8,"i");
+        $afc_trabajador = afc($empleado["id"]);
+        if ($afc_trabajador["id"] == 6) {
+            $monto_porcentaje_trabajador = 0;
+            $monto_porcentaje_empleador = $aporte_trabajador * 0.3;
+        }elseif ($afc_trabajador["id"] == 5) {
+            $monto_porcentaje_trabajador = 0;
+            $monto_porcentaje_empleador = $aporte_trabajador * 0.8;
+        }elseif ($afc_trabajador["id"] == 1) {
+            $monto_porcentaje_trabajador = $aporte_trabajador * 0.006;
+            $monto_porcentaje_trabajador = round($monto_porcentaje_trabajador);
+            $monto_porcentaje_empleador = $aporte_trabajador * 2.4;
+        }
+        $aporte_trabajador_seguro_cesantia = rellenar($monto_porcentaje_trabajador,8,"i");
         //$var.= $aporte_trabajador_seguro_cesantia;
         fwrite($fch, $aporte_trabajador_seguro_cesantia); // Grabas*/
 
-        $aporte_empleador_seguro_cesantia = rellenar(0,8,"i");
+        $aporte_empleador_seguro_cesantia = rellenar($monto_porcentaje_empleador,8,"i");
         //$var.= $aporte_empleador_seguro_cesantia;
         fwrite($fch, $aporte_empleador_seguro_cesantia); // Grabas*/
 
@@ -1027,7 +1039,7 @@ function crearTxt($post){
         $otros_datos = rellenar("",20,"s");
         //$var.= $otros_datos;
         fwrite($fch, $otros_datos); // Grabas
-        //show_array($arr_trabajadores_con_incidencia[0]['data']['fechas_limites']);
+        //show_array($arr_trabajadores_con_incidencia);
         fwrite($fch, PHP_EOL); // Grabas
         foreach ($arr_trabajadores_con_incidencia as $array_trabajadores) {
             if ($array_trabajadores['trabajador_id'] == $empleado["id"]) {
@@ -1052,16 +1064,17 @@ function crearTxt($post){
                     $tipo_linea = rellenar($tipo_linea_movimientos,2,"s");
                     fwrite($fch, $tipo_linea); // Grabas
 
-                    $codigo_movimientos = rellenar($array_trabajadores['data']['codigo_movimiento'],2,"i");
+                    $codigo_movimientos = rellenar($array_trabajadores['data']['codigo'],2,"i");
                     fwrite($fch, $codigo_movimientos); // Grabas
-
-                    $separador_fecha_inicio_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_inicio']);
-                    $fecha_formateada_inicio_movimientos = $separador_fecha_inicio_movimientos[2]."-".$separador_fecha_inicio_movimientos[1]."-".$separador_fecha_inicio_movimientos[0];
+                    $separador_fecha_inicio_movimientos = explode("-",$array_trabajadores['data']['fechaHora']);
+                    $separador_fecha_inicio_movimientos_dias = explode(" ",$separador_fecha_inicio_movimientos[2]);
+                    $fecha_formateada_inicio_movimientos = $separador_fecha_inicio_movimientos_dias[0]."-".$separador_fecha_inicio_movimientos[1]."-".$separador_fecha_inicio_movimientos[0];
                     $fecha_formateada_inicio_movimientos = rellenar($fecha_formateada_inicio_movimientos,10,"s");
                     fwrite($fch, $fecha_formateada_inicio_movimientos); // Grabas
 
-                    $separador_fecha_fin_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_fin']);
-                    $fecha_formateada_fin_movimientos = $separador_fecha_fin_movimientos[2]."-".$separador_fecha_fin_movimientos[1]."-".$separador_fecha_fin_movimientos[0];
+                    $separador_fecha_fin_movimientos = explode("-",$array_trabajadores['data']['fechaHora']);
+                    $separador_fecha_fin_movimientos_dias = explode(" ",$separador_fecha_fin_movimientos[2]);
+                    $fecha_formateada_fin_movimientos = $separador_fecha_fin_movimientos_dias[0]."-".$separador_fecha_fin_movimientos[1]."-".$separador_fecha_fin_movimientos[0];
                     $fecha_formateada_fin_movimientos = rellenar($fecha_formateada_fin_movimientos,10,"s");
                     fwrite($fch, $fecha_formateada_fin_movimientos); // Grabas
 
@@ -1355,16 +1368,18 @@ function crearTxt($post){
                     $tipo_linea = rellenar($tipo_linea_movimientos,2,"s");
                     fwrite($fch, $tipo_linea); // Grabas
 
-                    $codigo_movimientos = rellenar($array_trabajadores['data']['codigo_movimiento'],2,"i");
+                    $codigo_movimientos = rellenar($array_trabajadores['data']['codigo'],2,"i");
                     fwrite($fch, $codigo_movimientos); // Grabas
 
-                    $separador_fecha_inicio_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_inicio']);
-                    $fecha_formateada_inicio_movimientos = $separador_fecha_inicio_movimientos[2]."-".$separador_fecha_inicio_movimientos[1]."-".$separador_fecha_inicio_movimientos[0];
+                    $separador_fecha_inicio_movimientos = explode("-",$array_trabajadores['data']['fechaHora']);
+                    $separador_fecha_inicio_movimientos_dias = explode(" ",$separador_fecha_inicio_movimientos[2]);
+                    $fecha_formateada_inicio_movimientos = $separador_fecha_inicio_movimientos_dias[0]."-".$separador_fecha_inicio_movimientos[1]."-".$separador_fecha_inicio_movimientos[0];
                     $fecha_formateada_inicio_movimientos = rellenar($fecha_formateada_inicio_movimientos,10,"s");
                     fwrite($fch, $fecha_formateada_inicio_movimientos); // Grabas
 
-                    $separador_fecha_fin_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_fin']);
-                    $fecha_formateada_fin_movimientos = $separador_fecha_fin_movimientos[2]."-".$separador_fecha_fin_movimientos[1]."-".$separador_fecha_fin_movimientos[0];
+                    $separador_fecha_fin_movimientos = explode("-",$array_trabajadores['data']['fechaHora']);
+                    $separador_fecha_fin_movimientos_dias = explode(" ",$separador_fecha_fin_movimientos[2]);
+                    $fecha_formateada_fin_movimientos = $separador_fecha_fin_movimientos_dias[0]."-".$separador_fecha_fin_movimientos[1]."-".$separador_fecha_fin_movimientos[0];
                     $fecha_formateada_fin_movimientos = rellenar($fecha_formateada_fin_movimientos,10,"s");
                     fwrite($fch, $fecha_formateada_fin_movimientos); // Grabas
 
@@ -1648,6 +1663,17 @@ function crearTxt($post){
     exit();
 }
 
+function afc($trabajador_id){
+    global $db;
+
+    $db->where("id",$trabajador_id);
+    $result_mtrabajador = $db->getOne("m_trabajador");
+
+    $db->where("id",$result_mtrabajador["tipotrabajador_id"]);
+    $result = $db->getOne("m_tipotrabajador");
+    return $result;
+}
+
 function pagadorSubsidios($trabajador_id, $mes = "", $ano = ""){
     global $db;
 
@@ -1782,8 +1808,15 @@ function monedaSalud($trabajador_id){
     return $return_datos;
 }
 
-function tipoSalud($trabajador_id){
+function tipoSalud($trabajador_id, $mes = "", $ano = ""){
     global $db;
+
+    if( $mes == '' ){
+        $mes = (int)getMesMostrarCorte();
+    }
+    if( $ano == '' ){
+        $ano = (int)getAnoMostrarCorte();
+    }
 
     $db->where("trabajador_id", $trabajador_id);
     $tipo_salud = $db->getOne("t_prevision");
@@ -1791,6 +1824,8 @@ function tipoSalud($trabajador_id){
     if ($tipo_salud['fonosa'] == 1) {
 
         $db->where("trabajador_id", $trabajador_id);
+        $db->where("ano", $ano);
+        $db->where("mes", $mes);
         $liquidacion_fonasa = $db->getOne("liquidacion");
         return $liquidacion_fonasa;
 
@@ -1798,6 +1833,8 @@ function tipoSalud($trabajador_id){
 
         $db->where("trabajador_id", $trabajador_id);
         $db->where("isapre_id", $tipo_salud['isapre_id']);
+        $db->where("ano", $ano);
+        $db->where("mes", $mes);
         $liquidacion_isapre = $db->getOne("liquidacion");
         return $liquidacion_isapre;
     }
@@ -2390,7 +2427,10 @@ function sqlMovimientos($mes = "", $year = ""){
         FROM t_contrato C, m_trabajador T
         WHERE C.trabajador_id = " . $p['trabajador_id']."
         AND C.activo = 1
-        AND C.trabajador_id = T.id    
+        AND C.trabajador_id = T.id 
+        AND month(T.fechaContratoInicio) = $mes
+        AND year(T.fechaContratoInicio) = $year   
+        AND T.fechaContratoFin != '0000-00-00'
         ORDER BY nombre ASC    
         ";
         $subres = $db->rawQuery( $sub_sql );

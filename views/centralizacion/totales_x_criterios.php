@@ -106,7 +106,7 @@ tbody td{
             <!-- /.box-header -->
             <div class="box-body">
                 <?php foreach ($array_data['crit_x_entidad'] as $key => $value) { ?>
-                    <h3> <?php echo $value['entidad'] ?>: <?php echo dinero($value['subtotal'],true) ?> </h3>
+                    <h3> <?php echo $value['criterio'] ?>: <?php echo dinero($value['subtotal'],true) ?> </h3>
                 <?php } ?>
             </div>
             <!-- /.box-body -->

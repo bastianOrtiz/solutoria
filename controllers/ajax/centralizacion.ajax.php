@@ -9,16 +9,29 @@ extract($_POST);
 
 switch ($_POST['ajax_action']) :
 	case 'get_entidades':
-		$entidades = $db->get($_POST['nombre_tabla']);
-    
-	    if( $entidades ){
-	        $json['status'] = 'success';
+		if( $_POST['nombre_tabla'] != "fonasa" ){
+
+			$entidades = $db->get($_POST['nombre_tabla']);
+	    
+		    if( $entidades ){
+		        $json['status'] = 'success';
+		        $json['mensaje'] = 'OK';    
+		        $json['registros'] = $entidades;
+		    } else {
+		        $json['status'] = 'error';
+		        $json['mensaje'] = $db->getLastError();;   
+		    }
+		} else {
+			$json['status'] = 'success';
 	        $json['mensaje'] = 'OK';    
-	        $json['registros'] = $entidades;
-	    } else {
-	        $json['status'] = 'error';
-	        $json['mensaje'] = $db->getLastError();;   
-	    }
+	        $json['registros'] = [
+	        	[
+	        		'id' => 999, 
+		        	'nombre' => "Fonasa", 
+		        	'codigo' => '07'
+	        	]
+	        ];
+		}
 	break;
 
 

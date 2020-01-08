@@ -7,7 +7,9 @@ $haberes = $db->get("m_haber");
 $db->orderBy("nombre","ASC");
 $descuentos = $db->get("m_descuento");
 
+
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+$db->where('tipocontrato_id',[3,4],'NOT IN');
 $db->orderBy("departamento_id","ASC");
 $db->orderBy("nombres","ASC");
 $trabajdores = $db->get('m_trabajador');

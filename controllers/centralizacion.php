@@ -224,8 +224,11 @@ if( $parametros ){
     $registros_individual = $db->get('c_crixindividual');
     
     $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
-    $registros_malla = $db->get('c_mallaliq');
+    $db->groupBy('fk_criterioid');
+    $criterios_id = $db->get('c_mallaliq',null,'fk_criterioid');
     
+    $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
+    $registros_malla = $db->get('c_mallaliq');
 
 
     if( $parametros[0] == 'criterios-centrocosto' && $parametros[1] == 'editar' && isset($parametros[2]) ){
@@ -329,7 +332,9 @@ if( $parametros ){
             'm_institucion' => ['campo_monto' => 'apvMonto','campo_id' => 'cuenta2Id']
         ];
 
+
         foreach ($crit_x_entidad as $crixentidad) {
+            $subtotal_entidad = 0;
 
             $sql = "
             SELECT SUM(L.". $query_field[$crixentidad['tabla_entidad']]['campo_monto'] .") AS tot 
@@ -340,16 +345,16 @@ if( $parametros ){
             ";
 
             $result = $db->rawQuery($sql);
-            $subtotal += $result[0]['tot'];
+            $subtotal_entidad += $result[0]['tot'];
 
-            $array_data['crit_x_entidad'][] = [
+            $array_data['crit_x_entidad'][$crixentidad['id']] = [
                 'criterio' => $crixentidad['criterio'],
                 'entidad' => getNombre($crixentidad['id_entidad'], $crixentidad['tabla_entidad'], false),
                 'entidad_id' => $crixentidad['id_entidad'],
-                'subtotal' => $subtotal,
-                'tipo_entidad' => $crixentidad['tabla_entidad']
+                'subtotal' => $subtotal_entidad,
+                'tipo_entidad' => $crixentidad['tabla_entidad'],
+                'sql' => $sql
             ];
-
         }
 
 

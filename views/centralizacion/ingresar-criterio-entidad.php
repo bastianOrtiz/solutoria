@@ -414,6 +414,7 @@
                                     <option value="m_afp">AFP</option>
                                     <option value="m_isapre">ISAPRES</option>
                                     <option value="m_institucion">Instituciones Aseguradoras</option>
+                                    <option value="fonasa">Fonasa</option>
                                 </select>
                             </div>
                         </div>
