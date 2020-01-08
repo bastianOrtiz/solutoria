@@ -1034,7 +1034,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label for="anoDebeTrabajador">Año</label>
-                                                                        <input type="number" min="1900" class="form-control required" name="anoDebeTrabajador" id="anoDebeTrabajador" value="<?php echo date('Y') ?>" />
+                                                                        <input type="number" min="1900" class="form-control required" name="anoDebeTrabajador" id="anoDebeTrabajador" value="<?php echo getAnoMostrarCorte(); ?>" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1178,7 +1178,7 @@
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label for="anoHaberTrabajador">Año</label>
-                                                                        <input type="number" class="form-control required" name="anoHaberTrabajador" id="anoHaberTrabajador" value="<?php echo date('Y') ?>" />
+                                                                        <input type="number" class="form-control required" name="anoHaberTrabajador" id="anoHaberTrabajador" value="<?php echo getAnoMostrarCorte() ?>" />
                                                                     </div>
                                                                 </div>
                                                             </div>
