@@ -156,6 +156,7 @@ if( $_POST ){
                     'tipo_criterio' => $_POST['tipoCriterioMalla'],
                     'fk_criterioid' => $_POST['criterioMalla']
                 ];
+
                 $create_id = $db->insert('c_mallaliq',$data_insert);
                 logit( $_SESSION[PREFIX.'login_name'],'agregar','Malla liquidacion',$create_id,$db->getLastQuery() );
             }  
@@ -208,7 +209,7 @@ if( $_POST ){
 if( $parametros ){
 
     //$mes = (int)getMesMostrarCorte();
-    $mes = 8;
+    $mes = 10;
     $ano = (int)getAnoMostrarCorte();
         
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
@@ -280,8 +281,10 @@ if( $parametros ){
         $crit_x_entidad = $db->get('c_crixentidad');
         $crit_x_individual = $db->get('c_crixindividual');
 
+        // Tipos de Criterios: 1: CCOSTO, 2:ENTIDAD, 3:INDIVIDUAL
         foreach ($crit_x_ccosto as $crixccosto) {
             $db->where('fk_criterioid',$crixccosto['id']);
+            $db->where('tipo_criterio',1);
             $campos = $db->get('c_mallaliq');
 
             $subtotal = 0;
@@ -309,6 +312,7 @@ if( $parametros ){
                     ";
                 }
 
+
                 $result = $db->rawQuery($sql);
                 $subtotal += $result[0]['tot'];
 
@@ -326,6 +330,7 @@ if( $parametros ){
 
 
 
+
         $query_field = [
             'm_afp' => ['campo_monto' => 'afpMonto','campo_id' => 'afp_id'],
             'm_isapre' => ['campo_monto' => 'saludMonto','campo_id' => 'isapre_id'],
@@ -336,20 +341,31 @@ if( $parametros ){
         foreach ($crit_x_entidad as $crixentidad) {
             $subtotal_entidad = 0;
 
-            $sql = "
-            SELECT SUM(L.". $query_field[$crixentidad['tabla_entidad']]['campo_monto'] .") AS tot 
-            FROM liquidacion L
-            WHERE L." . $query_field[$crixentidad['tabla_entidad']]['campo_id'] . " = ". $crixentidad['id_entidad'] ."
-            AND L.mes = ". $mes ."
-            AND L.ano = ". $ano ."
-            ";
+            if( $crixentidad['tabla_entidad'] == 'fonasa' ){
+                $sql = "
+                SELECT SUM(L.saludMonto) AS tot 
+                FROM liquidacion L
+                WHERE L.isapre_id = 0
+                AND L.mes = ". $mes ."
+                AND L.ano = ". $ano ."
+                AND L.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
+            } else {
+                $sql = "
+                SELECT SUM(L.". $query_field[$crixentidad['tabla_entidad']]['campo_monto'] .") AS tot 
+                FROM liquidacion L
+                WHERE L." . $query_field[$crixentidad['tabla_entidad']]['campo_id'] . " = ". $crixentidad['id_entidad'] ."
+                AND L.mes = ". $mes ."
+                AND L.ano = ". $ano ."
+                AND L.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
+            }
+
 
             $result = $db->rawQuery($sql);
             $subtotal_entidad += $result[0]['tot'];
 
             $array_data['crit_x_entidad'][$crixentidad['id']] = [
                 'criterio' => $crixentidad['criterio'],
-                'entidad' => getNombre($crixentidad['id_entidad'], $crixentidad['tabla_entidad'], false),
+                'entidad' => $crixentidad['id_entidad'],
                 'entidad_id' => $crixentidad['id_entidad'],
                 'subtotal' => $subtotal_entidad,
                 'tipo_entidad' => $crixentidad['tabla_entidad'],
@@ -359,7 +375,13 @@ if( $parametros ){
 
 
         $sql_adm = "
-        select T.apellidoPaterno, T.apellidoMaterno, T.nombres, L.sueldoBase, L.gratificacion, (L.sueldoBase + L.gratificacion) as imponible, L.horaExtraMonto, L.horaExtraFestivoMonto, L.totalHaberesImponibles
+        select T.apellidoPaterno, T.apellidoMaterno, T.nombres, 
+            L.sueldoBase, 
+            L.gratificacion, 
+            (L.sueldoBase + L.gratificacion) as imponible, 
+            L.horaExtraMonto, 
+            L.horaExtraFestivoMonto, 
+            L.totalHaberesImponibles
         from m_trabajador T, liquidacion L
         WHERE L.mes = $mes
         AND L.ano = $ano
