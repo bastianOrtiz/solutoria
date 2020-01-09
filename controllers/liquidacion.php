@@ -460,7 +460,7 @@ if( isset($parametros[1]) ){
     $arr_ausencias = @obtenerAusencias($trabajador_id);
     
 
-    $ausencias = $arr_ausencias['total'];                  
+    $ausencias = $arr_ausencias['total'];
     $dias_licencia = $arr_ausencias['dias_licencia'];
     $dias_no_enrolado = 0;
     
@@ -676,6 +676,63 @@ if( isset($parametros[1]) ){
 }
 
 
+
+if( $parametros[0] == 're_sis_sces' ){
+
+    if( $parametros[1] && $parametros[2] ):
+
+
+        $db->orderBy('apellidoPaterno','ASC');
+        $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+        $db->where('tipocontrato_id',array(3,4),'NOT IN');
+        $trabajadores_todos = $db->get('m_trabajador');
+        
+        //$trabajadores_todos = [ ['id' => 111] ]; // Probar con 1 solo trabjador
+
+        foreach ($trabajadores_todos as $key => $trabajador) {
+            
+            $db->where('mes',$parametros[1]);
+            $db->where('ano',$parametros[2]);
+            $db->where('trabajador_id',$trabajador['id']);
+            $data_trabajador = $db->getOne('liquidacion');
+
+            if( $data_trabajador ){
+
+                $sis = calcularSis($data_trabajador['totalImponible'],$trabajador['id'], $parametros[1], $parametros[2]);
+                $sces = calcularSCes($data_trabajador['totalImponible'],$trabajador['id'],$parametros[1],$parametros[2]);
+
+                $data_array = [
+                    'sis' => $sis,
+                    'sces' => $sces
+                ];
+                
+                /*
+                echo $parametros[1]."/".$parametros[2];
+                show_array(getNombreTrabajador($trabajador['id'],true) . " - " . $parametros[1] ."/".$parametros[2],0);
+                show_array($data_array,0);
+                echo "<hr>";
+                */
+                
+                $db->where('mes',$parametros[1]);
+                $db->where('ano',$parametros[2]);
+                $db->where('trabajador_id',$trabajador['id']);
+                if($db->update('liquidacion', $data_array))
+                     show_array($trabajador['apellidoPaterno'] . ' ' . $trabajador['nombres'] . ' ........................................... Actualizado OK! <br>',0);
+                else 
+                    show_array($trabajador['apellidoPaterno'] . ' ' . $trabajador['nombres'] . ' ........................................... Actualizado ERROR! <br>',0);
+            }
+
+        }
+
+    else:
+        echo "No ha pasado el mes y año por parametro";
+    endif;
+
+    exit();
+
+}
+
+
 if( $parametros[0] == 'reliquidar' ){
 
     $mes = 8;
@@ -748,12 +805,12 @@ if( $parametros[0] == 'reliquidar' ){
 
 if( $parametros[0] == 'reliquidar_bonos' ){
 
-    $mes = 8;
+    $mes = 10;
 
     $db->orderBy('apellidoPaterno','ASC');
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
     $db->where('tipocontrato_id',array(3,4),'NOT IN');
-    $db->where('centrocosto_id',3);
+    $db->where('centrocosto_id',2); // ADM:2 - TEC:3 - COM:4
     @$trabajadores_todos = $db->get('m_trabajador');
 
 
