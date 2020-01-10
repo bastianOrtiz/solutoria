@@ -1,11 +1,13 @@
 <?php
-                    
+
 /**
  * Calcula el Costo empresa SIS
  * @param (int) $rentaImponible Total imponible del mes
  * @param (int) $trabajador_id ID del trabajador a calcular
  * @return (floar) $sis Total SIS calculado
  */
+
+
 function calcularSis($rentaImponible, $trabajador_id = 0, $mes, $ano){
     global $db;
 
@@ -34,26 +36,30 @@ function calcularSis($rentaImponible, $trabajador_id = 0, $mes, $ano){
 
         $dias_a_pago = (30 - $dias_ausencias['total']);
 
-        if( $dias_ausencias['dias_licencia'] > 0 ){ // Si tiene licencias tomamos el imponible del mes anterior
-            $mes_consultar = ($mes_corte - 1);
-            $ano_consultar = $ano_corte;
 
-            if( $mes_consultar == 0 ){
-                $mes_consultar = 12;
-                $ano_consultar = ($ano_corte - 1);
-            }
+        // Si tiene licencias tomamos el imponible del ultimo mes que no tuvo licencia 
+        if( $dias_ausencias['dias_licencia'] > 0 ){ 
+            $db->where('trabajador_id',$trabajador_id);
+            $db->where('mes',$mes_corte);
+            $db->where('ano',$ano_corte);
+            $result2 = $db->getOne('liquidacion');
+            $imponible = $result2['totalImponible'];
 
             $db->where('trabajador_id',$trabajador_id);
-            $db->where('mes',$mes_consultar);
-            $db->where('ano',$ano_consultar);
-            $imponible = $db->getOne('liquidacion');
-            $imponible = $imponible['totalImponible'];
+            $db->where('diaLicencia',0);
+            $db->orderBy("ano","DESC");
+            $db->orderBy("mes","DESC");
+            $result = $db->getOne('liquidacion');
+            $imponible_licencia = $result['totalImponible'];
+
         } else {
             $db->where('trabajador_id',$trabajador_id);
             $db->where('mes',$mes_corte);
             $db->where('ano',$ano_corte);
-            $imponible = $db->getOne('liquidacion');
-            $imponible = $imponible['totalImponible'];
+            $result = $db->getOne('liquidacion');
+            $imponible = $result['totalImponible'];
+
+            $imponible_licencia = $imponible;
         }
 
 
@@ -66,15 +72,18 @@ function calcularSis($rentaImponible, $trabajador_id = 0, $mes, $ano){
 
 
         // Renta imponible Mes
-        $renta_imponible_mes = ( ($imponible / 30) * $dias_a_pago );
+        $renta_imponible_mes = $imponible;
         $sis__renta = ($renta_imponible_mes * $porcentajeCostoEmpresa);
+
          
 
         // Renta Imponible licencia médica
-        $renta_imponible_licencia = ( ($imponible / 30) * $dias_ausencias['dias_licencia'] );
+        $renta_imponible_licencia = ( ($imponible_licencia / 30) * $dias_ausencias['dias_licencia'] );
         $sis__licencia = ($renta_imponible_licencia * $porcentajeCostoEmpresa);
 
         $total_cotizacion_sis = ($sis__renta + $sis__licencia);
+
+
 
         return $total_cotizacion_sis;
 
@@ -135,26 +144,28 @@ function calcularSCes($rentaImponible, $trabajador_id = 0, $mes, $ano){
         $dias_a_pago = (30 - $dias_ausencias['total']);
 
 
-        if( $dias_ausencias['dias_licencia'] > 0 ){ // Si tiene licencias tomamos el imponible del mes anterior
-            $mes_consultar = ($mes_corte - 1);
-            $ano_consultar = $ano_corte;
-
-            if( $mes_consultar == 0 ){
-                $mes_consultar = 12;
-                $ano_consultar = ($ano_corte - 1);
-            }
+        if( $dias_ausencias['dias_licencia'] > 0 ){ 
+            $db->where('trabajador_id',$trabajador_id);
+            $db->where('mes',$mes_corte);
+            $db->where('ano',$ano_corte);
+            $result2 = $db->getOne('liquidacion');
+            $imponible = $result2['totalImponible'];
 
             $db->where('trabajador_id',$trabajador_id);
-            $db->where('mes',$mes_consultar);
-            $db->where('ano',$ano_consultar);
-            $imponible = $db->getOne('liquidacion');
-            $imponible = $imponible['totalImponible'];
+            $db->where('diaLicencia',0);
+            $db->orderBy("ano","DESC");
+            $db->orderBy("mes","DESC");
+            $result = $db->getOne('liquidacion');
+            $imponible_licencia = $result['totalImponible'];
+
         } else {
             $db->where('trabajador_id',$trabajador_id);
             $db->where('mes',$mes_corte);
             $db->where('ano',$ano_corte);
-            $imponible = $db->getOne('liquidacion');
-            $imponible = $imponible['totalImponible'];
+            $result = $db->getOne('liquidacion');
+            $imponible = $result['totalImponible'];
+
+            $imponible_licencia = $imponible;
         }
 
 
@@ -181,17 +192,18 @@ function calcularSCes($rentaImponible, $trabajador_id = 0, $mes, $ano){
         $porcentajeCostoEmpresa = ($valor / 100);
 
         // Renta imponible Mes
-        $renta_imponible_mes = ( ($imponible / 30) * $dias_a_pago );
-
+        $renta_imponible_mes = $imponible;
         $sces_renta = ($renta_imponible_mes * $porcentajeCostoEmpresa);
         
 
 
         // Renta Imponible licencia médica
-        $renta_imponible_licencia = ( ($imponible / 30) * $dias_ausencias['dias_licencia'] );
+        $renta_imponible_licencia = ( ($imponible_licencia / 30) * $dias_ausencias['dias_licencia'] );
         $sces_licencia = ($renta_imponible_licencia * $porcentajeCostoEmpresa);
 
         $total_cotizacion_sces = ($sces_renta + $sces_licencia);
+
+
 
         return $total_cotizacion_sces;
 
@@ -1301,14 +1313,20 @@ function obtenerLicencias($trabajador_id){
  * @param (Array) $arr_no_OUT arreglo con fechas que NO marco salida
  * @return (Array) Arreglo con las fechas de ausencias  
  */
-function obtenerAusencias($trabajador_id){
+function obtenerAusencias($trabajador_id,$mes=0,$year=0){
 
     global $db;
 
     $periodo = getPeriodoCorte();
 
-    $mes = getMesMostrarCorte();
-    $year = getAnoMostrarCorte();
+    if( $mes == 0 ){
+        $mes = getMesMostrarCorte();
+    }
+    if( $year == 0 ){
+        $year = getAnoMostrarCorte();
+    }
+
+    
 
 
     //Proceso para obtener el
