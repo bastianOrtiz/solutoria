@@ -6,9 +6,7 @@
     <section class="content">
     	<div class="row">
     		<div class="col-lg-12">
-                <?php if ($_POST) { ?>
 
-                <?php }else{?>
 
                 <!--<form method="post" id="frmPrevi">
                     <input type="hidden" name="action" value="obtenerEmpleados" />
@@ -26,9 +24,19 @@
                         </div>
                     </div>
                 </form>-->
+                <?php if ($_POST): ?>
                 <form method="post" id="frmPrevi">
-                <input type="hidden" name="action" value="enviarEmpleados" />
+
+                    <input type="hidden" name="action" value="enviarEmpleados" />
+                    <input type="hidden" name="mesAtraso" value="<?php echo $_POST['mesAtraso'] ?>" />
+                    <input type="hidden" name="anoAtraso" value="<?php echo $_POST['anoAtraso'] ?>" />
+
+                    <div class="row">
+                        <button type="submit" id="" class="btn btn-primary btn-lg pull-right">Generar Archivo Previred</button>
+                    </div>
+
                     <div class="table-responsive">
+                        
                         <table class="table table-bordered table-striped" style="background-color: #fff">
                             <thead>
                                 <tr>
@@ -70,7 +78,7 @@
                                         echo $tipoTrabajador['nombre'];
                                         ?>
                                     </td>
-                                    <td><?php echo getDiasTrabajados($empleado["id"]);?><td>
+                                    <td><?php echo getDiasTrabajados($empleado["id"],$_POST['mesAtraso'],$_POST['anoAtraso']);?><td>
                                         
                                     <input type="hidden" name="rut[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['rut']; ?>">
                                     <input type="hidden" name="id[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['id']; ?>">
@@ -88,48 +96,54 @@
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
-                            <div class="box-footer">
-                                <div class="row">
+                        </table>
 
-                                    <div class="col-lg-4">
-                                        <div class="input-group input-group-lg">
-                                            <input type="hidden" name="mesAtraso" class="hdnValue">
-                                            <div class="input-group-btn">
-                                              <button type="button" class="btn btn-warning" data-toggle="dropdown">Seleccione mes
-                                                <span class="fa fa-caret-down"></span></button>
-                                              <ul class="dropdown-menu" id="cboMes">
-                                                <li><a href="#">Seleccione mes</a></li>
-                                                <?php for($i=1;$i<=12;$i++){ ?>
-                                                <li><a href="#" data-val="<?php echo $i ?>"> <?php echo getNombreMes($i) ?> </a></li>
-                                                <?php } ?>
-                                              </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <div class="input-group input-group-lg">
-                                            <input type="hidden" name="anoAtraso" class="hdnValue">
-                                            <div class="input-group-btn">
-                                              <button type="button" class="btn btn-warning" data-toggle="dropdown">Seleccione Año
-                                                <span class="fa fa-caret-down"></span></button>
-                                                  <ul class="dropdown-menu" id="cboAno">
-                                                    <li><a href="#">Seleccione Año</a></li>
-                                                    <?php for($i=date('Y');$i>=2015;$i--){ ?>
-                                                    <li><a href="#" data-val="<?php echo $i ?>"> <?php echo $i ?> </a></li>
-                                                    <?php } ?>
-                                                  </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <button type="submit" id="" class="btn btn-primary btn-lg pull-right">Generar Archivo Previred</button>
+                    </div>
+                    
+                </form>
+                <?php else: ?>
+                    <form method="post">
+                    <div class="box-footer">
+                        <div class="row">
+
+                            <div class="col-lg-2">
+                                <div class="input-group input-group-lg">
+                                    <input type="hidden" name="mesAtraso" class="hdnValue">
+                                    <div class="input-group-btn">
+                                      <button type="button" class="btn btn-warning" data-toggle="dropdown">Seleccione mes
+                                        <span class="fa fa-caret-down"></span></button>
+                                      <ul class="dropdown-menu" id="cboMes">
+                                        <li><a href="#">Seleccione mes</a></li>
+                                        <?php for($i=1;$i<=12;$i++){ ?>
+                                        <li><a href="#" data-val="<?php echo $i ?>"> <?php echo getNombreMes($i) ?> </a></li>
+                                        <?php } ?>
+                                      </ul>
                                     </div>
                                 </div>
                             </div>
-                        </table>
+                            <div class="col-lg-2">
+                                <div class="input-group input-group-lg">
+                                    <input type="hidden" name="anoAtraso" class="hdnValue">
+                                    <div class="input-group-btn">
+                                      <button type="button" class="btn btn-warning" data-toggle="dropdown">Seleccione Año
+                                        <span class="fa fa-caret-down"></span></button>
+                                          <ul class="dropdown-menu" id="cboAno">
+                                            <li><a href="#">Seleccione Año</a></li>
+                                            <?php for($i=date('Y');$i>=2015;$i--){ ?>
+                                            <li><a href="#" data-val="<?php echo $i ?>"> <?php echo $i ?> </a></li>
+                                            <?php } ?>
+                                          </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <button type="submit" class="btn btn-success btn-lg pull-right">filtrar</button>
+                            </div>
+                        </div>
                     </div>
-                </form>
-                <?php }?>
+                    </form>
+                <?php endif; ?>
+
     		</div>
     	</div>
     </section>

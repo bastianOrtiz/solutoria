@@ -14,7 +14,9 @@ if( $_POST ){
 }
 
 if( $parametros ){
-    $empleados = buscarEmpleados($id_empresa); 
+    if ($_POST) {
+        $empleados = buscarEmpleados($id_empresa, $_POST['mesAtraso'], $_POST['anoAtraso']);
+    }
     $periodoDesde = getMesMostrarCorte().getAnoMostrarCorte(); 
     $periodoHasta = getMesMostrarCorte().getAnoMostrarCorte();
 }

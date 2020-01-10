@@ -4,14 +4,15 @@ function buscarEmpleados($id_empresa, $mes = "", $ano = ""){
     global $db;
 
     if( $mes == '' ){
-        $mes = 7;
+        $mes = (int)getMesMostrarCorte();
     }
     if( $ano == '' ){
         $ano = (int)getAnoMostrarCorte();
     }
 
     $sql = "SELECT L.*, T.* from liquidacion L, m_trabajador T
-            where L.ano = $ano
+            where T.id IN ( select L.trabajador_id from liquidacion L WHERE L.mes = $mes and L.ano = $ano )
+            and L.ano = $ano
             and L.mes = $mes
             and L.empresa_id = $id_empresa
             and L.trabajador_id = T.id
@@ -148,9 +149,9 @@ function tieneTramo($trabajador_id, $super_array){
         $array_return = [
             'tipo_tramo' => $super_array["tramo_a"]["datos"][$trabajador_id]["tramoCargas"],
             'cargas' => [
-                'cargasMaternales' => $super_array["licencias"]["datos"][$trabajador_id]["cargasMaternales"],
-                'cargasSimples' => $super_array["licencias"]["datos"][$trabajador_id]["cargasSimples"],
-                'cargasInvalidez' => $super_array["licencias"]["datos"][$trabajador_id]["cargasInvalidez"]
+                'cargasMaternales' => $super_array["tramo_a"]["datos"][$trabajador_id]["cargasMaternales"],
+                'cargasSimples' => $super_array["tramo_a"]["datos"][$trabajador_id]["cargasSimples"],
+                'cargasInvalidez' => $super_array["tramo_a"]["datos"][$trabajador_id]["cargasInvalidez"]
             ]
         ];
     }
@@ -161,9 +162,9 @@ function tieneTramo($trabajador_id, $super_array){
         $array_return = [
             'tipo_tramo' => $super_array["tramo_b"]["datos"][$trabajador_id]["tramoCargas"],
             'cargas' => [
-                'cargasMaternales' => $super_array["licencias"]["datos"][$trabajador_id]["cargasMaternales"],
-                'cargasSimples' => $super_array["licencias"]["datos"][$trabajador_id]["cargasSimples"],
-                'cargasInvalidez' => $super_array["licencias"]["datos"][$trabajador_id]["cargasInvalidez"]
+                'cargasMaternales' => $super_array["tramo_b"]["datos"][$trabajador_id]["cargasMaternales"],
+                'cargasSimples' => $super_array["tramo_b"]["datos"][$trabajador_id]["cargasSimples"],
+                'cargasInvalidez' => $super_array["tramo_b"]["datos"][$trabajador_id]["cargasInvalidez"]
             ]
         ];
     }
@@ -174,9 +175,9 @@ function tieneTramo($trabajador_id, $super_array){
         $array_return = [
             'tipo_tramo' => $super_array["tramo_c"]["datos"][$trabajador_id]["tramoCargas"],
             'cargas' => [
-                'cargasMaternales' => $super_array["licencias"]["datos"][$trabajador_id]["cargasMaternales"],
-                'cargasSimples' => $super_array["licencias"]["datos"][$trabajador_id]["cargasSimples"],
-                'cargasInvalidez' => $super_array["licencias"]["datos"][$trabajador_id]["cargasInvalidez"]
+                'cargasMaternales' => $super_array["tramo_c"]["datos"][$trabajador_id]["cargasMaternales"],
+                'cargasSimples' => $super_array["tramo_c"]["datos"][$trabajador_id]["cargasSimples"],
+                'cargasInvalidez' => $super_array["tramo_c"]["datos"][$trabajador_id]["cargasInvalidez"]
             ]
         ];
     }
@@ -187,9 +188,9 @@ function tieneTramo($trabajador_id, $super_array){
         $array_return = [
             'tipo_tramo' => $super_array["tramo_d"]["datos"][$trabajador_id]["tramoCargas"],
             'cargas' => [
-                'cargasMaternales' => $super_array["licencias"]["datos"][$trabajador_id]["cargasMaternales"],
-                'cargasSimples' => $super_array["licencias"]["datos"][$trabajador_id]["cargasSimples"],
-                'cargasInvalidez' => $super_array["licencias"]["datos"][$trabajador_id]["cargasInvalidez"]
+                'cargasMaternales' => $super_array["tramo_d"]["datos"][$trabajador_id]["cargasMaternales"],
+                'cargasSimples' => $super_array["tramo_d"]["datos"][$trabajador_id]["cargasSimples"],
+                'cargasInvalidez' => $super_array["tramo_d"]["datos"][$trabajador_id]["cargasInvalidez"]
             ]
         ];
     }
@@ -244,7 +245,7 @@ function sqlLiquidacion($mes = "", $ano = ""){
         $ano = (int)getAnoMostrarCorte();
     }
 
-    $db->where("mes", $mes);
+    $db->where("mes", $mes);//remplazar por datos que le mando antes de generar previred
     $db->where("ano", $ano);
     $liquidaciones = $db->get("liquidacion");
     foreach ($liquidaciones as $liquidacion) {
@@ -386,8 +387,9 @@ function crearTxt($post){
     $arreglo_ids_licencia = obtenerDiasLicencia($post['mesAtraso'],$post['anoAtraso']);
     $arreglo_liquidaciones = sqlLiquidacion($post['mesAtraso'],$post['anoAtraso']);
     $empleados = [];
+    $arr_trabajadores_con_incidencia[] = [];
     foreach ($post['rut'] as $key => $empleado) {
-       $empleados[] = [
+        $empleados[] = [
             'rut'=>$key,
             'id'=>$post["id"][$key],
             'apellidoPaterno'=> $post["apellidoPaterno"][$key],
@@ -481,12 +483,12 @@ function crearTxt($post){
         //$var.= $tipo_pago;
         fwrite($fch, $tipo_pago); // Grabas -- 8
 
-        $periodoDesde = getMesMostrarCorte().getAnoMostrarCorte();
+        $periodoDesde = $post['mesAtraso'].$post['anoAtraso'];
         $periodoDesde = rellenar($periodoDesde,6,"i");
         //$var.= $periodoDesde;
         fwrite($fch, $periodoDesde); // Grabas -- 9
 
-        $periodoHasta = getMesMostrarCorte().getAnoMostrarCorte();
+        $periodoHasta = $post['mesAtraso'].$post['anoAtraso'];
         $periodoHasta = rellenar($periodoHasta,6,"i");
         //$var.= $periodoHasta;
         fwrite($fch, $periodoHasta); // Grabas -- 10
@@ -517,7 +519,7 @@ function crearTxt($post){
             fwrite($fch, $tip_trabajador); // Grabas -- 12
         }
 
-        $dias_trabajados = getDiasTrabajados($empleado["id"]);
+        $dias_trabajados = getDiasTrabajados(104,$post['mesAtraso'],$post['anoAtraso']);//areglar
         $dias_trabajados = rellenar($dias_trabajados,2,"i");
         //$var.= $dias_trabajados;
         fwrite($fch, $dias_trabajados); // Grabas -- 13
@@ -527,54 +529,128 @@ function crearTxt($post){
         //$var.= $tipo_linea;
         fwrite($fch, $tipo_linea); // Grabas -- 14
 
-        $movimientos = tieneMovimientos($empleado["id"],$super_array);
-        $n_movimientos = count($movimientos);
+        $movimientos = tieneMovimientos(104,$movimiento);
+        $obtenerAusencias = obtenerAusenciasPrevired(104,$post['mesAtraso'],$post['anoAtraso']);
+
+        $movimientos_lenght = 0;
+
+        foreach ($obtenerAusencias as $key => $value) {
+            if (is_int($key)) {
+                $movimientos_lenght ++;
+            }
+        }
+
+
+
         $fecha_formateada_inicio = "";
         $fecha_formateada_fin = "";
-        if ($n_movimientos > 1) {
-            $indice = 0;
-            foreach ($movimientos as $movimiento) {
-                if ($indice > 0) {
-                    $arr_trabajadores_con_incidencia[] = [
-                        'trabajador_id' => $empleado["id"],
-                        'tipo_incidencia' => 'movimientos',
-                        'data' => $movimiento
-                    ];
-                }
-                $indice++;
-            }
-            $codigo_movimiento = rellenar($movimientos[0]["codigo_movimiento"],2,"i");
-            //$var.= $codigo_movimiento;
-            fwrite($fch, $codigo_movimiento); // Grabas -- 15
-            if ($movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
-                $fecha_formateada_inicio = rellenar($movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
-            }else{
-                $separador_fecha_inicio = explode("-",$movimientos[0]["fechas_limites"]["fecha_inicio"]);
-                $fecha_formateada_inicio = $separador_fecha_inicio[2]."-".$separador_fecha_inicio[1]."-".$separador_fecha_inicio[0];
-                $fecha_formateada_inicio = rellenar($fecha_formateada_inicio,10,"s");
-            }
-            //$var.= $fecha_formateada_inicio;
-            fwrite($fch, $fecha_formateada_inicio); // Grabas -- 16
 
-            if ($movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
-                $fecha_formateada_fin = rellenar($movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
+        if ($movimientos_lenght >= 1) {
+            $n_movimientos = $movimientos_lenght;
+
+            if ($n_movimientos >= 1) {
+                $indice = 0;
+                foreach ($obtenerAusencias as $movimiento) {
+                    if ($indice > 0) {
+                        $arr_trabajadores_con_incidencia[] = [
+                            'trabajador_id' => $empleado["id"],
+                            'tipo_incidencia' => 'movimientos',
+                            'data' => $movimiento
+                        ];
+                    }
+                    $indice++;
+                }
+
+                
+
+                show_array($arr_trabajadores_con_incidencia);
+
+                $codigo_movimiento = rellenar($movimientos[0]["codigo_movimiento"],2,"i");
+                //$var.= $codigo_movimiento;
+                fwrite($fch, $codigo_movimiento); // Grabas -- 15
+                if ($movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
+                    $fecha_formateada_inicio = rellenar($movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
+                }else{
+                    $separador_fecha_inicio = explode("-",$movimientos[0]["fechas_limites"]["fecha_inicio"]);
+                    $fecha_formateada_inicio = $separador_fecha_inicio[2]."-".$separador_fecha_inicio[1]."-".$separador_fecha_inicio[0];
+                    $fecha_formateada_inicio = rellenar($fecha_formateada_inicio,10,"s");
+                }
+                //$var.= $fecha_formateada_inicio;
+                fwrite($fch, $fecha_formateada_inicio); // Grabas -- 16
+
+                if ($movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
+                    $fecha_formateada_fin = rellenar($movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
+                }else{
+                    $separador_fecha_fin = explode("-",$movimientos[0]["fechas_limites"]["fecha_fin"]);
+                    $fecha_formateada_fin = $separador_fecha_fin[2]."-".$separador_fecha_fin[1]."-".$separador_fecha_fin[0];
+                    $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
+                }
+                //$var.= $fecha_formateada_fin;
+                fwrite($fch, $fecha_formateada_fin); // Grabas -- 17
             }else{
-                $separador_fecha_fin = explode("-",$movimientos[0]["fechas_limites"]["fecha_fin"]);
-                $fecha_formateada_fin = $separador_fecha_fin[2]."-".$separador_fecha_fin[1]."-".$separador_fecha_fin[0];
-                $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
+                $codigo_movimiento = rellenar(0,2,"i");
+                //$var.= $codigo_movimiento;
+                fwrite($fch, $codigo_movimiento); // Grabas -- 15
+                $fecha_formateada_inicio = rellenar("",10,"s");
+                fwrite($fch, $fecha_formateada_inicio); // Grabas -- 16
+                
+                $fecha_formateada_fin = rellenar("",10,"s");
+                //$var.= $fecha_formateada_fin;
+                fwrite($fch, $fecha_formateada_fin); // Grabas -- 17
             }
-            //$var.= $fecha_formateada_fin;
-            fwrite($fch, $fecha_formateada_fin); // Grabas -- 17
         }else{
-            $codigo_movimiento = rellenar(0,2,"i");
-            //$var.= $codigo_movimiento;
-            fwrite($fch, $codigo_movimiento); // Grabas -- 15
-            $fecha_formateada_inicio = rellenar("",10,"s");
-            fwrite($fch, $fecha_formateada_inicio); // Grabas -- 16
-            
-            $fecha_formateada_fin = rellenar("",10,"s");
-            //$var.= $fecha_formateada_fin;
-            fwrite($fch, $fecha_formateada_fin); // Grabas -- 17
+            $n_movimientos = count($movimientos);
+
+            if ($n_movimientos >= 1) {
+                $indice = 0;
+                foreach ($obtenerAusencias as $movimiento) {
+                    if ($indice > 0) {
+                        $arr_trabajadores_con_incidencia[] = [
+                            'trabajador_id' => $empleado["id"],
+                            'tipo_incidencia' => 'movimientos',
+                            'data' => $movimiento
+                        ];
+                    }
+                    $indice++;
+                }
+
+                
+
+                show_array($arr_trabajadores_con_incidencia);
+
+                $codigo_movimiento = rellenar($movimientos[0]["codigo_movimiento"],2,"i");
+                //$var.= $codigo_movimiento;
+                fwrite($fch, $codigo_movimiento); // Grabas -- 15
+                if ($movimientos[0]["fechas_limites"]["fecha_inicio"] == "") {
+                    $fecha_formateada_inicio = rellenar($movimientos[0]["fechas_limites"]["fecha_inicio"],10,"s");
+                }else{
+                    $separador_fecha_inicio = explode("-",$movimientos[0]["fechas_limites"]["fecha_inicio"]);
+                    $fecha_formateada_inicio = $separador_fecha_inicio[2]."-".$separador_fecha_inicio[1]."-".$separador_fecha_inicio[0];
+                    $fecha_formateada_inicio = rellenar($fecha_formateada_inicio,10,"s");
+                }
+                //$var.= $fecha_formateada_inicio;
+                fwrite($fch, $fecha_formateada_inicio); // Grabas -- 16
+
+                if ($movimientos[0]["fechas_limites"]["fecha_fin"] == "") {
+                    $fecha_formateada_fin = rellenar($movimientos[0]["fechas_limites"]["fecha_fin"],10,"s");
+                }else{
+                    $separador_fecha_fin = explode("-",$movimientos[0]["fechas_limites"]["fecha_fin"]);
+                    $fecha_formateada_fin = $separador_fecha_fin[2]."-".$separador_fecha_fin[1]."-".$separador_fecha_fin[0];
+                    $fecha_formateada_fin = rellenar($fecha_formateada_fin,10,"s");
+                }
+                //$var.= $fecha_formateada_fin;
+                fwrite($fch, $fecha_formateada_fin); // Grabas -- 17
+            }else{
+                $codigo_movimiento = rellenar(0,2,"i");
+                //$var.= $codigo_movimiento;
+                fwrite($fch, $codigo_movimiento); // Grabas -- 15
+                $fecha_formateada_inicio = rellenar("",10,"s");
+                fwrite($fch, $fecha_formateada_inicio); // Grabas -- 16
+                
+                $fecha_formateada_fin = rellenar("",10,"s");
+                //$var.= $fecha_formateada_fin;
+                fwrite($fch, $fecha_formateada_fin); // Grabas -- 17
+            }
         }
         
         $asignacion = tieneTramo($empleado["id"],$super_arreglo);
@@ -629,7 +705,6 @@ function crearTxt($post){
         $codigo_afp_rellenar = rellenar($codigo_afp_convertido,2,"i");
         //$var.= $codigo_afp_rellenar;
         fwrite($fch, $codigo_afp_rellenar); // Grabas
-
         $imponible = tieneImponible($empleado["id"],$arreglo_liquidaciones);
         $montoImponible = rellenar($imponible["monto"],8,"i");
         //$var.= $montoImponible;
@@ -671,7 +746,7 @@ function crearTxt($post){
         //$var.= $cotizacion_trabajo_pesado;
         fwrite($fch, $cotizacion_trabajo_pesado); // Grabas
         /*------ Datos Ahorro Previsional Voluntario Individual ------(Falta completar)*/
-        $apvi = insidencias('apv',$empleado["id"]);
+        $apvi = insidencias('apv',146);
         if ($apvi['apv']['count'] > 1) {
             $indice = 0;
             foreach ($apvi['apv']['results'] as $result) {
@@ -695,8 +770,13 @@ function crearTxt($post){
             //$var.= $forma_pago_apvi;
             fwrite($fch, $forma_pago_apvi); // Grabas
             $tip_moneda = tipoMoneda($apvi['apv']['results'][0]['tipomoneda_id']);
-            $val_moneda = valorMoneda($tip_moneda['id'],$post['mesAtraso'],$post['anoAtraso']);
-            $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda['valor']);
+            if ($tip_moneda['id'] == 1) {
+                $val_moneda = 1;
+                $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda);
+            }else{
+                $val_moneda = valorMoneda($tip_moneda['id'],$post['mesAtraso'],$post['anoAtraso']);
+                $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda['valor']);
+            }
             //$val_monto_sin_punto = str_replace(".","",$val_monto_apvi);/* No se remplaza el punto */
             $cotizacion_apvi = rellenar($val_monto_apvi,8,'i');
             //$var.= $cotizacion_apvi;
@@ -716,8 +796,13 @@ function crearTxt($post){
             //$var.= $forma_pago_apvi;
             fwrite($fch, $forma_pago_apvi); // Grabas
             $tip_moneda = tipoMoneda($apvi['apv']['results'][0]['tipomoneda_id']);
-            $val_moneda = valorMoneda($tip_moneda['id'],$post['mesAtraso'],$post['anoAtraso']);
-            $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda['valor']);
+            if ($tip_moneda['id'] == 1) {
+                $val_moneda = 1;
+                $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda);
+            }else{
+                $val_moneda = valorMoneda($tip_moneda['id'],$post['mesAtraso'],$post['anoAtraso']);
+                $val_monto_apvi = round($apvi['apv']['results'][0]['monto'] * $val_moneda['valor']);
+            }
             //$val_monto_sin_punto = str_replace(".","",$val_monto_apvi);/* No se remplaza el punto */
             $cotizacion_apvi = rellenar($val_monto_apvi,8,'i');
             //$var.= $cotizacion_apvi;
@@ -926,7 +1011,8 @@ function crearTxt($post){
         //$var.= $codigo_CCAF;
         fwrite($fch, $codigo_CCAF); // Grabas*/
 
-        $imponible = liquidacion($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
+        $imponible = liquidacion(110,$post['mesAtraso'],$post['anoAtraso']);
+        show_array($imponible);
         $renta_imponible_CCAF = rellenar($imponible['totalImponible'],8,"i");
         //$var.= $renta_imponible_CCAF;
         fwrite($fch, $renta_imponible_CCAF); // Grabas*/
@@ -987,7 +1073,7 @@ function crearTxt($post){
         //$var.= $renta_imponible_mutual;
         fwrite($fch, $renta_imponible_mutual); // Grabas*/
 
-        $suma_mutual = ($m_mutual['tasaBase'] + $m_mutual['tasaAdicional']);
+        $suma_mutual = ($m_mutual['tasa_pactadaBase'] + $m_mutual['tasaAdicional']);
         $multiplicacion_mutual = (($suma_mutual * $imponible['totalImponible'])/100);
         $multiplicacion_redondeo_mutual = round($multiplicacion_mutual);
         $cotizacion_accidente_trabajo = rellenar($multiplicacion_redondeo_mutual,8,"i");
@@ -1005,17 +1091,19 @@ function crearTxt($post){
         $monto_porcentaje_trabajador = 0;
         $monto_porcentaje_empleador = 0;
         $aporte_trabajador = $imponible['afcMonto'];
-        $afc_trabajador = afc($empleado["id"]);
+        $afc_trabajador = afc(110);
+        show_array($afc_trabajador);
         if ($afc_trabajador["id"] == 6) {
             $monto_porcentaje_trabajador = 0;
-            $monto_porcentaje_empleador = $aporte_trabajador * 0.3;
+            $monto_porcentaje_empleador = ($aporte_trabajador * 3)/100;
         }elseif ($afc_trabajador["id"] == 5) {
             $monto_porcentaje_trabajador = 0;
-            $monto_porcentaje_empleador = $aporte_trabajador * 0.8;
+            $monto_porcentaje_empleador = ($aporte_trabajador * 0.8)/100;
         }elseif ($afc_trabajador["id"] == 1) {
-            $monto_porcentaje_trabajador = $aporte_trabajador * 0.006;
+            $monto_porcentaje_trabajador = ($aporte_trabajador * 0.6)/100;
             $monto_porcentaje_trabajador = round($monto_porcentaje_trabajador);
-            $monto_porcentaje_empleador = $aporte_trabajador * 2.4;
+            $monto_porcentaje_empleador = ($aporte_trabajador * 2.4)/100;
+            $monto_porcentaje_empleador = round($monto_porcentaje_empleador);
         }
         $aporte_trabajador_seguro_cesantia = rellenar($monto_porcentaje_trabajador,8,"i");
         //$var.= $aporte_trabajador_seguro_cesantia;
@@ -1025,7 +1113,7 @@ function crearTxt($post){
         //$var.= $aporte_empleador_seguro_cesantia;
         fwrite($fch, $aporte_empleador_seguro_cesantia); // Grabas*/
 
-        $pagadorSubsidios = pagadorSubsidios($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
+        $pagadorSubsidios = pagadorSubsidios(110,$post['mesAtraso'],$post['anoAtraso']);
         $rut_pagador = explode("-",$pagadorSubsidios["rut"]);
         $rut_pagador_previred = rellenar($rut_pagador[0],11,"i");
         //$var.= $rut_pagador_previred;
@@ -1064,17 +1152,15 @@ function crearTxt($post){
                     $tipo_linea = rellenar($tipo_linea_movimientos,2,"s");
                     fwrite($fch, $tipo_linea); // Grabas
 
-                    $codigo_movimientos = rellenar($array_trabajadores['data']['codigo'],2,"i");
+                    $codigo_movimientos = rellenar($array_trabajadores['data']['codigo_movimiento'],2,"i");
                     fwrite($fch, $codigo_movimientos); // Grabas
-                    $separador_fecha_inicio_movimientos = explode("-",$array_trabajadores['data']['fechaHora']);
-                    $separador_fecha_inicio_movimientos_dias = explode(" ",$separador_fecha_inicio_movimientos[2]);
-                    $fecha_formateada_inicio_movimientos = $separador_fecha_inicio_movimientos_dias[0]."-".$separador_fecha_inicio_movimientos[1]."-".$separador_fecha_inicio_movimientos[0];
+                    $separador_fecha_inicio_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_inicio']);
+                    $fecha_formateada_inicio_movimientos = $separador_fecha_inicio_movimientos[2]."-".$separador_fecha_inicio_movimientos[1]."-".$separador_fecha_inicio_movimientos[0];
                     $fecha_formateada_inicio_movimientos = rellenar($fecha_formateada_inicio_movimientos,10,"s");
                     fwrite($fch, $fecha_formateada_inicio_movimientos); // Grabas
 
-                    $separador_fecha_fin_movimientos = explode("-",$array_trabajadores['data']['fechaHora']);
-                    $separador_fecha_fin_movimientos_dias = explode(" ",$separador_fecha_fin_movimientos[2]);
-                    $fecha_formateada_fin_movimientos = $separador_fecha_fin_movimientos_dias[0]."-".$separador_fecha_fin_movimientos[1]."-".$separador_fecha_fin_movimientos[0];
+                    $separador_fecha_fin_movimientos = explode("-",$array_trabajadores['data']['fechas_limites']['fecha_fin']);
+                    $fecha_formateada_fin_movimientos = $separador_fecha_fin_movimientos[2]."-".$separador_fecha_fin_movimientos[1]."-".$separador_fecha_fin_movimientos[0];
                     $fecha_formateada_fin_movimientos = rellenar($fecha_formateada_fin_movimientos,10,"s");
                     fwrite($fch, $fecha_formateada_fin_movimientos); // Grabas
 
@@ -1684,7 +1770,7 @@ function pagadorSubsidios($trabajador_id, $mes = "", $ano = ""){
         $ano = (int)getAnoMostrarCorte();
     }
 
-    $sql = "SELECT * FROM t_ausencia TA WHERE month(fecha_inicio) = $mes AND year(fecha_inicio) = $ano and TA.trabajador_id = $trabajador_id";
+    $sql = "SELECT * FROM t_ausencia TA, m_ausencia MA WHERE month(fecha_inicio) = $mes AND year(fecha_inicio) = $ano AND TA.trabajador_id = $trabajador_id AND MA.licencia = 1 AND TA.ausencia_id = MA.id";
 
     $result = $db->rawQueryOne($sql);
 
@@ -1700,6 +1786,361 @@ function pagadorSubsidios($trabajador_id, $mes = "", $ano = ""){
         return 0;
     }
     
+}
+
+function obtenerAusenciasPrevired($trabajador_id, $mes = "", $year = ""){
+
+    global $db;
+
+    //$periodo = getPeriodoCorte();
+
+    //$mes = getMesMostrarCorte();
+    //$year = getAnoMostrarCorte();
+
+    if( $mes == '' ){
+        $mes = (int)getMesMostrarCorte();
+    }
+    if( $year == '' ){
+        $year = (int)getAnoMostrarCorte();
+    }
+
+
+    $periodo = [ 
+        'desde' => "$year-$mes-01", 
+        'hasta' => "$year-$mes-".getLimiteMes($mes)
+    ];
+
+    //Proceso para obtener el
+    $sql_fecha_fin = "
+    SELECT * FROM `m_trabajador` WHERE id = $trabajador_id
+    AND month(fechaContratoFin) = $mes
+    AND year(fechaContratoFin) = $year
+    ";
+    $finiquito_este_mes = $db->rawQueryOne($sql_fecha_fin);
+
+    if( $finiquito_este_mes ){
+        $hasta = $finiquito_este_mes['fechaContratoFin'] . "  23:59:59";
+    } else {
+        $hasta = $periodo['hasta'].' 23:59:59';
+    }
+    
+    $desde              = $periodo['desde'].' 00:00:00';
+
+    $fechaInicio        = strtotime($periodo['desde']);
+    $fechaFin           = strtotime($periodo['hasta']);    
+    $arr_ausencias      = array();
+    $total_ausencias    = 0;
+    $dias_licencia      = 0;
+
+
+
+    
+    /** AUSENCIAS SIN INC. LICENCIAS **/
+    $raw_query = "
+    SELECT fecha_inicio, fecha_fin,  DATEDIFF(fecha_fin,fecha_inicio)+1 as dias, ausencia_id  
+    FROM t_ausencia 
+    WHERE ( 
+            fecha_inicio <= '$desde' 
+            AND fecha_fin <= '$hasta' 
+            AND fecha_fin >= '$desde' 
+            AND trabajador_id = $trabajador_id 
+            AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.descuenta = 1 )
+            AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 0 )            
+            )
+    OR ( 
+        fecha_inicio >= '$desde' 
+        AND fecha_fin >= '$hasta' 
+        AND fecha_inicio <= '$hasta' 
+        AND trabajador_id = $trabajador_id 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.descuenta = 1 ) 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 0 )
+        )
+    OR ( 
+        fecha_inicio <= '$desde' 
+        AND fecha_fin >= '$hasta' 
+        AND trabajador_id = $trabajador_id 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.descuenta = 1 ) 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 0 )
+        )
+    OR ( 
+        fecha_inicio >= '$desde' 
+        AND fecha_fin <= '$hasta' 
+        AND trabajador_id = $trabajador_id 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.descuenta = 1 ) 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 0 )
+        )
+        ORDER BY fecha_inicio
+    ";    
+    $res = $db->rawQuery($raw_query,'',false);
+
+    if( $res ){
+        foreach($res as $aus){
+            $ausencias = 0;
+            $date_fin_corte = new DateTime( $hasta );
+            $date_fin_ausen = new DateTime( $aus['fecha_fin'] );
+            
+            $date_ini_corte = new DateTime( $desde );
+            $date_ini_ausen = new DateTime( $aus['fecha_inicio'] );
+            
+            if( ( $date_ini_ausen <= $date_ini_corte ) && ( $date_fin_ausen <= $date_fin_corte ) ){
+                $interval = $date_ini_corte->diff($date_fin_ausen);
+                $ausencias += ( $interval->days + 1 );
+                $n_dias = diasNoLaborales($desde,$aus['fecha_fin'],$trabajador_id);
+                $ausencias -= $n_dias;
+                $arr_ausencias[] = array(
+                    'fecha_inicio' => $desde,
+                    'fecha_fin' => $aus['fecha_fin'],
+                    'dias' => $ausencias,
+                    'ausencia_id' => $aus['ausencia_id']
+                );
+                $total_ausencias += $ausencias;
+                //echo "1<br />";
+            } elseif( ( $date_ini_ausen >= $date_ini_corte ) && ( $date_fin_ausen >= $date_fin_corte ) && ( $date_ini_ausen <= $date_fin_corte ) ){
+                $interval = $date_ini_ausen->diff($date_fin_corte);
+                $ausencias += ( $interval->days + 1 );
+                $n_dias = diasNoLaborales($aus['fecha_inicio'],$hasta,$trabajador_id);
+                $ausencias -= $n_dias;
+                $arr_ausencias[] = array(
+                    'fecha_inicio' => $aus['fecha_inicio'],
+                    'fecha_fin' => $hasta,
+                    'dias' => $ausencias,
+                    'ausencia_id' => $aus['ausencia_id']
+                );
+                $total_ausencias += $ausencias;
+                //echo "2<br />";
+            } elseif( ( $date_ini_ausen <= $date_ini_corte ) && ( $date_fin_ausen >= $date_fin_corte ) ){                
+                $interval = $date_ini_ausen->diff($date_fin_corte);
+                $ausencias += ( $interval->days + 1 );
+                $n_dias = diasNoLaborales($aus['fecha_inicio'],$hasta,$trabajador_id);
+                $ausencias -= $n_dias;
+                $arr_ausencias[] = array(
+                    'fecha_inicio' => $aus['fecha_inicio'],
+                    'fecha_fin' => $hasta,
+                    'dias' => $ausencias,
+                    'ausencia_id' => $aus['ausencia_id']
+                );
+                $total_ausencias += $ausencias;
+                //echo "3<br />";
+            } else {                
+                $ausencias += $aus['dias'];
+                $n_dias = diasNoLaborales($aus['fecha_inicio'],$aus['fecha_fin'],$trabajador_id);
+                $ausencias -= $n_dias;
+                $arr_ausencias[] = array(
+                    'fecha_inicio' => $aus['fecha_inicio'],
+                    'fecha_fin' => $aus['fecha_fin'],
+                    'dias' => $ausencias,
+                    'ausencia_id' => $aus['ausencia_id']
+                );   
+                $total_ausencias += $ausencias;             
+                //echo "4<br />";
+            }        
+        }
+    }
+
+    
+    
+    /** Ahora Se Recorren Las LICENCIAS **/
+    $total_days_month = cal_days_in_month(CAL_GREGORIAN, $mes, $year);
+    $desde_licencia = $year . '-' . leadZero($mes) . '-01';
+    $hasta_licencia = $year . '-' . leadZero($mes) . '-' . $total_days_month;  
+    $sql_licencia = "
+    SELECT fecha_inicio, fecha_fin,  DATEDIFF(fecha_fin,fecha_inicio)+1 as dias, ausencia_id  
+    FROM t_ausencia 
+    WHERE ( 
+            fecha_inicio <= '$desde_licencia' 
+            AND fecha_fin <= '$hasta_licencia' 
+            AND fecha_fin >= '$desde_licencia' 
+            AND trabajador_id = $trabajador_id 
+            AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.descuenta = 1 )
+            AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 1 )            
+            )
+    OR ( 
+        fecha_inicio >= '$desde_licencia' 
+        AND fecha_fin >= '$hasta_licencia' 
+        AND fecha_inicio <= '$hasta_licencia' 
+        AND trabajador_id = $trabajador_id 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.descuenta = 1 ) 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 1)
+        )
+    OR ( 
+        fecha_inicio <= '$desde_licencia' 
+        AND fecha_fin >= '$hasta_licencia' 
+        AND trabajador_id = $trabajador_id 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.descuenta = 1 ) 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 1 )
+        )
+    OR ( 
+        fecha_inicio >= '$desde_licencia' 
+        AND fecha_fin <= '$hasta_licencia' 
+        AND trabajador_id = $trabajador_id 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.descuenta = 1 ) 
+        AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 1 )
+        )
+        ORDER BY fecha_inicio
+    ";
+    $res_licencias = $db->rawQuery($sql_licencia,'',false);    
+
+    foreach($res_licencias as $aus){
+        $ausencias = 0;
+        $date_fin_mes = new DateTime( $hasta_licencia . ' 23:59:59' );
+        $date_fin_ausen = new DateTime( $aus['fecha_fin'] );
+        
+        $date_ini_mes = new DateTime( $desde_licencia . ' 00:00:00' );
+        $date_ini_ausen = new DateTime( $aus['fecha_inicio'] );                
+        
+        if( ( $date_ini_ausen <= $date_ini_mes ) && ( $date_fin_ausen <= $date_fin_mes ) ){
+            $interval = $date_ini_mes->diff($date_fin_ausen);
+            $ausencias += ( $interval->days + 1 );
+            $arr_ausencias[] = array(
+                'fecha_inicio' => $desde,
+                'fecha_fin' => $aus['fecha_fin'],
+                'dias' => $ausencias,
+                'ausencia_id' => $aus['ausencia_id']
+            );
+            $dias_licencia += $ausencias;
+            //echo "1<br />";
+        } elseif( ( $date_ini_ausen >= $date_ini_mes ) && ( $date_fin_ausen >= $date_fin_mes ) && ( $date_ini_ausen <= $date_fin_mes ) ){
+            $interval = $date_ini_ausen->diff($date_fin_mes);
+            $ausencias += ( $interval->days + 1 );
+            $arr_ausencias[] = array(
+                'fecha_inicio' => $aus['fecha_inicio'],
+                'fecha_fin' => $hasta,
+                'dias' => $ausencias,
+                'ausencia_id' => $aus['ausencia_id']
+            );
+            $dias_licencia += $ausencias;
+            //echo "2<br />";
+        } elseif( ( $date_ini_ausen <= $date_ini_mes ) && ( $date_fin_ausen >= $date_fin_mes ) ){                
+            $interval = $date_ini_ausen->diff($date_fin_mes);
+            $ausencias += ( $interval->days + 1 );
+            $arr_ausencias[] = array(
+                'fecha_inicio' => $aus['fecha_inicio'],
+                'fecha_fin' => $hasta,
+                'dias' => $ausencias,
+                'ausencia_id' => $aus['ausencia_id']
+            );
+            $dias_licencia += $ausencias;
+            //echo "3<br />";
+        } else {                
+            $ausencias += $aus['dias'];
+            $arr_ausencias[] = array(
+                'fecha_inicio' => $aus['fecha_inicio'],
+                'fecha_fin' => $aus['fecha_fin'],
+                'dias' => $ausencias,
+                'ausencia_id' => $aus['ausencia_id']
+            );   
+            $dias_licencia += $ausencias;             
+            //echo "4<br />";
+        }        
+    }
+
+
+
+    if( $dias_licencia > 30 ){
+        $dias_licencia = 30;
+    }
+
+
+    if( esAnoBisiesto($year) ){
+        $limiteFeb = 29;
+    } else {
+        $limiteFeb = 28;
+    }
+    
+
+    if( ( $mes == 2 ) && ( $dias_licencia == $limiteFeb ) ){
+        $dias_licencia += ( 30 - $limiteFeb );
+    }
+
+    
+
+    /*********************************************/
+    /**************** EXCEPCIONES ****************/
+    /*********************************************/
+
+    if( ( $trabajador_id == 643 ) && ($mes == 2) && ( $year == 2018 ) ){
+        $dias_licencia = 30;
+    }
+    if( ( $trabajador_id == 358 ) && ($mes == 2) && ( $year == 2018 ) ){
+        $dias_licencia = 29;
+    }
+
+
+
+    /** Proceso para determinar dias de NO enrolado **/
+    $diasNoEnrolado = 0;
+    
+    $db->where('id',$trabajador_id);
+    $fecha_inicio_contrato_plano = $db->getValue('m_trabajador','fechaContratoInicio');
+    $fecha_inicio_contrato_plano .= ' 00:00:00';    
+    $fecha_inicio_contrato = strtotime($fecha_inicio_contrato_plano);        
+
+    $mes_enrolado = date('m',$fecha_inicio_contrato);
+    $ano_enrolado = date('Y',$fecha_inicio_contrato);
+    $mes_enrolado = (int)$mes_enrolado;
+
+    
+    if( ($mes_enrolado == $mes) && ( $ano_enrolado == $year ) ){
+        /*
+        $db->where('trabajador_id',$trabajador_id);
+        $db->where('activo',1);
+        $db->get('t_contrato');
+        if( $db->count <= 2 ){
+        */
+            $datetime1 = new DateTime( $year.'-'.$mes.'-01 00:00:00' );
+            $datetime2 = new DateTime( $fecha_inicio_contrato_plano );
+            $interval = $datetime1->diff($datetime2);                    
+
+            $diasNoEnrolado = $interval->days;
+        //}
+    }
+    /** END **/
+
+
+    /** Proceso para determinar dias que no trabajo por Finiquito **/
+    $diasNoTrabajados = 0;
+    
+    $db->where('id',$trabajador_id);
+    $fecha_fin_contrato_plano = $db->getValue('m_trabajador','fechaContratoFin');
+
+    if($fecha_fin_contrato_plano != "0000-00-00"){                
+        $fecha_fin_contrato = strtotime($fecha_fin_contrato_plano);
+        $mes = leadZero($mes);
+        $ano = $year;
+        $fechaFinCorte=strtotime( $ano.'-'.$mes.'-30' );
+        if( $mes == 2 ){
+            $fechaFinCorte=strtotime( $ano.'-'.$mes.'-28' );
+        }
+
+        if( $fecha_fin_contrato < $fechaFinCorte ){
+            if( ( date('m',$fechaFinCorte) == date('m',$fecha_fin_contrato) ) ){
+                $datetime1 = new DateTime( $ano.'-'.$mes.'-01' );
+                $datetime2 = new DateTime( $fecha_fin_contrato_plano );
+                $interval = $datetime1->diff($datetime2);
+
+
+                $diasAlcanzoATrabajar = $interval->days;
+                $diasAlcanzoATrabajar++;
+                if($diasAlcanzoATrabajar > 30){
+                    $diasAlcanzoATrabajar = 0;
+                }
+            } else {
+                $diasAlcanzoATrabajar = 0;
+            }
+
+            $diasNoTrabajados = ( 30 - $diasAlcanzoATrabajar );            
+        }
+    }
+    /** END **/
+
+    
+    $arr_ausencias['dias_finiquito'] = $diasNoTrabajados;
+    $arr_ausencias['dias_no_enrolado'] = $diasNoEnrolado;
+    $arr_ausencias['dias_ausentismo'] = $total_ausencias;
+    $arr_ausencias['dias_licencia'] = $dias_licencia;
+    $arr_ausencias['total'] = ($total_ausencias + $dias_licencia + $diasNoEnrolado + $diasNoTrabajados );
+
+    return $arr_ausencias;
 }
 
 function mutualidad(){
@@ -2414,10 +2855,9 @@ function sqlMovimientos($mes = "", $year = ""){
     $sql1 = "
     SELECT C.trabajador_id
     FROM t_contrato C, m_trabajador T
-    where C.trabajador_id IN ( SELECT id FROM m_trabajador 
-    WHERE empresa_id = ". $_SESSION[PREFIX.'login_eid'] ." )
-    AND T.id = C.trabajador_id
-    group by trabajador_id HAVING SUM(T.activo)>1  
+    WHERE T.id = C.trabajador_id
+    AND t.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."  
+    group by trabajador_id HAVING SUM(T.activo)>1
     ";
     $plazo_a_indefinido = $db->rawQuery( $sql1 );
     
