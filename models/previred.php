@@ -405,7 +405,7 @@ function crearTxt($post){
        ];
     }
 
-    $archivo= ROOT."previred.txt"; // el nombre de tu archivo
+    $archivo= ROOT."/private/uploads/docs/previred.txt" // el nombre de tu archivo
     $empleados= $empleados; // Recibez el formulario
 
     $fch= fopen($archivo, "w"); // Abres el archivo para escribir en él
@@ -2857,7 +2857,7 @@ function sqlMovimientos($mes = "", $year = ""){
     SELECT C.trabajador_id
     FROM t_contrato C, m_trabajador T
     WHERE T.id = C.trabajador_id
-    AND t.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."  
+    AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."  
     group by trabajador_id HAVING SUM(T.activo)>1
     ";
     $plazo_a_indefinido = $db->rawQuery( $sql1 );
