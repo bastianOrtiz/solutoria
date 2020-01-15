@@ -521,7 +521,8 @@ function crearTxt($post){
         }
 
         $obtenerAusencias = obtenerAusenciasPrevired($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
-        $dias_trabajados = getDiasTrabajados($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);//areglar
+        //$dias_trabajados = getDiasTrabajados($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);//areglar
+        $dias_trabajados = 30 - $obtenerAusencias['total'];//areglar
         $dias_trabajados = rellenar($dias_trabajados,2,"i");
         //$var.= $dias_trabajados;
         fwrite($fch, $dias_trabajados); // Grabas -- 13
