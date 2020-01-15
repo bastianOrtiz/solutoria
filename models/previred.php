@@ -405,7 +405,7 @@ function crearTxt($post){
        ];
     }
 
-    $archivo= ROOT."/private/uploads/docs/previred.txt" // el nombre de tu archivo
+    $archivo= ROOT."/private/uploads/docs/previred.txt"; // el nombre de tu archivo
     $empleados= $empleados; // Recibez el formulario
 
     $fch= fopen($archivo, "w"); // Abres el archivo para escribir en él
