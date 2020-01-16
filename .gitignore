@@ -16,3 +16,5 @@ libs/\.DS_Store
 \.DS_Store
 
 respaldos/
+
+private/uploads/docs/
