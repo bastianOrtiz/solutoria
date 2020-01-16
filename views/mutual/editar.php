@@ -91,6 +91,11 @@ $("#frmCrear").submit(function(e){
     })
   
     if( error == 0 ){
+
+        if( <?php echo $mutual['id'] ?> == 1 ){
+            alert("Recuerde que al modificar la Tasa Base y la Tasa Adicional, debe cambiar el valor para ACHS en el mantenedor de Costos de Empresa\n(Menú Misceláneos -> Costos Empresa -> Costo: ACHS)");
+        }
+
         $(".overlayer").show();
         $("#frmCrear")[0].submit();
     }

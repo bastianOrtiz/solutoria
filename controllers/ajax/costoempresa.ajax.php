@@ -11,6 +11,8 @@ extract($_POST);
 if( $action == 'detalle_x_costo' ){
     
     $db->where ("costoempresa_id", $costoempresa_id);
+    $db->orderBy('ano','desc');
+    $db->orderBy('mes','desc');
     $valores = $db->get("m_costoempresa");
     
     if( $valores ){

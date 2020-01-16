@@ -107,7 +107,7 @@
 
 </div><!-- /.content-wrapper -->
       
-<script>  
+<script> 
 
 $(document).on('click','.btn_delete_costoempresa', function(){
     var costoempresa_id = $(this).data('id');
@@ -124,6 +124,9 @@ $(document).on('click','.btn_delete_costoempresa', function(){
             },
 			success: function (json) {
 			     this_tr.fadeOut(500);
+                 if( $("#costoempresa").val() == 2 ){
+                    alert("Recuerde que al modificar un valor para ACHS debe también modificar la Tasa Base y la Tasa Adicional en el mantenedor de Inst. de Seguridad\n(Menu Prevision -> Inst. de Seguridad -> Asociación Chilena de Seguridad ACHS)");
+                }
             }
 		})
     }
@@ -189,6 +192,9 @@ $("#frmCrear").submit(function(e){
     })
 
     if( error == 0 ){
+        if( $("#costoempresa").val() == 2 ){
+            alert("Recuerde que al agregar un valor para ACHS debe también modificar la Tasa Base y la Tasa Adicional en el mantenedor de Inst. de Seguridad\n(Menu Prevision -> Inst. de Seguridad -> Asociación Chilena de Seguridad ACHS)");
+        }
         $(".overlayer").show();
         $("#frmCrear")[0].submit();
     }
