@@ -1067,13 +1067,13 @@ function crearTxt($post){
         //$var.= $sucursal_pago_mutual;
         fwrite($fch, $sucursal_pago_mutual); // Grabas*/
 
-        $renta_imponible_seguro_cesantia = rellenar($imponible['afcMonto'],8,"i");
+        $renta_imponible_seguro_cesantia = rellenar($imponible['totalImponible'],8,"i");
         //$var.= $renta_imponible_seguro_cesantia;
         fwrite($fch, $renta_imponible_seguro_cesantia); // Grabas*/
 
         $monto_porcentaje_trabajador = 0;
         $monto_porcentaje_empleador = 0;
-        $aporte_trabajador = $imponible['afcMonto'];
+        $aporte_trabajador = $imponible['totalImponible'];
         $afc_trabajador = afc($empleado["id"]);
         if ($afc_trabajador["id"] == 6) {
             $monto_porcentaje_trabajador = 0;
