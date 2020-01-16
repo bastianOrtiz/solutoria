@@ -64,6 +64,9 @@ if( $_POST ){
                 }
                 
             }
+
+            unlink(ROOT.'/private/uploads/docs/' . $upload['filename']);
+            
         }
 
         $response = encrypt('status=success&mensaje=Datos importados correctamente&id=0');
