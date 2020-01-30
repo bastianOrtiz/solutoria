@@ -1078,9 +1078,13 @@ function crearTxt($post){
         if ($afc_trabajador["id"] == 6) {
             $monto_porcentaje_trabajador = 0;
             $monto_porcentaje_empleador = ($aporte_trabajador * 3)/100;
+            $monto_porcentaje_trabajador = round($monto_porcentaje_trabajador);
+            $monto_porcentaje_empleador = round($monto_porcentaje_empleador);
         }elseif ($afc_trabajador["id"] == 5) {
             $monto_porcentaje_trabajador = 0;
             $monto_porcentaje_empleador = ($aporte_trabajador * 0.8)/100;
+            $monto_porcentaje_trabajador = round($monto_porcentaje_trabajador);
+            $monto_porcentaje_empleador = round($monto_porcentaje_empleador);
         }elseif ($afc_trabajador["id"] == 1) {
             $monto_porcentaje_trabajador = ($aporte_trabajador * 0.6)/100;
             $monto_porcentaje_trabajador = round($monto_porcentaje_trabajador);
