@@ -40,6 +40,7 @@
                         <table class="table table-bordered table-striped" style="background-color: #fff">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Rut</th>
                                     <th>Apellido Paterno</th>
                                     <th>Apellido Materno</th>
@@ -55,9 +56,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($empleados as $empleado) : ?>
+                                <?php 
+                                $i=1;
+                                foreach ($empleados as $empleado) : 
+                                ?>
                                 <tr>
-                                    <td><?php echo $empleado['rut']; ?></td>
+                                    <td><?php echo $i; ?></td>
+                                    <td style="white-space: nowrap;"><?php echo $empleado['rut']; ?></td>
                                     <td><?php echo $empleado['apellidoPaterno']; ?></td>
                                     <td><?php echo $empleado['apellidoMaterno']; ?></td>
                                     <td><?php echo $empleado['nombres']; ?></td>
@@ -94,7 +99,10 @@
                                     <input type="hidden" name="tipo_trabajador[<?php echo $empleado['rut']; ?>]" value="<?php echo $empleado['tipotrabajador_id']; ?>">
                                     <input type="hidden" name="nombre_afp[<?php echo $empleado['rut']; ?>]" value="<?php $afp = previTrabajador($empleado["tipotrabajador_id"]);echo $afp['id']; ?>">
                                 </tr>
-                                <?php endforeach; ?>
+                                <?php 
+                                $i++;
+                                endforeach; 
+                                ?>
                             </tbody>
                         </table>
 

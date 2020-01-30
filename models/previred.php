@@ -408,7 +408,7 @@ function crearTxt($post){
     $archivo= ROOT."/private/uploads/docs/previred.txt"; // el nombre de tu archivo
     $empleados= $empleados; // Recibez el formulario
 
-    $fch= fopen($archivo, "w"); // Abres el archivo para escribir en él
+    $fch= fopen($archivo, "w+"); // Abres el archivo para escribir en él
     $var = "";
 
     foreach ($empleados as $empleado) {
@@ -1742,6 +1742,7 @@ function crearTxt($post){
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename="previred.txt"');
     readfile($archivo);
+    //unlink($archivo);
     exit();
 }
 
