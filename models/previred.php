@@ -1,5 +1,22 @@
 <?php
 
+function rentaScesZero($trabajador_id,$imponible){
+    global $db;
+
+    $db->where('id',$trabajador_id);
+    $tipotrabajador_id = $db->getValue ("m_trabajador", "tipotrabajador_id");
+
+    $db->where('id',$tipotrabajador_id);
+    $tipo_trabajador = $db->getOne('m_tipotrabajador');
+
+    if( ($tipo_trabajador['afc'] == 0) && ($tipo_trabajador['sces'] == 0) && ($tipo_trabajador['sces_full_empresa'] == 0) ){
+        return 0;
+    } else {
+        return $imponible;
+    }
+
+}
+
 function buscarEmpleados($id_empresa, $mes = "", $ano = ""){
     global $db;
 
@@ -1069,7 +1086,9 @@ function crearTxt($post){
         //$var.= $sucursal_pago_mutual;
         fwrite($fch, $sucursal_pago_mutual); // Grabas*/
 
-        $renta_imponible_seguro_cesantia = rellenar($imponible['totalImponible'],8,"i");
+        $renta_sces = rentaScesZero($empleado["id"],$imponible['totalImponible']);
+
+        $renta_imponible_seguro_cesantia = rellenar($renta_sces,8,"i");
         //$var.= $renta_imponible_seguro_cesantia;
         fwrite($fch, $renta_imponible_seguro_cesantia); // Grabas*/
 
@@ -1744,9 +1763,10 @@ function crearTxt($post){
     }
     fclose($fch); // Cierras el archivo.
 
+    $empresa_name_sanitized = _sanitize_redirect($_SESSION[PREFIX . 'login_empresa']);
     // Headers for an download:
     header('Content-Type: application/octet-stream');
-    header('Content-Disposition: attachment; filename="previred.txt"');
+    header('Content-Disposition: attachment; filename="previred_' . $empresa_name_sanitized . '.txt"');
     readfile($archivo);
     //unlink($archivo);
     exit();
