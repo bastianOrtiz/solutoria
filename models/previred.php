@@ -406,9 +406,11 @@ function crearTxt($post){
     }
 
     $archivo= ROOT."/private/uploads/docs/previred.txt"; // el nombre de tu archivo
+    unlink($archivo);
+    
     $empleados= $empleados; // Recibez el formulario
 
-    $fch= fopen($archivo, "w"); // Abres el archivo para escribir en él
+    $fch= fopen($archivo, "w+"); // Abres el archivo para escribir en él
     $var = "";
 
     foreach ($empleados as $empleado) {
@@ -1078,9 +1080,13 @@ function crearTxt($post){
         if ($afc_trabajador["id"] == 6) {
             $monto_porcentaje_trabajador = 0;
             $monto_porcentaje_empleador = ($aporte_trabajador * 3)/100;
+            $monto_porcentaje_trabajador = round($monto_porcentaje_trabajador);
+            $monto_porcentaje_empleador = round($monto_porcentaje_empleador);
         }elseif ($afc_trabajador["id"] == 5) {
             $monto_porcentaje_trabajador = 0;
             $monto_porcentaje_empleador = ($aporte_trabajador * 0.8)/100;
+            $monto_porcentaje_trabajador = round($monto_porcentaje_trabajador);
+            $monto_porcentaje_empleador = round($monto_porcentaje_empleador);
         }elseif ($afc_trabajador["id"] == 1) {
             $monto_porcentaje_trabajador = ($aporte_trabajador * 0.6)/100;
             $monto_porcentaje_trabajador = round($monto_porcentaje_trabajador);
@@ -1742,6 +1748,7 @@ function crearTxt($post){
     header('Content-Type: application/octet-stream');
     header('Content-Disposition: attachment; filename="previred.txt"');
     readfile($archivo);
+    //unlink($archivo);
     exit();
 }
 
