@@ -209,8 +209,10 @@ if( $_POST ){
 if( $parametros ){
 
     //$mes = (int)getMesMostrarCorte();
+    //$ano = (int)getAnoMostrarCorte();
     $mes = 10;
-    $ano = (int)getAnoMostrarCorte();
+    $ano = 2019;
+
         
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
     $ccostos = $db->get('m_centrocosto');
@@ -326,6 +328,7 @@ if( $parametros ){
                 'subtotal' => $subtotal
             ];
         }
+
 
 
 

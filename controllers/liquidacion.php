@@ -4,6 +4,7 @@
 $year = getAnoMostrarCorte();
 $mes = getMesMostrarCorte();
 
+
 $corte = getPeriodoCorte();
 
 
@@ -805,7 +806,8 @@ if( $parametros[0] == 'reliquidar' ){
 
 if( $parametros[0] == 'reliquidar_bonos' ){
 
-    $mes = 10;
+    $mes = $parametros[1];
+    $year = $parametros[2];
 
     $db->orderBy('apellidoPaterno','ASC');
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
@@ -838,6 +840,7 @@ if( $parametros[0] == 'reliquidar_bonos' ){
                 AND H.id = LH.haber_id
                 ORDER BY LH.id ASC ";
                 $haberes_imponibles = $db->rawQuery($sql_haberes);
+
                
                 $total_haberes_imponibles = 0;
                 foreach( $haberes_imponibles as $dt ){

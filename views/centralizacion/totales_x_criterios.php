@@ -59,23 +59,23 @@ tbody td{
                                         $tot_he += $value['horaExtraMonto'];
                                         $tot_he_100 += $value['horaExtraFestivoMonto'];
                                         $tot_bonos += $value['totalHaberesImponibles'];
-                                    ?>
-                                    <tr>
+                                        ?>
+                                        <tr>
 
-                                        <td><?php echo $value['apellidoPaterno']; ?></td>
-                                        <td><?php echo $value['apellidoMaterno']; ?></td>
-                                        <td><?php echo $value['nombres']; ?></td>
-                                        <td class="text-right"><?php echo number_format($value['sueldoBase'],0,',','.'); ?></td>
-                                        <td class="text-right"><?php echo number_format($value['gratificacion'],0,',','.'); ?></td>
-                                        <td class="text-right"><?php echo number_format($value['imponible'],0,',','.'); ?></td>
-                                        <td class="text-right"><?php echo number_format($value['horaExtraMonto'],0,',','.'); ?></td>
-                                        <td class="text-right"><?php echo number_format($value['horaExtraFestivoMonto'],0,',','.'); ?></td>
-                                        <td class="text-right"><?php echo number_format($value['totalHaberesImponibles'],0,',','.'); ?>
-                                        <td class="text-right">
-                                            <?php  echo ( $value['imponible'] + $value['horaExtraMonto'] + $value['horaExtraFestivoMonto'] + $value['totalHaberesImponibles'] ); ?>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
+                                            <td><?php echo $value['apellidoPaterno']; ?></td>
+                                            <td><?php echo $value['apellidoMaterno']; ?></td>
+                                            <td><?php echo $value['nombres']; ?></td>
+                                            <td class="text-right"><?php echo number_format($value['sueldoBase'],0,',','.'); ?></td>
+                                            <td class="text-right"><?php echo number_format($value['gratificacion'],0,',','.'); ?></td>
+                                            <td class="text-right"><?php echo number_format($value['imponible'],0,',','.'); ?></td>
+                                            <td class="text-right"><?php echo number_format($value['horaExtraMonto'],0,',','.'); ?></td>
+                                            <td class="text-right"><?php echo number_format($value['horaExtraFestivoMonto'],0,',','.'); ?></td>
+                                            <td class="text-right"><?php echo number_format($value['totalHaberesImponibles'],0,',','.'); ?>
+                                            <td class="text-right">
+                                                <?php  echo ( $value['imponible'] + $value['horaExtraMonto'] + $value['horaExtraFestivoMonto'] + $value['totalHaberesImponibles'] ); ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
                                 <tfoot>
                                     <tr>
                                         <th colspan="5">Totales</th>
