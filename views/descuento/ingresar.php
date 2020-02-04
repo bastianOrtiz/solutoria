@@ -112,8 +112,8 @@
 
                         <div class="form-group">
                           <label for="cajaDescuento">¿Crédito Asociado a una caja de compensación?</label>
-                          <select class="form-control" name="cajaDescuento" id="cajaDescuento">
-                            <option value="">No es un crédito Caja Compensación</option>
+                          <select class="form-control" name="cajaDescuento" id="cajaDescuento" required>
+                            <option value="">Seleccione Caja</option>
                             <?php foreach( $cajas as $caja ){ ?>
                             <option value="<?php echo $caja['id'] ?>"><?php echo $caja['nombre'] ?></option>
                             <?php } ?>

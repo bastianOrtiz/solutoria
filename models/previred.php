@@ -1021,7 +1021,7 @@ function crearTxt($post){
       /* esta variable hasta */  
         $credito_personales_ccaf = rellenar(0,8,"i");
         //$var.= $credito_personales_ccaf;
-        fwrite($fch, $credito_personales_ccaf); // Grabas*/
+        fwrite($fch, $credito_personales_ccaf); // Grabas 85
 
         $descuento_dental = rellenar(0,8,"i");
         //$var.= $descuento_dental;
@@ -1033,7 +1033,7 @@ function crearTxt($post){
 
         $descuento_x_seguro = rellenar(0,8,"i");
         //$var.= $descuento_x_seguro;
-        fwrite($fch, $descuento_x_seguro); // Grabas*/
+        fwrite($fch, $descuento_x_seguro); // Grabas 88
 
         $otros_descuentos = rellenar(0,8,"i");
         //$var.= $otros_descuentos;
@@ -1086,15 +1086,15 @@ function crearTxt($post){
         //$var.= $sucursal_pago_mutual;
         fwrite($fch, $sucursal_pago_mutual); // Grabas*/
 
-        $renta_sces = rentaScesZero($empleado["id"],$imponible['totalImponible']);
+        $renta_sces = rentaScesZero($empleado["id"],$imponible['topeAfc']);
 
         $renta_imponible_seguro_cesantia = rellenar($renta_sces,8,"i");
         //$var.= $renta_imponible_seguro_cesantia;
-        fwrite($fch, $renta_imponible_seguro_cesantia); // Grabas*/
+        fwrite($fch, $renta_imponible_seguro_cesantia); // Grabas 100
 
         $monto_porcentaje_trabajador = 0;
         $monto_porcentaje_empleador = 0;
-        $aporte_trabajador = $imponible['totalImponible'];
+        $aporte_trabajador = $imponible['topeAfc'];
         $afc_trabajador = afc($empleado["id"]);
         if ($afc_trabajador["id"] == 6) {
             $monto_porcentaje_trabajador = 0;
@@ -2261,7 +2261,9 @@ function liquidacion ($trabajador_id, $mes = "", $ano = ""){
         'aporte_voluntario' => $aporte_voluntario,
         'totalImponible' => $monto_imponible,
         'afcMonto' => $afc_monto,
+        'topeAfc' => $liquidacion['topeAfc']
     ];
+
 
     return $datos_liquidacion;
 }
