@@ -3230,6 +3230,9 @@
     
     $(window).load(function(){
         $(".overlayer").fadeOut('fast');
+        $("#descuentoDebeTrabajador, #descuentoHaberTrabajador").select2();
     })
+
+
              
 </script>

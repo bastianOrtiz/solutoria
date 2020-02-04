@@ -10,9 +10,11 @@ if( $_POST ){
     extract($_POST);
     
     if( @$_POST['action'] == 'edit' ){
+
         $fijo = $fijoDescuento[0];
+        $seguro = $seguroDescuento[0];
         $valorPredeterminado = $predeterminadoDescuento[0];
-        
+
         $data = Array (
             "nombre" => $nombreDescuento,            
             "fijo" => $fijo,
@@ -22,7 +24,8 @@ if( $_POST ){
             "activo" => $activoDescuento,
             "empresa_id" => $_SESSION[PREFIX.'login_eid'],
             "mostrarAbajo" => $mostrarAbajoDescuento,
-            "ccaf_id" => $cajaDescuento
+            "ccaf_id" => $cajaDescuento,
+            "es_seguro" => $seguro
         );
 
         if( editarDescuento($descuento_id, $data) ){
@@ -51,6 +54,7 @@ if( $_POST ){
     
     if( @$_POST['action'] == 'new' ){        
         $fijo = $fijoDescuento[0];
+        $seguro = $seguroDescuento[0];
         $valorPredeterminado = $predeterminadoDescuento[0];                
         
         $data = Array (
@@ -62,7 +66,8 @@ if( $_POST ){
             "activo" => $activoDescuento,
             "empresa_id" => $_SESSION[PREFIX.'login_eid'],
             "mostrarAbajo" => $mostrarAbajoDescuento,
-            "ccaf_id" => $cajaDescuento
+            "ccaf_id" => $cajaDescuento,
+            "es_seguro" => $seguro
         );
         
         $create_id = crearDescuento($data);

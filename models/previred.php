@@ -1,22 +1,5 @@
 <?php
 
-function rentaScesZero($trabajador_id,$imponible){
-    global $db;
-
-    $db->where('id',$trabajador_id);
-    $tipotrabajador_id = $db->getValue ("m_trabajador", "tipotrabajador_id");
-
-    $db->where('id',$tipotrabajador_id);
-    $tipo_trabajador = $db->getOne('m_tipotrabajador');
-
-    if( ($tipo_trabajador['afc'] == 0) && ($tipo_trabajador['sces'] == 0) && ($tipo_trabajador['sces_full_empresa'] == 0) ){
-        return 0;
-    } else {
-        return $imponible;
-    }
-
-}
-
 function buscarEmpleados($id_empresa, $mes = "", $ano = ""){
     global $db;
 
@@ -394,6 +377,7 @@ function insidencias($tipo, $trabajador_id, $super_array = []){
 }
 
 function crearTxt($post){
+
     global $db;
 
     $super_array = sqlMovimientos($post['mesAtraso'],$post['anoAtraso']);
@@ -1018,8 +1002,10 @@ function crearTxt($post){
         //$var.= $renta_imponible_CCAF;
         fwrite($fch, $renta_imponible_CCAF); // Grabas*/
 
-      /* esta variable hasta */  
-        $credito_personales_ccaf = rellenar(0,8,"i");
+      /* esta variable hasta */ 
+        $creditosPersonalesCCAF = getCreditosPersonalesCCAF($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
+
+        $credito_personales_ccaf = rellenar($creditosPersonalesCCAF,8,"i");
         //$var.= $credito_personales_ccaf;
         fwrite($fch, $credito_personales_ccaf); // Grabas 85
 
@@ -1031,8 +1017,9 @@ function crearTxt($post){
         //$var.= $descuento_leasing;
         fwrite($fch, $descuento_leasing); // Grabas*/
 
-        $descuento_x_seguro = rellenar(0,8,"i");
-        //$var.= $descuento_x_seguro;
+        
+        $total_descuento_x_seguro = getTotalDctoSeguros($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
+        $descuento_x_seguro = rellenar($total_descuento_x_seguro,8,"i");
         fwrite($fch, $descuento_x_seguro); // Grabas 88
 
         $otros_descuentos = rellenar(0,8,"i");
@@ -2234,7 +2221,7 @@ function descuentosCCAF($trabajador_id, $mes = "", $ano = ""){
 
 }
 
-function liquidacion ($trabajador_id, $mes = "", $ano = ""){
+function liquidacion($trabajador_id, $mes = "", $ano = ""){
     global $db;
 
     if( $mes == '' ){
@@ -3017,5 +3004,74 @@ function tieneMovimientos($trabajador_id, $super_array){
 
     return $array_return;
 }
+
+function rentaScesZero($trabajador_id,$imponible){
+    global $db;
+
+    $db->where('id',$trabajador_id);
+    $tipotrabajador_id = $db->getValue ("m_trabajador", "tipotrabajador_id");
+
+    $db->where('id',$tipotrabajador_id);
+    $tipo_trabajador = $db->getOne('m_tipotrabajador');
+
+    if( ($tipo_trabajador['afc'] == 0) && ($tipo_trabajador['sces'] == 0) && ($tipo_trabajador['sces_full_empresa'] == 0) ){
+        return 0;
+    } else {
+        return $imponible;
+    }
+
+}
+
+function getCreditosPersonalesCCAF($trabajador_id,$mes,$ano){
+    global $db;
+
+    $sql = "
+    select SUM(LD.monto) as total
+    from l_descuento LD, liquidacion L
+    where LD.descuento_id IN (select id from m_descuento D where D.ccaf_id != 5)
+    AND L.mes = $mes
+    AND L.ano = $ano
+    AND LD.liquidacion_id = L.id
+    AND L.empresa_id = " . session('login_eid') . "
+    AND L.trabajador_id = $trabajador_id";
+
+    $result = $db->rawQuery($sql);
+
+    if( $result[0]['total'] ){
+        $total = $result[0]['total'];
+    } else {
+        $total = 0;
+    }
+
+    return $total;
+    
+}
+
+
+function getTotalDctoSeguros($trabajador_id,$mes,$ano){
+    global $db;
+
+    $sql = "
+    select SUM(LD.monto) as total
+    from l_descuento LD, liquidacion L
+    where LD.descuento_id IN (select id from m_descuento D where D.es_seguro = 1)
+    AND L.mes = $mes
+    AND L.ano = $ano
+    AND LD.liquidacion_id = L.id
+    AND L.empresa_id = " . session('login_eid') . "
+    AND L.trabajador_id = $trabajador_id";
+
+    $result = $db->rawQuery($sql);
+
+    if( $result[0]['total'] ){
+        $total = $result[0]['total'];
+    } else {
+        $total = 0;
+    }
+
+    return $total;
+    
+}
+
 
 ?>
