@@ -1,3 +1,74 @@
+<style>
+/* The switch - the box around the slider */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+}
+
+
+/* Hide default HTML checkbox */
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+/* The slider */
+
+.switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.switch input:checked+.slider {
+    background-color: #2196F3;
+}
+
+.switch input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+.switch input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+
+/* Rounded sliders */
+
+.switch .slider.round {
+    border-radius: 34px;
+}
+
+.switch .slider.round:before {
+    border-radius: 50%;
+}
+</style>
 <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         
@@ -29,6 +100,7 @@
                         <th> ID </th>
                         <th>Nombre</th>
                         <th>Codigo Previred</th>
+                        <th>Caja Activa</th>
                         <th> Opciones </th>
                       </tr>
                     </thead>
@@ -38,6 +110,12 @@
                                 <td> <?php echo $reg['id']?> </td>
                                 <td> <?php echo $reg['nombre']?> </td>
                                 <td> <?php echo $reg['codigo']?> </td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox" name="caja_activa" class="caja_activa" value="<?php echo $reg['id']; ?>" <?php if( $reg['activa'] == 1 ){ echo " checked disabled ";  } ?> >
+                                        <span class="slider round"></span>
+                                    </label>
+                                </td>
                                 <td>                                    
                                     <button class="btn btn-flat btn-info" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Detalles"> <i class="fa fa-search"></i> </button>
                                     <button class="btn btn-flat btn-warning" data-toggle="tooltip" data-regid="<?php echo $reg['id']?>" title="Modificar"> <i class="fa fa-edit"></i> </button>
@@ -87,6 +165,36 @@
       
       
     <script>
+
+    $(".caja_activa").change(function(e){
+        regid = $(this).val();
+        if( confirm('¿Cambiar la caja activa?') ){
+            $(".caja_activa").not(this).each(function(){
+                $(this).prop('checked',false);
+            })
+            $.ajax({
+                type: "POST",
+                url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+                data: 'regid=' + regid + '&action=activar_caja',
+                dataType: 'json',
+                beforeSend: function(){
+                    $(".overlayer").show();
+                },
+                success: function (json) {
+                    if( json.msg == 'ok' ){
+                        location.reload();
+                    } else {
+                        alert("Error ajax");
+                    }
+                }
+            }) 
+        } else {
+            $(this).prop('checked',false);
+            return false;
+            e.preventDefault();
+        }
+    })
+
     $(function () {        
         $('#tabla_cajacompensacion').dataTable({
           "bPaginate": true,
