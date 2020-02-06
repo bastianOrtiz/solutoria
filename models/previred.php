@@ -3028,7 +3028,14 @@ function getCreditosPersonalesCCAF($trabajador_id,$mes,$ano){
     $sql = "
     select SUM(LD.monto) as total
     from l_descuento LD, liquidacion L
-    where LD.descuento_id IN (select id from m_descuento D where D.ccaf_id != 5)
+    where LD.descuento_id IN 
+                            (
+                                SELECT D.id 
+                                FROM m_descuento D, m_cajacompensacion C  
+                                WHERE D.ccaf_id = C.id 
+                                AND D.es_seguro = 0
+                                AND C.activa = 1
+                            )
     AND L.mes = $mes
     AND L.ano = $ano
     AND LD.liquidacion_id = L.id
@@ -3052,9 +3059,16 @@ function getTotalDctoSeguros($trabajador_id,$mes,$ano){
     global $db;
 
     $sql = "
-    select SUM(LD.monto) as total
-    from l_descuento LD, liquidacion L
-    where LD.descuento_id IN (select id from m_descuento D where D.es_seguro = 1)
+    SELECT SUM(LD.monto) as total
+    FROM l_descuento LD, liquidacion L
+    WHERE LD.descuento_id IN 
+                            (
+                                SELECT D.id 
+                                FROM m_descuento D, m_cajacompensacion C  
+                                WHERE D.ccaf_id = C.id 
+                                AND D.es_seguro = 1
+                                AND C.activa = 1
+                            )
     AND L.mes = $mes
     AND L.ano = $ano
     AND LD.liquidacion_id = L.id
