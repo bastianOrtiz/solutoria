@@ -2,10 +2,17 @@
 
 function getNombreEntidad($id,$tabla){
 	global $db;
+
 	if( $tabla != "fonasa" ){
-	    $db->where('id',$id);
-	    $dpto = $db->getOne($tabla,'nombre');
-	    return $dpto['nombre']; 
+		if( $tabla == "m_afc" ){
+			$db->where('id',$id);
+		    $dpto = $db->getOne('m_afp','nombre');
+		    return $dpto['nombre']; 
+		} else {
+		    $db->where('id',$id);
+		    $dpto = $db->getOne($tabla,'nombre');
+		    return $dpto['nombre']; 
+		}
 	} else {
 		return 'FONASA';
 	}
@@ -18,6 +25,7 @@ function getTipoEntidad($tabla){
 	} else {
 		$arr = [
 			'm_afp' => 'AFP',
+			'm_afc' => 'AFC',
 			'm_isapre' => 'Isapre',
 			'm_institucion' => 'Instituciones Aseguradoras'
 		];
