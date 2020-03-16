@@ -319,24 +319,6 @@ if( $parametros ){
             foreach ($tablas as $table) {
                 $sql_adm .= $table . ",";
             }
-            $sql_adm = trim($sql_adm,',');
-            
-            $sql_adm .= "\n FROM ";
-            foreach ($tablas as $table) {
-                $sql_adm .= $table . ",";
-            }
-
-            $sql_adm .= "m_trabajador ";
-
-            $sql_adm .= "
-            WHERE liquidacion.mes = $mes
-            AND liquidacion.ano = $ano
-            AND m_trabajador.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
-            AND m_trabajador.centrocosto_id = ".$crixccosto['id_ccosto']."
-            and liquidacion.trabajador_id = m_trabajador.id  
-            AND m_trabajador.id = liquidacion.trabajador_id
-            ORDER BY m_trabajador.apellidoPaterno ASC
-            ";
 
             $sql_adm .= "m_trabajador ";
 
@@ -373,9 +355,12 @@ if( $parametros ){
                 'data' => $all_data
             ];
             
-
-
         }
+
+
+
+
+
 
 
 
