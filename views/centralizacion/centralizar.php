@@ -21,6 +21,7 @@ tbody td{
             <!-- /.box-header -->
             <div class="box-body table-responsive">
                 <table id="tabla_centralizacion_step_one" class="table table-bordered table-striped">
+                    <table id="tabla_centralizacion_step_one" class="hidden table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>CENTRO COSTO    </th>
@@ -198,7 +199,9 @@ tbody td{
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
-        <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/totales_x_criterios" class="btn btn-success btn-lg pull-right">
+
+        <a href="<?php echo BASE_URL ?>/<?php echo $entity ?>/totales_x_criterios" class="hidden btn btn-success btn-lg pull-right">
+
         Siguiente <i class="fa fa-arrow-right"></i> 
         </a>
 
@@ -207,6 +210,7 @@ tbody td{
     </section>
 </div>
 <!-- /.content-wrapper -->            
+
 <script>
 $(function () {        
     $('#tabla_centralizacion_step_one').dataTable({

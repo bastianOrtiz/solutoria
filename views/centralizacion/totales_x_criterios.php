@@ -25,7 +25,10 @@ tbody td{
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <?php foreach ($array_data['crit_x_ccosto'] as $key => $value) { ?>
+
+
+                <?php foreach ($array_data['crit_x_ccosto'] as $ccosto_id => $value) { ?>
+
                     <h3> <?php echo $value['criterio'] ?>: <?php echo dinero($value['subtotal'],true) ?> </h3>
 
                     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#ccosto_<?php echo $value['centro_costo_id'] ?>" aria-expanded="false" aria-controls="collapseExample">
@@ -40,6 +43,7 @@ tbody td{
                                         <th>apellidoPaterno</th>
                                         <th>apellidoMaterno</th>
                                         <th>nombres</th>
+
                                         <th>sueldoBase</th>
                                         <th>gratificacion</th>
                                         <th>imponible</th>
@@ -83,6 +87,39 @@ tbody td{
                                         <th class="text-right"><?php echo $tot_he; ?> </th>
                                         <th class="text-right"><?php echo $tot_he_100; ?> </th>
                                         <th class="text-right"><?php echo $tot_bonos; ?> </th>
+
+                                        <?php 
+                                        $tot = [];
+                                        foreach ($value['totales'] as $key => $cabecera) { 
+                                        $tot[$key] = 0;
+                                        ?>
+                                        <th><?php echo $key; ?></th>
+                                        <?php } ?>
+                                        
+                                    </tr>                        
+                                </thead>
+                                    <?php  
+                                    foreach ($value['data'] as $key => $trabajador_item) { 
+                                        foreach ($value['totales'] as $key => $cabecera) { 
+                                            $tot[$key] += $trabajador_item[$key];
+                                        }
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $trabajador_item['apellidoPaterno']; ?></td>
+                                        <td><?php echo $trabajador_item['apellidoMaterno']; ?></td>
+                                        <td><?php echo $trabajador_item['nombres']; ?></td>
+                                        <?php foreach ($value['totales'] as $key => $cabecera) { ?>
+                                        <td class="text-right"><?php echo number_format($trabajador_item[$key],0,',','.'); ?></td>
+                                        <?php } ?>
+                                    </tr>
+                                    <?php } ?>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3">Totales</th>
+                                        <?php foreach ($value['totales'] as $key => $cabecera) { ?>
+                                        <th class="text-right"><?php echo number_format($tot[$key],0,',','.'); ?></th>
+                                        <?php } ?>
+                                        
                                     </tr>
                                 </tfoot>
                             </table>

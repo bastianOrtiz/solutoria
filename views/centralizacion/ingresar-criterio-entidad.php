@@ -412,6 +412,7 @@
                                 <select id="tablaEntidad" name="tablaEntidad" class="form-control" required>
                                     <option value="">Seleccione una opción</option>
                                     <option value="m_afp">AFP</option>
+                                    <option value="m_afc">AFC</option>
                                     <option value="m_isapre">ISAPRES</option>
                                     <option value="m_institucion">Instituciones Aseguradoras</option>
                                     <option value="fonasa">Fonasa</option>
@@ -446,6 +447,11 @@ $("[name=cuentaContable]").change(function(){
 $("#tablaEntidad").change(function(){
     if( $(this).val() != "" ){
         nombre_tabla = $(this).val();
+
+        
+    if( nombre_tabla == 'm_afc' )
+            nombre_tabla = 'm_afp';
+        
         $.ajax({
             type: "POST",
             url: "<?php echo BASE_URL . '/controllers/ajax/centralizacion.ajax.php'?>",
