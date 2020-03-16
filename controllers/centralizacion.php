@@ -3,8 +3,8 @@
 if( $_POST ){
 
     switch ($_POST['action']) {
-        case 'new_criterio_centrocosto':
-
+        case 'new_criterio_centrocosto':        
+        
             $data_insert = [
                 'fk_empreid' => $_SESSION[PREFIX.'login_eid'],
                 'criterio' => $_POST['nombreCriterio'],
@@ -370,14 +370,13 @@ if( $parametros ){
             'm_institucion' => ['campo_monto' => 'apvMonto','campo_id' => 'cuenta2Id']
         ];
 
-        show_array($crit_x_entidad);
+		
+		show_array($crit_x_entidad, 1);
+
         foreach ($crit_x_entidad as $crixentidad) {
             $db->where('fk_criterioid',$crixentidad['id']);
             $db->where('tipo_criterio',2);
             $campos = $db->get('c_mallaliq');
-
-
-
 
 
 
@@ -409,9 +408,11 @@ if( $parametros ){
 
             $sql_adm .= "
             WHERE liquidacion." . $query_field[$crixentidad['tabla_entidad']]['campo_id'] . " = ". $crixentidad['id_entidad'] ."
-            AND L.mes = ". $mes ."
-            AND L.ano = ". $ano ."
-            AND L.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
+            AND liquidacion.mes = ". $mes ."
+            AND liquidacion.ano = ". $ano ."
+            AND liquidacion.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
+            
+			show_array($sql_adm, 0);
 
             $all_data = $db->rawQuery($sql_adm);
 
