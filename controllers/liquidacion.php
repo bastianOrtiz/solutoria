@@ -806,24 +806,16 @@ if( $parametros[0] == 'reliquidar' ){
 
 if( $parametros[0] == 'reliquidar_bonos' ){
 
-<<<<<<< HEAD
-    $mes = $parametros[1];
-    $year = $parametros[2];
-=======
-
     $mes = $parametros[1];
     $year = $parametros[2];
     $ccosto = $parametros[3];
->>>>>>> e3554a59be2dbf46a60450c02fc6f143b789f7bf
+
 
     $db->orderBy('apellidoPaterno','ASC');
     $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
     $db->where('tipocontrato_id',array(3,4),'NOT IN');
-<<<<<<< HEAD
-    $db->where('centrocosto_id',2); // ADM:2 - TEC:3 - COM:4
-=======
     $db->where('centrocosto_id',$ccosto); // ADM:2 - TEC:3 - COM:4
->>>>>>> e3554a59be2dbf46a60450c02fc6f143b789f7bf
+
     @$trabajadores_todos = $db->get('m_trabajador');
 
 
