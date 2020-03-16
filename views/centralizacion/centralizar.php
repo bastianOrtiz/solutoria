@@ -212,6 +212,7 @@ tbody td{
 <!-- /.content-wrapper -->            
 
 <script>
+/*
 $(function () {        
     $('#tabla_centralizacion_step_one').dataTable({
         "bPaginate": false,
@@ -223,5 +224,5 @@ $(function () {
         "pageLength": false
     });
 });
-
+*/
 </script>
