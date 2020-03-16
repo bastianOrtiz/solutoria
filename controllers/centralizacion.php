@@ -1,5 +1,5 @@
 <?php
-echo "test";
+
 if( $_POST ){
 
     switch ($_POST['action']) {
