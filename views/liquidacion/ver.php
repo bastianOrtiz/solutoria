@@ -226,7 +226,7 @@ td.total{
                                     <br /><br />
 
                                     <?php
-                                    echo "Dias Licencia: " . $dias_licencia."<br />";
+                                    echo "Dias Licencia: " . $arr_ausencias['dias_licencia_efectivas'] ."<br />";
                                     if($dias_licencia){
                                     if( $dias_licencia > 0 ){ ?>
                                     Proporcional x licencia: <?php echo round($proporcional_pactado_licencia,3); ?> <?php echo fnGetNombre($prevision_trabajador['tipomoneda_id'],'m_tipomoneda',0) ?>

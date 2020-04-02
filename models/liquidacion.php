@@ -1554,8 +1554,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
             //echo "4<br />";
         }        
     }
-
-
+    $dias_licencia_efectiva = $dias_licencia;
 
     if( $dias_licencia > 30 ){
         $dias_licencia = 30;
@@ -1571,6 +1570,12 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
 
     if( ( getMesMostrarCorte() == 2 ) && ( $dias_licencia == $limiteFeb ) ){
         $dias_licencia += ( 30 - $limiteFeb );
+    }
+
+
+
+    if( ( $dias_licencia_efectiva == 30 ) && (getLimiteMes($mes) == 31 ) ){
+        $dias_licencia--;
     }
 
     
@@ -1660,6 +1665,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
     $arr_ausencias['dias_no_enrolado'] = $diasNoEnrolado;
     $arr_ausencias['dias_ausentismo'] = $total_ausencias;
     $arr_ausencias['dias_licencia'] = $dias_licencia;
+    $arr_ausencias['dias_licencia_efectivas'] = $dias_licencia_efectiva;
     $arr_ausencias['total'] = ($total_ausencias + $dias_licencia + $diasNoEnrolado + $diasNoTrabajados );
 
     return $arr_ausencias;

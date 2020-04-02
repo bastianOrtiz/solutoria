@@ -26,7 +26,6 @@ tbody td{
             <!-- /.box-header -->
             <div class="box-body">
 
-
                 <?php foreach ($array_data['crit_x_ccosto'] as $ccosto_id => $value) { ?>
 
                     <h3> <?php echo $value['criterio'] ?>: <?php echo dinero($value['subtotal'],true) ?> </h3>
@@ -44,12 +43,11 @@ tbody td{
                                         <th>apellidoMaterno</th>
                                         <th>nombres</th>
 
-                                        <th>sueldoBase</th>
-                                        <th>gratificacion</th>
-                                        <th>imponible</th>
-                                        <th>horaExtraMonto</th>
-                                        <th>horaExtraFestivoMonto</th>
-                                        <th>totalHaberesImponibles</th>
+                                        <?php  
+                                        foreach ($value['totales'] as $key => $cabecera) { 
+                                            echo '<th>' . $key . '</th>';
+                                        }
+                                        ?>
                                         <th> Subtotal </th>
                                     </tr>                        
                                 </thead>
@@ -80,24 +78,7 @@ tbody td{
                                             </td>
                                         </tr>
                                     <?php } ?>
-                                <tfoot>
-                                    <tr>
-                                        <th colspan="5">Totales</th>
-                                        <th class="text-right"><?php echo $tot_imponible; ?> </th>
-                                        <th class="text-right"><?php echo $tot_he; ?> </th>
-                                        <th class="text-right"><?php echo $tot_he_100; ?> </th>
-                                        <th class="text-right"><?php echo $tot_bonos; ?> </th>
-
-                                        <?php 
-                                        $tot = [];
-                                        foreach ($value['totales'] as $key => $cabecera) { 
-                                        $tot[$key] = 0;
-                                        ?>
-                                        <th><?php echo $key; ?></th>
-                                        <?php } ?>
-                                        
-                                    </tr>                        
-                                </thead>
+                                    
                                     <?php  
                                     foreach ($value['data'] as $key => $trabajador_item) { 
                                         foreach ($value['totales'] as $key => $cabecera) { 
@@ -113,15 +94,7 @@ tbody td{
                                         <?php } ?>
                                     </tr>
                                     <?php } ?>
-                                <tfoot>
-                                    <tr>
-                                        <th colspan="3">Totales</th>
-                                        <?php foreach ($value['totales'] as $key => $cabecera) { ?>
-                                        <th class="text-right"><?php echo number_format($tot[$key],0,',','.'); ?></th>
-                                        <?php } ?>
-                                        
-                                    </tr>
-                                </tfoot>
+                                
                             </table>
                         </div>
                     </div>
@@ -142,8 +115,45 @@ tbody td{
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <?php foreach ($array_data['crit_x_entidad'] as $key => $value) { ?>
-                    <h3> <?php echo $value['criterio'] ?>: <?php echo dinero($value['subtotal'],true) ?> </h3>
+                <?php foreach ($array_data['crit_x_entidad'] as $key => $criterio) { ?>
+                    <h3> <?php echo $criterio['criterio'] ?>: <?php echo dinero($criterio['total'],true) ?> </h3>
+
+
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#entidad_<?php echo $key ?>" aria-expanded="false" aria-controls="collapseExample">
+                        Ver detalle <?php echo $criterio['criterio'] ?>
+                    </button>
+
+                    <div class="collapse" id="entidad_<?php echo $key ?>">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>apellidoPaterno</th>
+                                        <th>apellidoMaterno</th>
+                                        <th>nombres</th>
+                                        <?php foreach ($criterio['campos'] as $key => $campo) { ?>
+                                        <th><?php echo $campo['campo'] ?></th>
+                                        <?php } ?>
+                                    </tr>                        
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($criterio['data'] as $key => $trabajador) { ?>
+                                        <tr> 
+                                            <td><?php echo $trabajador['apellidoPaterno'] ?></td>
+                                            <td><?php echo $trabajador['apellidoMaterno'] ?></td>
+                                            <td><?php echo $trabajador['nombres'] ?></td>
+                                            <?php foreach ($criterio['campos'] as $key => $campo) { ?>
+                                            <td class="text-right"><?php echo $trabajador[$campo['campo']] ?></td>
+                                            <?php } ?>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
                 <?php } ?>
             </div>
             <!-- /.box-body -->

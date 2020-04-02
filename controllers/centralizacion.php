@@ -210,7 +210,7 @@ if( $parametros ){
 
     //$mes = (int)getMesMostrarCorte();
     //$ano = (int)getAnoMostrarCorte();
-    $mes = 01;
+    $mes = 1;
     $ano = 2020;
 
         
@@ -230,8 +230,18 @@ if( $parametros ){
     $db->groupBy('fk_criterioid');
     $criterios_id = $db->get('c_mallaliq',null,'fk_criterioid');
     
+    
     $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
-    $registros_malla = $db->get('c_mallaliq');
+    $db->where('tipo_criterio',1);
+    $registros_malla_ccosto = $db->get('c_mallaliq');
+
+    $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
+    $db->where('tipo_criterio',2);
+    $registros_malla_entidad = $db->get('c_mallaliq');
+
+    $db->where('fk_empreid',$_SESSION[PREFIX.'login_eid']);
+    $db->where('tipo_criterio',3);
+    $registros_malla_personal = $db->get('c_mallaliq');
 
 
     if( $parametros[0] == 'criterios-centrocosto' && $parametros[1] == 'editar' && isset($parametros[2]) ){
@@ -359,134 +369,126 @@ if( $parametros ){
 
 
 
-
-
-
-
-
-        $query_field = [
-            'm_afp' => ['campo_monto' => 'afpMonto','campo_id' => 'afp_id'],
-            'm_isapre' => ['campo_monto' => 'saludMonto','campo_id' => 'isapre_id'],
-            'm_institucion' => ['campo_monto' => 'apvMonto','campo_id' => 'cuenta2Id']
+        $campos_entidad = [
+            'm_afp' => 'afp_id',
+            'm_afc' => 'afp_id',
+            'm_isapre' => 'isapre_id'
         ];
-
-		
-		show_array($crit_x_entidad, 1);
-
         foreach ($crit_x_entidad as $crixentidad) {
+	        
+	        
             $db->where('fk_criterioid',$crixentidad['id']);
             $db->where('tipo_criterio',2);
             $campos = $db->get('c_mallaliq');
 
 
+            if( $campos ):
 
-            $tablas = [];
-            foreach ($campos as $key => $campo) {
-                if( !in_array($campo['origen'], $tablas) ){
-                    $tablas[] = $campo['origen'];
-                }
-            }
-
-            $sql_adm = "";
-
-            $sql_adm .= "
-            select 
-                m_trabajador.apellidoPaterno, 
-                m_trabajador.apellidoMaterno, 
-                m_trabajador.nombres, ";
-            foreach ($campos as $key => $campo) {
-                $sql_adm .= $campo['origen'].".".$campo['campo'].",";
-            }
-            $sql_adm = trim($sql_adm,',');
-            
-            $sql_adm .= "\n FROM ";
-            foreach ($tablas as $table) {
-                $sql_adm .= $table . ",";
-            }
-
-            $sql_adm .= "m_trabajador ";
-
-            $sql_adm .= "
-            WHERE liquidacion." . $query_field[$crixentidad['tabla_entidad']]['campo_id'] . " = ". $crixentidad['id_entidad'] ."
-            AND liquidacion.mes = ". $mes ."
-            AND liquidacion.ano = ". $ano ."
-            AND liquidacion.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
-            
-			show_array($sql_adm, 0);
-
-            $all_data = $db->rawQuery($sql_adm);
-
-            foreach ($campos as $key => $campo) {
-                $totales[$campo['campo']] = 0;
-            }
-
-            foreach ($all_data as $tot_x_trabajador) {
+                $tablas = [];
                 foreach ($campos as $key => $campo) {
-                    $totales[$campo['campo']] += $tot_x_trabajador[$campo['campo']];
+                    if( !in_array($campo['origen'], $tablas) ){
+                        $tablas[] = $campo['origen'];
+                    }
                 }
-            }
 
-            $array_data['crit_x_ccosto'][$crixccosto['id_ccosto']] = [
-                'criterio' => $crixccosto['criterio'],
-                'centro_costo' => getNombre($crixccosto['id_ccosto'], 'm_centrocosto', true),
-                'centro_costo_id' => $crixccosto['id_ccosto'],
-                'totales' => $totales,
-                'subtotal' => $totales['totalHaberesImponibles'] + $totales['horaExtraFestivoMonto'] + $totales['horaExtraMonto'] + $totales['gratificacion'] + $totales['sueldoBase'],
-                'data' => $all_data
-            ];
+                $sql_adm = "";
 
+                $sql_adm .= "
+                select 
+                    m_trabajador.apellidoPaterno, 
+                    m_trabajador.apellidoMaterno, 
+                    m_trabajador.nombres, ";
+                foreach ($campos as $key => $campo) {
+                    $sql_adm .= $campo['origen'].".".$campo['campo'].",";
+                }
+                $sql_adm = trim($sql_adm,',');
+                
+                $sql_adm .= "\n FROM ";
+                foreach ($tablas as $table) {
+                    $sql_adm .= $table . ",";
+                }
 
+                $sql_adm .= "m_trabajador ";
+                
+                
+                $sql_adm .= "
+                WHERE liquidacion.mes = ". $mes ."
+                AND liquidacion.ano = ". $ano ."
+                AND liquidacion.empresa_id = " . $_SESSION[PREFIX.'login_eid'] ."
+                AND " . $campos_entidad[$crixentidad['tabla_entidad']] . " = " . $crixentidad['id_entidad'] . "
+                AND liquidacion.trabajador_id = m_trabajador.id
+                ORDER BY liquidacion.trabajador_id
+                ";
 
+                show_array($sql_adm,0);
 
+                
+                if( $campos ){	
+                    $all_data_ent[$crixentidad['id']] = $db->rawQuery($sql_adm);
+                }
 
-
-
-
-
-            $subtotal_entidad = 0;
-
-            if( $crixentidad['tabla_entidad'] == 'fonasa' ){
-                $sql = "
-                SELECT SUM(L.saludMonto) AS tot 
-                FROM liquidacion L
-                WHERE L.isapre_id = 0
-                AND L.mes = ". $mes ."
-                AND L.ano = ". $ano ."
-                AND L.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
-            } elseif ($crixentidad['tabla_entidad'] == 'm_afc') {
-                $sql = "
-                SELECT SUM(L.saludMonto) AS tot 
-                FROM liquidacion L
-                WHERE L.isapre_id = 0
-                AND L.mes = ". $mes ."
-                AND L.ano = ". $ano ."
-                AND L.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
-            } else {
-                $sql = "
-                SELECT SUM(L.". $query_field[$crixentidad['tabla_entidad']]['campo_monto'] .") AS tot 
-                FROM liquidacion L
-                WHERE L." . $query_field[$crixentidad['tabla_entidad']]['campo_id'] . " = ". $crixentidad['id_entidad'] ."
-                AND L.mes = ". $mes ."
-                AND L.ano = ". $ano ."
-                AND L.empresa_id = " . $_SESSION[PREFIX.'login_eid'];
-            }
+                $subtotal = 0;
+                foreach ($all_data_ent[$crixentidad['id']] as $datos_trabajador) {
+                    foreach ($campos as $key => $campo) {
+                        $subtotal += $datos_trabajador[$campo['campo']];
+                    }
+                }
 
 
-            $result = $db->rawQuery($sql);
-            $subtotal_entidad += $result[0]['tot'];
+                $array_data['crit_x_entidad'][$crixentidad['id']] = [
+                    'entidad' => getNombre($crixentidad['id_entidad'],'m_afp',false),
+                    'criterio' => $crixentidad['criterio'],
+                    'id_entidad' => $crixentidad['id_entidad'],
+                    'tabla' => $crixentidad['tabla_entidad'],
+                    'total' => $subtotal,
+                    'campos' => $campos,
+                    'data' => $all_data_ent[$crixentidad['id']]
+                ];
 
-            $array_data['crit_x_entidad'][$crixentidad['id']] = [
-                'criterio' => $crixentidad['criterio'],
-                'entidad' => $crixentidad['id_entidad'],
-                'entidad_id' => $crixentidad['id_entidad'],
-                'subtotal' => $subtotal_entidad,
-                'tipo_entidad' => $crixentidad['tabla_entidad'],
-                'sql' => $sql
-            ];
+            endif;
+
         }
 
+        //show_array($array_data['crit_x_entidad']);
 
-    
+
+        /*
+        foreach ($crit_x_entidad as $crixentidad) {
+
+            $db->where('fk_criterioid',$crixentidad['id']);
+            $db->where('tipo_criterio',2);
+            $campos = $db->get('c_mallaliq');
+            show_array($campos);
+
+            $field = 'afpMonto';
+            if( $crixentidad['tabla_entidad'] == 'm_afc' ){
+                $field = 'afcMonto';
+            }
+            $sql = "
+            select SUM(L.". $field .") as total
+            from liquidacion L
+            WHERE L.afp_id = " . $crixentidad['id_entidad'] . "
+            AND L.mes = $mes
+            and L.ano = $ano
+            AND L.empresa_id = ". session('login_eid') ."
+            ";
+
+            
+
+            $all_data = $db->rawQuery($sql);
+
+            $array_data['criterios_x_entidades'][] = [
+                'entidad' => getNombre($crixentidad['id_entidad'],'m_afp',false),
+                'criterio' => $crixentidad['criterio'],
+                'id_entidad' => $crixentidad['id_entidad'],
+                'tabla' => $crixentidad['tabla_entidad'],
+                'total' => $all_data[0]['total']
+            ];
+
+        }
+        */
+
+
 
     }
 
