@@ -420,8 +420,6 @@ if( $parametros ){
                 ORDER BY liquidacion.trabajador_id
                 ";
 
-                show_array($sql_adm,0);
-
                 
                 if( $campos ){	
                     $all_data_ent[$crixentidad['id']] = $db->rawQuery($sql_adm);

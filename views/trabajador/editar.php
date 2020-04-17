@@ -597,6 +597,7 @@
                                                         <script> $("input.rbtFullJerarquia[value=<?php echo $trabajador['fullJerarquia'] ?>]").prop('checked',true) </script>                
                                                     </div>
                                                 </div>
+                                               
                                                 <div class="col-lg-12">
                                                     <!-- Rounded switch -->
                                                     <p>&nbsp;</p>
@@ -609,6 +610,20 @@
                                                     <script> $("#comisiones_pendientes").prop('checked',true); </script>
                                                     <?php } ?>
                                                 </div>
+
+                                                 <div class="col-lg-12">
+                                                    <!-- Rounded switch -->
+                                                    <p>&nbsp;</p>
+                                                    <label class="switch">
+                                                    <input type="checkbox" name="teletrabajo" id="teletrabajo">
+                                                    <span class="slider round"></span>
+                                                    </label>
+                                                    &nbsp; <strong>Teletrabajo</strong>
+                                                    <?php if($trabajador['teletrabajo'] == 1){ ?>
+                                                    <script> $("#teletrabajo").prop('checked',true); </script>
+                                                    <?php } ?>
+                                                </div>
+                                                
                                             </div>
                                         </div>
                                         <div class="col-md-6">

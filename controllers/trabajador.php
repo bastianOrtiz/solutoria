@@ -285,6 +285,12 @@ if( $_POST ){
         } else {
             $data['comisiones_pendientes'] = 0;
         }
+
+        if( $_POST['teletrabajo'] ){
+            $data['teletrabajo'] = 1;
+        } else {
+            $data['teletrabajo'] = 0;
+        }
         
         if( $saludTrabajador == 'fonasa' ){
             $data_prev = array(
@@ -391,6 +397,12 @@ if( $_POST ){
             $customFields = '';
         }
         
+        if( $_POST['teletrabajo'] ){
+            $data['teletrabajo'] = 1;
+        } else {
+            $data['teletrabajo'] = 0;
+        }
+
         $data = array(
             'empresa_id' => $_SESSION[ PREFIX . 'login_eid'],
             'nombres' => $nombreTrabajador,
