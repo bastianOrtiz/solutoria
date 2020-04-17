@@ -10,6 +10,7 @@ if( $action == 'api' && $entity == 'trabajador' ){
         if ($_POST['method'] == 'get_trabajador_data') {
             $rut_decrypted = $_POST['rut'];
             $db->where('rut',$rut_decrypted);
+            $db->where('teletrabajo',1);
             $trabajador = $db->getOne('m_trabajador');
 
             if($trabajador):
