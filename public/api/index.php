@@ -3,10 +3,81 @@
 header('Access-Control-Allow-Origin: *');
 header('Content-type: application/json');
 
-
 if( $action == 'api' && $entity == 'trabajador' ){
-    
+
     if( $_POST['secret'] == md5('arriba los que luchan') ){
+
+        if ($_POST['method'] == 'get_trabajador_data') {
+            $rut_decrypted = $_POST['rut'];
+            $db->where('rut',$rut_decrypted);
+            $trabajador = $db->getOne('m_trabajador');
+
+            if($trabajador):
+                $db->where('id',$trabajador['empresa_id']);
+                $empresa = $db->getOne('m_empresa');
+                
+                $array_trabajador = [
+                    'found' => 1,
+                    'id' => $trabajador['id'],
+                    'nombres' => $trabajador['nombres'],
+                    'apellidoPaterno' => $trabajador['apellidoPaterno'],
+                    'apellidoMaterno' => $trabajador['apellidoMaterno'],
+                    'rut' => $trabajador['rut'],
+                    'email' => $trabajador['email'],
+                    'empresa' => $empresa['nombre'],
+                    'umbral' => $empresa['umbralRelojControl']
+                ];
+            else:
+                $array_trabajador = [
+                    'found' => 0
+                ];
+            endif;
+
+            echo json_encode($array_trabajador);
+            exit();
+        }
+
+
+        if ($_POST['method'] == 'set_trabajador_checkin') {
+            $db->where('rut',$_POST['rut']);
+            $trabajador = $db->getOne('m_trabajador');
+
+            if($trabajador):
+
+                $time = strtotime($_POST['checktime']);
+                
+                $array_data = [
+                    'rut' => $_POST['rut'],
+                    'checktime' => $_POST['checktime'],
+                    'checktype' => $_POST['checktype']
+                ];
+
+                $last_id = $db->insert('m_relojcontrol_teletrabajo',$array_data);
+                if( $last_id ):
+                    $array_trabajador = [
+                        'status' => 'ok',
+                        'email' => $trabajador['email'],
+                        'nombre' => $trabajador['nombres'] . ' ' . $trabajador['apellidoPaterno'] . ' ' . $trabajador['apellidoMaterno'],
+                        'rut' => $trabajador['rut'],
+                        'fecha' => date('d/M/Y',$time),
+                        'hora' => date('H:i',$time)
+                    ];
+                else:
+                    $array_trabajador = ['status' => 'error'];
+                endif;
+        
+            endif;
+
+            echo json_encode($array_trabajador);
+            exit();
+        }
+
+
+
+
+
+    
+    
 
         $rut_decrypted = base64_decode($_POST['id']);
 
@@ -28,11 +99,14 @@ if( $action == 'api' && $entity == 'trabajador' ){
         ];
 
         echo json_encode( $data );
+    
+
     } else {
         echo json_encode(['msg' => 'no permitido']);
     }
 
     exit();
 }
+
 
 ?>
