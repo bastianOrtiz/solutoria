@@ -74,6 +74,28 @@ if( $action == 'api' && $entity == 'trabajador' ){
         }
 
 
+        if ($_POST['method'] == 'check_trabajador_checkin') {
+            $checktime = explode(" ", $_POST['checktime']);
+            $db->where('date(checktime)',$checktime[0]);
+            $db->where('checktype',$_POST['checktype']);
+            $db->where('rut',$_POST['rut']);
+            $db->orderBy("checktime","DESC");
+            $exist = $db->get('m_relojcontrol_teletrabajo');
+            
+            if($exist):
+                $return = [
+                    'existe' => true,
+                    'data' =>  $exist
+                ];
+            else:
+                $return['existe'] = false;
+            endif;
+
+            echo json_encode($return);
+            exit();
+        }
+
+
 
 
 
