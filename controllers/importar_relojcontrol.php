@@ -6,7 +6,8 @@ if( $_POST ){
         
         $stamp_ini = strtotime($_POST['fechaInicioRango']);
         $stamp_fin = strtotime($_POST['fechaFinRango']);
-        
+
+
         $upload = upload_doc('archivo_dat',ROOT.'/private/uploads/docs/');
         
         if( $upload['status'] == true ){
@@ -25,6 +26,7 @@ if( $_POST ){
                     foreach ($lines as $key => $value) {
     
                         $parts = preg_split('/\s+/', $value);
+
                         /*
                         $parts[0] = N/A
                         $parts[1] = UserID (Asociado al campo m_trabajador.relojcontrol_id)
@@ -68,6 +70,26 @@ if( $_POST ){
             unlink(ROOT.'/private/uploads/docs/' . $upload['filename']);
             
         }
+
+
+
+        // Proceso para agregar los marcajes por teletrabajo
+        $db->where('checktime',[$_POST['fechaInicioRango'],$_POST['fechaFinRango']], 'BETWEEN');
+        $rango_teletrabajo = $db->get('m_relojcontrol_teletrabajo');
+        
+        foreach ($rango_teletrabajo as $key => $value) {
+            $db->where('rut',$value['rut']);
+            $reloj_id = $db->getValue('m_trabajador','relojcontrol_id');
+            $dataInsert = [
+                'checktime' => $value['checktime'],
+                'userid' => $reloj_id,
+                'checktype' => $value['checktime'],
+                'logid' => 0
+            ];
+            $db->insert('m_relojcontrol',$dataInsert);
+        }
+
+
 
         $response = encrypt('status=success&mensaje=Datos importados correctamente&id=0');
         redirect(BASE_URL . '/' . $entity . '/upload/response/' . $response );
