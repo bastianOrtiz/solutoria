@@ -26,7 +26,8 @@ if( $action == 'api' && $entity == 'trabajador' ){
                     'rut' => $trabajador['rut'],
                     'email' => $trabajador['email'],
                     'empresa' => $empresa['nombre'],
-                    'umbral' => $empresa['umbralRelojControl']
+                    'umbral' => $empresa['umbralRelojControl'],
+                    'reduccion_laboral' => $trabajador['reduccion_laboral']
                 ];
             else:
                 $array_trabajador = [
