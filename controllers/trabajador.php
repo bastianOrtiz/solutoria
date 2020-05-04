@@ -85,6 +85,7 @@ if( $_POST ){
     extract($_POST);
         
     if( @$_POST['action'] == 'edit' ){
+
         
         $fechaInicio=date("Y-m-d", $fI);
         $fechaInicio .= " 00:00:00";
@@ -269,7 +270,9 @@ if( $_POST ){
             'relojcontrol_id' => $relojControlIdTrabajador,
             'forzar_plan_completo' => $forzarPlanCompleto,
             'estadoCivil' => $estadoCivil,
-            'centrocosto_externo' => $ccostoExterno
+            'centrocosto_externo' => $ccostoExterno,
+            'horas_reduccion_laboral_semanal' => $horas_reduccion_laboral_semanal,
+            'horario_reduccion' => $horario_reduccion
         );
 
         
@@ -290,6 +293,12 @@ if( $_POST ){
             $data['teletrabajo'] = 1;
         } else {
             $data['teletrabajo'] = 0;
+        }
+
+        if( $_POST['reduccion_laboral'] ){
+            $data['reduccion_laboral'] = 1;
+        } else {
+            $data['reduccion_laboral'] = 0;
         }
         
         if( $saludTrabajador == 'fonasa' ){
@@ -327,6 +336,7 @@ if( $_POST ){
                 'afp_id' => $afpTrabajadorPrev
             );
         }
+
         
         
         if( $_FILES['docTrabajadorDocumento']['name'] != "" ){
@@ -342,6 +352,7 @@ if( $_POST ){
         }
         
         $edit_trabajador = editarTrabajador($idTrabajador, $data);
+
         logit( $_SESSION[PREFIX.'login_name'],'editar','trabajador',$idTrabajador,$db->getLastQuery() );
         
         
@@ -401,6 +412,12 @@ if( $_POST ){
             $data['teletrabajo'] = 1;
         } else {
             $data['teletrabajo'] = 0;
+        }
+        
+        if( $_POST['reduccion_laboral'] ){
+            $data['reduccion_laboral'] = 1;
+        } else {
+            $data['reduccion_laboral'] = 0;
         }
 
         $data = array(

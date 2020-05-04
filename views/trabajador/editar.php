@@ -625,6 +625,132 @@
                                                 </div>
                                                 
                                             </div>
+
+
+                                            <!-- ****** REDUCCION DE JORNADA LABORAL 2020 ******* -->
+
+                                            <div class="row" style="margin-top: 50px;">
+                                                <div class="col-lg-6 col-sm-12">
+                                                    <!-- Rounded switch -->
+                                                    <p>&nbsp;</p>
+                                                    <label class="switch">
+                                                    <input type="checkbox" name="reduccion_laboral" id="reduccion_laboral">
+                                                    <span class="slider round"></span>
+                                                    </label>
+                                                    &nbsp; <strong>Reduccion de jornada laboral</strong>
+                                                    <?php if($trabajador['reduccion_laboral'] == 1){ ?>
+                                                    <script> $("#reduccion_laboral").prop('checked',true); </script>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-12">
+                                                    <input type="text" name="horas_reduccion_laboral_semanal" value="<?php echo $trabajador['horas_reduccion_laboral_semanal'] ?>" style="display: none;" class="form-control" placeholder="Cant. de horas semanales" readonly>
+                                                    <input type="hidden" name="horario_reduccion" value='<?php echo $trabajador['horario_reduccion'] ?>'>
+                                                </div>
+                                                <div class="col-lg-6 col-sm-12">
+                                                    <button id="btn-reduccion-laboral" style="display: none;" type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-reduccion-laboral">
+                                                        Definir horas semanales
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal fade" id="modal-reduccion-laboral">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title">Horas semanales</h4>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <table class="table" id="tabla-reduccion-jornada">
+                                                        <thead>
+                                                            <tr>
+                                                                <th> Dia</th>
+                                                                <th> Hora Inicio</th>
+                                                                <th> Hora Término</th>
+                                                                <th class="text-right" style="padding-right: 50px;"> Horas</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php 
+                                                            $tot_horas_reduccion = 0;
+                                                            $json_horario = json_decode($trabajador['horario_reduccion']);
+                                                            for($j=0;$j<=4;$j++):
+                                                            $day = getNombreDia($j);
+                                                            $day = str_replace(['á','é','í','ó','ú'], ['a','e','i','o','u'], $day);
+                                                            $dia = strtolower($day);
+
+                                                            $arr_entrada = explode(":",$json_horario->$dia->marcaje[0]);
+                                                            $arr_salida = explode(":",$json_horario->$dia->marcaje[1]);
+                                                            $tot_horas_reduccion += $json_horario->$dia->horas;
+                                                            ?>
+                                                            <tr data-dia="<?php echo $dia; ?>">
+                                                                <th style="text-transform: uppercase;"> <?php echo $dia; ?> </th>
+                                                                <td>  
+                                                                    <select class="reduccion_horas_inicio" id="<?php echo $dia; ?>_hora_ini">
+                                                                        <option value="00">--</option>
+                                                                        <?php for($i=8;$i<=20;$i++): ?>
+                                                                        <option value="<?php echo leadZero($i) ?>"><?php echo leadZero($i) ?></option>
+                                                                        <?php endfor; ?>
+                                                                    </select>
+                                                                    <script> $("#<?php echo $dia; ?>_hora_ini").val('<?php echo $arr_entrada[0] ?>') </script>
+
+
+                                                                    <select class="reduccion_minutos_inicio" id="<?php echo $dia; ?>_min_ini">
+                                                                        <option value="00">--</option>
+                                                                        <?php for($i=0;$i<=45;$i+=15): ?>
+                                                                        <option value="<?php echo leadZero($i) ?>"><?php echo leadZero($i) ?></option>
+                                                                        <?php endfor; ?>
+                                                                    </select>
+                                                                    <script> $("#<?php echo $dia; ?>_min_ini").val('<?php echo $arr_entrada[1] ?>') </script>
+
+
+                                                                </td>
+                                                                <td>  
+                                                                    <select class="reduccion_horas_fin" id="<?php echo $dia; ?>_hora_end">
+                                                                        <option value="00">--</option>
+                                                                        <?php for($i=8;$i<=20;$i++): ?>
+                                                                        <option value="<?php echo leadZero($i) ?>"><?php echo leadZero($i) ?></option>
+                                                                        <?php endfor; ?>
+                                                                    </select>
+                                                                    <script> $("#<?php echo $dia; ?>_hora_end").val('<?php echo $arr_salida[0] ?>') </script>
+
+
+                                                                    <select class="reduccion_minutos_fin" id="<?php echo $dia; ?>_min_end">
+                                                                        <option value="00">--</option>
+                                                                        <?php for($i=0;$i<=45;$i+=15): ?>
+                                                                        <option value="<?php echo leadZero($i) ?>"><?php echo leadZero($i) ?></option>
+                                                                        <?php endfor; ?>
+                                                                    </select>
+                                                                    <script> $("#<?php echo $dia; ?>_min_end").val('<?php echo $arr_salida[1] ?>') </script>
+
+
+                                                                </td>
+                                                                <td class="text-right" style="padding-right: 50px;"><input type="text" value="<?php echo $json_horario->$dia->horas ?>" class="total_horas_row" style="width: 50px; border: 0px; text-align: right; outline: none;" value="0" readonly></td>
+                                                            </tr>
+                                                            <?php endfor; ?>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th colspan="4" class="text-right" style="padding-right: 50px;"> 
+                                                                    Total horas <input type="text" value="<?php echo $tot_horas_reduccion; ?>" class="total_horas_total" style="width: 50px; border: 0px; text-align: right; outline: none;" value="0" readonly> 
+                                                                </th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cerrar</button>
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-definir-horas-reduccion">Definir</button>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+
+                                            <!-- ****** FIN REDUCCION DE JORNADA LABORAL 2020 ******* -->
+
                                         </div>
                                         <div class="col-md-6">
                                             <!--
@@ -2167,7 +2293,63 @@
 </form>
 <script>
     $(document).ready(function(){
-    
+
+        <?php if($trabajador['reduccion_laboral'] == 1){ ?>
+        $("[name=horas_reduccion_laboral_semanal]").show();
+        $("#btn-reduccion-laboral").show();
+        <?php } ?>
+
+        $("#btn-definir-horas-reduccion").click(function(){
+            $("[name=horas_reduccion_laboral_semanal]").val( $(".total_horas_total").val() );
+            obj = {};
+            $("#tabla-reduccion-jornada tbody tr").each(function(){
+                my_tr = $(this);
+                dia = my_tr.data('dia');
+                time_inicio = my_tr.find('.reduccion_horas_inicio').val() + ':' + my_tr.find('.reduccion_minutos_inicio').val();
+                time_fin = my_tr.find('.reduccion_horas_fin').val() + ':' + my_tr.find('.reduccion_minutos_fin').val();
+                obj[dia] = {
+                    'marcaje' : [time_inicio,time_fin],
+                    'horas' : my_tr.find('.total_horas_row').val()
+                };
+            })
+
+            obj.horas = $(".total_horas_total").val();
+
+            $("[name=horario_reduccion]").val( JSON.stringify(obj) );
+        })
+        
+
+        $("#tabla-reduccion-jornada select").change(function(){
+            my_tr = $(this).closest('tr');
+
+            time_inicio = my_tr.find('.reduccion_horas_inicio').val() + ':' + my_tr.find('.reduccion_minutos_inicio').val() + ':00';
+            time_fin = my_tr.find('.reduccion_horas_fin').val() + ':' + my_tr.find('.reduccion_minutos_fin').val() + ':00';
+
+            var diff = ( new Date("1970-1-1 " + time_fin) - new Date("1970-1-1 " + time_inicio) ) / 1000 / 60 / 60;  
+            
+            if( diff >= 0 ){
+                my_tr.find('.total_horas_row').val(diff);    
+            }
+
+
+            tot = 0;
+            $(".total_horas_row").each(function(){
+                tot += parseFloat($(this).val());
+            })
+            $(".total_horas_total").val(tot)
+        })
+
+
+        $("#reduccion_laboral").change(function(){
+            if( $(this).prop('checked') == true ){
+                $("[name=horas_reduccion_laboral_semanal]").show();
+                $("#btn-reduccion-laboral").show();
+            } else {
+                $("[name=horas_reduccion_laboral_semanal]").hide();
+                $("#btn-reduccion-laboral").hide();
+            }
+        })
+
         $("#motivoAusencia").change(function(){
             idMotivo = $(this).val();
             $.ajax({
@@ -3248,6 +3430,12 @@
         $("#descuentoDebeTrabajador, #descuentoHaberTrabajador").select2();
     })
 
+
+function timeDiff(time_ini,time_end){
+    diff = ( new Date("1970-1-1 " + time_end) - new Date("1970-1-1 " + time_ini) ) / 1000 / 60 / 60;
+
+    return diff;
+}
 
              
 </script>
