@@ -652,8 +652,9 @@
                                                     </button>
                                                     <br>
                                                     <br>
-                                                    <label>Sueldo reducido</label>
-                                                    <input type="text" name="sueldo_base_reducido" value="<?php echo $trabajador['sueldo_base_reducido'] ?>" style="display: none;" class="form-control" placeholder="Sueldo base reducido">
+                                                    <label id="sueldo_base_reducido" style="display: none;">Sueldo reducido
+                                                        <input type="text" name="sueldo_base_reducido" value="<?php echo $trabajador['sueldo_base_reducido'] ?>" class="form-control" placeholder="Sueldo base reducido">
+                                                    </label>
                                                 </div>
                                                 
                                             </div>
@@ -2302,7 +2303,7 @@
         <?php if($trabajador['reduccion_laboral'] == 1){ ?>
         $("[name=horas_reduccion_laboral_semanal]").show();
         $("#btn-reduccion-laboral").show();
-        $("[name=sueldo_base_reducido]").show();
+        $("#sueldo_base_reducido").show();
         <?php } ?>
 
         $("#btn-definir-horas-reduccion").click(function(){
@@ -2350,11 +2351,11 @@
             if( $(this).prop('checked') == true ){
                 $("[name=horas_reduccion_laboral_semanal]").show();
                 $("#btn-reduccion-laboral").show();
-                $("[name=sueldo_base_reducido]").show();
+                $("#sueldo_base_reducido").show();
             } else {
                 $("[name=horas_reduccion_laboral_semanal]").hide();
                 $("#btn-reduccion-laboral").hide();
-                $("[name=sueldo_base_reducido]").hide();
+                $("#sueldo_base_reducido").hide();
             }
         })
 
