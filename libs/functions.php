@@ -1541,6 +1541,11 @@ function mainMenu(){
                 'entidad' => 'informe',
                 'accion' => 'haberes_descuentos',
                 'label' => 'Informe Haberes/Descuentos'
+            ),
+            array(
+                'entidad' => 'informe',
+                'accion' => 'trabajadores_jornada',
+                'label' => 'Jornada Trabajadores'
             )
         )
     );

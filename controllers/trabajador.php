@@ -86,7 +86,6 @@ if( $_POST ){
         
     if( @$_POST['action'] == 'edit' ){
 
-        
         $fechaInicio=date("Y-m-d", $fI);
         $fechaInicio .= " 00:00:00";
         $fechaFin=date("Y-m-d", $fF);
@@ -272,7 +271,8 @@ if( $_POST ){
             'estadoCivil' => $estadoCivil,
             'centrocosto_externo' => $ccostoExterno,
             'horas_reduccion_laboral_semanal' => $horas_reduccion_laboral_semanal,
-            'horario_reduccion' => $horario_reduccion
+            'horario_reduccion' => $horario_reduccion,
+            'sueldo_base_reducido' => $sueldo_base_reducido
         );
 
         

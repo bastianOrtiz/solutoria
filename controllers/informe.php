@@ -14,6 +14,7 @@ $db->where('tipocontrato_id',array(3,4),'NOT IN');
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $trabajadores_todos_cert_sueldos = $db->get('m_trabajador');
 
+
 if( $_POST ){
         
     logit( $_SESSION[PREFIX.'login_name'],'generar informe',$_POST['action'],0,$db->getLastQuery() );
@@ -1170,7 +1171,135 @@ if( $_POST ){
         header("Expires: 0");
         echo $html;
         exit();
-    }            
+    }    
+
+
+    if( $_POST['action'] == 'trabajadores_jornada' ){
+
+        switch ($_GET['show']) {
+            case 'tele':
+                $db->orderBy('apellidoPaterno','ASC');
+                $db->where('tipocontrato_id',array(3,4),'NOT IN');
+                $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+                $db->where('teletrabajo',1);
+                $trabajadores_jornada = $db->get('m_trabajador');
+                break;
+
+            case 'reduc':
+                $db->orderBy('apellidoPaterno','ASC');
+                $db->where('tipocontrato_id',array(3,4),'NOT IN');
+                $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+                $db->where('reduccion_laboral',1);
+                $trabajadores_jornada = $db->get('m_trabajador');
+                break;
+            
+            case 'ambos':
+                $sql = "
+                SELECT * FROM m_trabajador
+                WHERE (teletrabajo = 1 OR reduccion_laboral = 1)
+                AND tipocontrato_id NOT IN (3,4)
+                AND empresa_id = ".$_SESSION[PREFIX.'login_eid']."
+                ORDER BY apellidoPaterno ASC
+                ";
+                $trabajadores_jornada = $db->rawQuery($sql);
+                break;
+            
+            case 'none':
+                $db->orderBy('apellidoPaterno','ASC');
+                $db->where('tipocontrato_id',array(3,4),'NOT IN');
+                $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+                $db->where('reduccion_laboral',0);
+                $db->where('teletrabajo',0);
+                $trabajadores_jornada = $db->get('m_trabajador');
+                break;
+
+            default:
+                $db->orderBy('apellidoPaterno','ASC');
+                $db->where('tipocontrato_id',array(3,4),'NOT IN');
+                $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+                $trabajadores_jornada = $db->get('m_trabajador');
+                break;
+        }
+
+        if( file_exists( ROOT . '/private/uploads/images/' . fotoEmpresa( $_SESSION[PREFIX.'login_eid'] ) ) ){
+            $foto_empresa =  ROOT . '/private/uploads/images/' . fotoEmpresa( $_SESSION[PREFIX.'login_eid'] );
+        } else {
+            $foto_empresa = ROOT . '/public/img/no_img.jpg';
+        }
+
+        $db->where('id',$_SESSION[PREFIX.'login_eid']);
+        $empresa = $db->getOne('m_empresa');
+        extract($empresa);
+
+        $html = '
+            <style>
+            .table td, .table th{ padding: 5px 10px; border: 1px solid #999 }
+            </style>
+            <table style="width: 900px">
+                <tbody>
+                    <tr>
+                        <td style="padding: 0 20px;">
+                            <img class="round" src="'. $foto_empresa .'" />
+                        </td>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>' . $nombre . '</td>
+                                </tr>
+                                <tr>
+                                    <td>' . $rut . '</td>
+                                </tr>
+                                <tr>
+                                    <td>' . $direccion . '</td>
+                                </tr>
+                                <tr>
+                                    <td>' . $razonSocial . '</td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td style="width:500px; text-align: right">
+                            Fecha: '.date('d/M/Y').' <br>
+                            Hora: '.date('H:i').'
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <table class="table" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Nombre Completo</th>
+                        <th>Rut</th>
+                        <th>Departamento</th>
+                        <th>S.Base <br>(100%)</th>
+                        <th>S.Base <br> Reducido</th>
+                        <th>Teletrabajo </th>
+                        <th>Jornada <br> Reducida </th>
+                        <th>Cant. Horas <br> Semana</th>
+                    </tr>
+                </thead>
+                <tbody>';
+                foreach ($trabajadores_jornada as $key => $trabajador) {
+                $html .= '
+                    <tr>
+                        <td>' . getNombreTrabajador($trabajador['id']) . '</td>
+                        <td>' . $trabajador['rut'] . '</td>
+                        <td>' . getNombre($trabajador['departamento_id'],'m_departamento') . '</td>
+                        <td>' . $trabajador['sueldoBase'] . '</td>
+                        <td>' . $trabajador['sueldoBase'] . '</td>
+                        <td>' . booleano($trabajador['teletrabajo']) . '</td>
+                        <td>' . booleano($trabajador['reduccion_laboral']) . '</td>
+                        <td>' . $trabajador['horas_reduccion_laboral_semanal'] . '</td>
+                    </tr>';
+                }
+                $html .= '
+                </tbody>
+            </table>
+        ';
+
+        $orientation = 'L';
+
+    }        
     
     $array_informes_NOT_pdf = array(
         'atrasos_view',
@@ -1456,6 +1585,57 @@ if( $parametros[0] == 'ausencias' ){
 if( $parametros[0] == 'haberes_descuentos' ){    
     $haberes = getRegistrosCompartidos('Haber','m_haber');
     $descuentos = getRegistrosCompartidos('Descuento','m_descuento');
+}
+
+
+if( $parametros[0] == 'trabajadores_jornada' ){    
+    
+    switch ($_GET['show']) {
+        case 'tele':
+            $db->orderBy('apellidoPaterno','ASC');
+            $db->where('tipocontrato_id',array(3,4),'NOT IN');
+            $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+            $db->where('teletrabajo',1);
+            $trabajadores_jornada = $db->get('m_trabajador');
+            break;
+
+        case 'reduc':
+            $db->orderBy('apellidoPaterno','ASC');
+            $db->where('tipocontrato_id',array(3,4),'NOT IN');
+            $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+            $db->where('reduccion_laboral',1);
+            $trabajadores_jornada = $db->get('m_trabajador');
+            break;
+        
+        case 'ambos':
+            $sql = "
+            SELECT * FROM m_trabajador
+            WHERE (teletrabajo = 1 OR reduccion_laboral = 1)
+            AND tipocontrato_id NOT IN (3,4)
+            AND empresa_id = ".$_SESSION[PREFIX.'login_eid']."
+            ORDER BY apellidoPaterno ASC
+            ";
+            $trabajadores_jornada = $db->rawQuery($sql);
+            break;
+        
+        case 'none':
+            $db->orderBy('apellidoPaterno','ASC');
+            $db->where('tipocontrato_id',array(3,4),'NOT IN');
+            $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+            $db->where('reduccion_laboral',0);
+            $db->where('teletrabajo',0);
+            $trabajadores_jornada = $db->get('m_trabajador');
+            break;
+
+        default:
+            $db->orderBy('apellidoPaterno','ASC');
+            $db->where('tipocontrato_id',array(3,4),'NOT IN');
+            $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+            $trabajadores_jornada = $db->get('m_trabajador');
+            break;
+    }
+
+
 }
 
 
