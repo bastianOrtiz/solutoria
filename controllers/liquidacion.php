@@ -460,11 +460,13 @@ if( isset($parametros[1]) ){
 
     $arr_ausencias = @obtenerAusencias($trabajador_id);
 
-
         
     $dias_del_mes = 30;
 
     $ausencias = $arr_ausencias['total'];
+    if( $trabajador_id == 644 ){
+        $ausencias = 20;
+    }
     $dias_licencia = $arr_ausencias['dias_licencia'];
 
     if( ($dias_licencia > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
