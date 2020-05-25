@@ -460,12 +460,21 @@ if( isset($parametros[1]) ){
 
     $arr_ausencias = @obtenerAusencias($trabajador_id);
 
-    
+
+        
+    $dias_del_mes = 30;
 
     $ausencias = $arr_ausencias['total'];
     $dias_licencia = $arr_ausencias['dias_licencia'];
-    $dias_no_enrolado = 0;
+
+    if( ($dias_licencia > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
+        $dias_del_mes = 31;
+    }
     
+
+
+
+    $dias_no_enrolado = 0;    
     $horas_extra = obtenerHoraExtraTrabajador($trabajador_id);                
 
     $total_atrasos = obtenerTotalAtrasos($atrasos_entrada['total_atraso'], $atrasos_salida['total_atraso'],$ausencias); 

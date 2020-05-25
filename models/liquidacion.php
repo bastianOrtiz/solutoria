@@ -1554,6 +1554,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
             //echo "4<br />";
         }        
     }
+
     $dias_licencia_efectiva = $dias_licencia;
 
     if( $dias_licencia > 30 ){
@@ -1571,13 +1572,6 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
     if( ( getMesMostrarCorte() == 2 ) && ( $dias_licencia == $limiteFeb ) ){
         $dias_licencia += ( 30 - $limiteFeb );
     }
-
-
-
-    if( ( $dias_licencia_efectiva == 30 ) && (getLimiteMes($mes) == 31 ) ){
-        $dias_licencia--;
-    }
-
     
 
     /*********************************************/
