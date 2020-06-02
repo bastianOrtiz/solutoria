@@ -463,7 +463,10 @@ if( isset($parametros[1]) ){
         
     $dias_del_mes = 30;
 
+
+
     $ausencias = $arr_ausencias['total'];
+
     if( $trabajador_id == 644 && getMesMostrarCorte() == 5 && getAnoMostrarCorte() == 2020 ){
         $ausencias = 20;
     }
@@ -472,7 +475,10 @@ if( isset($parametros[1]) ){
     if( ($dias_licencia > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
         $dias_del_mes = 31;
     }
-    
+
+
+
+    $ausencias_efectivas = ($arr_ausencias['dias_licencia_efectivas'] + $arr_ausencias['dias_ausentismo'] );
 
 
 

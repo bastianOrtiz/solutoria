@@ -765,15 +765,22 @@ function calcularSueldo($id_trabajador){
     $sueldo_base = $trabajador['sueldoBase'];        
     
     if( relojControlSync() ){        
-        $arr_ausencias = @obtenerAusencias($id_trabajador);                                
+        $arr_ausencias = @obtenerAusencias($id_trabajador);
         $ausencias = $arr_ausencias['total'];               
     } else {        
         $arr_ausencias = @obtenerAusencias($id_trabajador);                                
         $ausencias = $arr_ausencias['total'];
     }
-        
     
-    $sueldo_mes = ( ( $sueldo_base / 30 ) * ( 30 - $ausencias ) );        
+
+    $dias_del_mes = 30;
+    if( ($arr_ausencias['dias_licencia'] > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
+        $dias_del_mes = 31;
+    }
+
+    $dias_trabajados = ($dias_del_mes - $ausencias);
+    
+    $sueldo_mes = ( ( $sueldo_base / 30 ) * ( $dias_trabajados ) );        
     
     return $sueldo_mes;
 }
@@ -1413,7 +1420,6 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                     'ausencia_id' => $aus['ausencia_id']
                 );
                 $total_ausencias += $ausencias;
-                //echo "1<br />";
             } elseif( ( $date_ini_ausen >= $date_ini_corte ) && ( $date_fin_ausen >= $date_fin_corte ) && ( $date_ini_ausen <= $date_fin_corte ) ){
                 $interval = $date_ini_ausen->diff($date_fin_corte);
                 $ausencias += ( $interval->days + 1 );
@@ -1426,7 +1432,6 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                     'ausencia_id' => $aus['ausencia_id']
                 );
                 $total_ausencias += $ausencias;
-                //echo "2<br />";
             } elseif( ( $date_ini_ausen <= $date_ini_corte ) && ( $date_fin_ausen >= $date_fin_corte ) ){                
                 $interval = $date_ini_ausen->diff($date_fin_corte);
                 $ausencias += ( $interval->days + 1 );
@@ -1439,7 +1444,6 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                     'ausencia_id' => $aus['ausencia_id']
                 );
                 $total_ausencias += $ausencias;
-                //echo "3<br />";
             } else {                
                 $ausencias += $aus['dias'];
                 $n_dias = diasNoLaborales($aus['fecha_inicio'],$aus['fecha_fin'],$trabajador_id);
@@ -1451,7 +1455,6 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                     'ausencia_id' => $aus['ausencia_id']
                 );   
                 $total_ausencias += $ausencias;             
-                //echo "4<br />";
             }        
         }
     }
@@ -1554,6 +1557,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
             //echo "4<br />";
         }        
     }
+
 
     $dias_licencia_efectiva = $dias_licencia;
 
