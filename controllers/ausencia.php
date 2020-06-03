@@ -3,19 +3,21 @@ $ausencias = getRegistrosCompartidos('Ausencia','m_ausencia');
 $registros = $ausencias;
 
 if( $_POST ){
-    
+
     extract($_POST);
     
     if( @$_POST['action'] == 'edit' ){
         $descuenta = $ausenciaDescuenta[0];
         $licencia = $ausenciaLicencia[0];
+        $mesCompleto = $ausenciaMesCompleto[0];
         
         $data = Array (
             "nombre" => $nombreAusencia,            
             "descuenta" => $descuenta,
             "licencia" => $licencia,
             "empresa_id" => $_SESSION[PREFIX.'login_eid'],
-            "codigoPrevired" => $codigoPrevired
+            "codigoPrevired" => $codigoPrevired,
+            "mesCompleto" => $mesCompleto
         );
 
         if( editarAusencia($ausencia_id, $data) ){
@@ -45,13 +47,15 @@ if( $_POST ){
     if( @$_POST['action'] == 'new' ){
         $descuenta = $ausenciaDescuenta[0];
         $licencia = $ausenciaLicencia[0];
+        $mesCompleto = $ausenciaMesCompleto[0];
         
         $data = Array (
             "nombre" => $nombreAusencia,
             "descuenta" => $descuenta,
             "licencia" => $licencia,
             "empresa_id" => $_SESSION[PREFIX.'login_eid'],
-            "codigoPrevired" => $codigoPrevired
+            "codigoPrevired" => $codigoPrevired,
+            "mesCompleto" => $mesCompleto
         );                
         
         $create_id = crearAusencia($data);
@@ -62,8 +66,8 @@ if( $_POST ){
             redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
             exit();
         } else {
-            $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$id);
-            redirect(BASE_URL . '/' . $entity . '/ingresar/response/' . $response );
+            $response = encrypt('status=success&mensaje=El registro se ha creado correctamente&id='.$create_id);
+            redirect(BASE_URL . '/' . $entity . '/editar/'.$create_id.'/response/' . $response );
             exit();                
         }
                    

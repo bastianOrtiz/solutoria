@@ -73,6 +73,24 @@
                         <script>
                           $(".rbtAusenciaLicencia[value=<?php echo $ausencia['licencia'] ?>]").attr('checked','checked')
                           </script>
+
+
+                        <div class="form-group">
+                          <label for="ausenciaLicencia">Considera mes completo (no considerar corte)</label>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="ausenciaMesCompleto[]" value="1" />
+                              SI
+                            </label>
+                          </div>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="ausenciaMesCompleto[]" value="0" checked="checked" />
+                              NO
+                            </label>
+                          </div>                          
+                        </div>
+                        <script>$("[name='ausenciaMesCompleto[]'][value=<?php echo $ausencia['mesCompleto'] ?>]").attr('checked','checked')</script>
                           
                         <div class="form-group">
                           <label for="codigoPrevired">Codigo Previred</label>

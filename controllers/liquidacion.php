@@ -467,20 +467,32 @@ if( isset($parametros[1]) ){
 
     $ausencias = $arr_ausencias['total'];
 
+    
+    /**** EXCEPCION *****/
     if( $trabajador_id == 644 && getMesMostrarCorte() == 5 && getAnoMostrarCorte() == 2020 ){
         $ausencias = 20;
     }
+    /**** FIN EXCEPCION *****/
+
+
+
     $dias_licencia = $arr_ausencias['dias_licencia'];
+    $dias_sin_goce = $arr_ausencias['dias_sin_goce'];
 
     if( ($dias_licencia > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
         $dias_del_mes = 31;
     }
-
-
+    if( ($dias_sin_goce > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
+        $dias_del_mes = 31;
+    }
 
     $ausencias_efectivas = ($arr_ausencias['dias_licencia_efectivas'] + $arr_ausencias['dias_ausentismo'] );
 
-
+    // AUSENCIAS
+    // 31 - AUSENCIAS
+    // 30 - AUSENCIAS
+    // 28 - AUSENCIAS
+    // 29 - AUSENCIAS
 
     $dias_no_enrolado = 0;    
     $horas_extra = obtenerHoraExtraTrabajador($trabajador_id);                

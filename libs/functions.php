@@ -4,6 +4,26 @@
 
 
 /** 
+ * Determina si la ausencia considera Mes completo o Corte
+ *  
+ * @param (int) $ausencia_id, ID de la Ausecia
+ * @return (bool) 
+ */ 
+function mesCompleto($ausencia_id){ 
+     global $db; 
+ 
+    $db->where('id',$ausencia_id); 
+    $mesCompleto = $db->getOne('m_ausencia'); 
+     
+    if( $mesCompleto ){ 
+        return true;
+    } else {
+        return false;
+    }
+} 
+
+
+/** 
  * Retorna un numero en formato dinero 
  *  
  * @param (string) $var_sess, Nombre de la variable de session 
