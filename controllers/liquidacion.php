@@ -459,15 +459,12 @@ if( isset($parametros[1]) ){
     $licencias = obtenerLicencias($trabajador_id);
 
     $arr_ausencias = @obtenerAusencias($trabajador_id);
-
         
     $dias_del_mes = 30;
 
-
-
     $ausencias = $arr_ausencias['total'];
 
-    
+
     /**** EXCEPCION *****/
     if( $trabajador_id == 644 && getMesMostrarCorte() == 5 && getAnoMostrarCorte() == 2020 ){
         $ausencias = 20;
@@ -488,6 +485,7 @@ if( isset($parametros[1]) ){
 
     $ausencias_efectivas = ($arr_ausencias['dias_licencia_efectivas'] + $arr_ausencias['dias_ausentismo'] );
 
+
     // AUSENCIAS
     // 31 - AUSENCIAS
     // 30 - AUSENCIAS
@@ -501,8 +499,10 @@ if( isset($parametros[1]) ){
 
     $sueldo = calcularSueldo($trabajador_id);
 
+    $dias_trabajados = $dias_del_mes - $ausencias_efectivas;
+
     if( gratificacion( $trabajador_id ) ){
-        $gratificacion = calcularGratificacion($ausencias);    
+        $gratificacion = calcularGratificacion($dias_trabajados);
     } else {
         $gratificacion = 0;
     }

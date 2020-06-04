@@ -128,7 +128,7 @@ if( $_POST ){
 
                         case 'trabajador.gratificacion':
                             if( gratificacion( $trabajador_id ) ){
-                                $gratificacion = calcularGratificacion(0);
+                                $gratificacion = calcularGratificacion(30);
                             } else {
                                 $gratificacion = 0;
                             }

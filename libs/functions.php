@@ -14,8 +14,8 @@ function mesCompleto($ausencia_id){
  
     $db->where('id',$ausencia_id); 
     $mesCompleto = $db->getOne('m_ausencia'); 
-     
-    if( $mesCompleto ){ 
+
+    if( $mesCompleto['mesCompleto'] ){ 
         return true;
     } else {
         return false;

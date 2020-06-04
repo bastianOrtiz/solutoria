@@ -730,20 +730,20 @@ function gratificacion($trabajador_id){
  * @param (int) $ausencias Cantidad de dias de ausencias 
  * @return (int) Gratificacion
  */
-function calcularGratificacion( $ausencias ){
+function calcularGratificacion( $dias_trabajados ){
     global $db;    
     $db->setTrace(true);
     $db->where('codigo',4);
     $db->orderBy('id','DESC');
-    $sueldo_minimo = $db->getValue('m_tope','valor');        
-    $gratificacion = ( ( $sueldo_minimo * FACTOR_GRATIFICACION ) / 12 );      
-    
-    if( $ausencias > 0 ){
-        $gratificacion = ( $gratificacion / 30 * (30 - $ausencias) ); 
+    $sueldo_minimo = $db->getValue('m_tope','valor');
+    $gratificacion = ( ( $sueldo_minimo * FACTOR_GRATIFICACION ) / 12 );
+
+    if( $dias_trabajados < 30 ){
+        $gratificacion = ( $gratificacion / 30 * ( $dias_trabajados ) ); 
     }
     
-    $gratificacion = round($gratificacion);        
-    
+    $gratificacion = round($gratificacion);
+
     return $gratificacion;
 }
 
@@ -771,19 +771,23 @@ function calcularSueldo($id_trabajador){
         $arr_ausencias = @obtenerAusencias($id_trabajador);                                
         $ausencias = $arr_ausencias['total'];
     }
-    
+
 
     $dias_del_mes = 30;
+
+
     if( ($arr_ausencias['dias_licencia'] > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
         $dias_del_mes = 31;
+        $ausencias = ($arr_ausencias['dias_licencia_efectivas'] + $arr_ausencias['dias_ausentismo'] );
     }
+
     if( ($arr_ausencias['dias_sin_goce'] > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
         $dias_del_mes = 31;
     }
 
     $dias_trabajados = ($dias_del_mes - $ausencias);
     
-    $sueldo_mes = ( ( $sueldo_base / 30 ) * ( $dias_trabajados ) );        
+    $sueldo_mes = ( ( $sueldo_base / 30 ) * ( $dias_trabajados ) );
     
     return $sueldo_mes;
 }
