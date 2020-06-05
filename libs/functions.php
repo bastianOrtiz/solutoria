@@ -1,7 +1,7 @@
 <?php
 @session_start();
 
-
+error_reporting(0);
 
 /** 
  * Determina si la ausencia considera Mes completo o Corte

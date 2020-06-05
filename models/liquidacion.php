@@ -399,7 +399,7 @@ function obtenerTotalAfc2( $tope, $trabajador_id ){
  * @param (int) $dias_licencia 
  * @return (number)  Total a descontar por AFC
  */
-function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $tipocontrato_id){
+function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $tipocontrato_id,$dias_trabajados=2){
     
     global $db;                    
     $tope_afc = obtenerTope(3);
@@ -411,7 +411,7 @@ function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_l
             if( $tipocontrato_id == 3 ){
                 $topeAfcCalcular = $tope_afc;
             } else {
-                $sub_total_afc = ( ($tope_afc / 30 ) * (30 - $ausencias) );
+                $sub_total_afc = ( ($tope_afc / 30 ) * ($dias_trabajados) );
                 $topeAfcCalcular = $sub_total_afc;
             }
             
@@ -432,7 +432,7 @@ function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_l
         }
         */
 
-        if( ( $ausencias == 30 ) || ( $dias_licencia == 30 ) ){
+        if( $dias_trabajados == 0 ){
             $topeAfcCalcular = 0;
         }
     }

@@ -269,7 +269,7 @@ td.total{
                             <?php endif; ?>
 
                             <?php
-                            $topeAfc = topeAfc($remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $trabajador['tipocontrato_id'] );
+                            $topeAfc = topeAfc($remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $trabajador['tipocontrato_id'],$dias_trabajados );
 
                             if( tipoTrabajador('afc',$trabajador_id) ):
                             ?>
@@ -594,7 +594,8 @@ td.total{
                         'trabajador_id' => $trabajador_id,
                         'ano' => date('Y'),
                         'sueldoMaestro' => 'FROM DB',
-                        'diaAusencia' => $ausencias,
+                        'diaAusencia' => $ausencias_efectivas,
+                        'diasTrabajados' => $dias_trabajados,
                         'diaLicencia' => $dias_licencia,
                         'sueldoBase' => $sueldo,
                         'gratificacion' => $gratificacion,

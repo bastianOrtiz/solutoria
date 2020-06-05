@@ -30,6 +30,7 @@ if( $_SESSION[PREFIX . 'is_trabajador'] ){
 }
 
 
+
 extract($empresa);
 extract($liquidacion);
 
@@ -92,7 +93,17 @@ $trabajador = $db->getOne('m_trabajador');
 $nombre_trabajador = $trabajador['apellidoPaterno'] . " " . $trabajador['apellidoMaterno'] . ' ' . $trabajador['nombres'];
 $nombre_trabajador_slug = slugify($nombre_trabajador);
 
-$dias_trabajados = ( 30 - $diaAusencia );
+
+$dias_del_mes = getLimiteMes(getMesMostrarCorte());
+if( $dias_del_mes < 30 ){
+    $dias_del_mes = 30;
+}
+
+$dias_trabajados = ( $dias_del_mes - $diaAusencia );
+
+if( $dias_trabajados > 30 ){
+    $dias_trabajados = 30;
+}
 
 $total_salud_legal = round($totalImponible * 0.07,0);
 
