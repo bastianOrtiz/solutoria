@@ -335,7 +335,7 @@ if( isset($parametros[1]) ){
     $ultima_liquidacion = getNombreMes($ultima_liquidacion['mes']).'/'.$ultima_liquidacion['ano'];    
     
     $mes = getMesMostrarCorte();
-    $uf = getUF($mes,$year);        
+    $uf = getUF($mes,$year);
     
     $db->where ("id", $trabajador_id);
     $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
@@ -593,21 +593,26 @@ if( isset($parametros[1]) ){
    
     if( trabajadorEstaEnFonasa($trabajador_id) ){
         $total_salud = ($total_imponible * 0.07);
-        $total_salud_legal = round($total_imponible * 0.07, 0);            
+        $total_salud_legal = round($total_imponible * 0.07, 0);
         $diferencia_isapre = 0;         
     } else {
         
         if($dias_licencia > 0){
-            $proporcional_pactado_licencia = ( ( $prevision_trabajador['montoPlan'] / 30 ) * ( 30 - $dias_licencia ) );
+            $dias_trabajados_licencia = ( $dias_del_mes - $arr_ausencias['dias_licencia_efectivas'] );
+            $proporcional_pactado_licencia = ( ( $prevision_trabajador['montoPlan'] / 30 ) * ( $dias_trabajados_licencia ) );
+            $proporcional_pactado_licencia = round($proporcional_pactado_licencia,3);
         } else {
             $proporcional_pactado_licencia = $prevision_trabajador['montoPlan'];
+            $proporcional_pactado_licencia = round($proporcional_pactado_licencia,3);
         }
 
         $total_salud_legal = round($total_imponible * 0.07, 0);
 
         if( $prevision_trabajador['tipomoneda_id'] == ID_UF ){                                
             $total_pactado_isapre = ( $prevision_trabajador['montoPlan'] * $uf);
+            $proporcional_pactado_licencia = round($proporcional_pactado_licencia,3);
             $proporcional_pactado_licencia_en_pesos = round($proporcional_pactado_licencia * $uf, 0);
+
         } else {
             $total_pactado_isapre = $prevision_trabajador['montoPlan'];
             $proporcional_pactado_licencia_en_pesos = $proporcional_pactado_licencia;
@@ -619,7 +624,7 @@ if( isset($parametros[1]) ){
 
 
             if($arr_ausencias['dias_finiquito'] > 0){
-                $prop = ($total_pactado_isapre / 30 ) * ( ( 30 - $arr_ausencias['dias_finiquito'] ) - $arr_ausencias['dias_licencia'] );
+                $prop = ($total_pactado_isapre / 30 ) * ( $dias_trabajados );
                 
                 if( $prop < $total_salud_legal ){
                     $prop = $total_salud_legal;
