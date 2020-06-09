@@ -459,6 +459,7 @@ if( isset($parametros[1]) ){
     $licencias = obtenerLicencias($trabajador_id);
 
     $arr_ausencias = @obtenerAusencias($trabajador_id);
+
         
     $dias_del_mes = 30;
 

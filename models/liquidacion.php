@@ -1364,7 +1364,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
     $arr_ausencias      = array();
     $total_ausencias    = 0;
     $dias_licencia      = 0;
-
+    $total_dias_sin_goce = 0;
 
 
     
@@ -1436,7 +1436,10 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                     'ausencia_id' => $aus['ausencia_id']
                 );
                 $total_ausencias += $ausencias;
-                $total_dias_sin_goce += $ausencias;
+                if( mesCompleto($aus['ausencia_id']) ){
+                    $total_dias_sin_goce += $ausencias;    
+                }
+                
                 //echo "1";
             } elseif( ( $date_ini_ausen >= $date_ini_corte ) && ( $date_fin_ausen >= $date_fin_corte ) && ( $date_ini_ausen <= $date_fin_corte ) ){
                 $interval = $date_ini_ausen->diff($date_fin_corte);
@@ -1452,7 +1455,9 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                     'ausencia_id' => $aus['ausencia_id']
                 );
                 $total_ausencias += $ausencias;
-                $total_dias_sin_goce += $ausencias;
+                if( mesCompleto($aus['ausencia_id']) ){
+                    $total_dias_sin_goce += $ausencias;    
+                }
                 //echo "2";
             } elseif( ( $date_ini_ausen <= $date_ini_corte ) && ( $date_fin_ausen >= $date_fin_corte ) ){                
                 $interval = $date_ini_ausen->diff($date_fin_corte);
@@ -1468,7 +1473,9 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                     'ausencia_id' => $aus['ausencia_id']
                 );
                 $total_ausencias += $ausencias;
-                $total_dias_sin_goce += $ausencias;
+                if( mesCompleto($aus['ausencia_id']) ){
+                    $total_dias_sin_goce += $ausencias;    
+                }
                 //echo "3";
             } else {                
                 $ausencias += $aus['dias'];
@@ -1483,7 +1490,9 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                     'ausencia_id' => $aus['ausencia_id']
                 );   
                 $total_ausencias += $ausencias;
-                $total_dias_sin_goce += $ausencias;     
+                if( mesCompleto($aus['ausencia_id']) ){
+                    $total_dias_sin_goce += $ausencias;    
+                }
                 //echo "4";        
             }        
         }
