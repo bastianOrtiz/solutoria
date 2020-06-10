@@ -459,7 +459,6 @@ if( isset($parametros[1]) ){
     $licencias = obtenerLicencias($trabajador_id);
 
     $arr_ausencias = @obtenerAusencias($trabajador_id);
-
         
     $dias_del_mes = 30;
 
@@ -484,7 +483,14 @@ if( isset($parametros[1]) ){
         $dias_del_mes = 31;
     }
 
-    $ausencias_efectivas = ($arr_ausencias['dias_licencia_efectivas'] + $arr_ausencias['dias_ausentismo'] );
+    
+
+    $ausencias_efectivas = (
+        $arr_ausencias['dias_licencia_efectivas'] + 
+        $arr_ausencias['dias_ausentismo'] + 
+        $arr_ausencias['dias_finiquito'] + 
+        $arr_ausencias['dias_no_enrolado'] 
+    );
 
 
     // AUSENCIAS
@@ -499,6 +505,7 @@ if( isset($parametros[1]) ){
     $total_atrasos = obtenerTotalAtrasos($atrasos_entrada['total_atraso'], $atrasos_salida['total_atraso'],$ausencias); 
 
     $sueldo = calcularSueldo($trabajador_id);
+
 
     $dias_trabajados = $dias_del_mes - $ausencias_efectivas;
 

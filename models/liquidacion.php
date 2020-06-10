@@ -1621,8 +1621,8 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
     
     $db->where('id',$trabajador_id);
     $fecha_inicio_contrato_plano = $db->getValue('m_trabajador','fechaContratoInicio');
-    $fecha_inicio_contrato_plano .= ' 00:00:00';    
-    $fecha_inicio_contrato = strtotime($fecha_inicio_contrato_plano);        
+    $fecha_inicio_contrato_plano .= ' 00:00:00';
+    $fecha_inicio_contrato = strtotime($fecha_inicio_contrato_plano);
 
     $mes_enrolado = date('m',$fecha_inicio_contrato);
     $ano_enrolado = date('Y',$fecha_inicio_contrato);
@@ -1652,7 +1652,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
     $db->where('id',$trabajador_id);
     $fecha_fin_contrato_plano = $db->getValue('m_trabajador','fechaContratoFin');
 
-    if($fecha_fin_contrato_plano != "0000-00-00"){                
+    if($fecha_fin_contrato_plano != "0000-00-00"){
         $fecha_fin_contrato = strtotime($fecha_fin_contrato_plano);
         $mes = getMesMostrarCorte();
         $mes = leadZero($mes);
@@ -1682,7 +1682,6 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
         }
     }
     /** END **/
-
     
     $arr_ausencias['dias_finiquito'] = $diasNoTrabajados;
     $arr_ausencias['dias_no_enrolado'] = $diasNoEnrolado;
