@@ -76,10 +76,10 @@ if( $_POST ){
         // Proceso para agregar los marcajes por teletrabajo
         $db->where('cast(checktime as date)',[$_POST['fechaInicioRango'],$_POST['fechaFinRango']], 'BETWEEN');
         $rango_teletrabajo = $db->get('m_relojcontrol_teletrabajo');
-
         
         foreach ($rango_teletrabajo as $key => $value) {
             $db->where('rut',$value['rut']);
+            $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
             $reloj_id = $db->getValue('m_trabajador','relojcontrol_id');
             $dataInsert = [
                 'checktime' => $value['checktime'],
@@ -88,6 +88,9 @@ if( $_POST ){
                 'logid' => 0
             ];
             $db->insert('m_relojcontrol',$dataInsert);
+            show_array($db->getLastQuery(),0);
+            show_array($db->getLastError(),0);
+            echo "------------------------------------------------------------";
         }
 
 
