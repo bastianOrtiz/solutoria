@@ -88,9 +88,6 @@ if( $_POST ){
                 'logid' => 0
             ];
             $db->insert('m_relojcontrol',$dataInsert);
-            show_array($db->getLastQuery(),0);
-            show_array($db->getLastError(),0);
-            echo "------------------------------------------------------------";
         }
 
 
