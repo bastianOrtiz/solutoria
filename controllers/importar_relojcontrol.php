@@ -20,8 +20,15 @@ if( $_POST ){
                     
                     $dia_a_consultar = date('Y-m-d',$i);
                     
-                    $db->where ("checktime", $dia_a_consultar.'%', 'like');
-                    $db->delete('m_relojcontrol');
+                    $query_delete = "
+                    DELETE r
+                    FROM m_relojcontrol r
+                    INNER JOIN m_trabajador T
+                      ON r.userid=T.relojcontrol_id 
+                    WHERE T.empresa_id = ". $_SESSION[ PREFIX . 'login_eid'] ."
+                    AND r.checktime LIKE '". $dia_a_consultar ." %'
+                    ";
+                    $db->rawQuery($query_delete);
                     
                     foreach ($lines as $key => $value) {
     
@@ -81,6 +88,7 @@ if( $_POST ){
             $db->where('rut',$value['rut']);
             $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
             $reloj_id = $db->getValue('m_trabajador','relojcontrol_id');
+
             $dataInsert = [
                 'checktime' => $value['checktime'],
                 'userid' => $reloj_id,
@@ -89,7 +97,6 @@ if( $_POST ){
             ];
             $db->insert('m_relojcontrol',$dataInsert);
         }
-
 
 
         $response = encrypt('status=success&mensaje=Datos importados correctamente&id=0');
