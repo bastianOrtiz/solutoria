@@ -4,6 +4,31 @@
 error_reporting(0);
 
 /** 
+ * Determina si el trabajador esta en modo "Reduccion Laboral"
+ * Nueva ley de mierda en Chile, promulgada en el gobierno del CTM de Piñera 
+ * durante la pandemia del Coronavirus del 2020, que permitió a las empresas 
+ * reducir el sueldo a sus trabajadores, como "ayuda" para no hecharlos.
+ *  
+ * @param (int) $trabajador_id, ID del Trabajador
+ * @return (bool) 
+ */ 
+function reduccionLaboral($trabajador_id){ 
+     global $db; 
+ 
+    $db->where('id',$trabajador_id); 
+    $trabajador = $db->getOne('m_trabajador'); 
+
+    if( !$trabajador['reduccion_laboral'] ){ 
+        return false;
+    } else {
+        $return = ['sueldo_base_reducido' => $trabajador['sueldo_base_reducido']];
+
+        return $return;
+    }
+} 
+
+
+/** 
  * Determina si la ausencia considera Mes completo o Corte
  *  
  * @param (int) $ausencia_id, ID de la Ausecia

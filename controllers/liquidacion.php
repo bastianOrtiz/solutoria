@@ -504,9 +504,6 @@ if( isset($parametros[1]) ){
 
     $total_atrasos = obtenerTotalAtrasos($atrasos_entrada['total_atraso'], $atrasos_salida['total_atraso'],$ausencias); 
 
-    $sueldo = calcularSueldo($trabajador_id);
-
-
     $dias_trabajados = $dias_del_mes - $ausencias_efectivas;
 
     if( gratificacion( $trabajador_id ) ){
@@ -515,6 +512,7 @@ if( isset($parametros[1]) ){
         $gratificacion = 0;
     }
     
+    $sueldo = calcularSueldo($trabajador_id, $gratificacion);
 
     $hh = calcularValorHH($trabajador_id);
                 

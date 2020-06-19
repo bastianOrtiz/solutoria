@@ -753,7 +753,8 @@ function calcularGratificacion( $dias_trabajados ){
  * @param (int) $id_trabajador ID del Trabajador 
  * @return (int) Sueldo
  */
-function calcularSueldo($id_trabajador){
+function calcularSueldo($id_trabajador,$gratificacion = 0){
+
     global $db;
     
     $sueldo_base    = 0;
@@ -762,7 +763,12 @@ function calcularSueldo($id_trabajador){
     $db->where ("id", $id_trabajador);
     $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
     $trabajador = $db->getOne("m_trabajador");
-    $sueldo_base = $trabajador['sueldoBase'];        
+    $sueldo_base = $trabajador['sueldoBase'];
+
+    $sueldo_base_reducido = reduccionLaboral($id_trabajador);
+    if( $sueldo_base_reducido ){
+        $sueldo_base = ( $sueldo_base_reducido['sueldo_base_reducido'] - $gratificacion );
+    }
     
     if( relojControlSync() ){
         $arr_ausencias = @obtenerAusencias($id_trabajador);
