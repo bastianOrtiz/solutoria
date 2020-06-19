@@ -765,9 +765,9 @@ function calcularSueldo($id_trabajador,$gratificacion = 0){
     $trabajador = $db->getOne("m_trabajador");
     $sueldo_base = $trabajador['sueldoBase'];
 
-    $sueldo_base_reducido = reduccionLaboral($id_trabajador);
-    if( $sueldo_base_reducido ){
-        $sueldo_base = ( $sueldo_base_reducido['sueldo_base_reducido'] - $gratificacion );
+    $sueldo_imponible_reducido = reduccionLaboral($id_trabajador);
+    if( $sueldo_imponible_reducido ){
+        $sueldo_base = ( $sueldo_imponible_reducido['sueldo_base_reducido'] - $gratificacion );
     }
     
     if( relojControlSync() ){

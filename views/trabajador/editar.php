@@ -652,7 +652,7 @@
                                                     </button>
                                                     <br>
                                                     <br>
-                                                    <label id="sueldo_base_reducido" style="display: none;">Sueldo reducido
+                                                    <label id="sueldo_base_reducido" style="display: none;">Sueldo imponible reducido
                                                         <input type="text" name="sueldo_base_reducido" value="<?php echo $trabajador['sueldo_base_reducido'] ?>" class="form-control" placeholder="Sueldo base reducido">
                                                     </label>
                                                 </div>
