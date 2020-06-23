@@ -493,20 +493,7 @@ td.total{
                                             }
                                             ?>
 
-                                            <?php
-                                            if( $total_apv_A > 0 ){
-                                            ?>
-                                            <tr>
-                                                <td>
-                                                    1
-                                                </td>
-                                                <td> 1 </td>
-                                                <td>  <?php echo $apv['nombre']; ?> </td>
-                                                <td> $ <?php echo number_format($total_apv_A,0,',','.') ?> </td>
-                                            </tr>
-                                            <?php } ?>
                                         </tbody>
-
 
                             		</table>
                                     <?php } ?>
