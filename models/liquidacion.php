@@ -764,11 +764,6 @@ function calcularSueldo($id_trabajador,$gratificacion = 0){
     $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
     $trabajador = $db->getOne("m_trabajador");
     $sueldo_base = $trabajador['sueldoBase'];
-
-    $sueldo_imponible_reducido = reduccionLaboral($id_trabajador);
-    if( $sueldo_imponible_reducido ){
-        $sueldo_base = ( $sueldo_imponible_reducido['sueldo_base_reducido'] - $gratificacion );
-    }
     
     if( relojControlSync() ){
         $arr_ausencias = @obtenerAusencias($id_trabajador);
@@ -792,12 +787,19 @@ function calcularSueldo($id_trabajador,$gratificacion = 0){
     }
 
     $dias_trabajados = ($dias_del_mes - $ausencias);
-    
+
+    $sueldo_imponible_reducido = reduccionLaboral($id_trabajador);
+    if( $sueldo_imponible_reducido ){
+        $sueldo_base_proporcional = ( $sueldo_imponible_reducido['sueldo_base_reducido'] / 30 ) * $dias_trabajados;
+        $sueldo_base = ( $sueldo_base_proporcional - $gratificacion );
+    }
+
     if( !$sueldo_imponible_reducido ){
         $sueldo_mes = ( ( $sueldo_base / 30 ) * ( $dias_trabajados ) );
     } else {
         $sueldo_mes = $sueldo_base;
     }
+
     
     return $sueldo_mes;
 }
