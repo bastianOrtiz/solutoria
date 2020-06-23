@@ -544,7 +544,6 @@ if( isset($parametros[1]) ){
         exit();   
     }   
 
-
     if( $remuneracion_tributable > $tope ){
         if( ( $ausencias > 0 ) && ( $ausencias != 30 ) ){
             $total_imponible = ($tope / 30) * ( 30 - $ausencias );
@@ -554,6 +553,7 @@ if( isset($parametros[1]) ){
     } else {
         $total_imponible = $remuneracion_tributable;
     }
+
 
     if($licencias > 0){
         $sueldo_SUPER = ( ( $total_imponible / ( 30 - $ausencias ) ) * 30 );

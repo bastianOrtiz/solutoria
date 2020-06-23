@@ -793,7 +793,11 @@ function calcularSueldo($id_trabajador,$gratificacion = 0){
 
     $dias_trabajados = ($dias_del_mes - $ausencias);
     
-    $sueldo_mes = ( ( $sueldo_base / 30 ) * ( $dias_trabajados ) );
+    if( !$sueldo_imponible_reducido ){
+        $sueldo_mes = ( ( $sueldo_base / 30 ) * ( $dias_trabajados ) );
+    } else {
+        $sueldo_mes = $sueldo_base;
+    }
     
     return $sueldo_mes;
 }
