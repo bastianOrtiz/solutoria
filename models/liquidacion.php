@@ -1430,15 +1430,25 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
             if( mesCompleto($aus['ausencia_id']) ){
                 $desde = getAnoMostrarCorte().'-'.getMesMostrarCorte().'-01 00:00:00';
             }
+
             $date_ini_corte = new DateTime( $desde );
             $date_ini_ausen = new DateTime( $aus['fecha_inicio'] );
 
             
             if( ( $date_ini_ausen <= $date_ini_corte ) && ( $date_fin_ausen <= $date_fin_corte ) ){
-                $interval = $date_ini_corte->diff($date_fin_ausen);
+                if( mesCompleto($aus['ausencia_id']) ){
+                    if( $date_fin_ausen >= $date_ini_corte ){
+                        $interval = $date_ini_corte->diff($date_fin_ausen);
+                    } else {
+                        $interval->days = -1;
+                    }
+                } else {
+                    $interval = $date_ini_corte->diff($date_fin_ausen);
+                }
+                
                 $ausencias += ( $interval->days + 1 );
                 if( !mesCompleto($aus['ausencia_id']) ){
-                    $n_dias = diasNoLaborales($desde,$aus['fecha_fin'],$trabajador_id);
+                    $n_dias  = diasNoLaborales($desde,$aus['fecha_fin'],$trabajador_id);
                 }
                 $ausencias -= $n_dias;
                 $arr_ausencias[] = array(
@@ -1449,12 +1459,21 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                 );
                 $total_ausencias += $ausencias;
                 if( mesCompleto($aus['ausencia_id']) ){
-                    $total_dias_sin_goce += $ausencias;    
+                    $total_dias_sin_goce += $ausencias;
                 }
                 
                 //echo "1";
             } elseif( ( $date_ini_ausen >= $date_ini_corte ) && ( $date_fin_ausen >= $date_fin_corte ) && ( $date_ini_ausen <= $date_fin_corte ) ){
-                $interval = $date_ini_ausen->diff($date_fin_corte);
+                if( mesCompleto($aus['ausencia_id']) ){
+                    if( $date_fin_ausen >= $date_ini_corte ){
+                        $interval = $date_ini_corte->diff($date_fin_ausen);
+                    } else {
+                        $interval->days = -1;
+                    }
+                } else {
+                    $interval = $date_ini_corte->diff($date_fin_ausen);
+                }
+
                 $ausencias += ( $interval->days + 1 );
                 if( !mesCompleto($aus['ausencia_id']) ){
                     $n_dias = diasNoLaborales($aus['fecha_inicio'],$hasta,$trabajador_id);
@@ -1472,7 +1491,16 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                 }
                 //echo "2";
             } elseif( ( $date_ini_ausen <= $date_ini_corte ) && ( $date_fin_ausen >= $date_fin_corte ) ){                
-                $interval = $date_ini_ausen->diff($date_fin_corte);
+                if( mesCompleto($aus['ausencia_id']) ){
+                    if( $date_fin_ausen >= $date_ini_corte ){
+                        $interval = $date_ini_corte->diff($date_fin_ausen);
+                    } else {
+                        $interval->days = -1;
+                    }
+                } else {
+                    $interval = $date_ini_corte->diff($date_fin_ausen);
+                }
+
                 $ausencias += ( $interval->days + 1 );
                 if( !mesCompleto($aus['ausencia_id']) ){
                     $n_dias = diasNoLaborales($aus['fecha_inicio'],$hasta,$trabajador_id);

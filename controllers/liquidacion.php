@@ -483,8 +483,6 @@ if( isset($parametros[1]) ){
         $dias_del_mes = 31;
     }
 
-    
-
     $ausencias_efectivas = (
         $arr_ausencias['dias_licencia_efectivas'] + 
         $arr_ausencias['dias_ausentismo'] + 
