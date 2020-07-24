@@ -99,11 +99,16 @@ if( $dias_del_mes < 30 ){
     $dias_del_mes = 30;
 }
 
-$dias_trabajados = ( $dias_del_mes - $diaAusencia );
 
-if( $dias_trabajados > 30 ){
-    $dias_trabajados = 30;
+if( $liquidacion['diasTrabajados'] === null ){
+    $dias_trabajados = ( $dias_del_mes - $diaAusencia );
+    if( $dias_trabajados > 30 ){
+        $dias_trabajados = 30;
+    }
+} else {
+    $dias_trabajados = $liquidacion['diasTrabajados'];
 }
+
 
 $total_salud_legal = round($totalImponible * 0.07,0);
 

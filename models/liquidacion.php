@@ -1351,7 +1351,6 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
     if( $year == 0 ){
         $year = getAnoMostrarCorte();
     }
-
     
 
 

@@ -76,6 +76,7 @@ if( $_POST ){
             "sueldoMaestro" => $sueldo_maestro,
             "diaAusencia" => $diaAusencia,
             "diaLicencia" => $diaLicencia,
+            "diasTrabajados" => $diasTrabajados,
             "sueldoBase" => $sueldoBase,
             "gratificacion" => $gratificacion,
             "horaExtra" => $horaExtra,
