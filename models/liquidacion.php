@@ -778,7 +778,7 @@ function calcularSueldo($id_trabajador,$gratificacion = 0){
 
 
     if( ($arr_ausencias['dias_licencia'] > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
-        $dias_del_mes = 31;
+        $dias_del_mes = 30;
         $ausencias = ($arr_ausencias['dias_licencia_efectivas'] + $arr_ausencias['dias_ausentismo'] );
     }
 
