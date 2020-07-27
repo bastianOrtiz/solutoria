@@ -478,7 +478,7 @@ if( isset($parametros[1]) ){
     $dias_sin_goce = $arr_ausencias['dias_sin_goce'];
 
     if( ($dias_licencia > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
-        $dias_del_mes = 31;
+        $dias_del_mes = 30;
     }
     if( ($dias_sin_goce > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
         $dias_del_mes = 31;
