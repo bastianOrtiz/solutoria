@@ -55,7 +55,7 @@ td.total{
                             <tr>
                                 <td>
                                     <strong>Sueldo Base de <?php echo getNombreMes(getMesMostrarCorte()) ?></strong>
-                                    (<?php echo ( $dias_del_mes - $ausencias_efectivas ) ?> días trabajados) </td>
+                                    (<?php echo ( $dias_trabajados ) ?> días trabajados) </td>
                                 <td class="total"> $ <?php echo number_format($sueldo, 0, '', '.'); ?> </td>
                             </tr>
                             <tr>

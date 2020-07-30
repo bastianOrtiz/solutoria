@@ -777,16 +777,11 @@ function calcularSueldo($id_trabajador,$gratificacion = 0){
     $dias_del_mes = 30;
 
 
-    if( ($arr_ausencias['dias_licencia'] > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
-        $dias_del_mes = 30;
-        $ausencias = ($arr_ausencias['dias_licencia_efectivas'] + $arr_ausencias['dias_ausentismo'] );
-    }
-
-    if( ($arr_ausencias['dias_sin_goce'] > 0) && (getLimiteMes(getMesMostrarCorte()) == 31 ) ){
-        $dias_del_mes = 31;
-    }
-
     $dias_trabajados = ($dias_del_mes - $ausencias);
+
+    if( $dias_trabajados < 0 ){
+        $dias_trabajados = 0;
+    }
 
     $sueldo_imponible_reducido = reduccionLaboral($id_trabajador);
     if( $sueldo_imponible_reducido ){
