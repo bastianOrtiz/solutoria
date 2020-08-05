@@ -1750,7 +1750,7 @@ function crearTxt($post){
     }
     fclose($fch); // Cierras el archivo.
 
-    
+    $empresa_name_sanitized = _sanitize_redirect( $_SESSION[PREFIX.'login_empresa'] );
     $empresa_name_sanitized = str_replace(".","",$empresa_name_sanitized);
 
     // Headers for an download:
