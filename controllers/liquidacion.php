@@ -597,18 +597,16 @@ if( isset($parametros[1]) ){
         if($dias_licencia > 0){
             $dias_trabajados_licencia = ( $dias_del_mes - $arr_ausencias['dias_licencia_efectivas'] );
             $proporcional_pactado_licencia = ( ( $prevision_trabajador['montoPlan'] / 30 ) * ( $dias_trabajados_licencia ) );
-            $proporcional_pactado_licencia = round($proporcional_pactado_licencia,3);
+
         } else {
             $proporcional_pactado_licencia = $prevision_trabajador['montoPlan'];
-            $proporcional_pactado_licencia = round($proporcional_pactado_licencia,3);
         }
 
-        $total_salud_legal = round($total_imponible * 0.07, 0);
+        $total_salud_legal = ($total_imponible * 0.07);
 
         if( $prevision_trabajador['tipomoneda_id'] == ID_UF ){                                
             $total_pactado_isapre = ( $prevision_trabajador['montoPlan'] * $uf);
-            $proporcional_pactado_licencia = round($proporcional_pactado_licencia,3);
-            $proporcional_pactado_licencia_en_pesos = round($proporcional_pactado_licencia * $uf, 0);
+            $proporcional_pactado_licencia_en_pesos = ($proporcional_pactado_licencia * $uf);
 
         } else {
             $total_pactado_isapre = $prevision_trabajador['montoPlan'];

@@ -1446,6 +1446,11 @@ function mainMenu(){
                 'entidad' => 'previred',
                 'accion' => 'previsualizacion',
                 'label' => 'Archivo Previred'
+            ),
+            array(
+                'entidad' => 'previred',
+                'accion' => 'revisor',
+                'label' => 'Revisor Archivo Previred'
             )
         )
     );
@@ -2773,7 +2778,7 @@ function upload_image($input_name, $folder){
 function upload_doc($input_name, $folder){
     $name = $_FILES[$input_name]['name'];
     $pathinfo = pathinfo($name);
-    $array_extension_allowed = array('pdf','xls', 'xlsx', 'doc', 'docx','jpeg','jpg','png','dat');
+    $array_extension_allowed = array('pdf','xls', 'xlsx', 'doc', 'docx','jpeg','jpg','png','dat','txt');
     if( in_array($pathinfo['extension'],$array_extension_allowed) ){ 
         $array_return = array();
                 
