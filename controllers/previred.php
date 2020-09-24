@@ -118,7 +118,7 @@ if( $_POST ){
             $otros_descuentos_ccaf_1_futuro  = rellenar($_POST['otros_descuentos_ccaf_1_futuro'][$i], 8, "i");
             $otros_descuentos_ccaf_2_futuro  = rellenar($_POST['otros_descuentos_ccaf_2_futuro'][$i], 8, "i");
             $bonos_gobierno_futuro  = rellenar($_POST['bonos_gobierno_futuro'][$i], 8, "i");
-            $codigo_de_sucursal_futuro   = rellenar($_POST['codigo_de_sucursal_futuro'][$i],20, "i");
+            $codigo_de_sucursal_futuro   = rellenar($_POST['codigo_de_sucursal_futuro'][$i],20, "s");
             $codigo_mutualidad  = rellenar($_POST['codigo_mutualidad'][$i], 2, "i");
             $renta_imponible_mutual  = rellenar($_POST['renta_imponible_mutual'][$i], 8, "i");
             $cotizacion_mutual  = rellenar($_POST['cotizacion_mutual'][$i], 8, "i");
@@ -127,8 +127,8 @@ if( $_POST ){
             $aporte_trabajador_seguro_cesantia  = rellenar($_POST['aporte_trabajador_seguro_cesantia'][$i], 8, "i");
             $aporte_empleador_seguro_cesantia = rellenar($_POST['aporte_empleador_seguro_cesantia'][$i], 8, "i");
             $rut_pagadora_subsidio   = rellenar($_POST['rut_pagadora_subsidio'][$i],11, "i");
-            $dv_pagadora_subsidio = rellenar($_POST['dv_pagadora_subsidio'][$i], 1, "i");
-            $ccosots_suc_agencia_obra_region  = rellenar($_POST['ccosots_suc_agencia_obra_region'][$i],20, "i");
+            $dv_pagadora_subsidio = rellenar($_POST['dv_pagadora_subsidio'][$i], 1, "s");
+            $ccosots_suc_agencia_obra_region  = rellenar($_POST['ccosots_suc_agencia_obra_region'][$i],20, "s");
 
             fwrite($fch, $rut);
             fwrite($fch, $dv);
