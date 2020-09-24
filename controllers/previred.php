@@ -17,7 +17,7 @@ if( $_POST ){
 
     if( @$_POST['action'] == 'generar_archivo_previred' ){
         
-        $total_reg = count($_POST['rut']);
+        $total_reg = ( count($_POST['rut']) / 2 );
 
         $uniqid = uniqid();
         $archivo = ROOT . "/private/uploads/docs/previred_" . $uniqid . ".txt"; // el nombre de tu archivo
