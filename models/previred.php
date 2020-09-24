@@ -671,11 +671,11 @@ function crearTxt($post){
         $reintegro_cargas_familiares = 0;
         $monto_reintegro_cargas_familiares = rellenar($reintegro_cargas_familiares,6,"i");
         //$var.= $monto_reintegro_cargas_familiares;
-        fwrite($fch, $monto_reintegro_cargas_familiares); // Grabas
+        fwrite($fch, $monto_reintegro_cargas_familiares); // Grabas 24
 
         $solicitud_trabajador_joven = rellenar("N",1,"s");
         //$var.= $solicitud_trabajador_joven;
-        fwrite($fch, $solicitud_trabajador_joven); // Grabas
+        fwrite($fch, $solicitud_trabajador_joven); // Grabas 25
 
         /*$licencia = obtenerDiasLicencia($empleado["id"]);
         $dias_de_licencia = rellenar($licencia,1,"s");
@@ -690,26 +690,26 @@ function crearTxt($post){
         $codigo_afp_convertido = leadZero($codigo_afp["codigo"]);
         $codigo_afp_rellenar = rellenar($codigo_afp_convertido,2,"i");
         //$var.= $codigo_afp_rellenar;
-        fwrite($fch, $codigo_afp_rellenar); // Grabas
+        fwrite($fch, $codigo_afp_rellenar); // Grabas 26
         $imponible = tieneImponible($empleado["id"],$arreglo_liquidaciones);
         $montoImponible = rellenar($imponible["monto"],8,"i");
         //$var.= $montoImponible;
-        fwrite($fch, $montoImponible); // Grabas
+        fwrite($fch, $montoImponible); // Grabas 27
         $monto_obligatorio_afp = rellenar($imponible["cotizacion"],8,"i");
         //$var.= $monto_obligatorio_afp;
-        fwrite($fch, $monto_obligatorio_afp); // Grabas
+        fwrite($fch, $monto_obligatorio_afp); // Grabas 28
         $monto_sis = rellenar($imponible["sis"],8,"i");
         //$var.= $monto_sis;
-        fwrite($fch, $monto_sis); // Grabas
+        fwrite($fch, $monto_sis); // Grabas 29
         $cuenta2Monto = rellenar($imponible["cuenta2Monto"],8,"i");
         //$var.= $cuenta2Monto;
-        fwrite($fch, $cuenta2Monto); // Grabas
+        fwrite($fch, $cuenta2Monto); // Grabas 30
         $renta_imp_sust_afp = rellenar(0,8,"i");
         //$var.= $renta_imp_sust_afp;
-        fwrite($fch, $renta_imp_sust_afp); // Grabas
+        fwrite($fch, $renta_imp_sust_afp); // Grabas 31
         $tasa_pactada = "00,00";
         //$var.= $tasa_pac00,tada;
-        fwrite($fch, $tasa_pactada); // Grabas
+        fwrite($fch, $tasa_pactada); // Grabas 32
         $aporte_indemn = rellenar(0,9,"i");
         //$var.= $aporte_indemn;
         fwrite($fch, $aporte_indemn); // Grabas
