@@ -265,13 +265,8 @@ if( $_POST ){
             $lines = file(ROOT.'/private/uploads/docs/' . $upload['filename']);
             unlink(ROOT.'/private/uploads/docs/' . $upload['filename']);
 
-            $cont = 0;
             foreach ($lines as $line) {
                 $revisor[] = $line;
-                if($cont == 20){
-                    break;
-                }
-                $cont++;
             }
 
         }
