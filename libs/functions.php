@@ -2703,6 +2703,17 @@ function fnGetNombre($id,$tabla,$valida_empresa = true){
     return $dpto['nombre']; 
 }
 
+function getUltimaLiquidacion($trabajador_id){
+    global $db;
+
+    $db->orderBy("ano","desc");
+    $db->orderBy("mes","desc");
+    $db->where("trabajador_id",$trabajador_id);
+    $liquidacion = $db->getOne('liquidacion');
+
+    return $liquidacion;
+}
+
 /**
  * Alias de fnGetNombre()
  * @param int $id Id del nombre

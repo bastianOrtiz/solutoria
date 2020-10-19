@@ -160,12 +160,63 @@ function editarPrevisionalTrabajador($trabajador_id, $data_array){
 
 function eliminarTrabajador( $trabajador_id ){
     global $db;
+    
+    $db->where('trabajador_id', $trabajador_id);
+    $liquidaciones = $db->get('liquidacion');
+
+    if( $liquidaciones ){
+        //Borrado logico
+        $db->where('id', $trabajador_id);
+        $db->update('m_trabajador',[ 'deleted_at' => date('Y-m-d H:i:s') ]);
+        return true;
+
+    } else {
+        // Borrar cualquier dato previsional (t_prevision)
+        $db->where('trabajador_id', $trabajador_id);
+        $db->delete('t_prevision');
+
+        // Borrar cualquier dato debe/Haber
+        $db->where('trabajador_id', $trabajador_id);
+        $db->delete('t_haber');
+
+        $db->where('trabajador_id', $trabajador_id);
+        $db->delete('t_descuento');
+
+        // Borrar cualquier dato Atraso, ausencia, hora extra
+        $db->where('trabajador_id', $trabajador_id);
+        $db->delete('t_atrasohoraextra');
+        
+        $db->where('trabajador_id', $trabajador_id);
+        $db->delete('t_ausencia');
+        
+
+        // Borrar cualquier dato de contrato o documentos
+        $db->where('trabajador_id', $trabajador_id);
+        $db->delete('t_contrato');
+        
+        $db->where('trabajador_id', $trabajador_id);
+        $db->delete('t_documentotrabajador');
+        
+
+        //Ahora se borra fisicamente el trabajador
+        $db->where('id', $trabajador_id);
+        if($db->delete('m_trabajador')){
+            return true;    
+        } else {
+            return false;
+        } 
+
+    }
+
+
+    /*
     $db->where('id', $trabajador_id);
     if($db->delete('m_trabajador')){
         return true;    
     } else {
         return false;
-    }    
+    } 
+    */   
 }
 
 ?>

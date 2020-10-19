@@ -38,6 +38,33 @@ if( $_POST['action'] == 'detalle' ){
     }
 }
 
+if( $_POST['action'] == 'get_trabajador_inactivo' ){
+    $db->where ("rut", $_POST['rut']);
+    $db->where ("deleted_at", NULL, 'IS NOT');
+    $user = $db->getOne("m_trabajador");
+
+    if( $user ){
+        $last_liq = getUltimaLiquidacion($user['id']);
+        $json['trabajador'] = array(
+            'Nombre' => $user['nombres'] . ' ' . $user['apellidoPaterno'] . ' ' . $user['apellidoMaterno'],
+            'Rut' => $user['rut'],
+            'Departamento' => getNombre($user['departamento_id'],'m_departamento',false),
+            'Cargo' => getNombre($user['cargo_id'],'m_cargo',false),
+            'Ultima Liquidacion' => getNombreMes($last_liq['mes']) . '/' . $last_liq['ano']
+        );
+        $json['trabajador_id'] = $user['id'];
+    }
+    
+}
+
+
+if( $_POST['action'] == 'reactivar_trabajador' ){
+    $db->where('id', $_POST['trabajador_id']);
+    if ($db->update ('m_trabajador', ['deleted_at' => null])){
+        $json['trabajador_id'] = $_POST['trabajador_id'];
+        $json['status'] = 'success';
+    }
+}
 
 if( $_POST['action'] == 'buscarlive' ){
     
@@ -52,6 +79,7 @@ if( $_POST['action'] == 'buscarlive' ){
     $sql = "SELECT id, nombres, apellidoPaterno, apellidoMaterno  
             FROM m_trabajador 
             WHERE  empresa_id = ".$_SESSION[ PREFIX . 'login_eid']." 
+            AND deleted_at IS NULL
             AND (nombres LIKE '%$s%'  
             OR apellidoPaterno LIKE '%$s%'  
             OR apellidoMaterno LIKE '%$s%')";

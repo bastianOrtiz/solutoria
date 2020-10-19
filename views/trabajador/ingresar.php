@@ -3,6 +3,47 @@
 input.form-control.loading{
     background: url(<?php echo BASE_URL; ?>/public/img/loading_negro.gif) no-repeat 99% center;
 }
+._contenedor{
+    width: auto;
+    margin: 10px 20px;        
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    float: left;
+}
+
+._contenedor ._label{
+    width: auto;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    float: left;        
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+     border-top-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background: #EAEAEA;
+    font-weight: bold;
+}
+
+._contenedor ._input{
+    width: auto;
+    float: left;
+    height: 30px;
+    padding: 0 10px;
+    line-height: 30px;   
+    border: 1px solid #EAEAEA;     
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: #FBFBFB;
+}
 </style>    
       <div class="content-wrapper">
         
@@ -503,6 +544,35 @@ input.form-control.loading{
         
       </div><!-- /.content-wrapper -->
       
+
+
+<!-- Large modal -->                                                
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="resumenTrabajadorReactivar" aria-labelledby="myLargeModalLabel">
+        <input type="hidden" name="rutReactivar">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myLargeModalLabel"> 
+                    <i class="fa fa-warning text-danger"></i> 
+                    <strong>¡Atencion!</strong> <br> Este RUT de trabajador ya fue ingresado al sistema en algun momento. Estos son sus datos:
+                </h4>
+            </div>
+            
+            <div class="modal-body">
+               
+            </div>
+
+            <br class="clear" />
+            <div class="modal-footer">
+                <div class="text-right">¿Desea reactivar este trabajador?</div>
+                <a href="#" class="btn btn-default btn-no" data-dismiss="modal">NO <i class="fa fa-times"></i></a>
+                <a href="" class="btn btn-success btn-si">SI <i class="fa fa-check"></i></a>
+            </div>  
+        </div>
+      </div>
+    </div><!-- /.modal -->
+
 <script>
 
 $("#relojControlIdTrabajador").blur(function(){    
@@ -527,6 +597,28 @@ $("#relojControlIdTrabajador").blur(function(){
     })    
 })
 
+$("#resumenTrabajadorReactivar .btn-no").click(function(){
+    $("#rutTrabajador").val("");
+})
+
+$("#resumenTrabajadorReactivar .btn-si").click(function(){
+    trabajador_id = $("[name=rutReactivar]").val();
+    $.ajax({
+        type: "POST",
+        url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+        data:"trabajador_id=" + trabajador_id + "&action=reactivar_trabajador",
+        dataType: 'json',
+        beforeSend: function(){
+            $(".overlayer").show();
+        },
+        success: function (json) {
+            if( json.status == 'success' ){
+                window.location.href = '<?php echo BASE_URL . '/' . $entity . '/editar/'; ?>' + json.trabajador_id;
+            }
+        }
+    })
+})
+
 $("#rutTrabajador").blur(function(){    
     if( !formateaRut( $(this) ) ){
         if( !$(this).parent().hasClass('has-error') ){
@@ -537,6 +629,35 @@ $("#rutTrabajador").blur(function(){
         $(this).parent().removeClass('has-error');
         $(this).parent().find('label').find('small').remove();
     }
+
+    setTimeout(function(){
+        rut = $("#rutTrabajador").val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+            data:"rut=" + rut + "&action=get_trabajador_inactivo",
+            dataType: 'json',
+            beforeSend: function(){
+                $(".row#custom_fields").html('<i class="fa fa-refresh fa-spin" style="margin:0px 0px 0px 20px"></i>');
+            },
+            success: function (json) {
+                if(json.trabajador){
+                    $("#resumenTrabajadorReactivar .modal-body").empty();
+                    $.each(json.trabajador, function(k,v) {
+                        html_iterante = '<div class="_contenedor">';                            
+                        html_iterante += '      <span class="_label">'+k+'</span>';
+                        html_iterante += '      <span class="_input">'+v+'</span>';                            
+                        html_iterante += '</div>';
+                        $("#resumenTrabajadorReactivar .modal-body").append(html_iterante);                                
+                    });
+                    $("[name=rutReactivar]").val(json.trabajador_id);
+                    //Mostrar el Modal, cargado
+                    $("#resumenTrabajadorReactivar").modal('show');
+                }
+            }
+        })
+    }, 500)
+
 })
 
 $("input").keydown(function(){

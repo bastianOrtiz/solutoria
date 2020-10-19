@@ -61,6 +61,7 @@ function fnNombreDepartamento($id_departamento){
 
 $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
 $db->where ("tipocontrato_id", array(3,4), 'NOT IN');
+$db->where ("deleted_at", NULL, 'IS');
 $db->orderBy('apellidoPaterno','ASC');
 $registros = $db->get("m_trabajador");
 $trabajadors = $registros;
@@ -865,6 +866,7 @@ if( $parametros ){
 
         $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
         $db->orderBy("apellidoPaterno","ASC");
+        $db->where ("deleted_at", NULL, 'IS');
         $lista_trabajadores = $db->get("m_trabajador");
 
         $fecha_ini = strtotime($parametros[2]);
@@ -875,6 +877,7 @@ if( $parametros ){
         $indice=0;
 
         $db->where('id',$parametros[1]);
+        $db->where ("deleted_at", NULL, 'IS');
         $trabajador = $db->getOne('m_trabajador');
         $relojcontrol_id = $trabajador['relojcontrol_id'];
 

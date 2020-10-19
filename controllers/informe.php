@@ -4,6 +4,7 @@
 $db->orderBy('apellidoPaterno','ASC');
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $db->where('tipocontrato_id',array(3,4),'NOT IN');
+$db->where ("deleted_at", NULL, 'IS');
 $db->where('marcaTarjeta',1);
 @$trabajadores_todos = $db->get('m_trabajador');
 
@@ -11,6 +12,7 @@ $db->where('marcaTarjeta',1);
 
 $db->orderBy('apellidoPaterno','ASC');
 $db->where('tipocontrato_id',array(3,4),'NOT IN');
+$db->where ("deleted_at", NULL, 'IS');
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $trabajadores_todos_cert_sueldos = $db->get('m_trabajador');
 
@@ -278,6 +280,7 @@ if( $_POST ){
         
         $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
         $db->where('tipocontrato_id',array(3,4),'NOT IN');
+        $db->where ("deleted_at", NULL, 'IS');
         $db->where('marcaTarjeta',1);
         $trabajadorAtraso = $db->get ("m_trabajador", null,'id');
 
@@ -908,6 +911,7 @@ if( $_POST ){
         } else {
             $sql .= "
                 WHERE  tipocontrato_id NOT IN (3,4)  
+                AND deleted_at IS NULL
                 AND empresa_id = '". $_SESSION[ PREFIX . 'login_eid' ] ."'
             ";
         }
@@ -1180,6 +1184,7 @@ if( $_POST ){
             case 'tele':
                 $db->orderBy('apellidoPaterno','ASC');
                 $db->where('tipocontrato_id',array(3,4),'NOT IN');
+                $db->where ("deleted_at", NULL, 'IS');
                 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
                 $db->where('teletrabajo',1);
                 $trabajadores_jornada = $db->get('m_trabajador');
@@ -1188,6 +1193,7 @@ if( $_POST ){
             case 'reduc':
                 $db->orderBy('apellidoPaterno','ASC');
                 $db->where('tipocontrato_id',array(3,4),'NOT IN');
+                $db->where ("deleted_at", NULL, 'IS');
                 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
                 $db->where('reduccion_laboral',1);
                 $trabajadores_jornada = $db->get('m_trabajador');
@@ -1198,6 +1204,7 @@ if( $_POST ){
                 SELECT * FROM m_trabajador
                 WHERE (teletrabajo = 1 OR reduccion_laboral = 1)
                 AND tipocontrato_id NOT IN (3,4)
+                AND deleted_at IS NULL
                 AND empresa_id = ".$_SESSION[PREFIX.'login_eid']."
                 ORDER BY apellidoPaterno ASC
                 ";
@@ -1207,6 +1214,7 @@ if( $_POST ){
             case 'none':
                 $db->orderBy('apellidoPaterno','ASC');
                 $db->where('tipocontrato_id',array(3,4),'NOT IN');
+                $db->where ("deleted_at", NULL, 'IS');
                 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
                 $db->where('reduccion_laboral',0);
                 $db->where('teletrabajo',0);
@@ -1216,6 +1224,7 @@ if( $_POST ){
             default:
                 $db->orderBy('apellidoPaterno','ASC');
                 $db->where('tipocontrato_id',array(3,4),'NOT IN');
+                $db->where ("deleted_at", NULL, 'IS');
                 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
                 $trabajadores_jornada = $db->get('m_trabajador');
                 break;
@@ -1500,6 +1509,7 @@ if( $parametros[0] == 'imposiciones' ){
     AND T.fechaContratoFin >= '$year-".leadZero($mes)."-01'
     AND T.empresa_ID = " . $_SESSION[PREFIX.'login_eid'] ."
     AND T.tipocontrato_id NOT IN (3,4)
+    AND T.deleted_at IS NULL
     ORDER BY nombre ASC
     ";    
     $plazo_fijo_durante_mes = $db->rawQuery( $sql );
@@ -1594,6 +1604,7 @@ if( $parametros[0] == 'trabajadores_jornada' ){
         case 'tele':
             $db->orderBy('apellidoPaterno','ASC');
             $db->where('tipocontrato_id',array(3,4),'NOT IN');
+            $db->where ("deleted_at", NULL, 'IS');
             $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
             $db->where('teletrabajo',1);
             $trabajadores_jornada = $db->get('m_trabajador');
@@ -1602,6 +1613,7 @@ if( $parametros[0] == 'trabajadores_jornada' ){
         case 'reduc':
             $db->orderBy('apellidoPaterno','ASC');
             $db->where('tipocontrato_id',array(3,4),'NOT IN');
+            $db->where ("deleted_at", NULL, 'IS');
             $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
             $db->where('reduccion_laboral',1);
             $trabajadores_jornada = $db->get('m_trabajador');
@@ -1612,6 +1624,7 @@ if( $parametros[0] == 'trabajadores_jornada' ){
             SELECT * FROM m_trabajador
             WHERE (teletrabajo = 1 OR reduccion_laboral = 1)
             AND tipocontrato_id NOT IN (3,4)
+            AND deleted_at IS NULL
             AND empresa_id = ".$_SESSION[PREFIX.'login_eid']."
             ORDER BY apellidoPaterno ASC
             ";
@@ -1621,6 +1634,7 @@ if( $parametros[0] == 'trabajadores_jornada' ){
         case 'none':
             $db->orderBy('apellidoPaterno','ASC');
             $db->where('tipocontrato_id',array(3,4),'NOT IN');
+            $db->where ("deleted_at", NULL, 'IS');
             $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
             $db->where('reduccion_laboral',0);
             $db->where('teletrabajo',0);
@@ -1630,6 +1644,7 @@ if( $parametros[0] == 'trabajadores_jornada' ){
         default:
             $db->orderBy('apellidoPaterno','ASC');
             $db->where('tipocontrato_id',array(3,4),'NOT IN');
+            $db->where ("deleted_at", NULL, 'IS');
             $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
             $trabajadores_jornada = $db->get('m_trabajador');
             break;
