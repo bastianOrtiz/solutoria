@@ -612,7 +612,7 @@ require_once('../libs/html2pdf/html2pdf.class.php');
 $html2pdf = new HTML2PDF('P','LETTER','es');
 $html2pdf->WriteHTML($content);
 //$html2pdf->Output('liquidacion_' . $nombre_trabajador_slug . '_' .  date("Y-m-t", strtotime($a_date)) .'.pdf');
-$html2pdf->Output( strtoupper($trabajador['apellidoPaterno']) . ' ' . strtoupper($trabajador['nombres']) . '.pdf');
+$html2pdf->Output( strtoupper($nombre_trabajador_slug) . '.pdf');
 
 
 ?>
