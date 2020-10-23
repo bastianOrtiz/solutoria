@@ -341,6 +341,9 @@ if( isset($parametros[1]) ){
     $db->where ("id", $trabajador_id);
     $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
     $trabajador = $db->getOne("m_trabajador");      
+
+    $nombre_split = explode(" ", $trabajador['nombres']);
+    $trabajador['nombres'] = $nombre_split[0];
     
     if( !$trabajador ){
         redirect(BASE_URL.'/trabajador/listar','',true,'El trabajador no existe en la empresa\n(Acceda a la lista de trabajadores y presione el boton liquidar o revise la empresa seleccionada actualmente)');        

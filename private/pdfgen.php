@@ -89,9 +89,12 @@ $debes_trabajador = $db->rawQuery( $query_desc );
 $db->where('id',$trabajador_id);
 $trabajador = $db->getOne('m_trabajador');
 
-
 $nombre_trabajador = $trabajador['apellidoPaterno'] . " " . $trabajador['apellidoMaterno'] . ' ' . $trabajador['nombres'];
-$nombre_trabajador_slug = slugify($nombre_trabajador);
+
+$nombre_split = explode(" ", $trabajador['nombres']);
+$trabajador['nombres'] = $nombre_split[0];
+$nombre_trabajador_slug = $trabajador['apellidoPaterno'] . " " . $trabajador['apellidoMaterno'] . ' ' . $trabajador['nombres'];
+$nombre_trabajador_slug = slugify($nombre_trabajador_slug);
 
 
 $dias_del_mes = getLimiteMes(getMesMostrarCorte());
