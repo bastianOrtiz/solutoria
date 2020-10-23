@@ -41,7 +41,7 @@ td.total{
                     </table>
                     <br /><br />
 
-                    <h3 class="box-title" style="display: block;">Nombre: <?php echo $trabajador['nombres'] ?> <?php echo $trabajador['apellidoPaterno'] ?> <?php echo $trabajador['apellidoMaterno'] ?>
+                    <h3 class="box-title" style="display: block;">Nombre: <?php echo $trabajador['apellidoPaterno'] ?> <?php echo $trabajador['apellidoMaterno'] ?> <?php echo $trabajador['nombres'] ?>
                         <span style="float: right; font-size: 14px;">(Última liquidacion procesada: <strong><?php echo $ultima_liquidacion ?></strong>)</span>
                     </h3>
                 </div><!-- /.box-header -->

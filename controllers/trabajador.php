@@ -60,7 +60,6 @@ function fnNombreDepartamento($id_departamento){
 
 
 $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
-$db->where ("tipocontrato_id", array(3,4), 'NOT IN');
 $db->where ("deleted_at", NULL, 'IS');
 $db->orderBy('apellidoPaterno','ASC');
 $registros = $db->get("m_trabajador");

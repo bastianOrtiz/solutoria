@@ -709,6 +709,7 @@ if( $_POST ){
             }
             
             $sql .= " AND T.departamento_id = D.id
+            AND deleted_at IS NULL
             order by D.nombre
             ";
         } else {
@@ -722,6 +723,7 @@ if( $_POST ){
             }
             
             $sql .= " AND T.centrocosto_id = CC.id
+            AND deleted_at IS NULL
             order by CC.nombre
             ";
         }                                

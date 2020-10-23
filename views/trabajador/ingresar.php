@@ -555,7 +555,7 @@ input.form-control.loading{
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title" id="myLargeModalLabel"> 
                     <i class="fa fa-warning text-danger"></i> 
-                    <strong>¡Atencion!</strong> <br> Este RUT de trabajador ya fue ingresado al sistema en algun momento. Estos son sus datos:
+                    <strong>¡Atención!</strong> <br> Este RUT de trabajador ya fue ingresado al sistema en algún momento. Éstos son sus datos:
                 </h4>
             </div>
             
