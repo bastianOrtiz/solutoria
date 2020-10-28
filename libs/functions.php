@@ -3,6 +3,75 @@
 
 error_reporting(0);
 
+
+
+
+
+/** 
+ * Convierte un tag en su valor
+ * Recive el parametro en el formato tabla.Campo
+ * Se hace un explode por el punto (.) y se obtiene el valor desde la basde de datos
+ *  
+ * @param (string) $tag, Tag, en formato {{ table.Campo }}
+ * @param (int) $id, ID de la entidad a consultar
+ * @return (bool) 
+ */ 
+function getTag($tag, $id){ 
+    global $db; 
+
+    $tag = ltrim($tag,"{{ ");
+    $tag = rtrim($tag," }}");
+
+    $param_tag = explode('.', $tag);
+    $tabla = 'm_' . $param_tag[0];
+    $campo = $param_tag[1];
+
+    $excepciones = [
+        'trabajador.ciudad',
+        'trabajador.horario',
+        'trabajador.nombreCompleto'
+    ];
+
+    if( !in_array($tag, $excepciones) ){
+        $db->where('id',$id); 
+        $value = $db->getValue ($tabla, $campo);
+    } else {
+        switch ($tag) {
+            case 'trabajador.ciudad':
+                $db->where('id',$id); 
+                $comuna_id = $db->getValue ('m_trabajador', 'comuna_id');
+                $ciudad = getNombre($comuna_id,'m_comuna', false);
+                
+                $value = $ciudad;
+            break;
+
+            case 'trabajador.horario':
+                $db->where('id',$id); 
+                $horario_id = $db->getValue ('m_trabajador', 'horario_id');
+                $horario = getNombre($horario_id,'m_horario', false);
+                
+                $value = $ciudad;
+            break;
+            
+            case 'trabajador.nombreCompleto':
+                $value = getNombreTrabajador($id, true);
+            break;
+            
+
+            default:
+                $value = '';
+            break;
+        }
+    }
+
+    if( !$value){ 
+        return false;
+    } else {
+        return $value;
+    }
+} 
+
+
 /** 
  * Determina si el trabajador esta en modo "Reduccion Laboral"
  * Nueva ley de mierda en Chile, promulgada en el gobierno del CTM de Piñera 
@@ -1684,6 +1753,24 @@ function mainMenu(){
                 'accion' => 'centralizar',
                 'label' => 'Centralizar'
             )
+        )
+    );
+
+    $menu['documentos'] = array(
+        'label' => 'Documentos',
+        'icon_class' => 'fa fa-file-text-o',
+        'childs' => array(
+            array(
+                'entidad' => 'documento',
+                'accion' => 'listar',
+                'label' => 'Listar'
+            ),
+            array(
+                'entidad' => 'documento',
+                'accion' => 'generar',
+                'label' => 'Generar x Trabajador'
+            ),
+            
         )
     );
     

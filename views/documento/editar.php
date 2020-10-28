@@ -43,7 +43,7 @@
                                     <input type="text" class="form-control required" value="<?php echo $documento['nombre'] ?>" id="nombreDocumento" name="nombreDocumento" placeholder="Nombre Documento" />
                                 </div>                                
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 hidden">
                                 <div class="form-group">
                                     <div class="radio">
                                     <label> <strong>Imprimir</strong> </label>

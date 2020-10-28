@@ -3,6 +3,12 @@ $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $registros = $db->get("m_documento");
 $documentos = $registros;
 
+$db->orderBy('apellidoPaterno','ASC');
+$db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
+$db->where ("deleted_at", NULL, 'IS');
+$db->where('marcaTarjeta',1);
+@$trabajadores_todos = $db->get('m_trabajador');
+
 if( $_POST ){
     
     extract($_POST);

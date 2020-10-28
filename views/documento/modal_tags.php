@@ -68,6 +68,14 @@
                   </tr>
                   <tr>
                       <td>
+                          <code>{{ trabajador.nombreCompleto }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                      </td>
+                      <td>
+                          Nombre completo del trabajado, comenzando con los nombres primero.
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
                             <code>{{ trabajador.nombres }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a><br>
                             <code>{{ trabajador.apellidoPaterno }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a><br>
                             <code>{{ trabajador.apellidoMaterno }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
