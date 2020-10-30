@@ -29,13 +29,16 @@ function getTag($tag, $id){
     $excepciones = [
         'trabajador.ciudad',
         'trabajador.horario',
-        'trabajador.nombreCompleto'
+        'trabajador.nombreCompleto',
+        'trabajador.pais',
+        'trabajador.nacionalidad'
     ];
 
     if( !in_array($tag, $excepciones) ){
         $db->where('id',$id); 
         $value = $db->getValue ($tabla, $campo);
     } else {
+        show_array($tag,0);
         switch ($tag) {
             case 'trabajador.ciudad':
                 $db->where('id',$id); 
@@ -56,7 +59,22 @@ function getTag($tag, $id){
             case 'trabajador.nombreCompleto':
                 $value = getNombreTrabajador($id, true);
             break;
+
+            case 'trabajador.nacionalidad':
+                $db->where('id',$id); 
+                $pais_id = $db->getValue ('m_trabajador', 'idNacionalidad');
+                $nacionalidad = $db->getValue ('m_pais', 'gentilicio');
+                $value = $nacionalidad;
+            break;
+
+            case 'trabajador.pais':
+                $db->where('id',$id); 
+                $pais_id = $db->getValue ('m_trabajador', 'idNacionalidad');
+                $pais = getNombre($pais_id,'m_pais', false);
+                $value = $pais;
+            break;
             
+
 
             default:
                 $value = '';
