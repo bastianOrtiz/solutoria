@@ -31,14 +31,16 @@ function getTag($tag, $id){
         'trabajador.horario',
         'trabajador.nombreCompleto',
         'trabajador.pais',
-        'trabajador.nacionalidad'
+        'trabajador.nacionalidad',
+        'trabajador.afp',
+        'trabajador.salud'
     ];
 
     if( !in_array($tag, $excepciones) ){
         $db->where('id',$id); 
         $value = $db->getValue ($tabla, $campo);
     } else {
-        show_array($tag,0);
+
         switch ($tag) {
             case 'trabajador.ciudad':
                 $db->where('id',$id); 
@@ -72,6 +74,28 @@ function getTag($tag, $id){
                 $pais_id = $db->getValue ('m_trabajador', 'idNacionalidad');
                 $pais = getNombre($pais_id,'m_pais', false);
                 $value = $pais;
+            break;
+
+            case 'trabajador.afp':
+                $db->where('trabajador_id',$id); 
+                $afp_id = $db->getValue ('t_prevision', 'afp_id');
+                $afp = getNombre($afp_id,'m_afp', false);
+                $value = $afp;
+            break;
+
+
+            case 'trabajador.salud':
+                $db->where('trabajador_id',$id); 
+                $es_fonasa = $db->getValue ('t_prevision', 'fonasa');
+                if( $es_fonasa == 1){
+                    $value = 'Fonasa';
+                } else {
+                    $db->where('trabajador_id',$id); 
+                    $isapre_id = $db->getValue ('t_prevision', 'isapre_id');
+                    $isapre = getNombre($isapre_id,'m_isapre', false);
+                    $value = $isapre;
+                }
+                
             break;
             
 

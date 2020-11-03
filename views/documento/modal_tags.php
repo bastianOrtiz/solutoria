@@ -166,6 +166,22 @@
                           <i class="fa fa-asterisk"></i>
                       </td>
                   </tr>
+                  <tr>
+                      <td>
+                          <code>{{ trabajador.afp }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                      </td>
+                      <td>
+                          Nombre de la AFP a la que esta afiliado el trabajador
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <code>{{ trabajador.salud }}</code><a href="#" data-dismiss="modal" data-toggle="tooltip" title="Insertar etiqueta en el texto" class="btnAddTag btn btn-xs" style="font-size: 24px"><i class="fa fa-external-link-square" style="transform: rotate(180deg);"></i></a>
+                      </td>
+                      <td>
+                          Nombre de la institución de salud a la que esta afiliado el trabajador
+                      </td>
+                  </tr>
               </tbody>
             </table>
             <p>&nbsp;</p>

@@ -54,6 +54,8 @@ if( $_SESSION && isAdmin() ){
             '{{ trabajador.horario }}',
             '{{ trabajador.sueldoBase }}',
             '{{ trabajador.gratificacion }}',
+            '{{ trabajador.afp }}',
+            '{{ trabajador.salud }}',
             '{{ fecha1 }}',
             '{{ fecha2 }}'
         );
@@ -78,6 +80,8 @@ if( $_SESSION && isAdmin() ){
             getTag('{{ trabajador.horario }}', $trabajador_id),
             getTag('{{ trabajador.sueldoBase }}', $trabajador_id),
             getTag('{{ trabajador.gratificacion }}', $trabajador_id),
+            getTag('{{ trabajador.afp }}', $trabajador_id),
+            getTag('{{ trabajador.salud }}', $trabajador_id),
             date('dd-mm-yyyy'),
             date('d') . ' de ' . getNombreMes(date('d')) . ' de ' . date('Y')
         );
