@@ -5,121 +5,17 @@ include ROOT . '/libs/functions.php';
 include ROOT . '/models/common.php';
 
 if( $_SESSION && isAdmin() ){
-        
-    $mes = getMesMostrarCorte();
-    $year = getAnoMostrarCorte();
     
-    $sql = "
-    SELECT CONCAT( T.apellidoPaterno, ' ', T.nombres ) as nombre, T.fechaContratoInicio, T.fechaContratoFin
-    FROM m_trabajador T 
-    WHERE month(T.fechaContratoInicio) = $mes
-    AND year(T.fechaContratoInicio) = $year
-    AND T.fechaContratoFin != '0000-00-00'
-    AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
-    ORDER BY nombre ASC
-    ";
-    $inicio_plazo_fijo_mes = $db->rawQuery( $sql );        
-       
+    $informe_pago_imposiciones = $_SESSION[PREFIX . 'informe_pago_imposiciones'];
     
-    $sql = "
-    SELECT CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, A.trabajador_id, A.fecha_inicio, A.fecha_fin 
-    FROM t_ausencia A, m_trabajador T
-    WHERE ausencia_id IN ( SELECT id FROM m_ausencia M WHERE M.licencia = 1 )
-    AND ( month(fecha_inicio) = $mes OR month(fecha_fin) = $mes )
-    AND ( year(fecha_inicio) = $year OR year(fecha_fin) = $year )
-    AND T.id = A.trabajador_id
-    AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
-    ORDER BY nombre ASC
-    ";
-    $licencias = $db->rawQuery( $sql ); 
-    
-    
-    $db->where("id",$_SESSION[PREFIX.'login_eid']);
-    $id_ausencia_vacaciones = $db->getValue('m_empresa','ausenciaVacaciones');
-    $sql = "
-    SELECT CONCAT( T.apellidoPaterno,' ', T.apellidoMaterno,' ', T.nombres ) AS nombre, A.trabajador_id, A.fecha_inicio, A.fecha_fin 
-    FROM t_ausencia A, m_trabajador T
-    WHERE A.ausencia_id IN ( SELECT id FROM m_ausencia M WHERE M.descuenta = 1 )
-    AND A.ausencia_id NOT IN ( SELECT id FROM m_ausencia M WHERE M.licencia = 1 )
-    AND ( month(fecha_inicio) = $mes OR month(fecha_fin) = $mes )
-    AND ( year(fecha_inicio) = $year OR year(fecha_fin) = $year )
-    AND T.id = A.trabajador_id
-    AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
-    ";
-    $ausencias_no_justificadas = $db->rawQuery( $sql );
-    
-    
-    $sql = "
-    SELECT CONCAT( T.apellidoPaterno, ' ', T.nombres ) as nombre, T.fechaContratoInicio, T.fechaContratoFin
-    FROM m_trabajador T 
-    WHERE month(T.fechaContratoInicio) = $mes
-    AND year(T.fechaContratoInicio) = $year
-    AND T.fechaContratoFin = '0000-00-00'
-    AND T.empresa_id = ".$_SESSION[PREFIX.'login_eid']."
-    ORDER BY nombre ASC
-    ";
-    $indefinidos_mes = $db->rawQuery( $sql );
-         
-    
-    $total_dias_mes = cal_days_in_month(CAL_GREGORIAN, $mes, $year);
-    $sql = "
-    SELECT CONCAT( T.apellidoPaterno, ' ', T.nombres ) as nombre, T.fechaContratoInicio, T.fechaContratoFin
-    FROM m_trabajador T
-    WHERE T.fechaContratoFin != '0000-00-00'
-    AND T.fechaContratoInicio < '$year-".leadZero($mes)."-01'
-    AND T.fechaContratoFin >= '$year-".leadZero($mes)."-01'
-    AND T.empresa_ID = " . $_SESSION[PREFIX.'login_eid'] ."
-    AND T.tipocontrato_id != 4
-    ORDER BY nombre ASC
-    ";
-    $plazo_fijo_durante_mes = $db->rawQuery( $sql );
-    
-        
-    
-    $array_plazo_a_indefinido = array();   
-    $arr_paso_a_indefinido = array();
-    $sql1 = "
-    SELECT C.trabajador_id
-    FROM t_contrato C, m_trabajador T
-    where C.trabajador_id IN ( SELECT id FROM m_trabajador 
-    WHERE empresa_id = ". $_SESSION[PREFIX.'login_eid'] ." )
-    AND T.id = C.trabajador_id
-    group by trabajador_id HAVING SUM(T.activo)>1  
-    ";
-    $plazo_a_indefinido = $db->rawQuery( $sql1 );
-    
-    foreach( $plazo_a_indefinido as $p ){
-        $sub_sql = "
-        SELECT MAX(C.fechaInicio) as fechaContrato, concat(T.apellidoPaterno,' ', T.apellidoMaterno,' ' ,T.nombres) as nombre
-        FROM t_contrato C, m_trabajador T
-        WHERE C.trabajador_id = " . $p['trabajador_id']."
-        AND C.activo = 1
-        AND C.trabajador_id = T.id    
-        ORDER BY nombre ASC 
-        ";
-        $subres = $db->rawQuery( $sub_sql );
-        $array_plazo_a_indefinido[] = $subres[0];        
-    }        
-    
-    
-    foreach( $array_plazo_a_indefinido as $r ){        
-        $time = strtotime( $r['fechaContrato'] );    
-        if( ( date('n',$time) == $mes ) && ( date('Y',$time) == $year ) ){
-            $arr_paso_a_indefinido[] = $r;
-        }
-    } 
-    
-    
-    $sql = "
-    SELECT concat(T.apellidoPaterno,' ', T.apellidoMaterno,' ' ,T.nombres) as nombre, T.fechaContratoFin
-    FROM m_trabajador T
-    WHERE empresa_id = ". $_SESSION[PREFIX.'login_eid'] ." 
-    AND tipocontrato_id IN (3,4)
-    AND month(fechaContratoFin) = $mes
-    AND year(fechaContratoFin) = $year
-    ORDER BY nombre ASC
-    ";        
-    $despedidos = $db->rawQuery( $sql );       
+    $inicio_plazo_fijo_mes = $informe_pago_imposiciones['inicio_plazo_fijo_mes'];
+    $licencias = $informe_pago_imposiciones['licencias'];
+    $ausencias_no_justificadas = $informe_pago_imposiciones['ausencias_no_justificadas'];
+    $indefinidos_mes = $informe_pago_imposiciones['indefinidos_mes'];
+    $plazo_fijo_durante_mes = $informe_pago_imposiciones['plazo_fijo_durante_mes'];
+    $plazo_a_indefinido = $informe_pago_imposiciones['plazo_a_indefinido'];
+    $arr_paso_a_indefinido = $informe_pago_imposiciones['arr_paso_a_indefinido'];
+    $despedidos = $informe_pago_imposiciones['despedidos'];
     
     
     

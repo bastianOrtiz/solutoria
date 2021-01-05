@@ -1379,6 +1379,8 @@ if( $parametros[0] == 'reporte_atrasos' ){
 
 if( $parametros[0] == 'imposiciones' ){
     
+
+    $informe_pago_imposiciones = [];
     $mes = getMesMostrarCorte();
     $year = getAnoMostrarCorte();
     
@@ -1392,6 +1394,8 @@ if( $parametros[0] == 'imposiciones' ){
     ORDER BY nombre ASC
     ";
     $inicio_plazo_fijo_mes = $db->rawQuery( $sql );        
+
+    $informe_pago_imposiciones['inicio_plazo_fijo_mes'] = $inicio_plazo_fijo_mes;
        
     
     /* OLD
@@ -1469,10 +1473,10 @@ if( $parametros[0] == 'imposiciones' ){
                 'fecha_fin' => $licencia['fecha_fin']
             ];
         }
-
-
         
     }
+
+    $informe_pago_imposiciones['licencias'] = $licencias;
 
     
     $db->where("id",$_SESSION[PREFIX.'login_eid']);
@@ -1489,6 +1493,7 @@ if( $parametros[0] == 'imposiciones' ){
     ORDER BY nombre ASC
     ";
     $ausencias_no_justificadas = $db->rawQuery( $sql );
+    $informe_pago_imposiciones['ausencias_no_justificadas'] = $ausencias_no_justificadas;
     
     
     $sql = "
@@ -1501,6 +1506,8 @@ if( $parametros[0] == 'imposiciones' ){
     ORDER BY nombre ASC
     ";
     $indefinidos_mes = $db->rawQuery( $sql ); 
+    $informe_pago_imposiciones['indefinidos_mes'] = $indefinidos_mes;
+
     
     $total_dias_mes = cal_days_in_month(CAL_GREGORIAN, $mes, $year);
     $sql = "
@@ -1515,7 +1522,7 @@ if( $parametros[0] == 'imposiciones' ){
     ORDER BY nombre ASC
     ";    
     $plazo_fijo_durante_mes = $db->rawQuery( $sql );
-    
+    $informe_pago_imposiciones['plazo_fijo_durante_mes'] = $plazo_fijo_durante_mes;
         
     
     $array_plazo_a_indefinido = array();   
@@ -1550,6 +1557,9 @@ if( $parametros[0] == 'imposiciones' ){
             $arr_paso_a_indefinido[] = $r;
         }
     } 
+
+    $informe_pago_imposiciones['arr_paso_a_indefinido'] = $arr_paso_a_indefinido;
+
     
     $sql = "
     SELECT concat(T.apellidoPaterno,' ', T.apellidoMaterno,' ' ,T.nombres) as nombre, T.fechaContratoFin
@@ -1561,7 +1571,10 @@ if( $parametros[0] == 'imposiciones' ){
     ORDER BY nombre ASC
     ";        
     $despedidos = $db->rawQuery( $sql );
-    
+    $informe_pago_imposiciones['despedidos'] = $despedidos;
+
+
+    $_SESSION[PREFIX . 'informe_pago_imposiciones'] = $informe_pago_imposiciones;
 }
 
 
