@@ -494,6 +494,10 @@ if( isset($parametros[1]) ){
     $total_atrasos = obtenerTotalAtrasos($atrasos_entrada['total_atraso'], $atrasos_salida['total_atraso'],$ausencias); 
 
     $dias_trabajados = $dias_del_mes - $ausencias_efectivas;
+    
+    if( ( getLimiteMes(getMesMostrarCorte()) < 30) && ( $ausencias_efectivas >= 28 ) ){
+        $dias_trabajados = 0;    
+    }
 
     if( $dias_trabajados < 0 ){
         $dias_trabajados = 0;
@@ -600,9 +604,13 @@ if( isset($parametros[1]) ){
         if($dias_licencia > 0){
             $dias_trabajados_licencia = ( $dias_del_mes - $arr_ausencias['dias_licencia_efectivas'] );
             $proporcional_pactado_licencia = ( ( $prevision_trabajador['montoPlan'] / 30 ) * ( $dias_trabajados_licencia ) );
-
         } else {
             $proporcional_pactado_licencia = $prevision_trabajador['montoPlan'];
+        }
+
+        // Licencia el MES COMPLETO en Febrero
+        if( ( getLimiteMes(getMesMostrarCorte()) < 30) && ( $arr_ausencias['dias_licencia_efectivas'] >= 28 ) ){
+            $proporcional_pactado_licencia = 0;
         }
 
         $total_salud_legal = ($total_imponible * 0.07);
