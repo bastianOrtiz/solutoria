@@ -422,7 +422,6 @@ function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_l
     } else {
         $res = (( $remuneracion_tributable / (30 - $ausencias) ) * (30 - $ausentismos ) );
         $tope_afc_general = obtenerTope(3);
-        $tope_sueldo = obtenerTope(1);
 
         if( $remuneracion_tributable > $tope_afc_general ){
             $topeAfcCalcular = ($tope_afc_general / 30 * (30 - $ausencias) );
@@ -430,8 +429,6 @@ function topeAfc( $remuneracion_tributable, $total_imponible, $ausencias,$dias_l
             $topeAfcCalcular = $total_imponible;    
         }
 
-        
-        
 
         /*
         if( $res > $tope_afc ){
