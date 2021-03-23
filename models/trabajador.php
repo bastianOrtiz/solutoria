@@ -68,14 +68,19 @@ function comprobarAusencia($fecha, $trabajador_id=''){
     $db->where('fecha_fin', $fecha, '>=');    
     $db->where('trabajador_id',$trabajador_id);
     $res = $db->getOne('t_ausencia');
+    $count_ausencias = $db->count;
+
+    $ausencia = $db->where('id', $res['ausencia_id'])->getOne('m_ausencia');
     
-    if( $db->count > 0 ){
+    if( $count_ausencias > 0 ){
         $motivo = fnGetNombre($res['ausencia_id'],'m_ausencia',false);
         $arr_return['es_ausencia'] = true;
         $arr_return['motivo'] = $motivo;
+        $arr_return['descuenta'] = $ausencia['descuenta'];
     } else {
         $arr_return['es_ausencia'] = false;
         $arr_return['motivo'] = '';
+        $arr_return['descuenta'] = 0;
     }           
     
     return $arr_return;

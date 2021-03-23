@@ -204,12 +204,12 @@ table th,
                                                     <?php } elseif( isDiaFeriado($fecha_iterar) ){ ?> 
                                                         <td class="no_laboral"><?php echo  $fecha_iterar; ?></td>
                                                         <td colspan="4" class="no_laboral">
-                                                                    <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
-                                                                    <span id="span_<?php echo $fecha_iterar ?>"></span>                                                            
+                                                            <input type="checkbox" class="chk_autorize" name="justificativo[<?php echo $fecha_iterar_int.'i' ?>][justificado]" />
+                                                            <span id="span_<?php echo $fecha_iterar ?>"></span>                                                            
                                                         </td>
                                                     <?php } elseif( $es_ausencia['es_ausencia'] ){ ?>
                                                         <td class="ausente es_ausencia"><?php echo $fecha_iterar; ?></td>
-                                                        <td class="ausente es_ausencia" colspan="4" style="text-align: left;"><strong><?php echo $es_ausencia['motivo'] ?></strong></td>    
+                                                        <td class="ausente es_ausencia descuenta_<?php echo $es_ausencia['descuenta'] ?>" colspan="4" style="text-align: left;"><strong><?php echo $es_ausencia['motivo'] ?></strong></td>    
                                                     <?php } else {  ?>
                                                         
                                                     <?php 
@@ -427,6 +427,7 @@ table th,
                     
                         <div class="row">                              
                               Días ausente: <span id="total_dias_ausente"></span><br />
+                              Ausencias Justificadas o Vacaciones: <span id="total_dias_ausente_justificado"></span><br />
                               Total de Impuntualidades: <span id="tota_impuntualidades"></span> <span style="padding-right: 100px;"></span>                    
                               Minutos Atraso: <?php echo $total_atrasos ?><span style="padding-right: 100px;"></span>
                               Minutos a Descontar: <?php echo $total_atrasos_descontar; ?><br /><span style="padding-right: 100px;"></span>
@@ -491,11 +492,10 @@ $(document).ready(function(){
     } 
     ?>
     
-    
-    
     total_imp = ($("#table_reloj_control .badge.bg-red").length + $('.no_marco_no_justif').length );
     $("#tota_impuntualidades").text( total_imp );    
-    $("#total_dias_ausente").text( ( $(".es_ausencia").length / 2 ) )
+    $("#total_dias_ausente").text( $(".es_ausencia.descuenta_1").length )
+    $("#total_dias_ausente_justificado").text( $(".es_ausencia.descuenta_0").length )
     
 })
 
