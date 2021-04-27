@@ -18,8 +18,85 @@ $trabajadores_todos_cert_sueldos = $db->get('m_trabajador');
 
 
 if( $_POST ){
+
         
     logit( $_SESSION[PREFIX.'login_name'],'generar informe',$_POST['action'],0,$db->getLastQuery() );
+
+
+    if( $action == 'dias_trabajados' ){
+
+        $time_desde = strtotime($_POST['fecha_desde']);
+        $time_hasta = strtotime($_POST['fecha_hasta']);
+
+        $limites = [ date('Yn', $time_desde), date('Yn', $time_hasta)  ];
+
+        $sql = '
+        SELECT 
+            trabajador_id,
+            mes,
+            ano,
+            departamento_id,
+            diasTrabajados,
+            diaLicencia,
+            diaAusencia
+        FROM liquidacion where concat(ano,mes) >= ' . $limites[0] . '
+        AND concat(ano,mes) <= ' . $limites[1] . '
+        AND empresa_id = ' . $_SESSION[PREFIX . 'login_eid'] . '
+        ORDER BY mes ASC, ano DESC
+        ';
+
+        $res = $db->rawQuery($sql);
+
+
+        $array_dias_trabajados = [];
+
+        foreach ($res as $value) {
+
+            $sql_vacaciones = "
+            SELECT * from t_ausencia 
+            WHERE trabajador_id = " . $value['trabajador_id'] . "
+            AND fecha_inicio BETWEEN '" . $_POST['fecha_desde'] . "' AND '" . $_POST['fecha_hasta'] . "'
+            AND ausencia_id IN (4,6) ORDER BY `totalDias`  DESC
+            ";
+            $res_vacaciones = $db->rawQuery($sql_vacaciones);
+
+            $total_dias = 0;
+
+            foreach ($res_vacaciones as $key => $vaca) {
+                //recorrer dia x dia el rango del registro de la BD dentro del loop
+                $fechaInicio = strtotime($vaca['fecha_inicio']);
+                $fechaFin = strtotime($vaca['fecha_fin']);
+                for($i=$fechaInicio; $i<=$fechaFin; $i+=86400){
+                    //Si el mes dentro del loop pertenece al mes consultado (loop), entonces suma
+                    
+                    //echo $i . " - " . date('n',$i) . "==" . $value['mes']."<br>";
+                    //echo  date('N',$i) . " " . date('d-m-Y', $i) . "<br>";
+
+                    if( ( date('n',$i) == $value['mes'] ) && ( date('Y',$i) == $value['ano'] ) ){
+                        if( date('N',$i) < 6 ){
+                            $total_dias++;
+                        }
+                    }
+                }
+            }
+
+
+            $array_dias_trabajados[] = [
+                'trabajador_id' => $value['trabajador_id'],
+                'nombre' => getNombreTrabajador($value['trabajador_id']),
+                'rut' => $db->where('id',$value['trabajador_id'])->getValue('m_trabajador','rut'),
+                'departamento' => getNombre($value['departamento_id'],'m_departamento',false),
+                'mesano' => $value['mes'] . '/' . $value['ano'],
+                'diasTrabajados' => $value['diasTrabajados'],
+                'diaLicencia' => $value['diaLicencia'],
+                'diaAusencia' => $value['diaAusencia'],
+                'diaVacaciones' => $total_dias,
+            ];
+
+            $_SESSION[PREFIX . 'html_dias_trabajados'] = $array_dias_trabajados;
+        }
+
+    }
     
     if( $action == 'certificado_sueldos' ){
 
@@ -1320,7 +1397,8 @@ if( $_POST ){
         'ausencias',
         'certificado_sueldos',
         'reporte_atrasos',
-        'haberes_descuentos'
+        'haberes_descuentos',
+        'dias_trabajados'
 
     ); // Informes que NO se imprimen en PDF
     
@@ -1334,6 +1412,115 @@ if( $_POST ){
        
 }
 
+
+
+if( $parametros[0] == 'dias_trabajados' ){
+    if( $parametros[1] == 'excel' ){
+
+        $html = '
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Rut</th>
+                        <th>Departamento</th>
+                        <th>Mes/ano</th>
+                        <th>Dias trabajados</th>
+                        <th>Dias Licencia</th>
+                        <th>Dias Vacaciones</th>
+                    </tr>
+                </thead>
+                <tbody>';
+        
+        foreach ($_SESSION[PREFIX . 'html_dias_trabajados'] as $key => $item) {
+            $html .='
+                    <tr>    
+                        <td>' . $item['trabajador_id'] . '</td>
+                        <td>' . $item['nombre'] . '</td>
+                        <td>' . $item['rut'] . '</td>
+                        <td>' . $item['departamento'] . '</td>
+                        <td>' . $item['mesano'] . '</td>
+                        <td>' . $item['diasTrabajados'] . '</td>
+                        <td>' . $item['diaLicencia'] . '</td>
+                        <td>' . $item['diaVacaciones'] . '</td>
+                    </tr>';
+        }
+
+
+        $html .='
+                </tbody>
+            </table>
+        ';
+
+        header("Content-Type: application/xls");    
+        header("Content-Disposition: attachment; filename=reporte_haberes-descuentos_".date('Y-m-d').".xls");  
+        header("Pragma: no-cache"); 
+        header("Expires: 0");
+        echo $html;
+        exit();
+
+    }
+
+    if( $parametros[1] == 'pdf' ){
+        
+        if( file_exists( ROOT . '/private/uploads/images/' . fotoEmpresa( $_SESSION[PREFIX.'login_eid'] ) ) ){
+            $foto_empresa =  ROOT . '/private/uploads/images/' . fotoEmpresa( $_SESSION[PREFIX.'login_eid'] );
+        } else {
+            $foto_empresa = ROOT . '/public/img/no_img.jpg';
+        }
+
+        $html = '<style type="text/css">
+                    td, th{ border: 1px solid #000; padding: 2px 5px; font-size: 12px}
+                </style>
+                <page backtop="1mm" backbottom="0mm" backleft="3mm" backright="3mm" style="font-size: 10pt">
+                <img class="round" src="'.$foto_empresa.'">
+                <h2 style="text-align: center;"> Informe de dias trabajados </h2>
+
+                <table style="border-collapse:collapse" align="center">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Rut</th>
+                            <th>Departamento</th>
+                            <th>Mes/ano</th>
+                            <th>Dias <br>trabajados</th>
+                            <th>Dias <br> Licencia</th>
+                            <th>Dias <br> Vac.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        ';
+        
+        foreach ($_SESSION[PREFIX . 'html_dias_trabajados'] as $key => $item) {
+            $html .='
+                    <tr>    
+                        <td style="font-size: 8px">' . $item['trabajador_id'] . '</td>
+                        <td>' . $item['nombre'] . '</td>
+                        <td>' . $item['rut'] . '</td>
+                        <td>' . $item['departamento'] . '</td>
+                        <td>' . $item['mesano'] . '</td>
+                        <td>' . $item['diasTrabajados'] . '</td>
+                        <td>' . $item['diaLicencia'] . '</td>
+                        <td>' . $item['diaVacaciones'] . '</td>
+                    </tr>';
+        }
+
+        $html .= '
+                </tbody>
+            </table>
+        </page>
+        ';        
+        
+        require_once( ROOT . '/libs/html2pdf/html2pdf.class.php');
+        $html2pdf = new HTML2PDF($orientation,'LETTER','es');
+        $html2pdf->WriteHTML($html);        
+        $html2pdf->Output( 'informe.pdf');
+        exit();
+    }
+
+}
 
 if( $parametros[0] == 'listar_trabajadores' ){
     $db->where('id',$_SESSION[PREFIX.'login_cid']);

@@ -1707,6 +1707,11 @@ function mainMenu(){
                 'entidad' => 'informe',
                 'accion' => 'trabajadores_jornada',
                 'label' => 'Jornada Trabajadores'
+            ),
+            array(
+                'entidad' => 'informe',
+                'accion' => 'dias_trabajados',
+                'label' => 'Dias trabajados'
             )
         )
     );
