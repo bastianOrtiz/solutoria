@@ -506,6 +506,13 @@ if( $_POST ){
 if( $parametros ){
 
     if( $parametros[0] == 'lista_firmas' ){
+        $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
+        $db->where ("deleted_at", NULL, 'IS');
+        $db->where('tipocontrato_id',array(3,4),'NOT IN');
+        $db->orderBy('apellidoPaterno','ASC');
+        $registros = $db->get("m_trabajador");
+        $trabajadors = $registros;
+
         $cargos = $db->where('empresa_id',$_SESSION[PREFIX.'login_eid'])->orderBy('nombre', 'ASC')->get('m_cargo');
         $departamentos = $db->where('empresa_id',$_SESSION[PREFIX.'login_eid'])->orderBy('nombre', 'ASC')->get('m_departamento');
     }
@@ -516,24 +523,50 @@ if( $parametros ){
         Header("Content-type: image/png");
 
         $im = imagecreatefrompng(ROOT . '/public/img/firma_base.png');
-        $font_color = imagecolorallocate($im, 38, 76, 116);
+        $font_color = imagecolorallocate($im, 53, 79, 119);
         $font_regular = ROOT . '/public/font/Arial.ttf';
         $font_bold = ROOT . '/public/font/ArialBold.ttf';
 
-        $texto = 'Angelo Terrile A.';
+        $nombre = 'Angelo Terrile A.';
+        $cargo = "Web Developer";
+        $email = 'Email: aterrile@gmail.com';
+        $telefono = "+56 2 24456250";
+        $celular = '+569 3 3979873';
 
 
-        // Add the text
-        $size = 12;
-        $angle = 0;
-        $x = 0;
-        $y = 35;
-
-        $dimensions = imagettfbbox($size, $angle, $font_regular, $texto);
+        // Escribir nombre
+        $dimensions = imagettfbbox(11, 0, $font_regular, $nombre);
         $textWidth = abs($dimensions[4] - $dimensions[0]);
         $x = (imagesx($im) - $textWidth - 250);
+        imagettftext($im, 11, 0, $x, 30, $font_color, $font_bold, $nombre);
 
-        imagettftext($im, $size, $angle, $x, $y, $font_color, $font_bold, $texto);
+        // Escribir Cargo
+        $dimensions = imagettfbbox(10, 0, $font_regular, $cargo);
+        $textWidth = abs($dimensions[4] - $dimensions[0]);
+        $x = (imagesx($im) - $textWidth - 240);
+        imagettftext($im, 10, 0, $x, 52, $font_color, $font_regular, $cargo);
+
+        // Escribir Email
+        $dimensions = imagettfbbox(10, 0, $font_regular, $email);
+        $textWidth = abs($dimensions[4] - $dimensions[0]);
+        $x = (imagesx($im) - $textWidth - 12);
+        imagettftext($im, 10, 0, $x, 144, $font_color, $font_regular, $email);
+
+       
+         // Escribir celular
+        $dimensions = imagettfbbox(9, 0, $font_regular, $celular);
+        $textWidth = abs($dimensions[4] - $dimensions[0]);
+        $x = (imagesx($im) - $textWidth - 11);
+        imagettftext($im, 9, 0, $x, 130, $font_color, $font_bold, $celular);
+
+       
+         // Escribir telefono
+        $dimensions = imagettfbbox(9, 0, $font_regular, $telefono);
+        $textWidth = abs($dimensions[4] - $dimensions[0]);
+        $x = (imagesx($im) - $textWidth - 11);
+        imagettftext($im, 9, 0, $x, 115, $font_color, $font_bold, $telefono);
+
+       
 
         // Using imagepng() results in clearer text compared with imagejpeg()
         imagepng($im);

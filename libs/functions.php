@@ -1475,6 +1475,11 @@ function mainMenu(){
                 'entidad' => 'tipotrabajador',
                 'accion' => 'listar',
                 'label' => 'Tipo Trabajador'
+            ),
+            array(
+                'entidad' => 'trabajador',
+                'accion' => 'lista_firmas',
+                'label' => 'Listado para Firmas'
             )
         )
     );
