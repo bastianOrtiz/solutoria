@@ -236,6 +236,7 @@ if( $_POST ){
             'idNacionalidad' => $nacionalidadTrabajador,
             'email' => $emailTrabajador,
             'telefono' => $telefonoTrabajador,
+            'celular' => $celularTrabajador,
             'emergencia' => $emergenciaTrabajador,
             'direccion' => $direccionTrabajador,
             'accionista' => $accionistaTrabajador, //Bool
@@ -433,6 +434,7 @@ if( $_POST ){
             'idNacionalidad' => $nacionalidadTrabajador,
             'email' => $emailTrabajador,
             'telefono' => $telefonoTrabajador,
+            'celular' => $celularTrabajador,
             'emergencia' => $emergenciaTrabajador,
             'direccion' => $direccionTrabajador,
             'accionista' => $accionistaTrabajador, //Bool
@@ -502,6 +504,43 @@ if( $_POST ){
 }
 
 if( $parametros ){
+
+    if( $parametros[0] == 'lista_firmas' ){
+        $cargos = $db->where('empresa_id',$_SESSION[PREFIX.'login_eid'])->orderBy('nombre', 'ASC')->get('m_cargo');
+        $departamentos = $db->where('empresa_id',$_SESSION[PREFIX.'login_eid'])->orderBy('nombre', 'ASC')->get('m_departamento');
+    }
+
+
+    if( $parametros[0] == 'generar_firmas' ){
+
+        Header("Content-type: image/png");
+
+        $im = imagecreatefrompng(ROOT . '/public/img/firma_base.png');
+        $font_color = imagecolorallocate($im, 38, 76, 116);
+        $font_regular = ROOT . '/public/font/Arial.ttf';
+        $font_bold = ROOT . '/public/font/ArialBold.ttf';
+
+        $texto = 'Angelo Terrile A.';
+
+
+        // Add the text
+        $size = 12;
+        $angle = 0;
+        $x = 0;
+        $y = 35;
+
+        $dimensions = imagettfbbox($size, $angle, $font_regular, $texto);
+        $textWidth = abs($dimensions[4] - $dimensions[0]);
+        $x = (imagesx($im) - $textWidth - 250);
+
+        imagettftext($im, $size, $angle, $x, $y, $font_color, $font_bold, $texto);
+
+        // Using imagepng() results in clearer text compared with imagejpeg()
+        imagepng($im);
+        imagedestroy($im);
+
+    }
+
 
     /** Consultar datos de trabajador **/
     if( isset($parametros[1]) ){

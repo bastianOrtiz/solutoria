@@ -1,12 +1,6 @@
 <?php
 @session_start();
 
-error_reporting(0);
-
-
-
-
-
 /** 
  * Convierte un tag en su valor
  * Recive el parametro en el formato tabla.Campo

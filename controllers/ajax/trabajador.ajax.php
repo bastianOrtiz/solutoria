@@ -9,6 +9,18 @@ include ROOT . '/models/liquidacion.php';
 $json = array();
 extract($_POST);
 
+
+if( $_POST['action'] == 'ajax_update_field' ){
+    $data_update = [
+        $_POST['field'] => $_POST['value']
+    ];
+
+    $db->where('id',$_POST['regid'])->update('m_trabajador', $data_update);
+
+    $json['status'] = 'success';
+    $json['mensaje'] = 'Oka!';
+}
+
 if( $_POST['action'] == 'detalle' ){
     
     $db->where ("id", $regid);
@@ -34,7 +46,7 @@ if( $_POST['action'] == 'detalle' ){
             );
     } else {
         $json['status'] = 'error';
-        $json['mensaje'] = $db->getLastError();;   
+        $json['mensaje'] = $db->getLastError();
     }
 }
 

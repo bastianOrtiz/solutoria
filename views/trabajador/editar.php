@@ -298,6 +298,10 @@
                                                         <input type="text" class="form-control required" value="<?php echo $trabajador['telefono'] ?>" name="telefonoTrabajador" id="telefonoTrabajador" />                                
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="celularTrabajador">Celular</label>
+                                                        <input type="text" class="form-control required" value="<?php echo $trabajador['celular'] ?>" name="celularTrabajador" id="celularTrabajador" />                                
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label class="top">Extranjero</label>
                                                         <div class="radio">                            
                                                             <label>
