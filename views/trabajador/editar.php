@@ -295,11 +295,11 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="telefonoTrabajador">Teléfono</label>
-                                                        <input type="text" class="form-control required" value="<?php echo $trabajador['telefono'] ?>" name="telefonoTrabajador" id="telefonoTrabajador" />                                
+                                                        <input type="text" class="form-control" value="<?php echo $trabajador['telefono'] ?>" name="telefonoTrabajador" id="telefonoTrabajador" />                                
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="celularTrabajador">Celular</label>
-                                                        <input type="text" class="form-control required" value="<?php echo $trabajador['celular'] ?>" name="celularTrabajador" id="celularTrabajador" />                                
+                                                        <input type="text" class="form-control" value="<?php echo $trabajador['celular'] ?>" name="celularTrabajador" id="celularTrabajador" />                                
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="top">Extranjero</label>
