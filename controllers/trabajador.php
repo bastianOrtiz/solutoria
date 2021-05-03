@@ -519,36 +519,31 @@ if( $parametros ){
 
 
     if( $parametros[0] == 'generar_firmas' ){
+        
+        Header("Content-type: image/png");
 
-        $trabajadores = $db->where('departamento_id',2)
-        ->where('tipocontrato_id',array(3,4),'NOT IN')
-        ->where('empresa_id',[2,11],'IN')
-        ->get('m_trabajador');
-
-        //Header("Content-type: image/png");
-
-        foreach ($trabajadores as $key => $trabajador) : 
 
             $im = imagecreatefrompng(ROOT . '/public/img/firma_base.png');
             $font_color = imagecolorallocate($im, 65, 100, 160);
             $font_regular = ROOT . '/public/font/Arial.ttf';
             $font_bold = ROOT . '/public/font/ArialBold.ttf';
 
-            $first_name = explode(" ", $trabajador['nombres']);
+            $first_name = explode(" ", utf8_decode($_POST['nombres']));
             $first_name = strtolower($first_name[0]);
-            $apellidoPaterno = strtolower($trabajador['apellidoPaterno']);
-            $apellidoMaterno = strtolower($trabajador['apellidoMaterno']);
+            $apellidoPaterno = strtolower( utf8_decode($_POST['apellidoPaterno']) );
+            $apellidoMaterno = strtolower( utf8_decode($_POST['apellidoMaterno']) );
 
-            $filename = $trabajador['apellidoPaterno'] . '-' . $trabajador['apellidoPaterno'] . '-' . $trabajador['nombres'];
-            $filename = _sanitize_redirect(strtolower($filename));
+
+            //$filename = $trabajador['apellidoPaterno'] . '-' . $trabajador['apellidoPaterno'] . '-' . $trabajador['nombres'];
+            //$filename = 'trabajador_' .;
 
             $nombre = ucwords( $first_name . ' ' . $apellidoPaterno . ' ' . $apellidoMaterno );
-            $cargo = ucwords(strtolower(getNombre($trabajador['cargo_id'],'m_cargo')));
-            $email = 'Email: ' . strtolower($trabajador['email']);
-            $telefono = $trabajador['telefono'];
-            $celular = $trabajador['celular'];
+            $cargo = ucwords(strtolower( utf8_decode($_POST['cargo_id']) ));
+            $email = 'Email: ' . strtolower($_POST['email']);
+            $telefono = $_POST['telefono'];
+            $celular = $_POST['celular'];
 
-            show_array('generando firma de "' . $nombre .'" ...................................[OK]',0);
+            //show_array('generando firma de "' . $nombre .'" ...................................[OK]',0);
 
             // Escribir nombre
             $dimensions = imagettfbbox(11, 0, $font_bold, $nombre);
@@ -584,13 +579,10 @@ if( $parametros ){
 
 
             // Using imagepng() results in clearer text compared with imagejpeg()
-            $save = ROOT . '/public/img/firmas/' . $filename . '.png';
-            imagepng($im,$save);
+            //$save = ROOT . '/public/img/firmas/' . $filename . '.png';
+            imagepng($im);
             imagedestroy($im);
 
-        endforeach;
-
-        echo '<a href="'.BASE_URL.'">Todo salio bien! ... volvamos al index</a>';
 
         exit();
 
@@ -1116,6 +1108,14 @@ if( $parametros ){
     }*/
 
 }
+
+
+function properText($text){
+    $text = mb_convert_encoding($text, "HTML-ENTITIES", "UTF-8");
+    $text = preg_replace('~^(&([a-zA-Z0-9]);)~',htmlentities('${1}'),$text);
+    return($text); 
+}
+
 
 include ROOT . '/views/comun/header.php';
 include ROOT . '/views/comun/menu_top.php';

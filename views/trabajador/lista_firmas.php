@@ -65,6 +65,7 @@
             <thead>
               <tr>
                 <th> ID </th>
+                <th></th>
                 <th>Ap. Paterno</th>                        
                 <th>Ap. Materno</th>                        
                 <th>Nombres</th>
@@ -78,17 +79,19 @@
             <tbody>
                 <?php foreach( $trabajadors as $reg ){ ?>
                     <tr data-id="<?php echo $reg['id']?>">
+                        <form  target="_blank" method="post" action="<?php echo BASE_URL . '/' . $entity ?>/generar_firmas/">
                         <td> <?php echo $reg['id']?> </td>
+                        <td><button type="submit" class="btn btn-success">Generar Firma</button></td>
                         <td> <input type="text" class="form-control text-uppercase" name="apellidoPaterno" value="<?php echo $reg['apellidoPaterno'] ?>"> <span style="position: absolute; left: -999999px"><?php echo $reg['apellidoPaterno'] ?></span> </td>
                         <td> <input type="text" class="form-control text-uppercase" name="apellidoMaterno" value="<?php echo $reg['apellidoMaterno'] ?>"> <span style="position: absolute; left: -999999px"><?php echo $reg['apellidoMaterno'] ?></span> </td>
                         <td> <input type="text" class="form-control text-uppercase" name="nombres" value="<?php echo $reg['nombres'] ?>"> <span style="position: absolute; left: -999999px"><?php echo $reg['nombres'] ?></span> </td>
                         <td>
                             <select id="cargo_id_<?php echo $reg['id']?>" class="form-control" name="cargo_id">
                                 <?php foreach ($cargos as $key => $cargo) { ?>
-                                <option value="<?php echo $cargo['id'] ?>"><?php echo $cargo['nombre'] ?></option>
+                                <option value="<?php echo $cargo['nombre'] ?>"><?php echo $cargo['nombre'] ?></option>
                                 <?php } ?>
                             </select>
-                            <script>$("#cargo_id_<?php echo $reg['id']?>").val('<?php echo $reg['cargo_id'] ?>')</script>
+                            <script>$("#cargo_id_<?php echo $reg['id']?>").val('<?php echo fnNombreCargo($reg['cargo_id']) ?>')</script>
                             <span style="position: absolute; left: -999999px"><?php echo fnNombreCargo($reg['cargo_id']) ?></span> 
                         </td>
                         <td> 
@@ -98,6 +101,7 @@
                         <td> <input type="text" class="form-control" name="telefono" value="<?php echo $reg['telefono'] ?>"> <span style="position: absolute; left: -999999px"><?php echo $reg['telefono'] ?></span> </td>
                         <td> <input type="text" class="form-control" name="celular" value="<?php echo $reg['celular'] ?>"> <span style="position: absolute; left: -999999px"><?php echo $reg['celular'] ?></span> </td>
                         <td> <input type="text" class="form-control" name="email" value="<?php echo $reg['email'] ?>" style="width: 300px"> <span style="position: absolute; left: -999999px"><?php echo $reg['email'] ?></span> </td>
+                        </form>
                     </tr>
                 <?php } ?>                        
             </tbody>
@@ -130,11 +134,7 @@
         </div><!-- /.box-body -->
       </div><!-- /.box -->
       
-      
-        <a href="<?php echo BASE_URL . '/' . $entity ?>/ingresar" class="btn btn-primary">
-            <i class="fa fa-plus-circle"></i> Nuevo <?php echo ucfirst($entity) ?>
-        </a>
-        
+           
         
         <!-- Large modal -->                                                
         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
