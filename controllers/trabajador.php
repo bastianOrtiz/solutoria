@@ -554,19 +554,19 @@ if( $parametros ){
         $dimensions = imagettfbbox(11, 0, $font_bold, $nombre);
         $textWidth = abs($dimensions[4] - $dimensions[0]);
         $x = (imagesx($im) - $textWidth - 240);
-        imagettftext($im, 11, 0, $x, 30, $font_color, $font_bold, $nombre);
+        imagettftext($im, 11, 0, $x, 25, $font_color, $font_bold, $nombre);
 
         // Escribir Cargo
         $dimensions = imagettfbbox(10, 0, $font_bold, $cargo);
         $textWidth = abs($dimensions[4] - $dimensions[0]);
         $x = (imagesx($im) - $textWidth - 240);
-        imagettftext($im, 10, 0, $x, 50, $font_color, $font_bold, $cargo);
+        imagettftext($im, 10, 0, $x, 43, $font_color, $font_bold, $cargo);
 
         // Escribir Email
         $dimensions = imagettfbbox(9, 0, $font_bold, $email);
         $textWidth = abs($dimensions[4] - $dimensions[0]);
         $x = (imagesx($im) - $textWidth - 17);
-        imagettftext($im, 9, 0, $x, 135, $font_color, $font_bold, $email);
+        imagettftext($im, 9, 0, $x, 130, $font_color, $font_bold, $email);
 
 
         if( $celular ):
@@ -574,7 +574,7 @@ if( $parametros ){
             $dimensions = imagettfbbox(9, 0, $font_bold, $celular);
             $textWidth = abs($dimensions[4] - $dimensions[0]);
             $x = (imagesx($im) - $textWidth - 16);
-            imagettftext($im, 9, 0, $x, 122, $font_color, $font_bold, $celular);
+            imagettftext($im, 9, 0, $x, 117, $font_color, $font_bold, $celular);
         endif;
        
         if( $telefono ):
@@ -582,7 +582,7 @@ if( $parametros ){
             $dimensions = imagettfbbox(9, 0, $font_bold, $telefono);
             $textWidth = abs($dimensions[4] - $dimensions[0]);
             $x = (imagesx($im) - $textWidth - 16);
-            imagettftext($im, 9, 0, $x, 107, $font_color, $font_bold, $telefono);
+            imagettftext($im, 9, 0, $x, 102, $font_color, $font_bold, $telefono);
         endif;
 
 
