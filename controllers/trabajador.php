@@ -506,15 +506,20 @@ if( $_POST ){
 if( $parametros ){
 
     if( $parametros[0] == 'lista_firmas' ){
-        $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
+
+        $m_empresa = ( $parametros[1] ) ? $parametros[1] : $_SESSION[PREFIX.'login_eid'];
+
+
+        $db->where ("empresa_id", $m_empresa);
         $db->where ("deleted_at", NULL, 'IS');
         $db->where('tipocontrato_id',array(3,4),'NOT IN');
         $db->orderBy('apellidoPaterno','ASC');
         $registros = $db->get("m_trabajador");
         $trabajadors = $registros;
 
-        $cargos = $db->where('empresa_id',$_SESSION[PREFIX.'login_eid'])->orderBy('nombre', 'ASC')->get('m_cargo');
-        $departamentos = $db->where('empresa_id',$_SESSION[PREFIX.'login_eid'])->orderBy('nombre', 'ASC')->get('m_departamento');
+        $cargos = $db->orderBy('nombre', 'ASC')->get('m_cargo');
+        $departamentos = $db->orderBy('nombre', 'ASC')->get('m_departamento');
+        $m_empresas = $db->get('m_empresa');
     }
 
 
@@ -523,65 +528,68 @@ if( $parametros ){
         Header("Content-type: image/png");
 
 
-            $im = imagecreatefrompng(ROOT . '/public/img/firma_base.png');
-            $font_color = imagecolorallocate($im, 65, 100, 160);
-            $font_regular = ROOT . '/public/font/Arial.ttf';
-            $font_bold = ROOT . '/public/font/ArialBold.ttf';
+        $im = imagecreatefrompng(ROOT . '/public/img/firma_base.png');
+        $font_color = imagecolorallocate($im, 65, 100, 160);
+        $font_regular = ROOT . '/public/font/Arial.ttf';
+        $font_bold = ROOT . '/public/font/ArialBold.ttf';
 
-            $first_name = explode(" ", utf8_decode($_POST['nombres']));
-            $first_name = strtolower($first_name[0]);
-            $apellidoPaterno = strtolower( utf8_decode($_POST['apellidoPaterno']) );
-            $apellidoMaterno = strtolower( utf8_decode($_POST['apellidoMaterno']) );
+        $first_name = explode(" ", utf8_decode($_POST['nombres']));
+        $first_name = strtolower($first_name[0]);
+        $apellidoPaterno = strtolower( utf8_decode($_POST['apellidoPaterno']) );
+        $apellidoMaterno = strtolower( utf8_decode($_POST['apellidoMaterno']) );
 
 
-            //$filename = $trabajador['apellidoPaterno'] . '-' . $trabajador['apellidoPaterno'] . '-' . $trabajador['nombres'];
-            //$filename = 'trabajador_' .;
+        //$filename = $trabajador['apellidoPaterno'] . '-' . $trabajador['apellidoPaterno'] . '-' . $trabajador['nombres'];
+        //$filename = 'trabajador_' .;
 
-            $nombre = ucwords( $first_name . ' ' . $apellidoPaterno . ' ' . $apellidoMaterno );
-            $cargo = ucwords(strtolower( utf8_decode($_POST['cargo_id']) ));
-            $email = 'Email: ' . strtolower($_POST['email']);
-            $telefono = $_POST['telefono'];
-            $celular = $_POST['celular'];
+        $nombre = ucwords( $first_name . ' ' . $apellidoPaterno . ' ' . $apellidoMaterno );
+        $cargo = ucwords(strtolower( utf8_decode($_POST['cargo_id']) ));
+        $email = 'Email: ' . strtolower($_POST['email']);
+        $telefono = ( $_POST['telefono'] ) ? 'Teléfono: ' . $_POST['telefono'] : '';
+        $celular = ($_POST['celular']) ? 'Celular: ' . $_POST['celular'] : '';
 
-            //show_array('generando firma de "' . $nombre .'" ...................................[OK]',0);
+        //show_array('generando firma de "' . $nombre .'" ...................................[OK]',0);
 
-            // Escribir nombre
-            $dimensions = imagettfbbox(11, 0, $font_bold, $nombre);
-            $textWidth = abs($dimensions[4] - $dimensions[0]);
-            $x = (imagesx($im) - $textWidth - 240);
-            imagettftext($im, 11, 0, $x, 30, $font_color, $font_bold, $nombre);
+        // Escribir nombre
+        $dimensions = imagettfbbox(11, 0, $font_bold, $nombre);
+        $textWidth = abs($dimensions[4] - $dimensions[0]);
+        $x = (imagesx($im) - $textWidth - 240);
+        imagettftext($im, 11, 0, $x, 30, $font_color, $font_bold, $nombre);
 
-            // Escribir Cargo
-            $dimensions = imagettfbbox(10, 0, $font_bold, $cargo);
-            $textWidth = abs($dimensions[4] - $dimensions[0]);
-            $x = (imagesx($im) - $textWidth - 240);
-            imagettftext($im, 10, 0, $x, 50, $font_color, $font_bold, $cargo);
+        // Escribir Cargo
+        $dimensions = imagettfbbox(10, 0, $font_bold, $cargo);
+        $textWidth = abs($dimensions[4] - $dimensions[0]);
+        $x = (imagesx($im) - $textWidth - 240);
+        imagettftext($im, 10, 0, $x, 50, $font_color, $font_bold, $cargo);
 
-            // Escribir Email
-            $dimensions = imagettfbbox(9, 0, $font_bold, $email);
-            $textWidth = abs($dimensions[4] - $dimensions[0]);
-            $x = (imagesx($im) - $textWidth - 17);
-            imagettftext($im, 9, 0, $x, 135, $font_color, $font_bold, $email);
+        // Escribir Email
+        $dimensions = imagettfbbox(9, 0, $font_bold, $email);
+        $textWidth = abs($dimensions[4] - $dimensions[0]);
+        $x = (imagesx($im) - $textWidth - 17);
+        imagettftext($im, 9, 0, $x, 135, $font_color, $font_bold, $email);
 
-           
+
+        if( $celular ):
              // Escribir celular
             $dimensions = imagettfbbox(9, 0, $font_bold, $celular);
             $textWidth = abs($dimensions[4] - $dimensions[0]);
             $x = (imagesx($im) - $textWidth - 16);
             imagettftext($im, 9, 0, $x, 122, $font_color, $font_bold, $celular);
-
-           
+        endif;
+       
+        if( $telefono ):
              // Escribir telefono
             $dimensions = imagettfbbox(9, 0, $font_bold, $telefono);
             $textWidth = abs($dimensions[4] - $dimensions[0]);
             $x = (imagesx($im) - $textWidth - 16);
             imagettftext($im, 9, 0, $x, 107, $font_color, $font_bold, $telefono);
+        endif;
 
 
-            // Using imagepng() results in clearer text compared with imagejpeg()
-            //$save = ROOT . '/public/img/firmas/' . $filename . '.png';
-            imagepng($im);
-            imagedestroy($im);
+        // Using imagepng() results in clearer text compared with imagejpeg()
+        //$save = ROOT . '/public/img/firmas/' . $filename . '.png';
+        imagepng($im);
+        imagedestroy($im);
 
 
         exit();

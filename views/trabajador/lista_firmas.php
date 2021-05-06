@@ -60,6 +60,13 @@
 
         <div class="overlayer_int"><i class="fa fa-refresh fa-spin"></i></div>
         
+        <select class="form-control" name="m_empresa" style="width: 300px;">
+            <option value="">Seleccione empresa</option>
+            <?php foreach ($m_empresas as $key => $empresa) { ?>
+            <option value="<?php echo $empresa['id'] ?>"><?php echo $empresa['nombre'] ?></option>
+            <?php } ?>
+        </select>
+
         <?php if( $registros ){ ?>
           <table id="trabajadores_list" class="table table-bordered table-striped">
             <thead>
@@ -191,6 +198,12 @@ $("input").blur(function(){
         }
     })
 })
+
+$("[name=m_empresa]").change(function(){
+    empresa = $(this).val();
+    location.href = '<?php echo BASE_URL ?>/trabajador/lista_firmas/' + empresa;
+})
+
 
 $("select").change(function(){
     regid = $(this).closest('tr').data('id');
