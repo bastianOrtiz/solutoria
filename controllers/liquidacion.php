@@ -921,6 +921,36 @@ if( ( $parametros[0] == 'ver' ) && ( !isset($parametros[1]) ) ){
 }
 
 
+if( $parametros[0] == 'editar_sis_sces' ){
+
+    if( $_GET['mes'] && $_GET['ano'] ){
+
+        extract($_GET);
+        $sql = "
+        SELECT 
+            T.id as trabajador_id, 
+            L.id as liquidacion_id, 
+            T.id, T.apellidoPaterno, 
+            T.apellidoMaterno, 
+            T.nombres, 
+            L.sis, 
+            L.sces
+        from m_trabajador T, liquidacion L
+        WHERE L.trabajador_id = T.id
+        AND L.mes = $mes
+        AND L.ano = $ano
+        ";
+
+        $registros = $db->rawQuery($sql);
+
+    } else {
+        $registros = [];
+    }
+
+}
+
+
+
 include ROOT . '/views/comun/header.php';
 include ROOT . '/views/comun/menu_top.php';
 include ROOT . '/views/comun/menu_sidebar.php';

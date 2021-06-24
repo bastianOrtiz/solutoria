@@ -219,6 +219,7 @@ $(document).ready(function(){
         })
     })
 
+    /*
     $(".cbo_liq").change(function(){
         year = $(this).val();
         $.ajax({
@@ -243,6 +244,7 @@ $(document).ready(function(){
             }
         })
     })
+    */
 
     $(".txtCol9").focus(function(){
         $(this).val( $(this).val().replace(".","") );

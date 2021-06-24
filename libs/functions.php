@@ -1740,6 +1740,11 @@ function mainMenu(){
                 'entidad' => 'liquidacion',
                 'accion' => 'seleccionar',
                 'label' => 'Ver liquidacion'
+            ),
+            array(
+                'entidad' => 'liquidacion',
+                'accion' => 'editar_sis_sces',
+                'label' => 'Editar SIS y SCES'
             )
         )
     );
@@ -2922,7 +2927,7 @@ function upload_image($input_name, $folder){
 function upload_doc($input_name, $folder){
     $name = $_FILES[$input_name]['name'];
     $pathinfo = pathinfo($name);
-    $array_extension_allowed = array('pdf','xls', 'xlsx', 'doc', 'docx','jpeg','jpg','png','dat','txt');
+    $array_extension_allowed = array('pdf','xls', 'xlsx', 'doc', 'docx','jpeg','jpg','png','dat','txt','PDF','XLS', 'XLSX', 'DOC', 'DOCX','JPEG','JPG','PNG','DAT','TXT');
     if( in_array($pathinfo['extension'],$array_extension_allowed) ){ 
         $array_return = array();
                 

@@ -11,8 +11,8 @@ $db->where('marcaTarjeta',1);
 
 
 $db->orderBy('apellidoPaterno','ASC');
-$db->where('tipocontrato_id',array(3,4),'NOT IN');
-$db->where ("deleted_at", NULL, 'IS');
+//$db->where('tipocontrato_id',array(3,4),'NOT IN');
+//$db->where ("deleted_at", NULL, 'IS');
 $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $trabajadores_todos_cert_sueldos = $db->get('m_trabajador');
 

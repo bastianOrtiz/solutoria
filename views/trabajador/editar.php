@@ -2273,11 +2273,11 @@
                                                     </thead>
                                                     <tbody>
                                                         <?php foreach( $documentos_trabajador as $doc ){ ?>
-                                                        <tr>
+                                                        <tr id="row_doc_<?php echo $doc['id'] ?>">
                                                             <td> <?php echo $doc['nombre'] ?> </td>
                                                             <td style="text-align: right;">
                                                                 <button data-id="<?php echo $doc['id'] ?>" type="button" class="viewDocTrabajador btn btn-xs btn-default"><i class="fa fa-search"></i></button>
-                                                                <button data-id="<?php echo $doc['id'] ?>" type="button" id="deleteDocTrabajador" class="btn btn-xs btn-default"><i class="fa fa-trash"></i></button>
+                                                                <button data-id="<?php echo $doc['id'] ?>" type="button" class="btn btn-xs btn-default deleteDocTrabajador"><i class="fa fa-trash"></i></button>
                                                             </td>
                                                         </tr>
                                                         <?php } ?>
@@ -3330,7 +3330,29 @@
             var docId = $(this).data('id');        
             window.open('<?php echo BASE_URL ?>/private/documento.php?docId=' + docId);
              
-        })                       
+        })    
+
+        $(".deleteDocTrabajador").click(function(event) {
+            id = $(this).data('id');
+            if( confirm('¿Seguro que desea borrar el documento selecionado?') ){
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo BASE_URL . '/controllers/ajax/' . $entity . '.ajax.php'?>",
+                    data: {
+                        action: 'ajax_delete_doc',
+                        id : id
+                    },
+                    dataType: 'json',
+                    beforeSend: function(){
+                        $(".overlayer").show();
+                    },
+                    success: function (json) { 
+                        $("#row_doc_" + json.documento.id).fadeOut(500);
+                        $(".overlayer").hide();
+                    }
+                })
+            }
+        });
             
         <?php if( $parametros[4] == 'OK' ){ ?>
         alert("Datos guardados correctamente");

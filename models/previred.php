@@ -893,11 +893,11 @@ function crearTxt($post){
         fwrite($fch, $cotizacion_desaucio); // Grabas -- 69
         $fonasa = tipoSalud($empleado["id"],$post['mesAtraso'],$post['anoAtraso']);
         if ($fonasa['isapre_id'] == 0) {
-            $imponible_calculo = $imponible["monto"]*0.064;
+            $imponible_calculo = $imponible["monto"]*0.039;
             $imponible_calculo = number_format($imponible_calculo,0,",","");
             $cotizacion_fonasa = rellenar($imponible_calculo,8,"i");
 
-            $imponible_CCAF = $imponible["monto"]*0.006;
+            $imponible_CCAF = $imponible["monto"]*0.031;
             $imponible_CCAF = number_format($imponible_CCAF,0,",","");
             $cotizacion_ccaf = $imponible_CCAF;
 

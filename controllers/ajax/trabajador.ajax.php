@@ -10,6 +10,21 @@ $json = array();
 extract($_POST);
 
 
+if( $_POST['action'] == 'ajax_delete_doc' ){
+    sleep(1);
+    
+    $doc = $db->where('id',$_POST['id'])->getOne("t_documentotrabajador");
+    unlink(ROOT . '/private/uploads/docs/' . $doc['filename']);
+
+    $last_delete = $db->where ('id',$_POST['id'])->delete('t_documentotrabajador');
+
+    $json = [
+        'status' => 'success',
+        'mensaje' => 'Documento borrado correctamente',
+        'documento' => $doc,
+    ];
+}
+
 if( $_POST['action'] == 'ajax_update_field' ){
     $data_update = [
         $_POST['field'] => $_POST['value']
