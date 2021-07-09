@@ -12,13 +12,10 @@ $db->where('empresa_id',$_SESSION[PREFIX.'login_eid']);
 $registros = $db->get("m_trabajador");
 
 if( $_SESSION[PREFIX.'is_trabajador'] ){    
-
     $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
-    $db->where('terminada',1);
     $db->orderBy('ano','DESC');
     $db->orderBy('mes','DESC');
-    $liquidaciones_trabajador = $db->get('liquidacion');
-
+    $liquidaciones_trabajador = $db->get('liquidacion',12);
 }
 
 if( $_POST ){
