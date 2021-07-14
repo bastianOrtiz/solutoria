@@ -1,8 +1,4 @@
 <?php
-error_reporting(0);
-//ini_set('error_reporting', E_ALL);
-//ini_set('display_errors', 1);
-
 @session_start();
 
 /** Includes Comunes para todo el sistema **
@@ -10,6 +6,16 @@ error_reporting(0);
 /** Configuracion **/
 include 'libs/config.php';
 include 'libs/constantes.php';
+
+if(DEBUG){
+    ini_set('error_reporting', E_ALL);
+    ini_set('display_errors', 1);    
+} else {
+    error_reporting(0);    
+}
+
+
+
 
 /** LIBRERIAS **/
 include ROOT . '/libs/class.upload.php';
