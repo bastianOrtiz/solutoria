@@ -301,6 +301,12 @@ if( $_POST ){
         } else {
             $data['reduccion_laboral'] = 0;
         }
+
+        if( $_POST['crea_evento'] ){
+            $data['creaEvento'] = 1;
+        } else {
+            $data['creaEvento'] = 0;
+        }
         
         if( $saludTrabajador == 'fonasa' ){
             $data_prev = array(
@@ -419,6 +425,12 @@ if( $_POST ){
             $data['reduccion_laboral'] = 1;
         } else {
             $data['reduccion_laboral'] = 0;
+        }
+
+        if( $_POST['crea_evento'] ){
+            $data['creaEvento'] = 1;
+        } else {
+            $data['creaEvento'] = 0;
         }
 
         $data = array(

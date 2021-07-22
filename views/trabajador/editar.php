@@ -628,6 +628,19 @@
                                                     <?php } ?>
                                                 </div>
                                                 
+                                                 <div class="col-lg-12">
+                                                    <!-- Rounded switch -->
+                                                    <p>&nbsp;</p>
+                                                    <label class="switch">
+                                                    <input type="checkbox" name="crea_evento" id="crea_evento">
+                                                    <span class="slider round"></span>
+                                                    </label>
+                                                    &nbsp; <strong>Puede crear eventos</strong>
+                                                    <?php if($trabajador['creaEvento'] == 1){ ?>
+                                                    <script> $("#crea_evento").prop('checked',true); </script>
+                                                    <?php } ?>
+                                                </div>
+                                                
                                             </div>
 
 

@@ -1212,6 +1212,76 @@ function getAnoMostrarCorte(){
 
 
 
+
+/**
+ * Devuelve la fecha formatada, segun el destino
+ * Si destino = db -> Y-m-d H:i:s
+ * Si destino = view -> d/m/Y H:i
+ * @param (int) $fecha
+ * @param (string) $destino
+ * @return (date) $fecha_format
+ */
+function formatDateEventos($fecha,$destino = 'view'){
+    if( $destino == 'db' ){
+        $fecha = str_replace("/", "-", $fecha);
+        $str_fecha = strtotime($fecha);
+        $fecha_format = date('Y-m-d H:i',$str_fecha) . ':00';    
+    } else {
+        $str_fecha = strtotime($fecha);
+        $fecha_format = date('d/m/Y H:i',$str_fecha); 
+    }
+    
+    return $fecha_format;
+}
+
+
+
+
+/**
+ * Retorna tru o false si el trabajador tiene la opcion "Puede crear eventos" en TRUE en su ficha
+ * @param (int) $trabajador_id ID del trabajador logueado
+ * @return (boolean)
+ */
+function puedeCrearEventos($trabajador_id){
+    global $db;
+
+    $puede_crear = $db->where('id',$trabajador_id)->getValue('m_trabajador','creaEvento');
+    if($puede_crear){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+
+/**
+ * Obtiene el nombre del Tipo de Evento
+ * @param (int) $tipoevento_id ID del trabajador logueado
+ * @return (boolean)
+ */
+function getTipoEvento($tipoevento_id){
+    global $db;
+
+    $tipos_eventos = [
+        ['id'=>1,'nombre'=>'Reunión'],
+        ['id'=>2,'nombre'=>'Capacitacion'],
+        ['id'=>3,'nombre'=>'Pendientes']
+    ];
+
+    foreach($tipos_eventos as $t){
+        if( $t['id'] == $tipoevento_id ){
+            return $t['nombre'];
+            break;
+        }
+    }
+}
+
+
+
+
+
 /**
  * Define un arreglo con todos los items del menu para el trabajador  
  *   
@@ -1263,6 +1333,46 @@ function menuJefe(){
                         
     return $menu;   
 }
+
+
+
+
+/**
+ * Define un arreglo con todos los items del menu para crear Eventos
+ *   
+ */
+function menuEventos(){
+    $menu = array();
+    $menu['eventos'] = array(
+        'label' => 'Eventos',
+        'icon_class' => 'fa fa-calendar',
+        'childs' => array(
+            array(
+                'entidad' => 'evento',
+                'accion' => 'listar',
+                'label' => 'Listar'
+            ),
+            array(
+                'entidad' => 'evento',
+                'accion' => 'calendario',
+                'label' => 'Calendario'
+            ),
+            array(
+                'entidad' => 'evento',
+                'accion' => 'tomar_asistencia',
+                'label' => 'Tomar Asistencia'
+            ),
+            array(
+                'entidad' => 'evento',
+                'accion' => 'invitaciones',
+                'label' => 'Mis invitaciones'
+            )
+        )
+    );
+                  
+    return $menu;   
+}
+
 
 
 
@@ -1863,6 +1973,8 @@ function generaMenu(){
                 
     } else if( $_SESSION[PREFIX.'is_trabajador'] ) {
         
+        // Si es trabajador, uestra menu de trabajador
+
         $menu = menuTrabajador();
         $output_trabajador = '<ul class="sidebar-menu">';
         $output_trabajador .= '<li class="header">MENÚ </li>';         
@@ -1882,10 +1994,32 @@ function generaMenu(){
         }        
         $output_trabajador .= '</ul>';
         
+        // Si es trabajador Y jefe, muestra menu de jefatura
         if( $_SESSION[PREFIX.'is_jefe'] ){
             $menu_jefe = menuJefe();
             $output_trabajador .= '<ul class="sidebar-menu">';
             $output_trabajador .= '<li class="header">MENÚ JEFATURA</li>'; 
+            foreach( $menu_jefe as $menu_key => $menu_item ){
+                    
+                $output_trabajador .= '<li class="treeview" id="menu_item_' . $menu_item['label'] . '">';
+                $output_trabajador .= '    <a href="#">';
+                $output_trabajador .= '    <i class="' . $menu_item['icon_class'] . '"></i> <span>' . $menu_item['label'] . '</span> <i class="fa fa-angle-left pull-right"></i>';
+                $output_trabajador .= '  </a>'; 
+                $output_trabajador .= '  <ul class="treeview-menu">';   
+                
+                foreach( $menu_item['childs'] as $subemnu_item ){            
+                    $output_trabajador .= '  <li><a href="' . BASE_URL . '/' . $subemnu_item['entidad'] . '/' . $subemnu_item['accion'] . '"><i class="fa fa-circle-o"></i>' . $subemnu_item['label'] . '</a></li>';            
+                }                                                         
+                $output_trabajador .= '  </ul>';             
+                $output_trabajador .= '</li>';            
+            }
+        }
+        
+        // Si es trabajador Y puede crear eventos, muestra menu para crear eventos
+        if( puedeCrearEventos($_SESSION[ PREFIX . 'login_uid']) ){
+            $menu_jefe = menuEventos();
+            $output_trabajador .= '<ul class="sidebar-menu">';
+            $output_trabajador .= '<li class="header">EVENTOS</li>'; 
             foreach( $menu_jefe as $menu_key => $menu_item ){
                     
                 $output_trabajador .= '<li class="treeview" id="menu_item_' . $menu_item['label'] . '">';

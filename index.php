@@ -23,6 +23,11 @@ include ROOT . '/libs/libmail.php';
 include ROOT . '/libs/functions.php';
 include ROOT . '/models/common.php';
 
+require ROOT . '/libs/phpmailer/Exception.php';
+require ROOT . '/libs/phpmailer/PHPMailer.php';
+require ROOT . '/libs/phpmailer/SMTP.php';
+
+
 /** ============================================= **/
 
 /** Procesamiento de URL para obtener Entidad, Accion y Parametros  **/
