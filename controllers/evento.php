@@ -40,6 +40,8 @@ if( $_POST ){
             ];
 
             $last_evento_insert = $db->insert('m_evento',$data_insert);
+            show_array($db->getLastQuery(),0);
+            show_array($db->getLastError(),0);
 
 
             $error = [];
@@ -52,8 +54,7 @@ if( $_POST ){
                     'nota' => ''
                 ];
                 $insert_participante = $db->insert('m_participante_evento',$data_participantes);
-                show_array($db->getLastQuery(),0);
-                show_array($db->getLastError(),0);
+                
                 if(!$insert_participante){
                     $error[] = [
                         'identificador' => [
@@ -65,67 +66,39 @@ if( $_POST ){
 
                 $email_to = $db->where('id',$trabajador_id)->getValue('m_trabajador','email');
 
+                /*
                 $mail = new PHPMailer;
+                $mail->isSMTP();
+                $mail->Host = '192.168.0.22';
+                $mail->SMTPAuth = true;
+                $mail->Port = 25;
+                $mail->Username = 'no_responder@tecnodatasa.cl';
+                $mail->Password = 'tecnodatasa2016';
+                */
+                $mail = new PHPMailer();
                 $mail->isSMTP();
                 $mail->Host = 'smtp.mailtrap.io';
                 $mail->SMTPAuth = true;
                 $mail->Port = 2525;
                 $mail->Username = '4aa44a8666e48a';
                 $mail->Password = '1cfbebc393a642';
-                                      // Specify main and backup server
-                $mail->SetFrom('contacto@tecnodatasa.cl', 'Tecnodata S.A.');
+                
+                // Specify main and backup server
+                $mail->SetFrom('no_responder@tecnodatasa.cl', 'Eventos Tecnodata S.A.');
                 $mail->addAddress($email_to);  // Add a recipient
-                $mail->WordWrap = 50;                                 // Set word wrap to 50 characters
+                //$mail->WordWrap = 50;                                 // Set word wrap to 50 characters
                 $mail->isHTML(true);                                  // Set email format to HTML
 
-                $location           = "Stardestroyer-013";
-                $date               = '20151216';
-                $startTime          = '0800';
-                $endTime            = '0900';
-                $subject            = 'Millennium Falcon';
-                $desc               = 'This email is a reminder for you. Please accept!';
+                $body = $_POST['evento_titulo'] . '<br><br>' . $_POST['descripcion'];
 
-                $organizer          = 'Darth Vader';
-
-                $organizer_email    = 'contacto@tecnodatasa.cl';   
-                $participant_name_1 = 'Angelo TErrile';
-                $participant_email_1= $email_to;
-
-                $text = "BEGIN:VCALENDAR\r\n
-                VERSION:2.0\r\n
-                PRODID:-//Deathstar-mailer//theforce/NONSGML v1.0//EN\r\n
-                METHOD:REQUEST\r\n
-                BEGIN:VEVENT\r\n
-                UID:" . md5(uniqid(mt_rand(), true)) . "example.com\r\n
-                DTSTAMP:" . gmdate('Ymd').'T'. gmdate('His') . "Z\r\n
-                DTSTART:".$date."T".$startTime."00Z\r\n
-                DTEND:".$date."T".$endTime."00Z\r\n
-                SUMMARY:".$subject."\r\n
-                ORGANIZER;CN=".$organizer.":mailto:".$organizer_email."\r\n
-                LOCATION:".$location."\r\n
-                DESCRIPTION:".$desc."\r\n
-                ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN".$participant_name_1.";X-NUM-GUESTS=0:MAILTO:".$participant_email_1."\r\n
-                END:VEVENT\r\n
-                END:VCALENDAR\r\n";
-
-                $headers = "From: Sender\n";
-                $headers .= "Content-Type:text/calendar; Content-Disposition: inline; charset=utf-8;\r\n";
-                $headers .= "Content-Type: text/plain;charset=\"utf-8\"\r\n";
-                $mail->Subject = "nuevo evento";
-                $mail->Body = $desc; 
-                $mail->AltBody = $text;
-                $mail->Ical = $text;
-
+                $mail->Subject = utf8_decode("Invitación a evento: " . $_POST['evento_titulo']);
+                $mail->Body = $body; 
 
                 if(!$mail->send()) {
                    echo 'Message could not be sent.';
                    echo 'Mailer Error: ' . $mail->ErrorInfo;
                    exit;
                 }
-
-                echo 'Message has been sent';
-
-
 
             }
 
@@ -197,8 +170,8 @@ if( $_POST ){
 
 
         case 'ajax_delete_evento':
-            $db->where('id',$_POST['evento_id'])->where('trabajador_id',$_SESSION[ PREFIX . 'login_uid'])->update('m_evento',['deleted_at'=>date('Y-m-d H:is')]);
-
+            $db->where('id',$_POST['evento_id'])->where('trabajador_id',$_SESSION[ PREFIX . 'login_uid'])->update('m_evento',['deleted_at'=>date('Y-m-d H:i:s')]);
+            
             echo json_encode([
                 'evento' => $_POST['evento_id']
             ]);
@@ -207,7 +180,8 @@ if( $_POST ){
 
 
         case 'ajax_restaurar_evento':
-            $db->where('id',$_POST['evento_id'])->where('trabajador_id',$_SESSION[ PREFIX . 'login_uid'])->update('m_evento',['deleted_at'=>null]);
+            $db->where('id',$_POST['evento_id'])->where('trabajador_id',$_SESSION[ PREFIX . 'login_uid'])->update('m_evento',['deleted_at' => null]);
+
 
             echo json_encode([
                 'evento' => $_POST['evento_id']
@@ -249,11 +223,7 @@ if( $_POST ){
 
 if( $parametros ){
 
-    $tipos_eventos = [
-        ['id'=>1,'nombre'=>'Reunión'],
-        ['id'=>2,'nombre'=>'Capacitacion'],
-        ['id'=>3,'nombre'=>'Pendientes']
-    ];
+    $tipos_eventos = $db->get('m_tipoevento');
 
     $departamentos = $db->where('empresa_id',[2,11],'IN')->where('activo',1)->get('m_departamento');
     $trabajadores = $db->orderBy("apellidoPaterno","ASC")
@@ -292,9 +262,10 @@ if( $parametros ){
         SELECT E.* FROM m_evento E, m_participante_evento P
         WHERE E.id = P.evento_id
         AND E.deleted_at IS NULL
+        AND date(E.fechaHoraTermino) >= '" . date('Y-m-d') . "'
         AND P.trabajador_id = " . $_SESSION[PREFIX . 'login_uid'];
         $eventos = $db->rawQuery($sql);
-
+        
         $all_invitaciones = [];
         foreach ($eventos as $key => $evento) {
 

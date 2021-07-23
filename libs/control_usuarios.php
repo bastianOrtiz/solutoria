@@ -29,13 +29,15 @@ if( $_SESSION[ PREFIX . 'is_jefe' ] ){
 
 
 if( puedeCrearEventos($_SESSION[ PREFIX . 'login_uid']) ){
-    $permisos_trabajador['evento']['listar'] = 1;
     $permisos_trabajador['evento']['crear'] = 1;
     $permisos_trabajador['evento']['calendario'] = 1;
     $permisos_trabajador['evento']['asistencia'] = 1;
     $permisos_trabajador['evento']['tomar_asistencia'] = 1;
-    $permisos_trabajador['evento']['invitaciones'] = 1;
 }
+$permisos_trabajador['evento']['listar'] = 1;
+$permisos_trabajador['evento']['invitaciones'] = 1;
+
+
 
 if( $_SESSION[ PREFIX . 'login_admin'] != 1 ){
     

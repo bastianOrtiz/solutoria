@@ -1264,18 +1264,9 @@ function puedeCrearEventos($trabajador_id){
 function getTipoEvento($tipoevento_id){
     global $db;
 
-    $tipos_eventos = [
-        ['id'=>1,'nombre'=>'Reunión'],
-        ['id'=>2,'nombre'=>'Capacitacion'],
-        ['id'=>3,'nombre'=>'Pendientes']
-    ];
+    $tipoevento = $db->where('id',$tipoevento_id)->getValue('m_tipoevento','nombre');
 
-    foreach($tipos_eventos as $t){
-        if( $t['id'] == $tipoevento_id ){
-            return $t['nombre'];
-            break;
-        }
-    }
+    return ($tipoevento) ? $tipoevento : 'N/A';
 }
 
 
@@ -1346,7 +1337,11 @@ function menuEventos(){
     $menu['eventos'] = array(
         'label' => 'Eventos',
         'icon_class' => 'fa fa-calendar',
-        'childs' => array(
+        'childs' => []
+    );
+
+    if( puedeCrearEventos($_SESSION[ PREFIX . 'login_uid']) ){
+        $eventos_admin = [
             array(
                 'entidad' => 'evento',
                 'accion' => 'listar',
@@ -1361,15 +1356,19 @@ function menuEventos(){
                 'entidad' => 'evento',
                 'accion' => 'tomar_asistencia',
                 'label' => 'Tomar Asistencia'
-            ),
-            array(
-                'entidad' => 'evento',
-                'accion' => 'invitaciones',
-                'label' => 'Mis invitaciones'
             )
-        )
-    );
-                  
+        ];
+        foreach($eventos_admin as $e){
+            array_push($menu['eventos']['childs'], $e);
+        } 
+    }
+
+    array_push($menu['eventos']['childs'], array(
+        'entidad' => 'evento',
+        'accion' => 'invitaciones',
+        'label' => 'Mis invitaciones'
+    ));
+
     return $menu;   
 }
 
@@ -2016,25 +2015,24 @@ function generaMenu(){
         }
         
         // Si es trabajador Y puede crear eventos, muestra menu para crear eventos
-        if( puedeCrearEventos($_SESSION[ PREFIX . 'login_uid']) ){
-            $menu_jefe = menuEventos();
-            $output_trabajador .= '<ul class="sidebar-menu">';
-            $output_trabajador .= '<li class="header">EVENTOS</li>'; 
-            foreach( $menu_jefe as $menu_key => $menu_item ){
-                    
-                $output_trabajador .= '<li class="treeview" id="menu_item_' . $menu_item['label'] . '">';
-                $output_trabajador .= '    <a href="#">';
-                $output_trabajador .= '    <i class="' . $menu_item['icon_class'] . '"></i> <span>' . $menu_item['label'] . '</span> <i class="fa fa-angle-left pull-right"></i>';
-                $output_trabajador .= '  </a>'; 
-                $output_trabajador .= '  <ul class="treeview-menu">';   
+        $menu_eventos = menuEventos();
+        $output_trabajador .= '<ul class="sidebar-menu">';
+        $output_trabajador .= '<li class="header">EVENTOS</li>'; 
+        foreach( $menu_eventos as $menu_key => $menu_item ){
                 
-                foreach( $menu_item['childs'] as $subemnu_item ){            
-                    $output_trabajador .= '  <li><a href="' . BASE_URL . '/' . $subemnu_item['entidad'] . '/' . $subemnu_item['accion'] . '"><i class="fa fa-circle-o"></i>' . $subemnu_item['label'] . '</a></li>';            
-                }                                                         
-                $output_trabajador .= '  </ul>';             
-                $output_trabajador .= '</li>';            
-            }
+            $output_trabajador .= '<li class="treeview" id="menu_item_' . $menu_item['label'] . '">';
+            $output_trabajador .= '    <a href="#">';
+            $output_trabajador .= '    <i class="' . $menu_item['icon_class'] . '"></i> <span>' . $menu_item['label'] . '</span> <i class="fa fa-angle-left pull-right"></i>';
+            $output_trabajador .= '  </a>'; 
+            $output_trabajador .= '  <ul class="treeview-menu">';   
+            
+            foreach( $menu_item['childs'] as $subemnu_item ){            
+                $output_trabajador .= '  <li><a href="' . BASE_URL . '/' . $subemnu_item['entidad'] . '/' . $subemnu_item['accion'] . '"><i class="fa fa-circle-o"></i>' . $subemnu_item['label'] . '</a></li>';            
+            }                                                         
+            $output_trabajador .= '  </ul>';             
+            $output_trabajador .= '</li>';            
         }
+
         
         $output_trabajador .= '</ul>';
         
