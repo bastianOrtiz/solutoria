@@ -1123,9 +1123,23 @@ if( $parametros ){
             $indice++;
         }
         
-        
-        
     }*/
+    
+    if ($parametros[0] == 'documentos_pendientes' || $parametros[0] == 'editar') {
+
+        $total_documentos = 18;
+
+        $codigos_documentos = [];
+        for($i=1;$i<=$total_documentos;$i++){
+            $codigos_documentos[] = str_pad($i, 3, '0', STR_PAD_LEFT);
+        }
+
+        $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
+        $db->orderBy("apellidoPaterno","ASC");
+        $db->where ("deleted_at", NULL, 'IS');
+        $db->where ("tipocontrato_id", [3,4], 'NOT IN');
+        $lista_trabajadores = $db->get("m_trabajador");
+    }
 
 }
 

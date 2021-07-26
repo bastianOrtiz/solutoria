@@ -154,6 +154,36 @@ function mesCompleto($ausencia_id){
 
 
 /** 
+ * Devuelve un arreglo con los documentos que tiene el trabajador
+ *  
+ * @param (int) $trabajador_id
+ * @return (array) $arr_documentos 
+ */ 
+function getDocumentosPorTrabajador($trabajador_id){ 
+    global $db; 
+    
+    $arr_documentos = [];
+
+    $sql = "
+    SELECT LEFT(nombre,3) as codigo 
+    FROM t_documentotrabajador
+    WHERE trabajador_id = $trabajador_id
+    group by LEFT(nombre,3) 
+    order by LEFT(nombre,3)
+    ";
+
+    $documentos =  $db->rawQuery($sql);
+    
+    foreach ($documentos as $doc) {
+        $arr_documentos[] = $doc['codigo'];
+    }
+
+    return $arr_documentos;
+
+} 
+
+
+/** 
  * Retorna un numero en formato dinero 
  *  
  * @param (string) $var_sess, Nombre de la variable de session 
@@ -1589,6 +1619,11 @@ function mainMenu(){
                 'entidad' => 'trabajador',
                 'accion' => 'lista_firmas',
                 'label' => 'Listado para Firmas'
+            ),
+            array(
+                'entidad' => 'trabajador',
+                'accion' => 'documentos_pendientes',
+                'label' => 'Documentos Pendientes'
             )
         )
     );

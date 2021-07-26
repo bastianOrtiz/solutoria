@@ -2277,7 +2277,7 @@
                                         <div class="col-md-6">
                                             <strong>Listado de documentos</strong><br /><br />
                                             <div class="table-responsive">
-                                                <table class="table table-striped">
+                                                <table class="table table-hover table-bordered">
                                                     <thead>
                                                         <tr>
                                                             <th> Nombre </th>
@@ -2285,8 +2285,12 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php foreach( $documentos_trabajador as $doc ){ ?>
-                                                        <tr id="row_doc_<?php echo $doc['id'] ?>">
+                                                        <?php 
+                                                        $arr_codigos_listos = [];
+                                                        foreach( $documentos_trabajador as $doc ){ 
+                                                        $arr_codigos_listos[] = substr($doc['nombre'], 0,3);
+                                                        ?>
+                                                        <tr class="bg-success" id="row_doc_<?php echo $doc['id'] ?>">
                                                             <td> <?php echo $doc['nombre'] ?> </td>
                                                             <td style="text-align: right;">
                                                                 <button data-id="<?php echo $doc['id'] ?>" type="button" class="viewDocTrabajador btn btn-xs btn-default"><i class="fa fa-search"></i></button>
@@ -2294,6 +2298,17 @@
                                                             </td>
                                                         </tr>
                                                         <?php } ?>
+                                                        <?php 
+                                                        foreach( $codigos_documentos as $doc_pend ){ 
+                                                        if( !in_array($doc_pend,$arr_codigos_listos) ){
+                                                        ?>
+                                                        <tr class="bg-danger">
+                                                            <td> <?php echo $doc_pend ?> </td>
+                                                            <td style="text-align: right;">
+                                                                <small>(pendiente)</small>
+                                                            </td>
+                                                        </tr>
+                                                        <?php } } ?>
                                                     </tbody>
                                                 </table>
                                             </div>
