@@ -6,14 +6,17 @@
             
     <section class="content">                
         <div class="box">
-            <div class="box-header"></div>
+            <div class="box-header">
+                <a href="<?php echo BASE_URL ?>/trabajador/pdf_documentos_pendientes" class="btn btn-danger pull-right" target="_blank" style="margin-left: 10px;">PDF</a>
+                <a href="<?php echo BASE_URL ?>/trabajador/excel_documentos_pendientes" class="btn btn-success pull-right" target="_blank">Excel</a>                
+            </div>
             <div class="box-body">
                 <div class="table-responsive">
                     <table id="tabla_afp" class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th colspan="2"></th>
-                                <th colspan="5">Documentos del Trabajador    </th>
+                                <th colspan="<?php echo $total_documentos; ?>">Documentos del Trabajador    </th>
                             </tr>
                             <tr>
                                 <th> ID </th>

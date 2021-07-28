@@ -6,6 +6,7 @@ $paises = $db->get("m_pais");
 $regiones = $db->get("m_region");
 $ids_relojcontrol = $db->rawQuery('SELECT distinct `userid` from m_relojcontrol');
 
+$total_documentos = 18;
 
 /** MAX ID RELOJ CONTROL **/
 //(Si en tabla 'm_cuenta' en el campo 'comparteRelojControl' = 1 o true)
@@ -1125,9 +1126,130 @@ if( $parametros ){
         
     }*/
     
-    if ($parametros[0] == 'documentos_pendientes' || $parametros[0] == 'editar') {
+    if( $parametros[0] == 'pdf_documentos_pendientes' ){
 
-        $total_documentos = 18;
+        $codigos_documentos = [];
+        for($i=1;$i<=$total_documentos;$i++){
+            $codigos_documentos[] = str_pad($i, 3, '0', STR_PAD_LEFT);
+        }
+
+        $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
+        $db->orderBy("apellidoPaterno","ASC");
+        $db->where ("deleted_at", NULL, 'IS');
+        $db->where ("tipocontrato_id", [3,4], 'NOT IN');
+        $lista_trabajadores = $db->get("m_trabajador");
+
+        $html = '
+        <table border="1" cellpadding="5" style="border-colapse: collapse">
+            <thead>
+                <tr>
+                    <th colspan="2"></th>
+                    <th colspan="' . $total_documentos . '">Documentos del Trabajador    </th>
+                </tr>
+                <tr>
+                    <th> ID </th>
+                    <th>Nombre</th>';
+                    foreach($codigos_documentos as $cod):
+                    $html .= '<th>' . $cod . '</th>';
+                    endforeach;
+        $html .= '
+                </tr>
+            </thead>
+            <tbody>';
+            foreach( $lista_trabajadores as $person ){
+                $html .= '
+                <tr>
+                    <td>' . $person['id'] . '</td>
+                    <td style="white-space: nowrap;">' . $person['apellidoPaterno'] . ' ' . $person['apellidoMaterno'] . ' ' . $person['nombres'] . '</td>';
+
+                    $documentos_x_trabajador = getDocumentosPorTrabajador($person['id']);
+                    foreach($codigos_documentos as $cod){
+                        if( in_array($cod,$documentos_x_trabajador) ){
+                            $html .= '<td  bgcolor="#b7ff9a" style="background-color:#b7ff9a;" style="text-align: center;">si</td>';
+                        } else {                    
+                            $html .= '<td  bgcolor="#ffbbbb" style="background-color:#ffbbbb;" style="text-align: center;">x</td>';
+                        }
+                    }
+                $html .= '</tr>';
+            }
+
+        $html .= '
+            </tbody>
+        </table>
+        ';
+
+
+        require_once( ROOT . '/libs/html2pdf/html2pdf.class.php');
+        $html2pdf = new HTML2PDF('L','LETTER','es');
+        $html2pdf->WriteHTML($html);        
+        $html2pdf->Output( 'informe.pdf');
+    }
+
+
+    if( $parametros[0] == 'excel_documentos_pendientes' ){
+
+        header("Content-Type: application/xls");    
+        header("Content-Disposition: attachment; filename=documentos_pendientes_".date('Y-m-d').".xls");  
+        header("Pragma: no-cache"); 
+        header("Expires: 0");
+
+        $codigos_documentos = [];
+        for($i=1;$i<=$total_documentos;$i++){
+            $codigos_documentos[] = str_pad($i, 3, '0', STR_PAD_LEFT);
+        }
+
+        $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
+        $db->orderBy("apellidoPaterno","ASC");
+        $db->where ("deleted_at", NULL, 'IS');
+        $db->where ("tipocontrato_id", [3,4], 'NOT IN');
+        $lista_trabajadores = $db->get("m_trabajador");
+        ?>
+
+        <table border="1" style="border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th colspan="2"></th>
+                    <th colspan="<?php $total_documentos ?>">Documentos del Trabajador    </th>
+                </tr>
+                <tr>
+                    <th> ID </th>
+                    <th>Nombre</th>
+                    <?php foreach($codigos_documentos as $cod): ?>
+                    <th><?php echo $cod; ?></th>
+                    <?php endforeach; ?>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach( $lista_trabajadores as $person ){ ?>
+                <tr>
+                    <td> <?php echo $person['id']?> </td>
+                    <td style="white-space: nowrap;"> <?php echo $person['apellidoPaterno'] ?> <?php echo $person['apellidoMaterno'] ?> <?php echo $person['nombres'] ?> </td>
+                    <?php 
+                    $documentos_x_trabajador = getDocumentosPorTrabajador($person['id']);
+                    foreach($codigos_documentos as $cod){
+                        if( in_array($cod,$documentos_x_trabajador) ){
+                        ?>
+                        <td style="background-color:#b7ff9a" style="text-align: center;"></td>
+                        <?php 
+                        } else { 
+                        ?>
+                        <td style="background-color:#ffbbbb" style="text-align: center;"></td>
+                        <?php 
+                        }
+                    }
+                    ?>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+
+        <?php
+
+        exit();
+
+    }
+
+    if ($parametros[0] == 'documentos_pendientes' || $parametros[0] == 'editar') {
 
         $codigos_documentos = [];
         for($i=1;$i<=$total_documentos;$i++){
