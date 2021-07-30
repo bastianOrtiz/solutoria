@@ -1257,8 +1257,7 @@ function formatDateEventos($fecha,$destino = 'view'){
         $str_fecha = strtotime($fecha);
         $fecha_format = date('Y-m-d H:i',$str_fecha) . ':00';    
     } else {
-        $str_fecha = strtotime($fecha);
-        $fecha_format = date('d/m/Y H:i',$str_fecha); 
+        $fecha_format = $fecha;
     }
     
     return $fecha_format;

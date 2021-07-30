@@ -40,8 +40,6 @@ if( $_POST ){
             ];
 
             $last_evento_insert = $db->insert('m_evento',$data_insert);
-            show_array($db->getLastQuery(),0);
-            show_array($db->getLastError(),0);
 
 
             $error = [];
@@ -89,7 +87,23 @@ if( $_POST ){
                 //$mail->WordWrap = 50;                                 // Set word wrap to 50 characters
                 $mail->isHTML(true);                                  // Set email format to HTML
 
-                $body = $_POST['evento_titulo'] . '<br><br>' . $_POST['descripcion'];
+                $body = '
+                <strong>Nombre del evento: </strong><br>' . $_POST['evento_titulo'] . ' <br>
+                <strong>Descripción del evento: </strong><br>' . $_POST['descripcion'] . ' <br><br>
+                <strong>Tipo de evento: </strong> ' . getTipoEvento($_POST['evento_tipo']) . ' <br>
+                <strong>Fecha/Hora Inicio:  </strong>' . formatDateEventos($_POST['evento_fechahora_termino']) . '<br>
+                <strong>Fecha/Hora Termino: </strong>' . formatDateEventos($_POST['evento_fechahora_termino']) . '<br>
+                <strong>Participantes:</strong> <br><br>
+                ';
+
+                foreach ($_POST['trabajador_id'] as $key => $trabajador_id) {
+                    $body .= '&bull; ' . $db->where('id',$trabajador_id)->getValue('m_trabajador','email') . '<br>';
+                }
+
+                $body .= '<br><br>--<br>Correo enviado automáticamente. No responda a este correo';
+
+                $body = utf8_decode($body);
+
 
                 $mail->Subject = utf8_decode("Invitación a evento: " . $_POST['evento_titulo']);
                 $mail->Body = $body; 
