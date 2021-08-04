@@ -95,7 +95,7 @@ if( $_POST ){
 
                 $body = '
                 <strong>Nombre del evento: </strong>' . $_POST['evento_titulo'] . ' <br><br>
-                <strong>Descripción del evento: </strong><br>' . $_POST['descripcion'] . ' <br><br>
+                <strong>Descripción del evento: </strong><br>' . nl2br($_POST['descripcion']) . ' <br><br>
                 <strong>Tipo de evento: </strong> ' . getTipoEvento($_POST['evento_tipo']) . ' <br>
                 <strong>Fecha/Hora Inicio:  </strong>' . formatDateEventos($_POST['evento_fechahora_termino']) . '<br>
                 <strong>Fecha/Hora Termino: </strong>' . formatDateEventos($_POST['evento_fechahora_termino']) . '<br>
