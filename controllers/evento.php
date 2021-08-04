@@ -39,7 +39,7 @@ if( $_POST ){
                 'trabajador_id' => $_SESSION[PREFIX . 'login_uid']
             ];
 
-            $last_evento_insert = $db->insert('m_evento',$data_insert);
+            //$last_evento_insert = $db->insert('m_evento',$data_insert);
 
 
             $error = [];
@@ -51,7 +51,7 @@ if( $_POST ){
                     'confirmacion' => 0,
                     'nota' => ''
                 ];
-                $insert_participante = $db->insert('m_participante_evento',$data_participantes);
+                //$insert_participante = $db->insert('m_participante_evento',$data_participantes);
                 
                 if(!$insert_participante){
                     $error[] = [
@@ -63,16 +63,18 @@ if( $_POST ){
                 }
 
                 $email_to = $db->where('id',$trabajador_id)->getValue('m_trabajador','email');
-
-                /*
+                
                 $mail = new PHPMailer;
-                $mail->isSMTP();
-                $mail->Host = '192.168.0.22';
+                
+                $mail->Host = "192.168.0.22";
                 $mail->SMTPAuth = true;
+                $mail->Username = 'aterrile@tecnodatasa.cl';
+                $mail->Password = 'tecno2016';
                 $mail->Port = 25;
-                $mail->Username = 'no_responder@tecnodatasa.cl';
-                $mail->Password = 'tecnodatasa2016';
-                */
+                
+                
+                
+                /*
                 $mail = new PHPMailer();
                 $mail->isSMTP();
                 $mail->Host = 'smtp.mailtrap.io';
@@ -80,10 +82,13 @@ if( $_POST ){
                 $mail->Port = 2525;
                 $mail->Username = '4aa44a8666e48a';
                 $mail->Password = '1cfbebc393a642';
+                */
                 
                 // Specify main and backup server
-                $mail->SetFrom('no_responder@tecnodatasa.cl', 'Eventos Tecnodata S.A.');
+                $mail->SetFrom('no_responder@tecnodatasa.cl');
                 $mail->addAddress($email_to);  // Add a recipient
+
+                //$mail->addAddress('darkcrisss@gmail.com');  // Add a recipient
                 //$mail->WordWrap = 50;                                 // Set word wrap to 50 characters
                 $mail->isHTML(true);                                  // Set email format to HTML
 
@@ -113,7 +118,6 @@ if( $_POST ){
                    echo 'Mailer Error: ' . $mail->ErrorInfo;
                    exit;
                 }
-
             }
 
 

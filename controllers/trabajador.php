@@ -6,7 +6,7 @@ $paises = $db->get("m_pais");
 $regiones = $db->get("m_region");
 $ids_relojcontrol = $db->rawQuery('SELECT distinct `userid` from m_relojcontrol');
 
-$total_documentos = 18;
+$total_documentos = 20;
 
 /** MAX ID RELOJ CONTROL **/
 //(Si en tabla 'm_cuenta' en el campo 'comparteRelojControl' = 1 o true)
