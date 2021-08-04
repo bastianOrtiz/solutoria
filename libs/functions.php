@@ -477,7 +477,7 @@ function logit($user_nombre, $action, $entity, $id=null, $sql="", $empresa_id=0)
 }
 
 /**
- * Envía un mail usando un servidor externo    
+ * Envía un mail
  * @param (array) $arr_query_post Arreglo con los datos $_POST
  * Los cuales son los siguientes 
  *  'token' => Token generado usando la funcion generateToken(),
@@ -525,6 +525,52 @@ function enviarMailExterno($arr_query_post){
     }
     */
 }
+
+
+
+
+/**
+ * Envía un mail usando un servidor externo    
+ * @param (array) $arr_query_post Arreglo con los datos $_POST
+ * Los cuales son los siguientes 
+ *  'token' => Token generado usando la funcion generateToken(),
+    'currUrl' => URL a la cual quiero direccionar despues del envío del correo,
+    'mailto' => Mail destinatario,
+    'nombre' => Nombre del destinatario,
+    'new_hash' => Hash para el reestablecimiento de contraeña (opcional, pero debe ir vacío en caso de no usar),
+    'body' => Cuerpo del mensaje
+ */
+function enviarMailExternalServer($arr_query_post){
+
+    $url = 'https://www.tecnodatasa.cl/devcontrato/mail.php';
+
+    $arr_query_post['token'] = generateToken($arr_query_post['mailto']);
+
+    // use key 'http' even if you send the request to https://...
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($arr_query_post)
+        )
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    
+    //var_dump($result);
+
+    if ($result === FALSE) { 
+        return false;
+    } else {
+        return true;
+    }
+
+}
+
+
+
+
+
 
 /**
  * Retorna la URL actual     

@@ -43,6 +43,7 @@ if( $_POST ){
 
 
             $error = [];
+            $mail_sent = [];
             foreach ($_POST['trabajador_id'] as $key => $trabajador_id) {
                 $data_participantes = [
                     'evento_id' => $last_evento_insert,
@@ -93,7 +94,7 @@ if( $_POST ){
                 $mail->isHTML(true);                                  // Set email format to HTML
 
                 $body = '
-                <strong>Nombre del evento: </strong><br>' . $_POST['evento_titulo'] . ' <br>
+                <strong>Nombre del evento: </strong>' . $_POST['evento_titulo'] . ' <br><br>
                 <strong>Descripción del evento: </strong><br>' . $_POST['descripcion'] . ' <br><br>
                 <strong>Tipo de evento: </strong> ' . getTipoEvento($_POST['evento_tipo']) . ' <br>
                 <strong>Fecha/Hora Inicio:  </strong>' . formatDateEventos($_POST['evento_fechahora_termino']) . '<br>
@@ -113,11 +114,22 @@ if( $_POST ){
                 $mail->Subject = utf8_decode("Invitación a evento: " . $_POST['evento_titulo']);
                 $mail->Body = $body; 
 
+                /*
                 if(!$mail->send()) {
                    echo 'Message could not be sent.';
                    echo 'Mailer Error: ' . $mail->ErrorInfo;
                    exit;
                 }
+                */
+
+                $datos = [
+                    'mailto' => $email_to,
+                    'subject' => utf8_decode("Invitación a evento: " . $_POST['evento_titulo']),
+                    'body' => $body
+                ];
+
+                $sent = enviarMailExternalServer($datos);
+
             }
 
 
