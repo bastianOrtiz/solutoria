@@ -39,7 +39,7 @@ if( $_POST ){
                 'trabajador_id' => $_SESSION[PREFIX . 'login_uid']
             ];
 
-            //$last_evento_insert = $db->insert('m_evento',$data_insert);
+            $last_evento_insert = $db->insert('m_evento',$data_insert);
 
 
             $error = [];
@@ -52,7 +52,7 @@ if( $_POST ){
                     'confirmacion' => 0,
                     'nota' => ''
                 ];
-                //$insert_participante = $db->insert('m_participante_evento',$data_participantes);
+                $insert_participante = $db->insert('m_participante_evento',$data_participantes);
                 
                 if(!$insert_participante){
                     $error[] = [
@@ -95,7 +95,7 @@ if( $_POST ){
 
                 $body = '
                 <strong>Nombre del evento: </strong>' . $_POST['evento_titulo'] . ' <br><br>
-                <strong>Descripción del evento: </strong><br>' . nl2br($_POST['descripcion']) . ' <br><br>
+                <strong>Descripci&oacute;n del evento: </strong><br>' . nl2br($_POST['descripcion']) . ' <br><br>
                 <strong>Tipo de evento: </strong> ' . getTipoEvento($_POST['evento_tipo']) . ' <br>
                 <strong>Fecha/Hora Inicio:  </strong>' . formatDateEventos($_POST['evento_fechahora_termino']) . '<br>
                 <strong>Fecha/Hora Termino: </strong>' . formatDateEventos($_POST['evento_fechahora_termino']) . '<br>
@@ -106,7 +106,7 @@ if( $_POST ){
                     $body .= '&bull; ' . $db->where('id',$trabajador_id)->getValue('m_trabajador','email') . '<br>';
                 }
 
-                $body .= '<br><br>--<br>Correo enviado automáticamente. No responda a este correo';
+                $body .= '<br><br>--<br>Correo enviado autom&aacute;ticamente. No responda a este correo';
 
                 $body = utf8_decode($body);
 

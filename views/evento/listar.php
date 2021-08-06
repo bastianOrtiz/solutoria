@@ -379,6 +379,7 @@ $(document).ready(function(){
             alert('Debe seleccionar al menos 1 participante para su evento');
             return false;
         } else {
+            $(".overlayer").show();
             $("#frm-nuevo-evento")[0].submit();
         }
     });
