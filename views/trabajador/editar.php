@@ -2273,6 +2273,31 @@
                                                 <br class="clear" /><br class="clear" />
                                                 <button type="button" name="btnSubirDoc" id="btnSubirDoc" value="" class="btn btn-primary"> Subir Documento </button>
                                             </div>
+
+                                            <div class="">
+                                                <p>
+                                                  <a class="btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        Documentacion Requerida para <?php echo $trabajador['nombres'] ?> <i class="fa fa-chevron-down"></i>
+                                                  </a>
+                                                </p>
+                                                <div class="collapse" id="collapseExample">
+                                                  <div class="box box-default">
+                                                    <div class="box-body">
+                                                        <?php 
+                                                        foreach( $codigos_documentos as $doc_pend ){ 
+                                                        ?>
+                                                            <label>
+                                                                <input type="checkbox" name="documentos_requeridos[]" value="<?php echo $doc_pend ?>">
+                                                                 &nbsp; 
+                                                                <?php echo $doc_pend ?>
+                                                            </label>
+                                                            <br>
+                                                        </tr>
+                                                        <?php } ?>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <strong>Listado de documentos</strong><br /><br />
@@ -2298,17 +2323,35 @@
                                                             </td>
                                                         </tr>
                                                         <?php } ?>
+                                                        
+
                                                         <?php 
+                                                        $documentos_requeridos = json_decode($trabajador['documentos_requeridos']);
+
                                                         foreach( $codigos_documentos as $doc_pend ){ 
-                                                        if( !in_array($doc_pend,$arr_codigos_listos) ){
+                                                            if( !in_array($doc_pend,$arr_codigos_listos) ){
+                                                                if(in_array($doc_pend,$documentos_requeridos)){
+                                                                ?>
+                                                                <tr class="bg-danger">
+                                                                    <td> <?php echo $doc_pend ?> </td>
+                                                                    <td style="text-align: right;">
+                                                                        <small>(pendiente)</small>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php 
+                                                                } else {
+                                                                ?>
+                                                                <tr>
+                                                                    <td> <?php echo $doc_pend ?> </td>
+                                                                    <td style="text-align: right;">
+                                                                        <small>(pendiente pero no requerido)</small>
+                                                                    </td>
+                                                                </tr>
+                                                                <?php
+                                                                }
+                                                            } 
+                                                        } 
                                                         ?>
-                                                        <tr class="bg-danger">
-                                                            <td> <?php echo $doc_pend ?> </td>
-                                                            <td style="text-align: right;">
-                                                                <small>(pendiente)</small>
-                                                            </td>
-                                                        </tr>
-                                                        <?php } } ?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -2331,6 +2374,10 @@
 </form>
 <script>
     $(document).ready(function(){
+
+        <?php foreach( json_decode($trabajador['documentos_requeridos']) as $doc ): ?>
+        $("[name='documentos_requeridos[]'][value='<?php echo $doc ?>']").prop('checked', true);
+        <?php endforeach; ?>
 
         <?php if($trabajador['reduccion_laboral'] == 1){ ?>
         $("[name=horas_reduccion_laboral_semanal]").show();

@@ -2002,6 +2002,11 @@ function mainMenu(){
         'childs' => array(
             array(
                 'entidad' => 'documento',
+                'accion' => 'documentos_codigo',
+                'label' => 'Documentos x codigo '
+            ),
+            array(
+                'entidad' => 'documento',
                 'accion' => 'listar',
                 'label' => 'Listar'
             ),
