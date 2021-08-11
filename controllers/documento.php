@@ -12,6 +12,26 @@ $db->where('marcaTarjeta',1);
 if( $_POST ){
     
     extract($_POST);
+
+    if($action == 'add_tipo_documento'){
+
+        $exist = $db->where('codigo_dcto',$_POST['codigo_dcto'])->getOne('m_categoriadocumentacion');
+        if($exist){
+            $insert = false;
+        } else {
+            $data = [
+                'codigo_dcto' => $_POST['codigo_dcto'],
+                'nombre' => $_POST['nombre'],
+                'descripcion' => $_POST['descripcion'],
+            ];
+            $insert = $db->insert('m_categoriadocumentacion',$data);
+        }
+
+        echo json_encode([
+            'status' => $insert
+        ]);
+        exit();
+    }
         
     if( $action == 'edit' ){ 
         
@@ -86,6 +106,19 @@ if( $parametros[0] == 'editar' ){
         }
     }
 }
+
+
+
+
+if( $parametros[0] == 'documentos_codigo' ){
+
+    $documentos_codigo = $db->orderBy('codigo_dcto','ASC')->get('m_categoriadocumentacion');
+    
+}
+
+
+
+
 
 include ROOT . '/views/comun/header.php';
 include ROOT . '/views/comun/menu_top.php';

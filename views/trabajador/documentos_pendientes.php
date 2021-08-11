@@ -28,7 +28,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach( $lista_trabajadores as $person ){ ?>
+                        <?php 
+                        foreach( $lista_trabajadores as $person ){ 
+                        $documentos_requeridos = json_decode($person['documentos_requeridos']);
+                        ?>
                             <tr>
                                 <td> <?php echo $person['id']?> </td>
                                 <td style="white-space: nowrap;"> <?php echo $person['apellidoPaterno'] ?> <?php echo $person['apellidoMaterno'] ?> <?php echo $person['nombres'] ?> </td>
@@ -40,10 +43,20 @@
                                     <td style="background-color:#b7ff9a" class="text-center"><i class="fa fa-check"></i></td>
                                     <?php 
                                     } else { 
-                                    ?>
-                                    <td style="background-color:#ffbbbb" class="text-center"><i class="fa fa-times"></i></td>
-                                    <?php 
+
+                                        if(in_array($cod,$documentos_requeridos)){
+                                            ?>
+                                            <td style="background-color:#ffbbbb" class="text-center"><i class="fa fa-times"></i></td>
+                                            <?php 
+                                        } else {
+                                            ?>
+                                            <td style="background-color:#f5f5f5" class="text-center">n/a</td>
+                                            <?php 
+                                        }
+
                                     }
+
+
                                 }
                                 ?>
                                 <td>
