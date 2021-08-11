@@ -46,16 +46,12 @@ if( ( $_POST ) || $parametros ){
             ";            
     
             $arr_query_post = array(
-                'token' => 'cualquiertokensirve',
-                'currUrl' => $currUrl,
                 'mailto' => $trabajador_email,
-                'nombre' => $trabajador_nombre,
-                'new_hash' => $new_hash,
                 'body' => $body,
-                'subject' => 'Reestablecer Contraseña'
+                'subject' => utf8_decode('Reestablecer Contraseña')
             );
                                     
-            enviarMailExterno($arr_query_post);
+            enviarMailExternalServer($arr_query_post);
 
             //goBack('Hemos enviado instrucciones a su correo para reestablecer su contrase\u00f1a\n');
             redirect(BASE_URL.'/login_trabajador', '', true, $msg = 'Hemos enviado instrucciones a su correo para reestablecer su contrase\u00f1a\n');
@@ -132,19 +128,18 @@ if( ( $_POST ) || $parametros ){
 
 
 if( ( isset($parametros[0]) ) && ( isset($parametros[1]) ) ){
-        
+
     $db->where('email',$parametros[0]);
     $db->where('hash',$parametros[1]);
-    $result = $db->getOne('m_trabajador');
+    $result = $db->getOne('m_trabajador',['email','nombres']);
     
-    if( $db->count > 0 ){
+    if( $result ){
+        
         $new_pass = uniqid();
         
         $db->where('email',$parametros[0]);
         $db->update('m_trabajador', array( 'password' => md5($new_pass), 'hash' => '' ));
         
-        $trabajador_email = $parametros[0];
-        $currUrl = BASE_URL . '/login_trabajador/' . $trabajador_email . '/' . $new_hash;
         $body = "
         <table>
         <tr>
@@ -167,16 +162,13 @@ if( ( isset($parametros[0]) ) && ( isset($parametros[1]) ) ){
         ";    
         
         $arr_query_post = array(
-            'token' => generateToken($trabajador_email),
-            'currUrl' => $currUrl,
-            'mailto' => $trabajador_email,
-            'nombre' => $result['nombres'],
-            'new_hash' =>'',
+            'mailto' => $result['email'],
             'body' => $body,
-            'subject' => 'Nueva contraseña generada'
+            'subject' => utf8_decode('Nueva contraseña generada')
         );
-        
-        enviarMailExterno($arr_query_post);
+
+
+        enviarMailExternalServer($arr_query_post);
                 
     }
     

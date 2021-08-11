@@ -56,6 +56,7 @@
         <p> &nbsp; </p>
         
         <a href="#" class="forgot_pass pull-left">Olvidé mi password</a>
+        <a href="<?php echo BASE_URL ?>/login_trabajador" class="forgot_pass pull-right">Soy Trabajador</a>
                
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->

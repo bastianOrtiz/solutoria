@@ -95,7 +95,7 @@ foreach($resul_vacaciones as $rango){
 if( $_SESSION[PREFIX.'is_trabajador'] ){
 
     $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
-    $db->where('terminada',1);
+    //$db->where('terminada',1);
     $db->orderBy('ano','desc');
     $db->orderBy('mes','desc');
     $liquidacion_trabajador = $db->getOne('liquidacion');

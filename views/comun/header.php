@@ -61,3 +61,4 @@
   <!-- COmentario html desde mac -->
     <body class="skin-blue sidebar-mini" id="body_<?php echo $entity ?>">
         <div class="wrapper">            
+          

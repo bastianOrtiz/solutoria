@@ -2056,7 +2056,14 @@ function generaMenu(){
 
         $menu = menuTrabajador();
         $output_trabajador = '<ul class="sidebar-menu">';
-        $output_trabajador .= '<li class="header">MENÚ </li>';         
+        $output_trabajador .= '<li class="header">MENÚ </li>';
+
+        $output_trabajador .= '<li class="treeview" id="menu_item_0">';
+        $output_trabajador .= '     <a href="' . BASE_URL . '">';
+        $output_trabajador .= '         <i class="fa fa-home"></i> <span>Inicio</span>';
+        $output_trabajador .= '     </a>'; 
+        $output_trabajador .= '</a>';
+
         foreach( $menu as $menu_key => $menu_item ){
                 
             $output_trabajador .= '<li class="treeview" id="menu_item_' . $menu_item['label'] . '">';
