@@ -21,12 +21,9 @@ if( $_POST ){
                     $dia_a_consultar = date('Y-m-d',$i);
                     
                     $query_delete = "
-                    DELETE r
-                    FROM m_relojcontrol r
-                    INNER JOIN m_trabajador T
-                      ON r.userid=T.relojcontrol_id 
-                    WHERE T.empresa_id = ". $_SESSION[ PREFIX . 'login_eid'] ."
-                    AND r.checktime LIKE '". $dia_a_consultar ." %'
+                    DELETE FROM m_relojcontrol 
+                    WHERE checktime like '". $dia_a_consultar ." %' 
+                    AND userid IN (SELECT relojcontrol_id FROM m_trabajador WHERE empresa_id = " . $_SESSION[ PREFIX . 'login_eid'] . ")
                     ";
                     $db->rawQuery($query_delete);
                     
@@ -45,27 +42,29 @@ if( $_POST ){
                         $parts[7] = N/A
                         $parts[8] = N/A
                         */
-    
-                        if( $parts[2] == $dia_a_consultar ){
-                            // Verificar si el dato existe en la BD
-                            $db->where('checktime',$parts[2].' '.$parts[3]);
-                            $db->where('userid',$parts[1]);
-                            $exist = $db->getOne('m_relojcontrol');
-    
-                            if( !$exist ){
-                                $checktype = '';
-                                if( $parts[5] == 0 ){
-                                    $checktype = 'I';
-                                } else {
-                                    $checktype = 'O';
+        
+                        if( is_numeric($parts[1]) ){
+                            if( $parts[2] == $dia_a_consultar ){
+                                // Verificar si el dato existe en la BD
+                                $db->where('checktime',$parts[2].' '.$parts[3]);
+                                $db->where('userid',$parts[1]);
+                                $exist = $db->getOne('m_relojcontrol');
+        
+                                if( !$exist ){
+                                    $checktype = '';
+                                    if( $parts[5] == 0 ){
+                                        $checktype = 'I';
+                                    } else {
+                                        $checktype = 'O';
+                                    }
+                                    $dataInsert = [
+                                        'checktime' => $parts[2].' '.$parts[3],
+                                        'userid' => $parts[1],
+                                        'checktype' => $checktype,
+                                        'logid' => 0
+                                    ];
+                                    $db->insert('m_relojcontrol',$dataInsert);
                                 }
-                                $dataInsert = [
-                                    'checktime' => $parts[2].' '.$parts[3],
-                                    'userid' => $parts[1],
-                                    'checktype' => $checktype,
-                                    'logid' => 0
-                                ];
-                                $db->insert('m_relojcontrol',$dataInsert);
                             }
                         }
                     }
