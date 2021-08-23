@@ -91,7 +91,7 @@ if( $_POST ){
             $dataInsert = [
                 'checktime' => $value['checktime'],
                 'userid' => $reloj_id,
-                'checktype' => $value['checktime'],
+                'checktype' => $value['checktype'],
                 'logid' => 0
             ];
             $db->insert('m_relojcontrol',$dataInsert);
