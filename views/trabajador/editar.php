@@ -289,18 +289,40 @@
                                                         <label for="fechaNacimientoTrabajador">Fecha Nacimiento</label>
                                                         <input type="text" class="form-control required datepicker" value="<?php echo $trabajador['fechaNacimiento'] ?>" id="fechaNacimientoTrabajador" name="fechaNacimientoTrabajador" placeholder="YYYY-mm-dd" readonly="" />
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="emailTrabajador">Email</label>
-                                                        <input type="text" class="form-control" value="<?php echo $trabajador['email'] ?>" name="emailTrabajador" id="emailTrabajador" />
+
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-6">
+                                                            <p><strong>Datos de contacto Corporativos</strong></p>
+                                                            <div class="form-group">
+                                                                <label for="emailTrabajador">Email</label>
+                                                                <input type="text" class="form-control" value="<?php echo $trabajador['email'] ?>" name="emailTrabajador" id="emailTrabajador" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="telefonoTrabajador">Teléfono</label>
+                                                                <input type="text" class="form-control" value="<?php echo $trabajador['telefono'] ?>" name="telefonoTrabajador" id="telefonoTrabajador" />                                
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="celularTrabajador">Celular</label>
+                                                                <input type="text" class="form-control" value="<?php echo $trabajador['celular'] ?>" name="celularTrabajador" id="celularTrabajador" />                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12 col-md-6">
+                                                            <p><strong>Datos de contacto Personal</strong></p>
+                                                            <div class="form-group">
+                                                                <label for="emailTrabajador_pers">Email</label>
+                                                                <input type="text" class="form-control" value="<?php echo $trabajador['email_pers'] ?>" name="emailTrabajador_pers" id="emailTrabajador_pers" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="telefonoTrabajador_pers">Teléfono</label>
+                                                                <input type="text" class="form-control" value="<?php echo $trabajador['telefono_pers'] ?>" name="telefonoTrabajador_pers" id="telefonoTrabajador_pers" />                                
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="celularTrabajador_pers">Celular</label>
+                                                                <input type="text" class="form-control" value="<?php echo $trabajador['celular_pers'] ?>" name="celularTrabajador_pers" id="celularTrabajador_pers" />                                
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="telefonoTrabajador">Teléfono</label>
-                                                        <input type="text" class="form-control" value="<?php echo $trabajador['telefono'] ?>" name="telefonoTrabajador" id="telefonoTrabajador" />                                
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="celularTrabajador">Celular</label>
-                                                        <input type="text" class="form-control" value="<?php echo $trabajador['celular'] ?>" name="celularTrabajador" id="celularTrabajador" />                                
-                                                    </div>
+
                                                     <div class="form-group">
                                                         <label class="top">Extranjero</label>
                                                         <div class="radio">                            

@@ -239,6 +239,9 @@ if( $_POST ){
             'email' => $emailTrabajador,
             'telefono' => $telefonoTrabajador,
             'celular' => $celularTrabajador,
+            'email_pers' => $emailTrabajador_pers,
+            'telefono_pers' => $telefonoTrabajador_pers,
+            'celular_pers' => $celularTrabajador_pers,
             'emergencia' => $emergenciaTrabajador,
             'direccion' => $direccionTrabajador,
             'accionista' => $accionistaTrabajador, //Bool
