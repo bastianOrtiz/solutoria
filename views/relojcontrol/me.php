@@ -1,4 +1,3 @@
-
 <style>
 .chk_autorize{
     visibility: hidden;
@@ -232,7 +231,7 @@
                                                                     /** SI llego atrasado, muestra ticket para autorizar **/                                                                    
                                                                     if( in_array($dia_semana,$dias_laborales_horario) ){
                                                                     ?>
-                                                                    <td style="width: 350px;" class="<?php echo $cls_no_trabaja; ?>">
+                                                                    <td style="width: 350px;" id="td_auth_in_<?php echo $fecha_iterar ?>" class="<?php echo $cls_no_trabaja; ?>">
                                                                     <?php
                                                                         if( $hora_entrada != strtotime( $m_horario_entrada ) ) {                                                                        
                                                                         ?>
@@ -253,11 +252,10 @@
                                                             ?>
                                                             
                                                     			<td class="ausente"> <?php echo $fecha_iterar ?> </td>
-                                                    			<td class="ausente" colspan="2"> 
+                                                    			<td class="ausente" colspan="2" id="td_no_marco_entrada_<?php echo $fecha_iterar; ?>"> 
                                                                     <small>Buscando Justificativo <i class="fa fa-refresh fa-spin"></i></small>
                                                                     <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_entrada[<?php echo $fecha_iterar; ?>][justificado]" />
-                                                                    <span id="span_<?php echo $fecha_iterar ?>"></span>
-                                                                                                                                
+                                                                    <span id="span_<?php echo $fecha_iterar ?>"></span>                                                     
                                                                 </td>                                                            			                                                    			                                                                
                                                     		    
                                                             <?php } ?>
@@ -314,7 +312,7 @@
                                                                     /** SI llego atrasado, muestra ticket para autorizar **/                                                                    
                                                                     if( in_array($dia_semana,$dias_laborales_horario) ){
                                                                     ?>
-                                                                    <td style="width: 350px;" class="<?php echo $cls_no_trabaja; ?>">
+                                                                    <td style="width: 350px;" id="td_auth_out_<?php echo $fecha_iterar ?>" class="<?php echo $cls_no_trabaja; ?>">
                                                                     <?php
                                                                         if( $hora_salida != strtotime( $m_horario_salida ) ) {                                                                        
                                                                         ?>
@@ -335,7 +333,7 @@
                                                                                                                                     
                                                                 ?>
                                                             
-                                                    			<td class="ausente" colspan="3"> 
+                                                    			<td class="ausente" colspan="3" id="td_no_marco_salida_<?php echo $fecha_iterar; ?>"> 
                                                                     <small>Buscando Justificativo <i class="fa fa-refresh fa-spin"></i></small>
                                                                     <input type="checkbox" class="chk_autorize" name="justificativo_no_marco_salida[<?php echo $fecha_iterar; ?>][justificado]" />
                                                                     <span id="span_<?php echo $fecha_iterar ?>"></span>
@@ -409,6 +407,7 @@ $(document).ready(function(){
 
 
     <?php 
+
     foreach( $t_atrasohoraextra as $ahe ){
         $ahe['horas'] = procesarDecimal($ahe['horas']);
         if( $ahe['horas'] > 0 ){
@@ -436,6 +435,19 @@ $(document).ready(function(){
     
     <?php
         }
+
+        if( $ahe['io'] == 'I' ){
+            ?>
+            $("#td_no_marco_entrada_<?php echo $ahe['fecha'] ?>").html(arr_justificativos[<?php echo $ahe['justificativo_id'] ?>]);
+            $("#td_auth_in_<?php echo $ahe['fecha'] ?>").html(arr_justificativos[<?php echo $ahe['justificativo_id'] ?>]);
+            <?php 
+        } else {
+            ?>
+            $("#td_no_marco_salida_<?php echo $ahe['fecha'] ?>").html(arr_justificativos[<?php echo $ahe['justificativo_id'] ?>]);
+            $("#td_auth_out_<?php echo $ahe['fecha'] ?>").html(arr_justificativos[<?php echo $ahe['justificativo_id'] ?>]);
+            <?php
+        }
+
     } 
     ?>
 

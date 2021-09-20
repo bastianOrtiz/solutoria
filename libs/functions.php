@@ -542,7 +542,7 @@ function enviarMailExterno($arr_query_post){
  */
 function enviarMailExternalServer($arr_query_post){
 
-    $url = 'https://www.tecnodatasa.cl/devcontrato/mail.php';
+    $url = 'https://www.tecnodatasa.cl/mail.php';
 
     $arr_query_post['token'] = generateToken($arr_query_post['mailto']);
 
