@@ -134,6 +134,27 @@ function reduccionLaboral($trabajador_id){
 
 
 /** 
+ * Determina si un documento pertenece al trabajador logueado
+ *  
+ * @param (int) $user_id, ID del trabajador
+ * @param (int) $doc_id, ID del documento
+ * @return (bool) 
+ */ 
+function docOwnsTrabajador($user_id,$doc_id){ 
+    global $db;
+
+    $owns = $db->where('id',$doc_id)->where('trabajador_id',$user_id)->getOne('t_documentotrabajador','id'); 
+
+    if( $owns ){ 
+        return true;
+    } else {
+        return false;
+    }
+} 
+
+
+
+/** 
  * Determina si la ausencia considera Mes completo o Corte
  *  
  * @param (int) $ausencia_id, ID de la Ausecia
@@ -1481,6 +1502,19 @@ function menuTrabajador(){
             )
         )
     );
+
+    $menu['anticipo'] = array(
+        'label' => 'Documentación',
+        'icon_class' => 'fa fa-folder-open',
+        'childs' => array(
+            array(
+                'entidad' => 'trabajador',
+                'accion' => 'listar_documentos',
+                'label' => 'Revisar'
+            )
+        )
+    );
+         
     
     /*            
     $menu['anticipo'] = array(

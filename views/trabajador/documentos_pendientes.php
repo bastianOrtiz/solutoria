@@ -16,13 +16,13 @@
                         <thead>
                             <tr>
                                 <th colspan="2"></th>
-                                <th colspan="<?php echo $total_documentos; ?>">Documentos del Trabajador    </th>
+                                <th colspan="<?php echo $total_documentos; ?>" style="white-space: nowrap;">Documentos del Trabajador    </th>
                             </tr>
                             <tr>
                                 <th> ID </th>
                                 <th>Nombre</th>
-                                <?php foreach($codigos_documentos as $cod): ?>
-                                <th class="no-sort"><?php echo $cod; ?></th>
+                                <?php foreach($codigos_documentos as $cod => $nombre_doc): ?>
+                                <th class="no-sort text-center"><?php echo $nombre_doc; ?></th>
                                 <?php endforeach; ?>
                                 <th></th>
                             </tr>
@@ -37,7 +37,7 @@
                                 <td style="white-space: nowrap;"> <?php echo $person['apellidoPaterno'] ?> <?php echo $person['apellidoMaterno'] ?> <?php echo $person['nombres'] ?> </td>
                                 <?php 
                                 $documentos_x_trabajador = getDocumentosPorTrabajador($person['id']);
-                                foreach($codigos_documentos as $cod){
+                                foreach($codigos_documentos as $cod => $nombre_doc){
                                     if( in_array($cod,$documentos_x_trabajador) ){
                                     ?>
                                     <td style="background-color:#b7ff9a" class="text-center"><i class="fa fa-check"></i></td>
