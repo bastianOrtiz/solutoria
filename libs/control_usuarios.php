@@ -16,6 +16,7 @@ $permisos_trabajador['vacaciones']['mis_solicitudes'] = 1;
 $permisos_trabajador['vacaciones']['solicitar'] = 1;
 $permisos_trabajador['relojcontrol']['me'] = 1;
 $permisos_trabajador['usuario']['perfil'] = 1;
+$permisos_trabajador['trabajador']['listar_documentos'] = 1;
  
 /** Si el trabajador es jefe de area **/
 if( $_SESSION[ PREFIX . 'is_jefe' ] ){
