@@ -6,7 +6,29 @@ $paises = $db->get("m_pais");
 $regiones = $db->get("m_region");
 $ids_relojcontrol = $db->rawQuery('SELECT distinct `userid` from m_relojcontrol');
 
-$total_documentos = 20;
+$codigos_documentos = [
+    '001' => 'SGI-F8 Curriculum ISO',
+    '002' => 'Cedula de Identidad',
+    '003' => 'Perfil de Cargo',
+    '004' => 'Cert. Estudios',
+    '005' => 'F22 Reg. de Inducción y DAS',
+    '006' => 'Contrato de Trabajo',
+    '007' => 'Anexo de Contrato',
+    '008' => 'Reglamento Interno',
+    '009' => 'ODI Riesgos Laborales',
+    '010' => 'ODI Teletrabajo',
+    '011' => 'ODI COVID-19',
+    '012' => 'Entrega EPP',
+    '013' => 'Ficha del Personal',
+    '014' => 'Seguro Covid',
+    '015' => 'Cert. Af. AFP',
+    '016' => 'Cert. Af. Fonasa o Isapre',
+    '017' => 'Cert. Inscripción AFC',
+    '018' => 'Evaluación de desempeño',
+    '019' => 'Comprobante de Vacaciones',
+    '020' => 'Cert. Vacaciones progresivas'
+];
+
 
 /** MAX ID RELOJ CONTROL **/
 //(Si en tabla 'm_cuenta' en el campo 'comparteRelojControl' = 1 o true)
@@ -972,6 +994,12 @@ if( $parametros ){
         /** Documentos escaneados del trabajador **/
         $db->where("trabajador_id", $parametros[1]);
         $documentos_trabajador = $db->get("t_documentotrabajador");
+
+    }
+
+    if ($parametros[0] == 'listar_documentos') {
+        $db->where("trabajador_id", $_SESSION[ PREFIX . 'login_uid']);
+        $documentos_trabajador = $db->get("t_documentotrabajador");
     }
 
     if ($parametros[0] == 'marcaje') {
@@ -1134,11 +1162,6 @@ if( $parametros ){
     
     if( $parametros[0] == 'pdf_documentos_pendientes' ){
 
-        $codigos_documentos = [];
-        for($i=1;$i<=$total_documentos;$i++){
-            $codigos_documentos[] = str_pad($i, 3, '0', STR_PAD_LEFT);
-        }
-
         $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
         $db->orderBy("apellidoPaterno","ASC");
         $db->where ("deleted_at", NULL, 'IS');
@@ -1199,11 +1222,6 @@ if( $parametros ){
         header("Pragma: no-cache"); 
         header("Expires: 0");
 
-        $codigos_documentos = [];
-        for($i=1;$i<=$total_documentos;$i++){
-            $codigos_documentos[] = str_pad($i, 3, '0', STR_PAD_LEFT);
-        }
-
         $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
         $db->orderBy("apellidoPaterno","ASC");
         $db->where ("deleted_at", NULL, 'IS');
@@ -1257,11 +1275,7 @@ if( $parametros ){
 
     if ($parametros[0] == 'documentos_pendientes' || $parametros[0] == 'editar') {
 
-        $codigos_documentos = [];
-        for($i=1;$i<=$total_documentos;$i++){
-            $codigos_documentos[] = str_pad($i, 3, '0', STR_PAD_LEFT);
-        }
-
+        
         $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
         $db->orderBy("apellidoPaterno","ASC");
         $db->where ("deleted_at", NULL, 'IS');
