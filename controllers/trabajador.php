@@ -993,17 +993,13 @@ if( $parametros ){
         
         /** Documentos escaneados del trabajador **/
         $db->where("trabajador_id", $parametros[1]);
-<<<<<<< HEAD
         $documentos_trabajador = $db->orderBy('nombre','ASC')->get("t_documentotrabajador");
-=======
-        $documentos_trabajador = $db->get("t_documentotrabajador");
 
     }
 
     if ($parametros[0] == 'listar_documentos') {
         $db->where("trabajador_id", $_SESSION[ PREFIX . 'login_uid']);
-        $documentos_trabajador = $db->get("t_documentotrabajador");
->>>>>>> master
+        $documentos_trabajador = $db->orderBy('nombre','ASC')->get("t_documentotrabajador");
     }
 
     if ($parametros[0] == 'marcaje') {
