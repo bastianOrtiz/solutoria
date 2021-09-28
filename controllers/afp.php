@@ -1,4 +1,5 @@
 <?php
+
 $registros = $db->get("m_afp");
 $afps = $registros;
 
