@@ -126,6 +126,7 @@
                             <!-- /.info-box-content -->
                           </div>
 
+                          <!--
                         <div class="info-box bg-blue">
                             <span class="info-box-icon"><i class="ion ion-android-calendar"></i></span>
 
@@ -136,8 +137,10 @@
                               </span>
 
                             </div>
-                            <!-- /.info-box-content -->
-                          </div>
+                        </div>
+                        -->
+
+
                     </div>
                 </div><!-- /.box -->
                 <?php } ?>

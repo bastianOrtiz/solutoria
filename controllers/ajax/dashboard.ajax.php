@@ -1,5 +1,8 @@
 <?php
 @session_start();
+
+if($_SESSION[ PREFIX . 'logged']):
+
 include '../../libs/config.php';
 include ROOT . '/libs/functions.php';
 include ROOT . '/models/common.php';
@@ -28,5 +31,7 @@ if( $_POST['ajax_action'] == 'procesar_liquidaciones' ){
 
 $json = json_encode($json);
 echo $json;
+
+endif;
 
 ?>

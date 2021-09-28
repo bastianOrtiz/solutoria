@@ -6,7 +6,7 @@
 <h3>Cómo cambiar mi contraseña</h3>
 
 <div class="videoWrapper">
-    <iframe  src="http://www.youtube.com/embed/XHbiXy8h4kk?&autoplay=1&rel=0&showinfo=0&modestbranding=1&autohide=1" frameborder="0" allowfullscreen></iframe>
+    <iframe  src="https://www.youtube.com/embed/XHbiXy8h4kk?&autoplay=1&rel=0&showinfo=0&modestbranding=1&autohide=1" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <?php include 'inc/footer.php'; ?>
