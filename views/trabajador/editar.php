@@ -2298,15 +2298,15 @@
 
                                             <div class="">
                                                 <p>
-                                                  <a class="btn" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                        Documentacion Requerida para <?php echo $trabajador['nombres'] ?> <i class="fa fa-chevron-down"></i>
+                                                  <a class="btn" data-toggle="collapse" href="#documentacion-requerida" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        Documentación <strong>REQUERIDA</strong> para <?php echo $trabajador['nombres'] ?> <i class="fa fa-chevron-down"></i>
                                                   </a>
                                                 </p>
-                                                <div class="collapse" id="collapseExample">
+                                                <div class="collapse" id="documentacion-requerida">
                                                   <div class="box box-default">
                                                     <div class="box-body">
                                                         <?php 
-                                                        foreach( $codigos_documentos as $doc_pend ){ 
+                                                        foreach( $codigos_documentos as $doc_pend => $doc ){ 
                                                         ?>
                                                             <label>
                                                                 <input type="checkbox" name="documentos_requeridos[]" value="<?php echo $doc_pend ?>">
@@ -2319,6 +2319,32 @@
                                                     </div>
                                                   </div>
                                                 </div>
+
+                                                <hr>
+
+                                                <p>
+                                                  <a class="btn" data-toggle="collapse" href="#documentacion-pendiente" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                        Documentación <strong>PENDIENTE</strong> para <?php echo $trabajador['nombres'] ?> <i class="fa fa-chevron-down"></i>
+                                                  </a>
+                                                </p>
+                                                <div class="collapse" id="documentacion-pendiente">
+                                                  <div class="box box-default">
+                                                    <div class="box-body">
+                                                        <?php 
+                                                        foreach( $codigos_documentos as $doc_pend => $doc ){ 
+                                                        ?>
+                                                            <label>
+                                                                <input type="checkbox" name="documentos_pendientes[]" value="<?php echo $doc_pend ?>">
+                                                                 &nbsp; 
+                                                                <?php echo $doc_pend ?>
+                                                            </label>
+                                                            <br>
+                                                        </tr>
+                                                        <?php } ?>
+                                                    </div>
+                                                  </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -2349,8 +2375,7 @@
 
                                                         <?php 
                                                         $documentos_requeridos = json_decode($trabajador['documentos_requeridos']);
-
-                                                        foreach( $codigos_documentos as $doc_pend ){ 
+                                                        foreach( $codigos_documentos as $doc_pend => $doc ){ 
                                                             if( !in_array($doc_pend,$arr_codigos_listos) ){
                                                                 if(in_array($doc_pend,$documentos_requeridos)){
                                                                 ?>
@@ -2399,6 +2424,10 @@
 
         <?php foreach( json_decode($trabajador['documentos_requeridos']) as $doc ): ?>
         $("[name='documentos_requeridos[]'][value='<?php echo $doc ?>']").prop('checked', true);
+        <?php endforeach; ?>
+
+        <?php foreach( json_decode($trabajador['documentos_pendientes']) as $doc ): ?>
+        $("[name='documentos_pendientes[]'][value='<?php echo $doc ?>']").prop('checked', true);
         <?php endforeach; ?>
 
         <?php if($trabajador['reduccion_laboral'] == 1){ ?>
