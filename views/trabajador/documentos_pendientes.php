@@ -7,8 +7,19 @@
     <section class="content">                
         <div class="box">
             <div class="box-header">
-                <a href="<?php echo BASE_URL ?>/trabajador/pdf_documentos_pendientes" class="btn btn-danger pull-right" target="_blank" style="margin-left: 10px;">PDF</a>
-                <a href="<?php echo BASE_URL ?>/trabajador/excel_documentos_pendientes" class="btn btn-success pull-right" target="_blank">Excel</a>                
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p><strong>Leyenda:</strong></p>
+                        <p><span style="background-color: #b7ff9a; padding: 3px 10px; border-radius: 5px;" class="text-center"><i class="fa fa-check"></i></span> &nbsp; Documento listo</p>
+                        <p><span style="background-color: #ffbbbb; padding: 3px 10px; border-radius: 5px;" class="text-center"><i class="fa fa-times"></i></span> &nbsp; Documento Incompleto</p>
+                        <p><span style="background-color: #b0edfb; padding: 3px 10px; border-radius: 5px;" class="text-center"><i class="fa fa-clock-o"></i></span> &nbsp; Documento Pendiente</p>
+                        <p><span style="background-color: #f4f4f4; padding: 3px 10px; border-radius: 5px; border: 1px solid #d7d7d7;" class="text-center">n/c</span> &nbsp; Documento No Corresponde o No Aplica</p>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <a href="<?php echo BASE_URL ?>/trabajador/pdf_documentos_pendientes" class="btn btn-danger pull-right" target="_blank" style="margin-left: 10px;">PDF</a>
+                        <a href="<?php echo BASE_URL ?>/trabajador/excel_documentos_pendientes" class="btn btn-success pull-right" target="_blank">Excel</a>                
+                    </div>
+                </div>
             </div>
             <div class="box-body">
                 <div class="table-responsive">
@@ -31,6 +42,7 @@
                         <?php 
                         foreach( $lista_trabajadores as $person ){ 
                         $documentos_requeridos = json_decode($person['documentos_requeridos']);
+                        $documentos_pendientes = json_decode($person['documentos_pendientes']);
                         ?>
                             <tr>
                                 <td> <?php echo $person['id']?> </td>
@@ -49,9 +61,15 @@
                                             <td style="background-color:#ffbbbb" class="text-center"><i class="fa fa-times"></i></td>
                                             <?php 
                                         } else {
+                                            if(in_array($cod,$documentos_pendientes)){
                                             ?>
-                                            <td style="background-color:#f5f5f5" class="text-center">n/a</td>
+                                                <td style="background-color:#b0edfb" class="text-center"><i class="fa fa-clock-o"></i></td>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <td style="background-color:#f5f5f5" class="text-center">n/c</td>
                                             <?php 
+                                            }
                                         }
 
                                     }
