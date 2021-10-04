@@ -2296,56 +2296,61 @@
                                                 <button type="button" name="btnSubirDoc" id="btnSubirDoc" value="" class="btn btn-primary"> Subir Documento </button>
                                             </div>
 
-                                            <div class="">
-                                                <p>
-                                                  <a class="btn" data-toggle="collapse" href="#documentacion-requerida" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                        Documentación <strong>REQUERIDA</strong> para <?php echo $trabajador['nombres'] ?> <i class="fa fa-chevron-down"></i>
-                                                  </a>
-                                                </p>
-                                                <div class="collapse" id="documentacion-requerida">
-                                                  <div class="box box-default">
-                                                    <div class="box-body">
-                                                        <?php 
-                                                        foreach( $codigos_documentos as $doc_pend => $doc ){ 
-                                                        ?>
-                                                            <label>
-                                                                <input type="checkbox" name="documentos_requeridos[]" value="<?php echo $doc_pend ?>">
-                                                                 &nbsp; 
-                                                                <?php echo $doc_pend ?>
-                                                            </label>
-                                                            <br>
-                                                        </tr>
-                                                        <?php } ?>
+                                            <br>
+                                            <br>
+                                            
+                                            <div class="box box-primary">
+                                                <div class="box-body">
+                                                    <p>
+                                                      <a class="btn btn-primary" data-toggle="collapse" href="#documentacion-requerida" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                            Documentación <strong>REQUERIDA</strong> para <?php echo $trabajador['nombres'] ?> <i class="fa fa-chevron-down"></i>
+                                                      </a>
+                                                    </p>
+                                                    <div class="collapse" id="documentacion-requerida">
+                                                      <div class="box box-default">
+                                                        <div class="box-body">
+                                                            <?php 
+                                                            foreach( $codigos_documentos as $doc_pend => $doc ){ 
+                                                            ?>
+                                                                <label>
+                                                                    <input type="checkbox" name="documentos_requeridos[]" value="<?php echo $doc_pend ?>">
+                                                                     &nbsp; 
+                                                                    <?php echo $doc_pend ?>
+                                                                </label>
+                                                                <br>
+                                                            </tr>
+                                                            <?php } ?>
+                                                        </div>
+                                                      </div>
                                                     </div>
-                                                  </div>
-                                                </div>
 
-                                                <hr>
+                                                    <hr>
 
-                                                <p>
-                                                  <a class="btn" data-toggle="collapse" href="#documentacion-pendiente" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                                        Documentación <strong>PENDIENTE</strong> para <?php echo $trabajador['nombres'] ?> <i class="fa fa-chevron-down"></i>
-                                                  </a>
-                                                </p>
-                                                <div class="collapse" id="documentacion-pendiente">
-                                                  <div class="box box-default">
-                                                    <div class="box-body">
-                                                        <?php 
-                                                        foreach( $codigos_documentos as $doc_pend => $doc ){ 
-                                                        ?>
-                                                            <label>
-                                                                <input type="checkbox" name="documentos_pendientes[]" value="<?php echo $doc_pend ?>">
-                                                                 &nbsp; 
-                                                                <?php echo $doc_pend ?>
-                                                            </label>
-                                                            <br>
-                                                        </tr>
-                                                        <?php } ?>
+                                                    <p>
+                                                      <a class="btn btn-primary" data-toggle="collapse" href="#documentacion-pendiente" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                            Documentación <strong>PENDIENTE</strong> para <?php echo $trabajador['nombres'] ?> <i class="fa fa-chevron-down"></i>
+                                                      </a>
+                                                    </p>
+                                                    <div class="collapse" id="documentacion-pendiente">
+                                                      <div class="box box-default">
+                                                        <div class="box-body">
+                                                            <?php 
+                                                            foreach( $codigos_documentos as $doc_pend => $doc ){ 
+                                                            ?>
+                                                                <label>
+                                                                    <input type="checkbox" name="documentos_pendientes[]" value="<?php echo $doc_pend ?>">
+                                                                     &nbsp; 
+                                                                    <?php echo $doc_pend ?>
+                                                                </label>
+                                                                <br>
+                                                            </tr>
+                                                            <?php } ?>
+                                                        </div>
+                                                      </div>
                                                     </div>
-                                                  </div>
-                                                </div>
-
+                                                </div>  
                                             </div>
+
                                         </div>
                                         <div class="col-md-6">
                                             <strong>Listado de documentos</strong><br /><br />
