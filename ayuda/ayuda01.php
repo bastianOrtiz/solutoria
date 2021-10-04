@@ -1,4 +1,3 @@
-
 <?php include 'inc/header.php'; ?>
 
 <a href="index.php" class="btn_back"><i class="fa fa-chevron-left"></i> &nbsp; VOLVER </a>
