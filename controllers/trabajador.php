@@ -301,7 +301,8 @@ if( $_POST ){
             'horas_reduccion_laboral_semanal' => $horas_reduccion_laboral_semanal,
             'horario_reduccion' => $horario_reduccion,
             'sueldo_base_reducido' => $sueldo_base_reducido,
-            'documentos_requeridos' => json_encode($_POST['documentos_requeridos'])
+            'documentos_requeridos' => json_encode($_POST['documentos_requeridos']),
+            'documentos_pendientes' => json_encode($_POST['documentos_pendientes'])
         );
 
         
@@ -507,7 +508,8 @@ if( $_POST ){
             'relojcontrol_id' => $relojControlIdTrabajador,
             'estadoCivil' => $estadoCivil,
             'centrocosto_externo' => $ccostoExterno,
-            'documentos_requeridos' => json_encode($_POST['documentos_requeridos'])
+            'documentos_requeridos' => json_encode($_POST['documentos_requeridos']),
+            'documentos_pendientes' => json_encode($_POST['documentos_pendientes'])
         );
 
         
