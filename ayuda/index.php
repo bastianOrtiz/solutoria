@@ -1,5 +1,5 @@
 <?php include 'inc/header.php'; ?>
-list:
+
 <div class="list">
     <ul>
         <li> <a href="ayuda01.php"> <i class="fa fa-asterisk"></i> Cómo Recuperar mi contraseña u obtenerla por primera vez </a> </li>
