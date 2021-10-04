@@ -2298,7 +2298,7 @@
 
                                             <br>
                                             <br>
-                                            
+
                                             <div class="box box-primary">
                                                 <div class="box-body">
                                                     <p>
@@ -2315,7 +2315,7 @@
                                                                 <label>
                                                                     <input type="checkbox" name="documentos_requeridos[]" value="<?php echo $doc_pend ?>">
                                                                      &nbsp; 
-                                                                    <?php echo $doc_pend ?>
+                                                                    <?php echo $doc_pend ?> - <?php echo $doc ?>
                                                                 </label>
                                                                 <br>
                                                             </tr>
@@ -2340,7 +2340,7 @@
                                                                 <label>
                                                                     <input type="checkbox" name="documentos_pendientes[]" value="<?php echo $doc_pend ?>">
                                                                      &nbsp; 
-                                                                    <?php echo $doc_pend ?>
+                                                                    <?php echo $doc_pend ?> - <?php echo $doc ?>
                                                                 </label>
                                                                 <br>
                                                             </tr>
