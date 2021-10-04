@@ -2380,27 +2380,50 @@
 
                                                         <?php 
                                                         $documentos_requeridos = json_decode($trabajador['documentos_requeridos']);
+                                                        $documentos_pendientes = json_decode($trabajador['documentos_pendientes']);
+
                                                         foreach( $codigos_documentos as $doc_pend => $doc ){ 
                                                             if( !in_array($doc_pend,$arr_codigos_listos) ){
+                                                                
+                                                                
                                                                 if(in_array($doc_pend,$documentos_requeridos)){
                                                                 ?>
-                                                                <tr class="bg-danger">
-                                                                    <td> <?php echo $doc_pend ?> </td>
+
+                                                                <tr style="background-color: #ffbbbb;">
+                                                                    <td> <?php echo $doc_pend ?> - <?php echo $doc ?> </td>
                                                                     <td style="text-align: right;">
-                                                                        <small>(pendiente)</small>
+                                                                        <small>(Doc. Incompleto)</small>
                                                                     </td>
                                                                 </tr>
-                                                            <?php 
+                                                                
+                                                                <?php 
                                                                 } else {
+
+                                                                if(in_array($doc_pend,$documentos_pendientes)){
                                                                 ?>
-                                                                <tr>
-                                                                    <td> <?php echo $doc_pend ?> </td>
+
+                                                                <tr style="background-color: #b0edfb;">
+                                                                    <td> <?php echo $doc_pend ?> - <?php echo $doc ?> </td>
                                                                     <td style="text-align: right;">
-                                                                        <small>(pendiente pero no requerido)</small>
+                                                                        <small>Doc. pendiente</small>
                                                                     </td>
                                                                 </tr>
+
+                                                                <?php } else { ?>
+
+                                                                <tr>
+                                                                    <td> <?php echo $doc_pend ?> - <?php echo $doc ?> </td>
+                                                                    <td style="text-align: right;">
+                                                                        <small>No corresponde o No Aplica</small>
+                                                                    </td>
+                                                                </tr>
+
                                                                 <?php
                                                                 }
+
+                                                                }
+
+
                                                             } 
                                                         } 
                                                         ?>
