@@ -12,9 +12,8 @@ if( $_SESSION && isAdmin() ){
     $pathinfo = pathinfo($filename); 
     header("Content-type:application/" . $pathinfo['extension']);
     
-    
     if( strtoupper($pathinfo['extension']) != 'PDF' ){
-        header("Content-Disposition:attachment;filename='descarga_".uniqid().".".$pathinfo['extension']."'");
+        header("Content-Disposition:attachment;filename=descarga_".uniqid().".".$pathinfo['extension']);
         header('Content-Transfer-Encoding: binary');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     } 
