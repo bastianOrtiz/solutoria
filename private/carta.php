@@ -6,6 +6,7 @@ include ROOT . '/libs/functions.php';
 include ROOT . '/models/common.php';
 
 
+
 if( $_SESSION && isAdmin() ){   
     
     if( 1==1 ){ // if( @$_SESSION[PREFIX.'carta_amonestacion'] ){
