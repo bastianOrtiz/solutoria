@@ -74,6 +74,7 @@ $ausencias_total = ( $ausencias['dias_ausentismo'] + $ausencias['dias_licencia']
 
 
 // Vacaciones
+/* Calcular las vacaciones en base a los dias de ausencia que son tipo vacaciones
 $sql_v = "SELECT * FROM t_ausencia TA
 WHERE TA.ausencia_id IN ( select ausenciaVacaciones from m_empresa E WHERE E.id = ".$_SESSION[PREFIX . 'login_eid']." )
 AND TA.trabajador_id = ".$_SESSION[PREFIX . 'login_uid']."
@@ -90,12 +91,14 @@ foreach($resul_vacaciones as $rango){
         }
     }
 }
+*/
 
+$dias_vac = $db->where('id',$_SESSION[PREFIX.'login_uid'])->getValue('m_trabajador','diasVacaciones');
 
 if( $_SESSION[PREFIX.'is_trabajador'] ){
 
     $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
-    //$db->where('terminada',1);
+    $db->where('terminada',1);
     $db->orderBy('ano','desc');
     $db->orderBy('mes','desc');
     $liquidacion_trabajador = $db->getOne('liquidacion');
