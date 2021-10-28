@@ -1,14 +1,14 @@
 <?php
 @session_start();
 
-if($_SESSION[ PREFIX . 'logged']):
 
 include '../../libs/config.php';
 include ROOT . '/libs/functions.php';
 include ROOT . '/models/common.php';
 
+if( $_SESSION[ PREFIX . 'logged'] && !$_SESSION[ PREFIX . 'is_trabajador'] ):
+
 $json = array();
-sleep(1);
 
 if( $_POST['ajax_action'] == 'procesar_liquidaciones' ){
     
@@ -18,6 +18,7 @@ if( $_POST['ajax_action'] == 'procesar_liquidaciones' ){
     $db->where('mes',$mes);
     $db->where('ano',$ano);
     $res = $db->update('liquidacion',['terminada' => 1]);
+
     
     if( $res ){
         $json['status'] = 'success';

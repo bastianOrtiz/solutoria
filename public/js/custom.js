@@ -98,6 +98,7 @@ function procesarLiquidaciones(){
             success: function (json) {                  
                 if(json.status == 'success'){                                               
                     $(".overlayer").fadeOut(300);
+                    swal('','Liquidaciones de '+ MES_CORTE_TXT +'/'+ANO_CORTE+' cerradas correctamente');
                 }
             }
         })
