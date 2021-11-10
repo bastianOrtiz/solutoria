@@ -284,6 +284,7 @@ if( $_POST ){
             'fechaContratoFin' => $finContratoTrabajador,
             
             'cargo_id' => $cargoTrabajador,
+            'jefe_id' => $jefeTrabajador,
             'centrocosto_id' => $centroCostoTrabajador,
             'departamento_id' => $departamentoTrabajador,
             'comuna_id' => $comunaTrabajador,
@@ -496,6 +497,7 @@ if( $_POST ){
             'fechaContratoFin' => $finContratoTrabajador,
             
             'cargo_id' => $cargoTrabajador,
+            'jefe_id' => $jefeTrabajador,
             'centrocosto_id' => $centroCostoTrabajador,
             'departamento_id' => $departamentoTrabajador,
             'comuna_id' => $comunaTrabajador,
@@ -652,7 +654,13 @@ if( $parametros ){
             redirect(BASE_URL . '/' . $entity . '/listar/' );
             exit();
         }
-        
+
+
+        $db->orderBy("apellidoPaterno","ASC");
+        $db->where ("deleted_at", NULL, 'IS');
+        $db->where ("tipocontrato_id", [3,4], 'NOT IN');
+        $lista_trabajadores = $db->get("m_trabajador");
+
         
         $mes = getMesMostrarCorte();        
         $ano = getAnoMostrarCorte();

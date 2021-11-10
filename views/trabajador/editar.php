@@ -448,6 +448,16 @@
                                                 <script>$("#cargoTrabajador").val('<?php echo $trabajador['cargo_id'] ?>') </script>
                                             </div>
                                             <div class="form-group">
+                                                <label for="cargoTrabajador">Jefe directo</label>
+                                                <select class="form-control required" name="jefeTrabajador" id="jefeTrabajador">
+                                                    <option value="">Seleccione Jefe directo</option>
+                                                    <?php foreach( $lista_trabajadores as $jefe ){ ?>
+                                                    <option value="<?php echo $jefe['id'] ?>"><?php echo getNombreTrabajador($jefe['id'], false) ?> </option>
+                                                    <?php } ?>
+                                                </select>
+                                                <script>$("#jefeTrabajador").val('<?php echo $trabajador['jefe_id'] ?>') </script>
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="centroCostoTrabajador">Centro Costo</label>
                                                 <select class="form-control required" name="centroCostoTrabajador" id="centroCostoTrabajador">
                                                     <option value="">Seleccione Centro Costo</option>
@@ -2450,6 +2460,8 @@
 <script>
     $(document).ready(function(){
 
+
+
         <?php foreach( json_decode($trabajador['documentos_requeridos']) as $doc ): ?>
         $("[name='documentos_requeridos[]'][value='<?php echo $doc ?>']").prop('checked', true);
         <?php endforeach; ?>
@@ -3516,7 +3528,7 @@
           
     
     $(window).load(function(){
-        cargaComuna('<?php echo fnGetRegion($trabajador['comuna_id']) ?>');        
+        cargaComuna('<?php echo fnGetRegion($trabajador['comuna_id']) ?>');
     })
     
     function cargaCamposPersonalizados(id_tipopago){
