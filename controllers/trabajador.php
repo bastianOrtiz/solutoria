@@ -659,7 +659,7 @@ if( $parametros ){
         $db->orderBy("apellidoPaterno","ASC");
         $db->where ("deleted_at", NULL, 'IS');
         $db->where ("tipocontrato_id", [3,4], 'NOT IN');
-        $lista_trabajadores = $db->get("m_trabajador");
+        $lista_trabajadores_jefes = $db->get("m_trabajador");
 
         
         $mes = getMesMostrarCorte();        
