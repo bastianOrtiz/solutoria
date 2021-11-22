@@ -42,6 +42,10 @@
     <link href="<?php echo BASE_URL ?>/public/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo BASE_URL ?>/public/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
     
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
     <link rel="stylesheet" type="text/css" media="print" href="<?php echo BASE_URL ?>/public/css/print.css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

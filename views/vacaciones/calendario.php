@@ -68,27 +68,32 @@ $("select").change(function(){
 $(document).ready(function(){              
         
     $('#calendar').fullCalendar({
-          header: {
+        monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+        monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
+        dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
+        height: 500,
+        header: {
             left: 'prev,next today',
             center: 'title',
             right: 'month,agendaWeek,agendaDay'
-          },
-          buttonText: {
-            today: 'today',
-            month: 'month',
-            week: 'week',
-            day: 'day'
-          },
+        },
+        buttonText: {
+            today: 'Hoy',
+            month: 'Mes',
+            week: 'Semana',
+            day: 'Día'
+        },
           //Random default events
-          events: [
+        events: [
             <?php echo $events; ?>
-          ],
-          eventClick: function(calEvent, jsEvent, view) {
-            alert('Ausencia: ' + calEvent.desc);
-          },
-          editable: false,
-          droppable: false, // this allows things to be dropped onto the calendar !!!           
-        });
+        ],
+        eventClick: function(calEvent, jsEvent, view) {
+            swal('','Trabajador: ' + calEvent.desc);
+        },
+        editable: false,
+        droppable: false, // this allows things to be dropped onto the calendar !!!           
+    });
     
              
 })

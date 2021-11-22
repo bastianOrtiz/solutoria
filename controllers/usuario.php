@@ -1,5 +1,4 @@
 <?php
-ini_set('error_reporting', E_ALL); ini_set('display_errors', 1);
 $db->where('cuenta_id', $_SESSION[PREFIX.'login_cid'] );
 $registros = $db->get("m_usuario");
 

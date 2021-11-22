@@ -126,19 +126,21 @@
                             <!-- /.info-box-content -->
                           </div>
 
-                          <!--
                         <div class="info-box bg-blue">
-                            <span class="info-box-icon"><i class="ion ion-android-calendar"></i></span>
+                            <span class="info-box-icon" style="height: 110px;"><i class="ion ion-android-calendar"></i></span>
 
                             <div class="info-box-content">
-                              <span class="info-box-text">Días de vacaciones tomadas este año</span>
+                              <span class="info-box-text">Días de vacaciones disponibles</span>
                               <span class="info-box-number">
-                                <?php echo $dias_vac ?>
-                              </span>
+                                    <?php echo $dias_vac ?> <small>Legales</small><br>
+                                    <?php echo $dias_vac_pro ?> <small>Progresivos</small>
 
+                                    &nbsp; &nbsp; &nbsp; &nbsp;
+                                    <a href="<?php echo BASE_URL ?>/vacaciones/solicitar" class="btn btn-primary">Ver/Solicitar vacaciones</a>
+                              </span>
+                            
                             </div>
                         </div>
-                        -->
 
 
                     </div>

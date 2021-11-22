@@ -359,6 +359,7 @@ function obtenerTotalAfc2( $tope, $trabajador_id ){
     $db->where('tipocontrato_id',2);
     $db->where('activo',1);
     $contrato_indefinido = $db->getOne('t_contrato');
+
     
     if( $contrato_indefinido ){        
         // Si Su contrato indefinido comenzo el mismo mes que se esta liquidando, se restan los dias        

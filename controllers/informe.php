@@ -1413,6 +1413,68 @@ if( $_POST ){
 }
 
 
+if( $parametros[0] == 'saldo_vacaciones' ){
+    
+    $trabajadores_vacaciones = $db->where('tipocontrato_id',[3,4],'NOT IN')
+    ->where('empresa_id',$_SESSION[PREFIX . 'login_eid'])
+    ->orderBy('apellidoPaterno','ASC')
+    ->get('m_trabajador',null,['apellidoPaterno', 'apellidoMaterno', 'nombres', 'departamento_id', 'diasVacaciones', 'diasVacacionesProgresivas']);
+
+}
+
+if( $parametros[0] == 'saldo_vacaciones' && $parametros[1] == 'pdf' ){
+
+    if( file_exists( ROOT . '/private/uploads/images/' . fotoEmpresa( $_SESSION[PREFIX.'login_eid'] ) ) ){
+        $foto_empresa =  ROOT . '/private/uploads/images/' . fotoEmpresa( $_SESSION[PREFIX.'login_eid'] );
+    } else {
+        $foto_empresa = ROOT . '/public/img/no_img.jpg';
+    }
+
+    $html = '
+    <page backtop="1mm" backbottom="0mm" backleft="3mm" backright="3mm" style="font-size: 10pt">
+    
+    <table style="width: 750px">
+        <tr>
+            <td style="width: 50%"><img class="round" src="'.$foto_empresa.'"></td>
+            <td style="width: 50%; text-align: right">Informe Saldo dias Vacaciones<br>' . date('d/M/Y') . '<br>' . date('H:i') . '</td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <br>
+    <table border="0" cellpadding="0" cellspacing="0" style="border: 1px solid gray">
+        <thead>
+            <tr>
+                <th style="text-align: center; border-collapse: collapse; border: 1px solid gray; padding: 10px 10px"> Nombre </th>
+                <th style="text-align: center; border-collapse: collapse; border: 1px solid gray; padding: 10px 10px"> Área </th>
+                <th style="text-align: center; border-collapse: collapse; border: 1px solid gray; padding: 10px 10px"> Vacaciones<br> Legales </th>
+                <th style="text-align: center; border-collapse: collapse; border: 1px solid gray; padding: 10px 10px"> Vacaciones<br> Progresivas </th>
+            </tr>
+        </thead>
+        <tbody>';
+            foreach( $trabajadores_vacaciones as $row ){
+                $html .= '
+                <tr>
+                    <td style="text-align: center; border-collapse: collapse; border: 1px solid gray; padding: 10px 10px"> ' . $row['apellidoPaterno'] . ' ' . $row['apellidoMaterno'] . ' ' . $row['nombres'] . ' </td>
+                    <td style="text-align: center; border-collapse: collapse; border: 1px solid gray; padding: 10px 10px"> ' . getNombre($row['departamento_id'], 'm_departamento', false) . '</td>
+                    <td style="text-align: center; border-collapse: collapse; border: 1px solid gray; padding: 10px 10px"> ' . $row['diasVacaciones'] . '</td>
+                    <td style="text-align: center; border-collapse: collapse; border: 1px solid gray; padding: 10px 10px">' . $row['diasVacacionesProgresivas'] . '</td>
+                </tr>
+                ';
+            }
+        $html .= '
+        </tbody>
+    </table>
+    </page>
+    ';
+
+    require_once( ROOT . '/libs/html2pdf/html2pdf.class.php');
+    $html2pdf = new HTML2PDF('P','LETTER','es');
+    $html2pdf->WriteHTML($html);
+    $html2pdf->Output( 'informe_saldos_vacaciones.pdf');
+    exit();
+}
+
 
 if( $parametros[0] == 'dias_trabajados' ){
     if( $parametros[1] == 'excel' ){

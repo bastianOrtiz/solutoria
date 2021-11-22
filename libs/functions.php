@@ -1399,7 +1399,7 @@ function menuJefe(){
         )
     );
     
-    /*
+  
     $menu['vacaciones_aprovar'] = array(
         'label' => 'Vacaciones',
         'icon_class' => 'fa fa-plane',
@@ -1416,7 +1416,7 @@ function menuJefe(){
             )
         )
     );
-    */
+  
                         
     return $menu;   
 }
@@ -1528,6 +1528,7 @@ function menuTrabajador(){
             )
         )
     );
+    */
             
     $menu['vacaciones'] = array(
         'label' => 'Vacaciones',
@@ -1536,11 +1537,11 @@ function menuTrabajador(){
             array(
                 'entidad' => 'vacaciones',
                 'accion' => 'solicitar',
-                'label' => 'Solicitar'
+                'label' => 'Ver / Solicitar'
             )
         )
     );
-    */
+    
     
     $menu['relojcontrol'] = array(
         'label' => 'Reloj Control',
@@ -1934,6 +1935,11 @@ function mainMenu(){
                 'entidad' => 'informe',
                 'accion' => 'dias_trabajados',
                 'label' => 'Dias trabajados'
+            ),
+            array(
+                'entidad' => 'informe',
+                'accion' => 'saldo_vacaciones',
+                'label' => 'Saldos Vacaciones'
             )
         )
     );
@@ -2050,6 +2056,18 @@ function mainMenu(){
                 'label' => 'Generar x Trabajador'
             ),
             
+        )
+    );
+    
+    $menu['vacaciones'] = array(
+        'label' => 'Vacaciones',
+        'icon_class' => 'fa fa-plane',
+        'childs' => array(
+            array(
+                'entidad' => 'vacaciones',
+                'accion' => 'confirmar_solicitudes',
+                'label' => 'Confirmar Solicitudes'
+            ),
         )
     );
     

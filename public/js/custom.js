@@ -86,23 +86,35 @@ $(document).ready(function(){
 })
 
 function procesarLiquidaciones(){
-    if( confirm('¿Cerrar el proceso de liquidacion de '+ MES_CORTE_TXT +'/'+ANO_CORTE+'?') ){
-        $.ajax({
-            type: "POST",
-            url: BASE_URL + '/controllers/ajax/dashboard.ajax.php',
-            data: 'ajax_action=procesar_liquidaciones',
-            dataType: 'json',
-            beforeSend: function(){   
-                $(".overlayer").show();
-            },
-            success: function (json) {                  
-                if(json.status == 'success'){                                               
-                    $(".overlayer").fadeOut(300);
-                    swal('','Liquidaciones de '+ MES_CORTE_TXT +'/'+ANO_CORTE+' cerradas correctamente');
+    swal({
+        title: '¿Cerrar '+ MES_CORTE_TXT +'/'+ANO_CORTE+'?',
+        icon: 'warning',
+        text: 'Esto cerrará el proceso de liquidaciones del mes y procesará los dias de vacaciones (sumará 1.25 dias a cada trabajador)',
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+                type: "POST",
+                url: BASE_URL + '/controllers/ajax/dashboard.ajax.php',
+                data: 'ajax_action=procesar_liquidaciones',
+                dataType: 'json',
+                beforeSend: function(){   
+                    $(".overlayer").show();
+                },
+                success: function (json) {                  
+                    if(json.status == 'success'){                                               
+                        swal('','Proceso de cierre de '+ MES_CORTE_TXT +'/'+ANO_CORTE+' completado')
+                        .then((data) => {
+                            window.location.reload();
+                        });
+                    }
                 }
-            }
-        })
-    }
+            })
+
+        }
+    });
 }
 
 function callAjaxSidebar(){    

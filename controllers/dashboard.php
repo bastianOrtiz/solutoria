@@ -94,6 +94,7 @@ foreach($resul_vacaciones as $rango){
 */
 
 $dias_vac = $db->where('id',$_SESSION[PREFIX.'login_uid'])->getValue('m_trabajador','diasVacaciones');
+$dias_vac_pro = $db->where('id',$_SESSION[PREFIX.'login_uid'])->getValue('m_trabajador','diasVacacionesProgresivas');
 
 if( $_SESSION[PREFIX.'is_trabajador'] ){
 

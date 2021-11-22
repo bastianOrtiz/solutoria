@@ -1,5 +1,10 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 @session_start();
+
 
 /** Includes Comunes para todo el sistema **
 =============================================

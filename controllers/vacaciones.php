@@ -4,72 +4,228 @@ $ano = getAnoMostrarCorte();
 $db->where("id",$_SESSION[PREFIX.'login_eid']);
 $id_ausencia_vacaciones = $db->getValue('m_empresa','ausenciaVacaciones');
 
-$db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);                        
-$db->where('aprobado',null,'IS');
-$vacaciones_espera = $db->get('m_vacaciones');
+$diasVacacionesTrabajador = $db->where('id',$_SESSION[PREFIX . 'login_uid'])->getValue('m_trabajador','diasVacaciones');
+$diasVacacionesProgresivasTrabajador = $db->where('id',$_SESSION[PREFIX . 'login_uid'])->getValue('m_trabajador','diasVacacionesProgresivas');
 
 
-$sql = "
-SELECT  * FROM t_ausencia 
-WHERE  trabajador_id = ".$_SESSION[PREFIX.'login_uid']."    
-AND ausencia_id = $id_ausencia_vacaciones
-";
-$vacaciones_historial = $db->rawQuery( $sql );
+$vacaciones_espera_todos = $db->get('m_vacaciones');
 
-$db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);                        
-$db->where('aprobado',0);
-$vacaciones_historial_rechazados = $db->get('m_vacaciones');
 
-//if( isAdmin() ){
-    $vacaciones_espera_todos = $db->get('m_vacaciones');
-//}
+// Determinar trabajadores a cargo del jefe logueado y buscar solicitudes de ESOS trabajadores
+
+$db->where('id',$_SESSION[PREFIX.'login_uid']);
+$cargo_id = $db->getValue('m_trabajador','cargo_id');
 
 
 if( $_POST ){
-    extract($_POST);  
-          
-    if( @$_POST['action'] == 'solicitar_vacaciones' ){                
-        
-        $diasHabiles = diasHabiles( $_SESSION[PREFIX.'login_uid'],$desdeVacaciones, $hastaVacaciones, $id_ausencia_vacaciones);                
-        
-        $diasVacacionesTrabajador = $db->getValue('m_trabajador','diasVacaciones');
-        
-        if( $diasHabiles > $diasVacacionesTrabajador ){
-            $response = encrypt("status=warning&mensaje=No puede solicitar mas de $diasVacacionesTrabajador días hábiles legales&id=");    
-        } else{
-            //SELECT * from t_ausencia WHERE trabajador_id = 1 and ausencia_id = 4 and YEAR( fecha_inicio ) = '2016'
-            $sub_total_dias = 0;
-            
-            $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
-            $db->where('ausencia_id',4);
-            $db->where('YEAR( fecha_inicio )',$ano);
-            $vacas = $db->get('t_ausencia');
-                      
-            foreach( $vacas as $v ){
-                $datetime1 = new DateTime($v['fecha_inicio']);
-                $datetime2 = new DateTime($v['fecha_fin']);
-                $interval = $datetime1->diff($datetime2);                
-                $int_dias += (int)($interval->format('%a'));                
-                $sub_total_dias += $int_dias;
-            }
-            
-            $vacacionesDisponibleEsteAno = ( $diasVacacionesTrabajador - $sub_total_dias );
-            
-            if( $diasHabiles > $vacacionesDisponibleEsteAno ){
-                $response = encrypt("status=warning&mensaje=No puede solicitar mas de $diasVacacionesTrabajador dias habiles legales en el año &id=");
+
+    extract($_POST);
+
+
+    if($_POST['action'] == 'confirmar_vacaciones'){
+
+        if( $_POST['status_aprobacion'] == 1 ){ // Si se confirma la solicitud de vacaciones:
+
+            // 1. Actualizar la solicitud a confirmada = 1
+            $db->where('id',$_POST['vacaciones_id'])->update('m_vacaciones',[
+                'confirmada' => 1,
+                'confirmada_por' => $_SESSION[PREFIX.'login_uid'],
+                'confirmada_fecha' => date('Y-m-d H:i:s')
+            ]);
+
+            // 2. Ingresar los dias a la tabla t_ausencia
+            $solicitud = $db->where('id',$_POST['vacaciones_id'])->getOne('m_vacaciones');
+
+            $db->insert('t_ausencia',[
+                'fecha_inicio' => $solicitud['fecha_inicio'],
+                'fecha_fin' => $solicitud['fecha_fin'],
+                'totalDias' => $solicitud['totalDias'],
+                'trabajador_id' => $solicitud['trabajador_id'],
+                'ausencia_id' => $id_ausencia_vacaciones,
+                'usuario_id' => $_SESSION[PREFIX.'login_uid'],
+            ]);
+
+
+            // 3. Descontar dias de las vacaciones que tiene actualmente (Progresivas o Legales)
+            if( $solicitud['tipo'] == 'progresivas' ){
+                $diasVacacionesTrabajador = $db->where('id',$solicitud['trabajador_id'])->getValue('m_trabajador','diasVacacionesProgresivas');
+                 $db->where('id',$solicitud['trabajador_id'])->update('m_trabajador',[
+                    'diasVacacionesProgresivas' => ( $diasVacacionesTrabajador - $solicitud['totalDias'])
+                ]);
             } else {
-                
-                $data_insert = array(
-                    'trabajador_id' => $_SESSION[PREFIX.'login_uid'],
-                    'fecha_inicio' => $desdeVacaciones,
-                    'fecha_fin' => $hastaVacaciones,
-                    'totalDias' => $diasHabiles                    
-                );
-                $insert_id = $db->insert('m_vacaciones',$data_insert);
-                
-                $response = encrypt('status=success&mensaje=Vacaciones solicitadas correctmente&id=');
+                $diasVacacionesTrabajador = $db->where('id',$solicitud['trabajador_id'])->getValue('m_trabajador','diasVacaciones');
+                $db->where('id',$solicitud['trabajador_id'])->update('m_trabajador',[
+                    'diasVacaciones' => ( $diasVacacionesTrabajador - $solicitud['totalDias'])
+                ]);
             }
             
+           
+            $person = $db->where('id',$solicitud['trabajador_id'])->getOne('m_trabajador');
+
+            $body = "
+                <table>
+                    <tr>
+                        <td> 
+                            <h2> Hola, " . $person['nombres'] . " " . $person['apellidoPaterno'] . " " . $person['apellidoMaterno'] . " </h2>
+                            <p>
+                                Su solicitud de vacaciones, desde el " . date('d/M/Y',strtotime($solicitud['fecha_inicio'])) . ", hasta el " . date('d/M/Y',strtotime($solicitud['fecha_fin'])) . " ha sido CONFIRMADA
+                            </p>
+                            <p>
+                                El periodo de vacaciones ha sido descontado autom&aacute;ticamente de su saldo de d&iacute;as de vacaciones y se ver&aacute; reflejado en la liquidaci&oacute;n correspondiente al mes solicitado.
+                            </p>
+                            <br />
+                            <p>
+                                Saludos<br />
+                                Tecnodata S.A.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            ";
+
+            $mailto = $db->where('id',$solicitud['trabajador_id'])->getValue('m_trabajador','email');
+
+
+            // 4. Enviar correo avisando que esta OK
+            $mail = new PHPMailer(true);
+            try {
+                
+                $mail->isSMTP();
+                $mail->Host     = 'srvcorreo.tecnodatasa.cl';
+                $mail->SMTPAuth = true;
+                $mail->Username = "sist_contr@tecnodatasa.cl";
+                $mail->Password = "devti007";
+
+                $mail->SMTPOptions = array(
+                    'ssl' => array(
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                    )
+                );
+
+                //Recipients
+                $mail->setFrom("sist_contr@tecnodatasa.cl", 'Recursos Humanos Tecnodata');
+                $mail->addAddress($mailto);
+                
+                //Content
+                $mail->isHTML(true);
+                $mail->Subject = 'Solicitud de vacaciones CONFIRMADA';
+                $mail->Body    = $body;
+
+                $mail->send();
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+
+            $response = encrypt('status=success&mensaje=Vacaciones CONFIRMADAS correctamente&id=');
+
+        } else {
+            $response = encrypt('status=error&mensaje=Vacaciones NO CONFIRMADAS&id=');
+        }
+
+        redirect(BASE_URL . '/' . $entity . '/confirmar_solicitudes/response/' . $response );
+        exit();
+
+    }
+
+
+    if( @$_POST['action'] == 'solicitar_vacaciones' ){
+
+        
+        $int_desde_vacaciones = str_replace("-", "", $desdeVacaciones);
+        $int_desde_vacaciones = (int)$int_desde_vacaciones;
+        $int_hoy = (int)date('Ymd');
+
+        if($int_desde_vacaciones < $int_hoy){
+            $response = encrypt("status=error&mensaje=No puede solicitar vacaciones antes de hoy&id=");    
+        } else {
+            $diasHabiles = diasHabiles( $_SESSION[PREFIX.'login_uid'],$desdeVacaciones, $hastaVacaciones, $id_ausencia_vacaciones);
+            
+            if( $diasHabiles > $diasVacacionesTrabajador ){
+                $response = encrypt("status=error&mensaje=No puede solicitar mas de $diasVacacionesTrabajador días hábiles legales&id=");    
+            } else{
+
+                if( $cargo == 'progresivas' && $diasHabiles > $diasVacacionesProgresivasTrabajador ){
+                    $response = encrypt('status=error&mensaje=No puedes pedir mas de ' . $diasVacacionesProgresivasTrabajador . ' días de vacaciones progresivas&id=');
+                } else {
+
+                    $data_insert = array(
+                        'trabajador_id' => $_SESSION[PREFIX.'login_uid'],
+                        'fecha_inicio' => $desdeVacaciones,
+                        'fecha_fin' => $hastaVacaciones,
+                        'totalDias' => $diasHabiles,                    
+                        'tipo' => $cargo                    
+                    );
+                    $insert_id = $db->insert('m_vacaciones',$data_insert);
+                    
+                    $solicitud = $db->where('id',$insert_id)->getOne('m_vacaciones');
+
+                    $dias_disponibles = $db->where('id',$solicitud['trabajador_id'])->getValue('m_trabajador','diasVacaciones');
+                    $dias_disponibles_prog = $db->where('id',$solicitud['trabajador_id'])->getValue('m_trabajador','diasVacacionesProgresivas');
+
+
+                    // AVisar al jefe directo que hay una solicitud de vacaciones
+                    $jefe_id = $db->where('id',$_SESSION[PREFIX.'login_uid'])->getValue('m_trabajador','jefe_id');
+                    $jefe = $db->where('id',$jefe_id)->getOne('m_trabajador');
+
+                    $body = "
+                        <table>
+                            <tr>
+                                <td> 
+                                    <h2> Hola, " . $jefe['nombres'] . " " . $jefe['apellidoPaterno'] . " " . $jefe['apellidoMaterno'] . " </h2>
+                                    <p>
+                                        Le informamos que el trabajador <strong>" . getNombreTrabajador($_SESSION[PREFIX . 'login_uid'],true) . "</strong> est&aacute; solicitando <strong>" . $solicitud['totalDias'] . " d&iacute;as </strong> de vacaciones, con cargo a sus vacaciones " . $solicitud['tipo'] . ", desde el " . date('d/M/Y',strtotime($solicitud['fecha_inicio'])) . ", hasta el " . date('d/M/Y',strtotime($solicitud['fecha_fin'])) . ".
+                                    </p>
+                                    <p>
+                                    Su saldo actual de dias disponibles es:<br>
+                                    Vacaciones Legales: " . $dias_disponibles . " d&iacute;as <br>
+                                    Vacaciones Progresivas: " . $dias_disponibles_prog . " d&iacute;as <br>
+                                    </p>
+                                    <p>Ingrese al portal de Recursos Humanos para aprobar o rechazar esta solicitud, seg&uacute;n sea el caso.</p>
+                                    <p>
+                                        <br>
+                                        Saludos<br />
+                                        Tecnodata S.A.
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    ";
+
+                    $mailto = $jefe['email'];
+
+                    $mail = new PHPMailer(true);
+                    //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                    $mail->isSMTP();
+                    $mail->Host     = 'srvcorreo.tecnodatasa.cl';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = "sist_contr@tecnodatasa.cl";
+                    $mail->Password = "devti007";
+
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true
+                        )
+                    );
+
+                    //Recipients
+                    $mail->setFrom("sist_contr@tecnodatasa.cl", 'Recursos Humanos Tecnodata');
+                    $mail->addAddress($mailto);
+                    
+                    //Content
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Nueva Solicitud de vacaciones';
+                    $mail->Body    = $body;
+
+                    $mail->send();
+
+
+                    $response = encrypt('status=success&mensaje=Vacaciones solicitadas correctamente. Ahora debe esperar a que su jefe directo la revise y apruebe o rechace según sea el caso&id=');
+                }
+            }
         }
         
         logit( $_SESSION[PREFIX.'login_name'],$_POST['action'],'vacaciones',$insert_id,$db->getLastQuery() );
@@ -79,84 +235,284 @@ if( $_POST ){
     }
     
     
-    if( $action == 'aprobar' ){                        
+    if( $action == 'aprobar' ){          
         
         $db->where('id',$vacaciones_id);
         $vacaciones_pre = $db->getOne('m_vacaciones');
-    
-        if( $status_aprobacion == 1 ){
-            $data = Array (
-                "fecha_inicio" => $vacaciones_pre['fecha_inicio'],            
-                "fecha_fin" => $vacaciones_pre['fecha_fin'],        
-                "ausencia_id" => $id_ausencia_vacaciones,
-                "trabajador_id" => $vacaciones_pre['trabajador_id']
-            );                        
-                           
-            $insert_id = $db->insert('t_ausencia', $data);
-            logit( $_SESSION[PREFIX.'login_name'],$_POST['action'],'vacaciones (t_ausencia)',$insert_id,$db->getLastQuery() );
-        }
+
+        $arr_status = ['Rechazada','Aprobada'];
         
-        
+        $trabajador = $db->where('id',$vacaciones_pre['trabajador_id'])->getOne('m_trabajador');
         
         $data_upd = array(
             "aprobado" => $status_aprobacion,
-            "aprobadoPor" => $_SESSION[PREFIX.'login_name'], 
+            "aprobadoPor" => getNombreTrabajador($_SESSION[PREFIX.'login_uid'], true), 
             "fechaAprobacion" => date('Y-m-d H:i:s')
         );                
         
         $db->where('id',$vacaciones_pre['id']);
         $db->update('m_vacaciones',$data_upd);
-        
-        $response = encrypt('status=success&mensaje=Datos guardados correctamente&id='.$insert_id);                           
+
+        $body = "
+            <table>
+                <tr>
+                    <td> 
+                        <h2> Hola, " . $trabajador['nombres'] . " " . $trabajador['apellidoPaterno'] . " " . $trabajador['apellidoMaterno'] . " </h2>
+                        <p>
+                            Su solicitud de vacaciones, desde el " . date('d/M/Y',strtotime($vacaciones_pre['fecha_inicio'])) . ", hasta el " . date('d/M/Y',strtotime($vacaciones_pre['fecha_fin'])) . " ha sido " . $arr_status[$status_aprobacion] . "
+                        </p>";
+
+                    if($status_aprobacion == 1){
+                        $body .= "<p>Por favor, imprima el formulario adjunto. F&iacute;rmelo y ll&eacute;velo a Recursos Humanos, para que confirmen su solicitud.</p>";
+                    }
+            
+                        
+                    $body .= "
+                        <br />
+                        <p>
+                            Saludos<br />
+                            Tecnodata S.A.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        ";            
+
+        $mail = new PHPMailer(true);
+        //$mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $mail->isSMTP();
+        $mail->Host = "srvcorreo.tecnodatasa.cl";
+        $mail->SMTPAuth = true;
+        $mail->Username = "sist_contr@tecnodatasa.cl";
+        $mail->Password = "devti007";
+
+        $mail->SMTPOptions = array( // Disable SSL Check
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+
+        //Recipients
+        $mail->setFrom("sist_contr@tecnodatasa.cl", 'Recursos Humanos Tecnodata');
+        $mail->addAddress($trabajador['email']);     //Add a recipient
+                    
+        //Attachments
+        $v_legal = ($vacaciones_pre['tipo'] == 'legal') ? 'X' : '&nbsp;&nbsp;';
+        $v_progre = ($vacaciones_pre['tipo'] == 'progresivas') ? 'X' : '&nbsp;&nbsp;';
+
+        $saldo_pendiente = ($vacaciones_pre['tipo'] == 'legal') ? ($trabajador['diasVacaciones'] - $vacaciones_pre['totalDias']) : ($trabajador['diasVacacionesProgresivas'] - $vacaciones_pre['totalDias']);
+
+
+        if($status_aprobacion == 1){
+            $formulario_vacaciones_html = '
+            <style type="text/css">
+                table.border td{ border: 1px solid #000; padding: 2px 5px; }
+            </style>
+            <page style="font-family: sans-serif;" backtop="1mm" backbottom="0mm" backleft="10mm" backright="10mm" style="font-size: 10pt">
+                <table style="width: 800px" border="0">
+                    <tr>
+                        <td style="width: 400px; text-align: left"><img class="round" src="'. BASE_URL .'/public/img/log_tecnodata_new.png"></td>
+                        <td style="width: 300px; text-align: right">' . date('d-m-Y') . '</td>
+                    </tr>
+                </table>
+
+                <h2 style="text-align: center; text-transform: uppercase"> <u>COMPROBANTE DE FERIADO LEGAL</u> </h2>
+                
+                <p>&nbsp;</p>
+
+                <table>
+                <tr>
+                    <td><strong>Nombre:</strong></td>
+                    <td><div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center"> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; 
+                    ' . $trabajador['nombres'] . ' ' . $trabajador['apellidoPaterno'] . ' ' . $trabajador['apellidoMaterno'] . ' 
+                    &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  </div></td>
+                    <td><strong>  &nbsp;  &nbsp;  &nbsp;  &nbsp; Rut:</strong></td>
+                    <td><div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center"> 
+                    ' . $trabajador['rut'] . '
+                    </div></td>
+                </tr>
+                </table>
+
+                <p>CERTIFICO QUE EN LA FECHA INDICADA A CONTINUACIÓN, HARE USO DE MI FERIADO LEGAL Y DIAS PENDIENTES QUE CORRESPONDEN AL O LOS PERIODOS:</p>
+                
+                <table>
+                <tr>
+                    <td><div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">' . $v_legal . '</div></td>
+                    <td>Vacaciones Legales</td>
+                </tr>
+                </table>
+                     
+                <table>
+                <tr>
+                    <td><div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">' . $v_progre . '</div></td>
+                    <td>Dias Progresivos</td>
+                </tr>
+                </table>
+                
+                <p>&nbsp;</p>
+
+                <table style="width: 100%" border="0">
+                    <tr>
+                        <td style="width: 50%; text-align: left">Fecha Inicio: 
+                        <div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">
+                        ' . date('d/M/Y',strtotime($vacaciones_pre['fecha_inicio'])) . '
+                        </div>
+                        </td>
+                        <td style="width: 50%; text-align: left"> &nbsp;  &nbsp;  &nbsp;  &nbsp; Fecha Término: 
+                        <div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">
+                        ' . date('d/M/Y',strtotime($vacaciones_pre['fecha_fin'])) . '
+                        </div>
+                        </td>
+                    </tr>
+                </table>
+                    
+                <table>
+                    <tr>
+                        <td><strong>Días solicitados</strong></td>
+                        <td>
+                        <div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">
+                        ' . $vacaciones_pre['totalDias'] . '
+                        </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Saldo pendiente</strong></td>
+                        <td>
+                        <div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center"> 
+                        ' . $saldo_pendiente . '
+                        </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+                <table style="width: 100%" border="0">
+                    <tr>
+                        <td style="width: 50%; text-align: center">______________________________________<br>Firma Trabajador </td>
+                        <td style="width: 50%; text-align: center"> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; ______________________________________<br>Firma Jefe Directo </td>
+                    </tr>
+                </table>
+                <p>&nbsp;</p>
+                <p>Uso Exclusivo Recursos Humanos</p>
+                <table>
+                <tr>
+                    <td>Saldo de días pendientes del periodo</td>
+                    <td><div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">  &nbsp; </div></td>
+                    <td> &nbsp;  &nbsp;  &nbsp;  Saldo de días pendientes totales </td>
+                    <td><div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">  &nbsp; </div></td>
+                </tr>
+                </table>
+            </page>
+            ';
+
+
+            require_once( ROOT . '/libs/html2pdf/html2pdf.class.php');
+            $html2pdf = new HTML2PDF('P','LETTER','es');
+            $html2pdf->WriteHTML($formulario_vacaciones_html);        
+            $html2pdf->Output( ROOT . '/private/uploads/docs/solicitud_de_vacaciones.pdf','F' );
+
+            $mail->addAttachment(ROOT . '/private/uploads/docs/solicitud_de_vacaciones.pdf','solicitud_de_vacaciones.pdf');
+
+        }
+
+
+        //Content
+        $mail->isHTML(true);
+        $mail->Subject = utf8_decode('Solicitud de vacaciones ' . $arr_status[$status_aprobacion]);
+        $mail->Body    = $body;
+        $mail->send();
+
+        unlink(ROOT . '/private/uploads/docs/solicitud_de_vacaciones.pdf');
+
+        $response = encrypt('status=success&mensaje=Solicitud '. $arr_status[$status_aprobacion] .' correctamente&id='.$insert_id);                           
     
-        
         redirect(BASE_URL . '/' . $entity . '/ver_solicitudes/response/' . $response );
         exit();         
+    }
+
+    if( $action == 'ajax_count_days' ){
+
+        $diasHabiles = diasHabiles($_SESSION[PREFIX.'login_uid'],$_POST['desde'], $_POST['hasta'], $id_ausencia_vacaciones);
+
+        $desde_format = ( $_POST['desde'] ) ? date('d',strtotime($_POST['desde'])) . '/' .  getNombreMes(date('m',strtotime($_POST['desde'])),true) . '/' . date('Y',strtotime($_POST['desde'])) : '';
+        $hasta_format = ( $_POST['hasta'] ) ? date('d',strtotime($_POST['hasta'])) . '/' .  getNombreMes(date('m',strtotime($_POST['hasta'])),true) . '/' . date('Y',strtotime($_POST['hasta'])) : '';
+
+        echo json_encode([
+            'dias' => $diasHabiles,
+            'desde_format' => $desde_format,
+            'hasta_format' => $hasta_format,
+            'desde_int' => ( $_POST['desde'] ) ? (int)date('Ymd',strtotime($_POST['desde'])) : date('Ymd'),
+            'hasta_int' => ( $_POST['hasta'] ) ? (int)date('Ymd',strtotime($_POST['hasta'])) : date('Ymd'),
+        ]);
+        exit();
     }
     
 }
 
 if( $parametros ){  
+
+    if( $parametros[0] == 'solicitar' ){
+
+        $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);                        
+        $db->where('aprobado',null,'IS');
+        $vacaciones_espera = $db->get('m_vacaciones');
+
+
+        $sql = "
+        SELECT  * FROM t_ausencia 
+        WHERE  trabajador_id = ".$_SESSION[PREFIX.'login_uid']."    
+        AND ausencia_id = $id_ausencia_vacaciones  order by id desc
+        ";
+        $vacaciones_historial = $db->rawQuery( $sql );
+
+
+        $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);                        
+        $db->where('aprobado',0);
+        $vacaciones_historial_rechazados = $db->get('m_vacaciones');
+
+
+
+        $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
+        $db->where('aprobado',1);
+        $vacaciones_aprobadas = $db->get('m_vacaciones');
+
+
+        $db->where('trabajador_id',$_SESSION[PREFIX.'login_uid']);
+        $db->where('aprobado',2);
+        $vacaciones_anuladas = $db->get('m_vacaciones');
+
+    }
     
-    if( $parametros[0] == 'calendario' ){
-                
-                
-                
-        /** Proceso para determinar los trabajadores del jefe logueado **/
-        // Cargo del jefe logeado
-        $db->where('id',$_SESSION[PREFIX.'login_uid']);
-        $cargo_id = $db->getValue('m_trabajador','cargo_id');
-        
-        $sql = " 
-            SELECT id from m_cargo where cargoPadreId in 
-                ( SELECT id FROM m_cargo where cargoPadreId IN 
-                    ( SELECT id FROM `m_cargo` WHERE cargoPadreId = $cargo_id )
-                ) 
-            OR cargoPadreId = $cargo_id 
-            OR cargoPadreId IN 
-                (SELECT id FROM `m_cargo` WHERE cargoPadreId = $cargo_id
-            )";
-            
-        $childs = $db->rawQuery( $sql );
-        
-        // Todos los trabajadores que pertenecen a cualquiera de los cargos hijos
-        foreach( $childs as $hijo ){
-            $db->orWhere('cargo_id',$hijo['id']);
+
+    if( $parametros[0] == 'ver_solicitudes' ){
+
+        $trabajadores_ids_x_area = $db->where('jefe_id',$_SESSION[PREFIX . 'login_uid'])->get('m_trabajador',null,'id');
+
+        $arr_ids_x_area = [];
+        foreach($trabajadores_ids_x_area as $t){
+            $arr_ids_x_area[] = $t['id'];
         }
-        $trabajadores_x_cargo = $db->get('m_trabajador',null,array( 'id' ));
-        $IN_concat = "( ";
-        foreach( $trabajadores_x_cargo as $trab_hijos ){
-            //$array_hijos[] = $trab_hijos['id'];
-            $IN_concat .= $trab_hijos['id'].',';
-        }        
-        $IN_concat = trim($IN_concat,",");
-        $IN_concat .= " )";
-                
-        $sql_ausencias_vacaciones = "
-        SELECT * FROM t_ausencia WHERE ausencia_id = $id_ausencia_vacaciones
-        AND trabajador_id IN $IN_concat
-        ";            
-        $ausencias_all = $db->rawQuery( $sql_ausencias_vacaciones );                
+
+        $vacaciones_espera_area = $db->where('trabajador_id',$arr_ids_x_area,'IN')->get('m_vacaciones');
+
+    }
+
+
+    if( $parametros[0] == 'calendario' ){
+                 
+        $trabajadores_ids_x_area = $db->where('jefe_id',$_SESSION[PREFIX . 'login_uid'])->get('m_trabajador',null,'id');
+
+        $arr_ids_x_area = [];
+        foreach($trabajadores_ids_x_area as $t){
+            $arr_ids_x_area[] = $t['id'];
+        }
+        
+        $ausencias_all = $db->where( 'ausencia_id',$id_ausencia_vacaciones )->where('trabajador_id',$arr_ids_x_area,'IN')->get('t_ausencia');
+
         
         $colors = array('#d76a6a','#b46ad7','#6a6dd7','#6ab2d7','#fe7575','#0ee669','#7fd76a','#d3d76a','#dca13a','#8b8baf');             
         $color_cont = 0;

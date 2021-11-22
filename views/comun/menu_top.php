@@ -193,13 +193,21 @@
       <!-- User Account: style can be found in dropdown.less -->
       <li class="dropdown user user-menu">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <img src="<?php echo BASE_URL ?>/public/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+          <?php if($_SESSION[ PREFIX . 'is_trabajador']): ?>
+            <img src="<?php echo BASE_URL ?>/private/imagen.php?f=<?php echo base64_encode(base64_encode(date('Ymd')) . $_SESSION[PREFIX . 'login_uid']) ?>&t=<?php echo base64_encode('m_trabajador') ?>" style="object-fit: cover;" class="user-image" />
+          <?php else: ?>
+            <img src="<?php echo BASE_URL ?>/public/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+          <?php endif; ?>
           <span class="hidden-xs"><?php echo $_SESSION[ PREFIX . 'login_name' ] ?></span>
         </a>
         <ul class="dropdown-menu">
           <!-- User image -->
           <li class="user-header">
-            <img src="<?php echo BASE_URL ?>/public/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+            <?php if($_SESSION[ PREFIX . 'is_trabajador']): ?>
+            <img src="<?php echo BASE_URL ?>/private/imagen.php?f=<?php echo base64_encode(base64_encode(date('Ymd')) . $_SESSION[PREFIX . 'login_uid']) ?>&t=<?php echo base64_encode('m_trabajador') ?>" style="object-fit: cover;" class="img-circle" />
+          <?php else: ?>
+            <img src="<?php echo BASE_URL ?>/public/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+          <?php endif; ?>
             <p>
               <?php echo $_SESSION[ PREFIX . 'login_name' ] ?>                    
             </p>

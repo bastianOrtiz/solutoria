@@ -83,7 +83,7 @@ echo $aray_f."\n";
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo BASE_URL ?>/public/dist/js/demo.js" type="text/javascript"></script>
     <script src="<?php echo BASE_URL ?>/public/js/numeral.js" type="text/javascript"></script>
-    <script src="<?php echo BASE_URL ?>/public/js/custom.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_URL ?>/public/js/custom.js?ver=1.<?php echo uniqid(); ?>" type="text/javascript"></script>
     
     <!-- fullCalendar 2.2.5 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
