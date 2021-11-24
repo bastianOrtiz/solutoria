@@ -7,6 +7,53 @@ if( $action == 'api' && $entity == 'trabajador' ){
 
     if( $_POST['secret'] == md5('arriba los que luchan') ){
 
+        if ($_POST['method'] == 'votar_comite') {
+            
+            $rut_decrypted = base64_decode($_POST['rut']);
+            $vote = $_POST['vote'];
+
+            $db->where('rut',$rut_decrypted);
+            $trabajador = $db->getOne('m_trabajador');
+
+            if($trabajador):
+
+                $exist_voto = $db->where('rut',$rut_decrypted)->getOne('vote_comite');
+
+                if($exist_voto){
+                    $array_trabajador = [
+                        'title' => 'Error',
+                        'status' => 'error',
+                        'message' => 'Este RUT ya ha votado anteriormente'
+                    ];
+                } else {
+
+                    $db->insert('vote_comite',[
+                        'rut' => $rut_decrypted,
+                        'voto' => $vote
+                    ]);
+
+                    $array_trabajador = [
+                        'sql' => $db->getLastQuery(),
+                        'title' => '¡Gracias!',
+                        'status' => 'success',
+                        'message' => 'Su voto ha sido registrado'
+                    ];
+
+                }
+
+            else:
+                $array_trabajador = [
+                    'title' => 'Error',
+                    'status' => 'error',
+                    'message' => 'Este RUT no existe en la base de datos de Tecnodata S.A.'
+                ];
+            endif;
+
+            echo json_encode($array_trabajador);
+            exit();
+        }
+
+
         if ($_POST['method'] == 'get_trabajador_data') {
             $rut_decrypted = $_POST['rut'];
             $db->where('rut',$rut_decrypted);

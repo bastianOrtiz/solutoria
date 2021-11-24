@@ -1,4 +1,5 @@
 <?php
+
 $ano = getAnoMostrarCorte();
 
 $db->where("id",$_SESSION[PREFIX.'login_eid']);
@@ -313,7 +314,7 @@ if( $_POST ){
             <page style="font-family: sans-serif;" backtop="1mm" backbottom="0mm" backleft="10mm" backright="10mm" style="font-size: 10pt">
                 <table style="width: 800px" border="0">
                     <tr>
-                        <td style="width: 400px; text-align: left"><img class="round" src="'. BASE_URL .'/public/img/log_tecnodata_new.png"></td>
+                        <td style="width: 400px; text-align: left"><img class="round" src="'. ROOT .'/public/img/logo.png"></td>
                         <td style="width: 300px; text-align: right">' . date('d-m-Y') . '</td>
                     </tr>
                 </table>
