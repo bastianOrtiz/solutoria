@@ -94,7 +94,7 @@ if( $_POST ){
                 $mail->isSMTP();
                 $mail->Host     = 'srvcorreo.tecnodatasa.cl';
                 $mail->SMTPAuth = true;
-                $mail->Username = "sist_contr@tecnodatasa.cl";
+                $mail->Username = "sist_rrhh@tecnodatasa.cl";
                 $mail->Password = "devti007";
 
                 $mail->SMTPOptions = array(
@@ -106,7 +106,7 @@ if( $_POST ){
                 );
 
                 //Recipients
-                $mail->setFrom("sist_contr@tecnodatasa.cl", 'Recursos Humanos Tecnodata');
+                $mail->setFrom("sist_rrhh@tecnodatasa.cl", 'Recursos Humanos Tecnodata');
                 $mail->addAddress($mailto);
                 
                 //Content
@@ -201,7 +201,7 @@ if( $_POST ){
                     $mail->isSMTP();
                     $mail->Host     = 'srvcorreo.tecnodatasa.cl';
                     $mail->SMTPAuth = true;
-                    $mail->Username = "sist_contr@tecnodatasa.cl";
+                    $mail->Username = "sist_rrhh@tecnodatasa.cl";
                     $mail->Password = "devti007";
 
                     $mail->SMTPOptions = array(
@@ -213,7 +213,7 @@ if( $_POST ){
                     );
 
                     //Recipients
-                    $mail->setFrom("sist_contr@tecnodatasa.cl", 'Recursos Humanos Tecnodata');
+                    $mail->setFrom("sist_rrhh@tecnodatasa.cl", 'Recursos Humanos Tecnodata');
                     $mail->addAddress($mailto);
                     
                     //Content
@@ -236,7 +236,7 @@ if( $_POST ){
     }
     
     
-    if( $action == 'aprobar' ){          
+    if( $action == 'aprobar' ){
         
         $db->where('id',$vacaciones_id);
         $vacaciones_pre = $db->getOne('m_vacaciones');
@@ -284,7 +284,7 @@ if( $_POST ){
         $mail->isSMTP();
         $mail->Host = "srvcorreo.tecnodatasa.cl";
         $mail->SMTPAuth = true;
-        $mail->Username = "sist_contr@tecnodatasa.cl";
+        $mail->Username = "sist_rrhh@tecnodatasa.cl";
         $mail->Password = "devti007";
 
         $mail->SMTPOptions = array( // Disable SSL Check
@@ -296,7 +296,7 @@ if( $_POST ){
         );
 
         //Recipients
-        $mail->setFrom("sist_contr@tecnodatasa.cl", 'Recursos Humanos Tecnodata');
+        $mail->setFrom("sist_rrhh@tecnodatasa.cl", 'Recursos Humanos Tecnodata');
         $mail->addAddress($trabajador['email']);     //Add a recipient
                     
         //Attachments
@@ -305,6 +305,9 @@ if( $_POST ){
 
         $saldo_pendiente = ($vacaciones_pre['tipo'] == 'legal') ? ($trabajador['diasVacaciones'] - $vacaciones_pre['totalDias']) : ($trabajador['diasVacacionesProgresivas'] - $vacaciones_pre['totalDias']);
 
+        // Fechas con el mes en español
+        $fecha_spanish_inicio = date('d',strtotime($vacaciones_pre['fecha_inicio'])) . '/' . getNombreMes(date('m',strtotime($vacaciones_pre['fecha_inicio'])), true) . '/' . date('Y',strtotime($vacaciones_pre['fecha_inicio']));
+        $fecha_spanish_fin = date('d',strtotime($vacaciones_pre['fecha_fin'])) . '/' . getNombreMes(date('m',strtotime($vacaciones_pre['fecha_fin'])), true) . '/' . date('Y',strtotime($vacaciones_pre['fecha_fin']));
 
         if($status_aprobacion == 1){
             $formulario_vacaciones_html = '
@@ -358,12 +361,12 @@ if( $_POST ){
                     <tr>
                         <td style="width: 50%; text-align: left">Fecha Inicio: 
                         <div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">
-                        ' . date('d/M/Y',strtotime($vacaciones_pre['fecha_inicio'])) . '
+                        ' . $fecha_spanish_inicio . '
                         </div>
                         </td>
                         <td style="width: 50%; text-align: left"> &nbsp;  &nbsp;  &nbsp;  &nbsp; Fecha Término: 
                         <div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">
-                        ' . date('d/M/Y',strtotime($vacaciones_pre['fecha_fin'])) . '
+                        ' . $fecha_spanish_fin . '
                         </div>
                         </td>
                     </tr>
@@ -387,14 +390,18 @@ if( $_POST ){
                         </td>
                     </tr>
                 </table>
-
                 <p>&nbsp;</p>
                 <p>&nbsp;</p>
-                <p>&nbsp;</p>
-                <table style="width: 100%" border="0">
+                <table style="width: 800px" border="0">
                     <tr>
-                        <td style="width: 50%; text-align: center">______________________________________<br>Firma Trabajador </td>
-                        <td style="width: 50%; text-align: center"> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; ______________________________________<br>Firma Jefe Directo </td>
+                        <td style="width: 300px; text-align: center; padding-top: 160px">
+                            ______________________________________<br>Firma Trabajador 
+                        </td>
+
+                        <td style="width: 400px; text-align: center">
+                            <img src="' . BASE_URL . '/public/img/aprobado.jpg"><br>
+                            ______________________________________<br>Firma Jefe Directo 
+                        </td>
                     </tr>
                 </table>
                 <p>&nbsp;</p>
@@ -409,7 +416,6 @@ if( $_POST ){
                 </table>
             </page>
             ';
-
 
             require_once( ROOT . '/libs/html2pdf/html2pdf.class.php');
             $html2pdf = new HTML2PDF('P','LETTER','es');
