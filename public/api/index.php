@@ -10,10 +10,12 @@ if( $action == 'api' && $entity == 'trabajador' ){
         if ($_POST['method'] == 'votar_comite') {
             
             $rut_decrypted = base64_decode($_POST['rut']);
-            $vote = $_POST['vote'];
+            $opt = $_POST['opt'];
 
-            $db->where('rut',$rut_decrypted);
-            $trabajador = $db->getOne('m_trabajador');
+            $trabajador = $db->where('rut',$rut_decrypted)
+            ->where('password',md5($_POST['vote_pass']))
+            ->where('tipocontrato_id',array(3,4),'NOT IN')
+            ->getOne('m_trabajador');
 
             if($trabajador):
 
@@ -29,11 +31,10 @@ if( $action == 'api' && $entity == 'trabajador' ){
 
                     $db->insert('vote_comite',[
                         'rut' => $rut_decrypted,
-                        'voto' => $vote
+                        'voto' => $opt
                     ]);
 
                     $array_trabajador = [
-                        'sql' => $db->getLastQuery(),
                         'title' => '¡Gracias!',
                         'status' => 'success',
                         'message' => 'Su voto ha sido registrado'
@@ -45,7 +46,7 @@ if( $action == 'api' && $entity == 'trabajador' ){
                 $array_trabajador = [
                     'title' => 'Error',
                     'status' => 'error',
-                    'message' => 'Este RUT no existe en la base de datos de Tecnodata S.A.'
+                    'message' => 'Empleado no encontrado o contraseña incorrecta'
                 ];
             endif;
 
