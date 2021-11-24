@@ -309,6 +309,16 @@ if( $_POST ){
         $fecha_spanish_inicio = date('d',strtotime($vacaciones_pre['fecha_inicio'])) . '/' . getNombreMes(date('m',strtotime($vacaciones_pre['fecha_inicio'])), true) . '/' . date('Y',strtotime($vacaciones_pre['fecha_inicio']));
         $fecha_spanish_fin = date('d',strtotime($vacaciones_pre['fecha_fin'])) . '/' . getNombreMes(date('m',strtotime($vacaciones_pre['fecha_fin'])), true) . '/' . date('Y',strtotime($vacaciones_pre['fecha_fin']));
 
+
+        //Obtener el logo y el timbre "aprobado" de la empresa
+        $logo = $db->where('id',$trabajador['empresa_id'])->getValue('m_empresa','foto');
+
+        switch ($trabajador['empresa_id']) {
+            case 2: $timbre = 'aprobado_tecnodata.jpg'; break;
+            case 11: $timbre = 'aprobado_mellafe.jpg'; break;
+            default: $timbre = 'aprobado.jpg'; break;
+        }
+
         if($status_aprobacion == 1){
             $formulario_vacaciones_html = '
             <style type="text/css">
@@ -317,7 +327,7 @@ if( $_POST ){
             <page style="font-family: sans-serif;" backtop="1mm" backbottom="0mm" backleft="10mm" backright="10mm" style="font-size: 10pt">
                 <table style="width: 800px" border="0">
                     <tr>
-                        <td style="width: 400px; text-align: left"><img class="round" src="'. ROOT .'/public/img/logo.png"></td>
+                        <td style="width: 400px; text-align: left"><img class="round" src="'. ROOT .'/private/uploads/images/' . $logo . '"></td>
                         <td style="width: 300px; text-align: right">' . date('d-m-Y') . '</td>
                     </tr>
                 </table>
@@ -394,26 +404,17 @@ if( $_POST ){
                 <p>&nbsp;</p>
                 <table style="width: 800px" border="0">
                     <tr>
-                        <td style="width: 300px; text-align: center; padding-top: 160px">
+                        <td style="width: 300px; text-align: center; padding-top: 200px">
                             ______________________________________<br>Firma Trabajador 
                         </td>
 
                         <td style="width: 400px; text-align: center">
-                            <img src="' . BASE_URL . '/public/img/aprobado.jpg"><br>
+                            <img src="' . BASE_URL . '/public/img/' . $timbre . '"><br>
                             ______________________________________<br>Firma Jefe Directo 
                         </td>
                     </tr>
                 </table>
                 <p>&nbsp;</p>
-                <p>Uso Exclusivo Recursos Humanos</p>
-                <table>
-                <tr>
-                    <td>Saldo de días pendientes del periodo</td>
-                    <td><div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">  &nbsp; </div></td>
-                    <td> &nbsp;  &nbsp;  &nbsp;  Saldo de días pendientes totales </td>
-                    <td><div style="display: inline-block; border: 1px solid black; padding: 5px 15px; width: auto; text-align: center">  &nbsp; </div></td>
-                </tr>
-                </table>
             </page>
             ';
 
