@@ -409,7 +409,7 @@ if( $_POST ){
                         </td>
 
                         <td style="width: 400px; text-align: center">
-                            <img src="' . BASE_URL . '/public/img/' . $timbre . '"><br>
+                            <img src="' . ROOT . '/public/img/' . $timbre . '"><br>
                             ______________________________________<br>Firma Jefe Directo 
                         </td>
                     </tr>
