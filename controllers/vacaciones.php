@@ -707,6 +707,7 @@ if( $parametros ){
         SELECT fecha_inicio, fecha_fin, totalDias FROM m_vacaciones
         WHERE m_vacaciones.trabajador_id = ".$_SESSION[PREFIX.'login_uid']."
         AND m_vacaciones.aprobado = 1
+        AND m_vacaciones.mediodia = 1
         ORDER by fecha_inicio DESC
         ";
         $vacaciones_historial = $db->rawQuery( $sql );
