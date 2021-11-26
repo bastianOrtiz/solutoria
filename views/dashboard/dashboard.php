@@ -138,9 +138,12 @@
                                     &nbsp; &nbsp; &nbsp; &nbsp;
                                     <a href="<?php echo BASE_URL ?>/vacaciones/solicitar" class="btn btn-primary">Ver/Solicitar vacaciones</a>
                               </span>
-                            
                             </div>
                         </div>
+
+                        <?php if( $_SESSION[PREFIX.'is_jefe'] && $count_vacaciones_espera_area ): ?>
+                        <a href="<?php echo BASE_URL; ?>/vacaciones/ver_solicitudes"><strong><?php echo $count_vacaciones_espera_area ?> solicitud<?php echo(count($count_vacaciones_espera_area) > 1) ? 'es' : ''; ?> de vacaciones pendientes</strong></a>
+                        <?php endif; ?>
 
 
                     </div>

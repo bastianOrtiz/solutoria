@@ -1401,7 +1401,7 @@ function menuJefe(){
     
   
     $menu['vacaciones_aprovar'] = array(
-        'label' => 'Vacaciones',
+        'label' => 'Coordinar Vacaciones',
         'icon_class' => 'fa fa-plane',
         'childs' => array(
             array(

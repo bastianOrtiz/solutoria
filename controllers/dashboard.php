@@ -107,6 +107,27 @@ if( $_SESSION[PREFIX.'is_trabajador'] ){
     $mes_ultima_liquidacion = getNombreMes($liquidacion_trabajador['mes']);
 }
 
+
+if( $_SESSION[PREFIX.'is_jefe'] ){
+
+    $trabajadores_ids_x_area = $db->where('jefe_id',$_SESSION[PREFIX . 'login_uid'])->get('m_trabajador',null,'id');
+    $arr_ids_x_area = [];
+    foreach($trabajadores_ids_x_area as $t){
+        $arr_ids_x_area[] = $t['id'];
+    }
+
+    if($arr_ids_x_area){
+        $count_vacaciones_espera_area = $db->where('trabajador_id',$arr_ids_x_area,'IN')
+        ->where('aprobado',null,'IS')
+        ->getValue('m_vacaciones','COUNT(*)');    
+    } else {
+        $count_vacaciones_espera_area = 0;
+    }
+
+}
+
+
+
 include ROOT . '/views/comun/header.php';
 include ROOT . '/views/comun/menu_top.php';
 include ROOT . '/views/comun/menu_sidebar.php';
