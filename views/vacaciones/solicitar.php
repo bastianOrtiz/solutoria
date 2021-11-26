@@ -77,7 +77,7 @@
                                   <label for="desdeVacaciones">Desde </label>
                                   <input type="text" class="form-control required flatpickr" value="" id="desdeVacaciones" name="desdeVacaciones" placeholder="Fecha de inicio de vacaciones" autocomplete="off" />
                                 </div>                                                                        
-                                <div class="form-group">
+                                <div class="form-group" id="hastaVacacionesGroup">
                                   <label for="hastaVacaciones">Hasta</label>
                                   <input type="text" class="form-control required flatpickr" value="" id="hastaVacaciones" name="hastaVacaciones" placeholder="Fecha fin de vacaciones" autocomplete="off" />
                                 </div>
@@ -91,6 +91,9 @@
                         </div>  
 
 
+                        <div class="form-group">
+                            <label> <input type="checkbox" name="vacaciones_mediodia"> Medio día de vacaciones</label> <br>
+                        </div>
 
                         
                         <div class="form-group">
@@ -124,7 +127,7 @@
                                     <tr>
                                         <th> Desde </th>
                                         <th> Hasta </th>
-                                        <th> Total Dias </th>                                    
+                                        <th class="text-center"> Total Dias </th>                                    
                                         <th style="text-align: center;"> Estado </th>                                  
                                     </tr>
                                 </thead>
@@ -134,7 +137,7 @@
                                         <tr>
                                             <td> <?php echo $ant['fecha_inicio']; ?> </td>
                                             <td> <?php echo $ant['fecha_fin']; ?> </td>
-                                            <td> <?php echo $ant['totalDias']; ?> </td>                                        
+                                            <td class="text-center"> <?php echo $ant['totalDias']; ?> </td>                                        
                                             <td style="text-align: center;"> 
                                                 <span class="tip warning" title="En espera de aprobación" data-toggle="tooltip"><i class="fa fa-clock-o"></i></span>                                            
                                             </td>
@@ -148,9 +151,9 @@
                             <table class="table table-striped table_vacas" id="table_vacaciones_rechazadas">
                                 <thead>
                                     <tr>
-                                        <th> Mes </th>
-                                        <th> Año </th>
-                                        <th> Total Dias </th> 
+                                        <th> Desde </th>
+                                        <th> Hasta </th>
+                                        <th class="text-center"> Total Dias </th> 
                                         <th style="text-align: center;">Estado</th>                                  
                                     </tr>
                                 </thead>
@@ -159,13 +162,18 @@
                                         <tr>
                                             <td> <?php echo $ant['fecha_inicio']; ?> </td>
                                             <td> <?php echo $ant['fecha_fin']; ?> </td>
-                                            <td> <?php echo $ant['totalDias']; ?> </td>
+                                            <td class="text-center"> <?php echo $ant['totalDias']; ?> </td>
                                             <td style="text-align: center; white-space: nowrap;">  
                                                 <span class="tip success" title="Aprobada" data-toggle="tooltip"><i class="fa fa-check"></i></span>
                                                 <?php if($ant['confirmada']): ?>
                                                 <span class="tip success" title="Confirmada" data-toggle="tooltip"><i class="fa fa-flag"></i></span>
                                                 <?php else : ?>
                                                 <span class="tip success" style="background-color: #b9e1b9" title="En espera de confirmación por RRHH" data-toggle="tooltip"><i class="fa fa-flag"></i></span>
+                                                <?php endif; ?>
+
+                                                <?php if(!$ant['confirmada']): ?>
+                                                &nbsp;  &nbsp;
+                                                <a href="#" class="btn-reenviar-form" data-vacaciones_id="<?php echo $ant['id']; ?>" title="Reenviar Formulario de Vacaciones por correo" data-toggle="tooltip"><span class="tip" style="background-color: #fff; background-color: #dd2f2f;"><i class="fa fa-envelope"></i></span></a>
                                                 <?php endif; ?>
                                             </td>
                                         </tr>
@@ -178,9 +186,9 @@
                             <table class="table table-striped table_vacas" id="table_vacaciones_rechazadasl">
                                 <thead>
                                     <tr>
-                                        <th> Mes </th>
-                                        <th> Año </th>
-                                        <th> Total Dias </th> 
+                                        <th> Desde </th>
+                                        <th> Hasta </th>
+                                        <th class="text-center"> Total Dias </th> 
                                         <th style="text-align: center;"> Estado </th>                                  
                                     </tr>
                                 </thead>
@@ -189,7 +197,7 @@
                                         <tr>
                                             <td> <?php echo $ant['fecha_inicio']; ?> </td>
                                             <td> <?php echo $ant['fecha_fin']; ?> </td>
-                                            <td> <?php echo $ant['totalDias']; ?> </td>
+                                            <td class="text-center"> <?php echo $ant['totalDias']; ?> </td>
                                             <td style="text-align: center;">  
                                                 <span class="tip danger" title="Rechazada" data-toggle="tooltip"><i class="fa fa-times"></i></span>
                                             </td>
@@ -203,9 +211,9 @@
                             <table class="table table-striped table_vacas" id="table_vacaciones_rechazadasl">
                                 <thead>
                                     <tr>
-                                        <th> Mes </th>
-                                        <th> Año </th>
-                                        <th> Total Dias </th> 
+                                        <th> Desde </th>
+                                        <th> Hasta </th>
+                                        <th class="text-center"> Total Dias </th> 
                                         <th style="text-align: center;">Estado</th>                                  
                                     </tr>
                                 </thead>
@@ -214,7 +222,7 @@
                                         <tr>
                                             <td> <?php echo $ant['fecha_inicio']; ?> </td>
                                             <td> <?php echo $ant['fecha_fin']; ?> </td>
-                                            <td> <?php echo $ant['totalDias']; ?> </td>
+                                            <td class="text-center"> <?php echo $ant['totalDias']; ?> </td>
                                             <td style="text-align: center;">  
                                                 <span class="tip warning" title="Anulada" data-toggle="tooltip"><i class="fa fa-times"></i></span>
                                             </td>
@@ -238,7 +246,7 @@
                                         <tr>
                                             <th> Desde </th>
                                             <th> Hasta </th>
-                                            <th> Total Dias </th>                                    
+                                            <th class="text-center"> Total Dias </th>                                    
                                             <th style="text-align: center;"> Estado </th>                                  
                                         </tr>
                                     </thead>
@@ -247,7 +255,7 @@
                                             <tr>
                                                 <td> <?php echo $ant['fecha_inicio']; ?> </td>
                                                 <td> <?php echo $ant['fecha_fin']; ?> </td>
-                                                <td> <?php echo diasHabiles($_SESSION[PREFIX.'login_uid'],$ant['fecha_inicio'], $ant['fecha_fin'], $id_ausencia_vacaciones); ?> </td> 
+                                                <td class="text-center"> <?php echo ($ant['totalDias'] == 0.5) ? '0.5' : diasHabiles($_SESSION[PREFIX.'login_uid'],$ant['fecha_inicio'], $ant['fecha_fin'], $id_ausencia_vacaciones); ?> </td> 
                                                 <td style="text-align: center;">  
                                                     <span class="tip aprobado"><i class="fa fa-check"></i></span>
                                                 </td>
@@ -278,6 +286,7 @@ $(document).ready(function(){
     $(".flatpickr").flatpickr({
         "locale": "es",
         onClose: function(selectedDates, dateStr, instance){
+            console.log(instance.element);
             $.ajax({
                 url: '<?php echo BASE_URL ?>/vacaciones/solicitar',
                 type: 'post',
@@ -295,9 +304,18 @@ $(document).ready(function(){
                     global_desde = json.desde_format;
                     global_hasta = json.hasta_format;
                     if( json.desde_int < hoy || json.hasta_int < hoy ){
-                        swal('','No puede elegir fechas antes de hoy','error');
-                        $("[name=desdeVacaciones]").val('');
-                        $("[name=hastaVacaciones]").val('');
+                        swal({
+                            title: "",
+                            text: "Esta seleccionando una fecha anterior a la actual. ¿Esta seguro?",
+                            buttons: true,
+                            dangerMode: true,
+                        })
+                        .then((go) => {
+                            if (!go) {
+                                $("[name=desdeVacaciones]").val('');
+                                $("[name=hastaVacaciones]").val('');
+                            }
+                        });
                     }
                 }
             })
@@ -308,6 +326,54 @@ $(document).ready(function(){
         }
     });
 })
+
+
+$("[name=vacaciones_mediodia]").change(function(event) {
+    if( $(this).prop('checked') ){
+        $("[name=hastaVacaciones]").removeClass('required').val('');
+        $("#hastaVacacionesGroup").slideUp('fast');
+    } else {
+        $("[name=hastaVacaciones]").addClass('required').val('');
+        $("#hastaVacacionesGroup").slideDown('fast');
+    }
+});
+
+$(".btn-reenviar-form").click(function(event) {
+    event.preventDefault();
+    vacaciones_id = $(this).data('vacaciones_id');
+    swal({
+        title: "",
+        text: "¿Re-enviar formulario de Vacaciones a tu correo?",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            $(".overlayer").show();
+            $.ajax({
+                url: '<?php echo BASE_URL ?>/vacaciones/solicitar',
+                type: 'post',
+                dataType: 'json',
+                beforeSend: function(){
+                    $(".overlayer").show();
+                },
+                data: {
+                    action: 'ajax_resend_form',
+                    vacaciones_id: vacaciones_id
+                },
+                success: function(json){
+                    if( json.status == 'ok' ){
+                        swal('','Correo enviado correctamente','success');
+                    }
+                }
+            })
+            .always(function() {
+                $(".overlayer").hide();
+            });
+        }
+    });
+});
+
 
 $("input").keydown(function(){
     $(this).parent().removeClass('has-error');
@@ -339,10 +405,16 @@ $("#frmCrear").submit(function(e){
      
     if( error == 0 ){
 
+        if( $("[name=vacaciones_mediodia]").prop('checked') == false ){
+            txt_hasta = " hasta el " + global_hasta;
+        } else {
+            txt_hasta = "";
+        }
+
         event.preventDefault();
         swal({
             title: "",
-            text: "Todo parece en orden... ¿Enviar solicitud de vacaciones desde el " + global_desde + " hasta el " + global_hasta + "?",
+            text: "Todo parece en orden... ¿Enviar solicitud de vacaciones desde el " + global_desde + txt_hasta + "?",
             buttons: true,
             dangerMode: true,
         })
