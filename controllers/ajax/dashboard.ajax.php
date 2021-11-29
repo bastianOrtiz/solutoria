@@ -22,7 +22,8 @@ if( $_POST['ajax_action'] == 'procesar_liquidaciones' ){
     Sino se ha hecho, Sumar 1.25 dias a las vacaciones de los trabajadores
     */
     
-    $cierre_vacaciones = $db->where('param','cierre_vacaciones')->where('value',$mes.'-'.$ano)->getOne('m_parametros');
+    $cierre_vacaciones = $db->where('param','cierre_vacaciones_' . $_SESSION[PREFIX . 'login_eid'])->where('value',$mes.'-'.$ano)->getOne('m_parametros');
+    
     if(!$cierre_vacaciones){
 
         $trabajadores_todos = $db->where('empresa_id',$_SESSION[PREFIX . 'login_eid'])->where('tipocontrato_id',[3,4],'NOT IN')->get('m_trabajador',null,['id','diasVacaciones']);
@@ -37,8 +38,7 @@ if( $_POST['ajax_action'] == 'procesar_liquidaciones' ){
 
         }
 
-        $db->where('param','cierre_vacaciones')->update('m_parametros',[
-            'param' => 'cierre_vacaciones',
+        $db->where('param','cierre_vacaciones_' . $_SESSION[PREFIX . 'login_eid'])->update('m_parametros',[
             'value' => $mes.'-'.$ano
         ]);
     }
@@ -50,7 +50,8 @@ if( $_POST['ajax_action'] == 'procesar_liquidaciones' ){
     
     if( $res ){
         $json['status'] = 'success';
-        $json['mensaje'] = 'OK';        
+        $json['mensaje'] = 'OK';
+
     } else {
         $json['status'] = 'error';
         $json['mensaje'] = $db->getLastError();;   
