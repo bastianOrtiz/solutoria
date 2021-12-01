@@ -106,7 +106,8 @@
       
 <script>
 $(document).ready(function(){        
-    $(".btn_aprobar").click(function(){
+    $(".btn_aprobar").click(function(event){
+        event.preventDefault();
         var vacaciones_id = $(this).data('id');
         var status_aprobacion = $(this).data('accion');
         if( status_aprobacion == 1 ){
