@@ -40,7 +40,7 @@
                                     <th> Hasta </th>                                     
                                     <th> Dias </th>                                     
                                     <th> Tipo </th>                                     
-                                    <th style="text-align: center;"> Confirmar <!--/ Rechazar--> </th>                                  
+                                    <th style="text-align: center;"> Acciones </th>                                  
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,6 +62,9 @@
                                             <?php if( ( $ant['confirmada'] === null ) || ( $ant['confirmada'] === "" ) || ( $ant['confirmada'] === 0 ) ){ ?>
                                             <a href="#" data-id="<?php echo $ant['id'] ?>"  data-accion="1" class="btn btn-success btn-sm btn_aprobar">
                                                 CONFIRMAR
+                                            </a>
+                                            <a href="#" data-id="<?php echo $ant['id'] ?>"  data-accion="0" class="btn btn-danger btn-sm btn_aprobar">
+                                                ELIMINAR
                                             </a>
                                             <!--
                                             &nbsp; &nbsp; &nbsp; 
@@ -108,13 +111,15 @@ $(document).ready(function(){
         var status_aprobacion = $(this).data('accion');
         if( status_aprobacion == 1 ){
             accion_apr = 'CONFIRMAR';
+            desc = '';
         } else {
-            accion_apr = 'RECHAZAR';
+            accion_apr = 'ELIMINAR';
+            desc = 'Esta accion NO puede deshacerse';
         }
 
         swal({
-            title: "",
-            text: "¿" + accion_apr + " vacaciones?",
+            title: "¿" + accion_apr + " vacaciones?",
+            text: desc,
             buttons: true,
             dangerMode: true,
         })

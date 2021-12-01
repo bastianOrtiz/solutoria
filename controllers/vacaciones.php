@@ -132,7 +132,8 @@ if( $_POST ){
             $response = encrypt('status=success&mensaje=Vacaciones CONFIRMADAS correctamente&id=');
 
         } else {
-            $response = encrypt('status=error&mensaje=Vacaciones NO CONFIRMADAS&id=');
+            $db->where('id',$_POST['vacaciones_id'])->delete('m_vacaciones');
+            $response = encrypt('status=error&mensaje=Solicitud ELIMINADA&id='.$_POST['vacaciones_id']);
         }
 
         redirect(BASE_URL . '/' . $entity . '/confirmar_solicitudes/response/' . $response );
