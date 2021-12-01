@@ -6,7 +6,7 @@
 <h3> Cómo Recuperar mi contraseña u obtenerla por primera vez </h3>
 
 <div class="videoWrapper">
-    <iframe  src="https://www.youtube.com/embed/kXM5T2SVUMU?&autoplay=1&rel=0&showinfo=0&modestbranding=1&autohide=1" frameborder="0" allowfullscreen></iframe>
+    <iframe  src="https://www.youtube.com/embed/J57VmZuTJwM?&autoplay=1&rel=0&showinfo=0&modestbranding=1&autohide=1" frameborder="0" allowfullscreen></iframe>
 </div>
 
 <?php include 'inc/footer.php'; ?>

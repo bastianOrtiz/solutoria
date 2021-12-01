@@ -59,7 +59,9 @@
           </div>
         </form>
         <p> &nbsp; </p>
-        <a href="#" class="forgot_pass">Solicitar / Recuperar password</a><br>        
+        <a href="#" class="forgot_pass pull-left">Solicitar / Recuperar password</a>
+        <a href="https://rrhh.tecnodatasa.cl/ayuda/index.php" class="pull-right">Ayuda <i class="fa fa-question-circle"></i></a><br>        
+        <div class="clearfix"></div>
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
 
@@ -83,6 +85,11 @@
             $("#login_rut").val("");
             $(this).remove();
         })
+
+        <?php if($_GET['request-pass']): ?>
+        $(".forgot_pass").click();
+        <?php endif; ?>
+
     })
     
     $("#frmLogin").submit(function(e){
