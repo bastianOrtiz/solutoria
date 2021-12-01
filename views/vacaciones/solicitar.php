@@ -300,7 +300,12 @@ $(document).ready(function(){
                     hasta: $("[name=hastaVacaciones]").val()
                 },
                 success: function(json){
-                    $("#dias_counter").text(json.dias);
+                    if( $("[name=vacaciones_mediodia]").prop('checked') == true){
+                        $("#dias_counter").text('0.5');    
+                    } else {
+                        $("#dias_counter").text(json.dias);
+                    }
+
                     global_desde = json.desde_format;
                     global_hasta = json.hasta_format;
                     if( json.desde_int < hoy || json.hasta_int < hoy ){
@@ -332,9 +337,11 @@ $("[name=vacaciones_mediodia]").change(function(event) {
     if( $(this).prop('checked') ){
         $("[name=hastaVacaciones]").removeClass('required').val('');
         $("#hastaVacacionesGroup").slideUp('fast');
+        $("#dias_counter").text('0.5');
     } else {
         $("[name=hastaVacaciones]").addClass('required').val('');
         $("#hastaVacacionesGroup").slideDown('fast');
+        $("#dias_counter").text('0');
     }
 });
 
