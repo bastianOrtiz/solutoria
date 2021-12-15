@@ -7,6 +7,11 @@
     white-space:pre;
     max-width:none;
 }
+
+#table_vacaciones_historial_wrapper .row:last-child{
+    margin-top: 50px;
+}
+
 </style>    
 <div class="content-wrapper">
     
@@ -16,7 +21,26 @@
     </section>
             
     <section class="content">
-      <div class="row">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box box-success">
+                    <div class="box-body">
+                        <form class="form-inline" method="get">
+                            <strong>Mostrar: &nbsp; </strong>
+                            <select name="filter" class="form-control" onchange="javascript: $('.overlayer').show(); this.form.submit()">
+                                <option value="">Todos</option>
+                                <option value="confirmadas">Confirmadas</option>
+                                <option value="por_confirmar">Por confirmar</option>
+                                <option value="espera">En espera de Aprobación</option>
+                            </select>
+                            <script>$("[name=filter]").val('<?php echo $_GET['filter'] ?>')</script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
           <div class="col-md-12">
               <!-- general form elements -->
               <div class="box box-primary">                
@@ -32,7 +56,7 @@
                          
                     <div class="col-md-10">
                     
-                        <table class="table table-striped" id="table_vacaciones_historial">
+                        <table class="table table-striped" id="table_vacaciones_historial" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th> Trabajador </th>
@@ -46,10 +70,9 @@
                             <tbody>
                                 <?php 
                                 foreach( $vacaciones_espera_todos as $ant ){
-                                $person = $db->where('id',$ant['trabajador_id'])->getOne('m_trabajador');
                                 ?>
                                     <tr>
-                                        <td> <?php echo $person['apellidoPaterno'] ?> <?php echo $person['apellidoMaterno'] ?> <?php echo $person['nombres'] ?>  </td>
+                                        <td> <?php echo $ant['apellidoPaterno'] ?> <?php echo $ant['apellidoMaterno'] ?> <?php echo $ant['nombres'] ?>  </td>
                                         <td> <?php echo $ant['fecha_inicio'] ?> </td>
                                         <td> <?php echo $ant['fecha_fin'] ?> </td>                                        
                                         <td> <?php echo $ant['totalDias'] ?> </td>                                        
@@ -106,6 +129,42 @@
       
 <script>
 $(document).ready(function(){        
+
+
+    var dataTableEsp1={
+        "sProcessing":     "Procesando...",
+        "sLengthMenu":     "Mostrar _MENU_ registros",
+        "sZeroRecords":    "No se encontraron resultados",
+        "sEmptyTable":     "Ning&uacute;n dato disponible en esta tabla",
+        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+        "sInfoPostFix":    "",
+        "sSearch":         "Buscar:",
+        "sUrl":            "",
+        "sInfoThousands":  ",",
+        "sLoadingRecords": "Cargando...",
+        "oPaginate": {
+            "sFirst":    "Primero",
+            "sLast":     "&uacute;ltimo",
+            "sNext":     "Siguiente",
+            "sPrevious": "Anterior"
+        },
+        "oAria": {
+            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+        }
+    }
+
+    $('#table_vacaciones_historial').DataTable({
+        "language": dataTableEsp1,
+        "pageLength": 50,
+        "columnDefs": [
+            { orderable: false, targets: 5 }
+        ]
+    }); 
+
+
     $(".btn_aprobar").click(function(event){
         event.preventDefault();
         var vacaciones_id = $(this).data('id');

@@ -9,8 +9,6 @@ $diasVacacionesTrabajador = $db->where('id',$_SESSION[PREFIX . 'login_uid'])->ge
 $diasVacacionesProgresivasTrabajador = $db->where('id',$_SESSION[PREFIX . 'login_uid'])->getValue('m_trabajador','diasVacacionesProgresivas');
 
 
-$vacaciones_espera_todos = $db->get('m_vacaciones');
-
 
 // Determinar trabajadores a cargo del jefe logueado y buscar solicitudes de ESOS trabajadores
 
@@ -732,6 +730,39 @@ if( $parametros ){
 
     }
     
+
+    if( $parametros[0] == 'confirmar_solicitudes' ){
+
+        switch($_GET['filter']){
+            case 'espera':
+                 $db->where('aprobado',null,'IS');
+            break;
+
+            case 'confirmadas':
+                $db->where('confirmada',null,'IS NOT');
+            break;
+
+            case 'por_confirmar':
+                $db->where('aprobado',1);
+                $db->where('confirmada',null,'IS');
+            break;
+
+            default;
+            break;
+        }
+
+        $vacaciones_espera_todos = $db->orderBy('apellidoPaterno','ASC')
+        ->join("m_trabajador", "m_trabajador.id = m_vacaciones.trabajador_id")
+        ->orderBy('m_trabajador.apellidoPaterno','ASC')
+        ->get('m_vacaciones',null,[
+            'm_trabajador.apellidoPaterno',
+            'm_trabajador.apellidoMaterno',
+            'm_trabajador.nombres',
+            'm_vacaciones.*'
+        ]);
+
+    }
+
 
     if( $parametros[0] == 'ver_solicitudes' ){
 
