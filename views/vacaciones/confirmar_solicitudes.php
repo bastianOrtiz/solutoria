@@ -165,7 +165,7 @@ $(document).ready(function(){
     }); 
 
 
-    $(".btn_aprobar").click(function(event){
+    $(document).on('click', '.btn_aprobar', function(event) {
         event.preventDefault();
         var vacaciones_id = $(this).data('id');
         var status_aprobacion = $(this).data('accion');
