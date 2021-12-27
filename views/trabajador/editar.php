@@ -452,7 +452,7 @@
                                                 <select class="form-control required" name="jefeTrabajador" id="jefeTrabajador">
                                                     <option value="">Seleccione Jefe directo</option>
                                                     <?php foreach( $lista_trabajadores_jefes as $jefe ){ ?>
-                                                    <option value="<?php echo $jefe['id'] ?>"><?php echo $jefe['apellidoPaterno'] ?> <?php echo $jefe['apellidoMaterno'] ?> <?php echo $jefe['nombres'] ?>  </option>
+                                                    <option value="<?php echo $jefe['id'] ?>"><?php echo $jefe['id'] ?> - <?php echo $jefe['apellidoPaterno'] ?> <?php echo $jefe['apellidoMaterno'] ?> <?php echo $jefe['nombres'] ?>  </option>
                                                     <?php } ?>
                                                 </select>
                                                 <script>$("#jefeTrabajador").val('<?php echo $trabajador['jefe_id'] ?>') </script>
@@ -485,13 +485,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="diasVacacionesTrabajador">Dias vacaciones/Año</label>
-                                                        <input name="diasVacacionesTrabajador" id="diasVacacionesTrabajador" value="<?php echo $trabajador['diasVacaciones'] ?>" class="form-control required" />
+                                                        <input type="text" name="diasVacacionesTrabajador" id="diasVacacionesTrabajador" value="<?php echo $trabajador['diasVacaciones'] ?>" class="form-control required" readonly />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="vacacionesProgresivasTrabajador">Vacaciones Progresivas</label>
-                                                        <input name="vacacionesProgresivasTrabajador" id="vacacionesProgresivasTrabajador" value="<?php echo $trabajador['diasVacacionesProgresivas'] ?>" class="form-control required" />
+                                                        <input type="text" name="vacacionesProgresivasTrabajador" id="vacacionesProgresivasTrabajador" value="<?php echo $trabajador['diasVacacionesProgresivas'] ?>" class="form-control required" readonly />
                                                     </div>
                                                 </div>
                                             </div>

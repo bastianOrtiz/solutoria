@@ -1599,29 +1599,8 @@ if( $parametros[0] == 'listar_trabajadores' ){
 if( $parametros[0] == 'reporte_atrasos' ){
     
     /** Proceso para determinar los trabajadores del jefe logueado **/
-    // Cargo del jefe logeado
-    $db->where('id',$_SESSION[PREFIX.'login_uid']);
-    $cargo_id = $db->getValue('m_trabajador','cargo_id');
-    
-    $sql = "
-        SELECT id from m_cargo where cargoPadreId in
-            ( SELECT id FROM m_cargo where cargoPadreId IN
-                ( SELECT id FROM `m_cargo` WHERE cargoPadreId = $cargo_id )
-            )
-        OR cargoPadreId = $cargo_id
-        OR cargoPadreId IN
-            (SELECT id FROM `m_cargo` WHERE cargoPadreId = $cargo_id
-        )";
-    
-    $sql_hijos = "SELECT * FROM `m_cargo` WHERE `cargoPadreId` = $cargo_id ORDER BY `activo` DESC";
-    $childs = $db->rawQuery( $sql );
-    foreach($childs as $ch){
-        $str_IN .= $ch['id'].",";
-    }
-    $str_IN = trim($str_IN,",");
-    
-    $sql_trabajadores_x_cargo = "SELECT * from m_trabajador T WHERE T.cargo_id IN (" . $str_IN . ")  AND T.empresa_id = " . $_SESSION[PREFIX.'login_eid'] . " AND marcaTarjeta = 1 ORDER BY apellidoPaterno ASC";
-    $trabajadores_x_cargo = $db->rawQuery( $sql_trabajadores_x_cargo );
+    $trabajadores_x_cargo = $db->where('tipocontrato_id',[3,4],'NOT IN')->where('jefe_id',$_SESSION[PREFIX.'login_uid'])->get('m_trabajador');
+
 }
 
 
