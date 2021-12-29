@@ -149,7 +149,7 @@ if( $_POST ){
 
         $diasHabiles = diasHabiles( $_SESSION[PREFIX.'login_uid'],$desdeVacaciones, $hastaVacaciones, $id_ausencia_vacaciones);
         
-        if( $diasHabiles > $diasVacacionesTrabajador ){
+        if( ($diasHabiles > $diasVacacionesTrabajador) && ($cargo != "progresivas") ){
             $response = encrypt("status=error&mensaje=No puede solicitar mas de $diasVacacionesTrabajador días hábiles legales&id=");    
         } else{
 
