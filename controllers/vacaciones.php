@@ -783,41 +783,97 @@ if( $parametros ){
 
 
     if( $parametros[0] == 'calendario' ){
-                 
-        $trabajadores_ids_x_area = $db->where('jefe_id',$_SESSION[PREFIX . 'login_uid'])->get('m_trabajador',null,'id');
 
-        $arr_ids_x_area = [];
-        foreach($trabajadores_ids_x_area as $t){
-            $arr_ids_x_area[] = $t['id'];
-        }
-        
-        $ausencias_all = $db->where( 'ausencia_id',$id_ausencia_vacaciones )->where('trabajador_id',$arr_ids_x_area,'IN')->get('t_ausencia');
+        $colors = array('#e9109f','#de851b','#6a6dd7','#e9dc10','#9510e9','#b9f448','#1510e9','#25be3a','#10e9e6','#1f8026','#c780ca','#FF0000','#eab275','#b775ea','#2d7fc5','#75ea7b');             
+            
 
-        
-        $colors = array('#d76a6a','#b46ad7','#6a6dd7','#6ab2d7','#fe7575','#0ee669','#7fd76a','#d3d76a','#dca13a','#8b8baf');             
-        $color_cont = 0;
-        $events = '';
-        foreach( $ausencias_all as $aus ){
-            $fecha_fin = date($aus['fecha_fin']);
-            $nuevafecha_fin = strtotime ( '+1 day' , strtotime ( $fecha_fin ) ) ;
-            $nuevafecha_fin = date ( 'Y-m-d' , $nuevafecha_fin );                                 
+        if( $_SESSION[PREFIX.'is_jefe'] ):     
+            $trabajadores_ids_x_area = $db->where('jefe_id',$_SESSION[PREFIX . 'login_uid'])->get('m_trabajador',null,'id');
+
+            $arr_ids_x_area = [];
+            foreach($trabajadores_ids_x_area as $t){
+                $arr_ids_x_area[] = $t['id'];
+            }
             
-            $events .= "{
-              title: '". getNombreTrabajador( $aus['trabajador_id'] ) ."',
-              desc: '". getNombreTrabajador( $aus['trabajador_id'] ) ."\\n(Desde: " . $aus['fecha_inicio'] . ", Hasta: ". $aus['fecha_fin'] .")',
-              start: '". $aus['fecha_inicio'] ."',
-              end: '". $nuevafecha_fin ."',
-              backgroundColor: '".$colors[$color_cont]."',
-              borderColor: '".$colors[$color_cont]."'
-            },";            
+            $ausencias_all = $db->where( 'ausencia_id',$id_ausencia_vacaciones )
+            ->where('trabajador_id',$arr_ids_x_area,'IN')
+            ->get('t_ausencia');
             
-            $color_cont++;
-            if( $color_cont == 10 )
-                $color_cont = 0;            
+            $color_cont = 0;
+            $events = '';
+
+            foreach( $ausencias_all as $aus ){
+                $fecha_fin = date($aus['fecha_fin']);
+                $nuevafecha_fin = strtotime ( '+1 day' , strtotime ( $fecha_fin ) ) ;
+                $nuevafecha_fin = date ( 'Y-m-d' , $nuevafecha_fin );                                 
+                
+                $events .= "{
+                  title: '". getNombreTrabajador( $aus['trabajador_id'], false, false ) ."',
+                  desc: '". getNombreTrabajador( $aus['trabajador_id'], false, false ) ."\\n(Desde: " . $aus['fecha_inicio'] . ", Hasta: ". $aus['fecha_fin'] .")',
+                  start: '". $aus['fecha_inicio'] ."',
+                  end: '". $nuevafecha_fin ."',
+                  backgroundColor: '".$colors[$color_cont]."',
+                  borderColor: '".$colors[$color_cont]."'
+                },";            
+                
+                $color_cont++;
+                if( $color_cont == 10 )
+                    $color_cont = 0;            
+                
+            }
+
+        else:
+
+            $arr_colors = [];
+            $departamentos = $db->where('empresa_id',[2,11],'IN')->get('m_departamento');
+            foreach ($departamentos as $key => $dep) {
+                $arr_colors[$dep['id']] = $colors[$key];
+            }
+
+            if( $_GET['dep'] ){
+
+                $arr_trabajadores_x_depto = $db->where('departamento_id',$_GET['dep'])
+                ->getValue('m_trabajador','id',null);
+
+                $db->where('trabajador_id',$arr_trabajadores_x_depto,'IN');
+            }
             
-        }
+            $db->where( 'ausencia_id',$id_ausencia_vacaciones );
+            $ausencias_all = $db->get('t_ausencia');
+
+
+
+            foreach( $ausencias_all as $aus ){
+                $fecha_fin = date($aus['fecha_fin']);
+                $nuevafecha_fin = strtotime ( '+1 day' , strtotime ( $fecha_fin ) ) ;
+                $nuevafecha_fin = date ( 'Y-m-d' , $nuevafecha_fin );                                 
+                
+                $depto_id = $db->where('id',$aus['trabajador_id'])->getValue('m_trabajador','departamento_id');
+
+
+                $events .= "{
+                  title: '". getNombreTrabajador( $aus['trabajador_id'], false, false ) ."',
+                  desc: '". getNombreTrabajador( $aus['trabajador_id'], false, false ) ."\\n(Desde: " . $aus['fecha_inicio'] . ", Hasta: ". $aus['fecha_fin'] .")\\nDepartamento: ". getNombre($depto_id, 'm_departamento', false) ."',
+                  start: '". $aus['fecha_inicio'] ."',
+                  end: '". $nuevafecha_fin ."',
+                  backgroundColor: '". $arr_colors[$depto_id] ."',
+                  borderColor: '".$arr_colors[$depto_id]."'
+                },";            
+                
+                $color_cont++;
+                if( $color_cont == 10 )
+                    $color_cont = 0;            
+                
+            }
+
+        endif;
+
+
         $events = trim($events,',');
+
     }
+
+    
     
 }
 

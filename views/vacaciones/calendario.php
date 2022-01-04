@@ -12,7 +12,7 @@ button{
 </style>
 <div class="content-wrapper">
     <section class="content-header">
-      <h1> GENERAR INFORME </h1>
+      <h1> Calendario de vacaciones </h1>
       <?php include ROOT . '/views/comun/breadcrumbs.php';  ?>
       
         <?php 
@@ -35,9 +35,21 @@ button{
                     
                     
                     <div class="box">
+
+                        <?php if(isAdmin()): ?>
                         <div class="box-header">
-                            <h3 class="box-title"> Calendario de Vacaciones  </h3>
+                            <h5 class="box-title"> Filtrar por departamento: </h5><br>
+                            <a class="btn btn-sm btn-default btn-filter-calendar" href="<?php echo BASE_URL ?>/vacaciones/calendario">
+                                Todos &nbsp; <i class="fa fa-square-o"></i>
+                            </a>
+                            <?php foreach ($departamentos as $key => $depto) { ?>
+                            <a class="btn btn-sm btn-default btn-filter-calendar" href="<?php echo BASE_URL ?>/vacaciones/calendario/?dep=<?php echo $depto['id'] ?>">
+                                <?php echo $depto['nombre']; ?> &nbsp; <i class="fa fa-square" style="color: <?php echo $arr_colors[$depto['id']] ?>;"></i>
+                            </a>
+                            <?php } ?>
                         </div>
+                        <?php endif; ?>
+
                         <div class="box-body">
                             <div class="col-md-12">
                                 <div id="calendar"></div>
@@ -65,14 +77,21 @@ $("select").change(function(){
 })
 
 
-$(document).ready(function(){              
+$(document).ready(function(){     
+
+    $(".btn-filter-calendar").click(function(event) {
+        event.preventDefault();
+        href = $(this).attr('href');
+        $(".overlayer").show();
+        window.location.href = href;
+    });         
         
     $('#calendar').fullCalendar({
         monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
         monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
         dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
         dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
-        height: 500,
+        height: 800,
         header: {
             left: 'prev,next today',
             center: 'title',
