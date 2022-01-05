@@ -2070,6 +2070,11 @@ function mainMenu(){
                 'accion' => 'confirmar_solicitudes',
                 'label' => 'Confirmar Solicitudes'
             ),
+            array(
+                'entidad' => 'vacaciones',
+                'accion' => 'calendario',
+                'label' => 'Calendario'
+            ),
         )
     );
     
