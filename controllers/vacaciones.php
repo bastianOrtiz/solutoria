@@ -784,7 +784,7 @@ if( $parametros ){
 
     if( $parametros[0] == 'calendario' ){
 
-        $colors = array('#e9109f','#de851b','#6a6dd7','#e9dc10','#9510e9','#b9f448','#1510e9','#25be3a','#10e9e6','#1f8026','#c780ca','#FF0000','#eab275','#b775ea','#2d7fc5','#75ea7b');             
+        $colors = array('#e9109f','#de851b','#0c82ff','#e9dc10','#9510e9','#b9f448','#1510e9','#25be3a','#10e9e6','#878074','#c780ca','#FF0000','#eab275','#b775ea','#2d7fc5','#75ea7b');             
             
 
         if( $_SESSION[PREFIX.'is_jefe'] ):     

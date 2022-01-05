@@ -111,7 +111,8 @@ $(document).ready(function(){
             swal('','Trabajador: ' + calEvent.desc);
         },
         editable: false,
-        droppable: false, // this allows things to be dropped onto the calendar !!!           
+        droppable: false,
+        firstDay: 1
     });
     
              

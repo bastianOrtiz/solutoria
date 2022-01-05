@@ -88,6 +88,7 @@ $(document).ready(function(){
             $("#modal-evento").modal('show');
         },
         editable: false,
+        firstDay: 1,
         droppable: false,
         timeFormat: 'h:mm',
         dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
