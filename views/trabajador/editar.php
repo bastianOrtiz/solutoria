@@ -491,7 +491,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="vacacionesProgresivasTrabajador">Vacaciones Progresivas</label>
-                                                        <input type="text" name="vacacionesProgresivasTrabajador" id="vacacionesProgresivasTrabajador" value="<?php echo $trabajador['diasVacacionesProgresivas'] ?>" class="form-control required" readonly />
+                                                        <input type="text" name="vacacionesProgresivasTrabajador" id="vacacionesProgresivasTrabajador" value="<?php echo $trabajador['diasVacacionesProgresivas'] ?>" class="form-control required" />
                                                     </div>
                                                 </div>
                                             </div>
