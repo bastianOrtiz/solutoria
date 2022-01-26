@@ -1,5 +1,4 @@
 <?php
-
 $ano = getAnoMostrarCorte();
 
 $db->where("id",$_SESSION[PREFIX.'login_eid']);
@@ -7,7 +6,6 @@ $id_ausencia_vacaciones = $db->getValue('m_empresa','ausenciaVacaciones');
 
 $diasVacacionesTrabajador = $db->where('id',$_SESSION[PREFIX . 'login_uid'])->getValue('m_trabajador','diasVacaciones');
 $diasVacacionesProgresivasTrabajador = $db->where('id',$_SESSION[PREFIX . 'login_uid'])->getValue('m_trabajador','diasVacacionesProgresivas');
-
 
 
 // Determinar trabajadores a cargo del jefe logueado y buscar solicitudes de ESOS trabajadores
@@ -58,6 +56,7 @@ if( $_POST ){
         // 3. Eliminar la solicitud de vacaciones
         $db->where('id',$_POST['solicitud_id'])->delete('m_vacaciones');
 
+        logit($_SESSION[PREFIX.'login_name'], 'Anular Vacaciones', 'm_vacaciones', $_POST['solicitud_id'], $db->getLastQuery(), $_SESSION[PREFIX.'login_eid']);
 
         echo json_encode([
             'status' => 'ok',

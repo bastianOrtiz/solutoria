@@ -487,6 +487,8 @@ function logit($user_nombre, $action, $entity, $id=null, $sql="", $empresa_id=0)
 
     $filename = ROOT.'/logs/log_'.date('Y-m').'.txt';
 
+    $fh = fopen($filename, 'w');
+
     $data_write = $user_nombre."|".$entity."|".$action."|".$sql."|".$empresa_id."|".$id."|".date('Y-m-d H:i:s');
 
     file_put_contents($filename, $data_write . PHP_EOL, FILE_APPEND);
