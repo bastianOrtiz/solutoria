@@ -20,6 +20,52 @@ if( $_POST ){
 
     extract($_POST);
 
+    if( $_POST['action'] == 'ajax_anular_solicitud'){
+
+        sleep(2);
+
+        $solicitud = $db->where('id',$_POST['solicitud_id'])->getOne('m_vacaciones');
+
+        $t_ausencia = $db->where('fecha_inicio',$solicitud['fecha_inicio'])
+        ->where('fecha_fin',$solicitud['fecha_fin'])
+        ->where('ausencia_id',4)
+        ->where('trabajador_id',$_POST['trabajador_id'])
+        ->getOne('t_ausencia');
+
+
+        // 1. Eliminar el registro en la table t_ausencia, si la ausencia NO es mediodia
+        if( $solicitud['mediodia'] == 0 ){
+            if( !$solicitud['solicitud_id'] ){
+                $del = $db->where('id',$t_ausencia['id'])->delete('t_ausencia'); 
+            } else {
+                $del = $db->where('solicitud_id',$solicitud['id'])->delete('t_ausencia'); 
+            }
+            
+        }
+
+        //2. Reestableceer cantidad de dias de vacaciones
+        $tipo_field = ($solicitud['tipo'] == 'progresivas') ? 'diasVacacionesProgresivas' : 'diasVacaciones';
+
+        $diasVacacionesCurrent = $db->where('id',$_POST['trabajador_id'])->getValue('m_trabajador',$tipo_field);
+
+        $newDiasVacaciones = ($diasVacacionesCurrent + $solicitud['totalDias']);
+
+        $db->where('id',$_POST['trabajador_id'])->update('m_trabajador',[
+            $tipo_field => $newDiasVacaciones
+        ]);
+
+
+        // 3. Eliminar la solicitud de vacaciones
+        $db->where('id',$_POST['solicitud_id'])->delete('m_vacaciones');
+
+
+        echo json_encode([
+            'status' => 'ok',
+            'solicitud_id' => $_POST['solicitud_id']
+        ]);
+        exit();
+    }
+
 
     if($_POST['action'] == 'confirmar_vacaciones'){
 
@@ -43,6 +89,7 @@ if( $_POST ){
                     'trabajador_id' => $solicitud['trabajador_id'],
                     'ausencia_id' => $id_ausencia_vacaciones,
                     'usuario_id' => $_SESSION[PREFIX.'login_uid'],
+                    'solicitud_id' => $_POST['vacaciones_id']
                 ]);
             }
 

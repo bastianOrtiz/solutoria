@@ -65,13 +65,14 @@
                                     <th> Dias </th>                                     
                                     <th> Tipo </th>                                     
                                     <th style="text-align: center;"> Acciones </th>                                  
+                                    <th style="text-align: center;"> Anular </th>                                  
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php 
                                 foreach( $vacaciones_espera_todos as $ant ){
                                 ?>
-                                    <tr>
+                                    <tr id="solicitud_<?php echo $ant['id'] ?>">
                                         <td> <?php echo $ant['apellidoPaterno'] ?> <?php echo $ant['apellidoMaterno'] ?> <?php echo $ant['nombres'] ?>  </td>
                                         <td> <?php echo $ant['fecha_inicio'] ?> </td>
                                         <td> <?php echo $ant['fecha_fin'] ?> </td>                                        
@@ -109,6 +110,11 @@
                                         <?php } ?> 
 
                                         </td>
+                                        <td>
+                                            <?php if($ant['confirmada'] == 1){ ?>
+                                            <a href="#" data-id="<?php echo $ant['id'] ?>" data-trabajador="<?php echo $ant['trabajador_id'] ?>" class="btn btn-sm btn-danger btn-anular">Anular</a>
+                                            <?php } ?>
+                                        </td>
                                     </tr>
                                 <?php } ?>                                
                             </tbody>
@@ -130,6 +136,45 @@
 <script>
 $(document).ready(function(){        
 
+    $(document).on('click', '.btn-anular', function(event) {
+        event.preventDefault();
+        solicitud_id = $(this).data('id');
+        trabajador_id = $(this).data('trabajador');
+        swal({
+            title: "¿Anular la solicitud seleccionada?",
+            text: "(Esta acción no puede deshacerse)",
+            buttons: true,
+            dangerMode: true,
+            icon: 'warning'
+        })
+        .then((go) => {
+            if (go) {
+                $.ajax({
+                    url: '<?php echo BASE_URL ?>/vacaciones/confirmar_solicitudes',
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        solicitud_id: solicitud_id,
+                        trabajador_id: trabajador_id,
+                        action: 'ajax_anular_solicitud'
+                    },
+                    beforeSend: function(){
+                        $(".overlayer").show();
+                    },
+                    success: function(json){
+                        $("#solicitud_" + json.solicitud_id).fadeOut('normall', function () {
+                            $(this).remove();
+                        });
+                        swal('','Vacaciones anuladas correctamente','success');
+                    }
+                })
+                .always(function() {
+                    $(".overlayer").hide();
+                });
+                
+            }
+        });
+    });
 
     var dataTableEsp1={
         "sProcessing":     "Procesando...",
