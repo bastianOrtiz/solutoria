@@ -1474,7 +1474,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                         $interval->days = -1;
                     }
                 } else {
-                    $interval = $date_ini_ausen->diff($date_fin_ausen);
+                    $interval = $date_ini_ausen->diff($date_fin_corte);
                 }
 
                 $ausencias += ( $interval->days + 1 );
