@@ -1416,7 +1416,8 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
         AND ausencia_id IN ( SELECT id from m_ausencia M WHERE M.licencia = 0 )
         )
         ORDER BY fecha_inicio
-    ";    
+    ";  
+
     $res = $db->rawQuery($raw_query,'',false);
 
     if( $res ){
@@ -1465,6 +1466,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                 
                 //echo "1";
             } elseif( ( $date_ini_ausen >= $date_ini_corte ) && ( $date_fin_ausen >= $date_fin_corte ) && ( $date_ini_ausen <= $date_fin_corte ) ){
+
                 if( mesCompleto($aus['ausencia_id']) ){
                     if( $date_fin_ausen >= $date_ini_corte ){
                         $interval = $date_ini_corte->diff($date_fin_ausen);
@@ -1472,7 +1474,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
                         $interval->days = -1;
                     }
                 } else {
-                    $interval = $date_ini_corte->diff($date_fin_ausen);
+                    $interval = $date_ini_ausen->diff($date_fin_ausen);
                 }
 
                 $ausencias += ( $interval->days + 1 );
@@ -1538,6 +1540,7 @@ function obtenerAusencias($trabajador_id,$mes=0,$year=0){
             }        
         }
     }
+
     
     
     /** Ahora Se Recorren Las LICENCIAS **/
