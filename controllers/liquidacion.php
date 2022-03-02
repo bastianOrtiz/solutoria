@@ -492,9 +492,10 @@ if( isset($parametros[1]) ){
     $total_atrasos = obtenerTotalAtrasos($atrasos_entrada['total_atraso'], $atrasos_salida['total_atraso'],$ausencias); 
 
     $dias_trabajados = $dias_del_mes - $ausencias_efectivas;
+
     
-    if( ( getLimiteMes(getMesMostrarCorte()) < 30) && ( $ausencias_efectivas >= 28 ) ){
-        $dias_trabajados = 0;    
+    if( ( getLimiteMes(getMesMostrarCorte()) < 30) && ( $arr_ausencias['dias_licencia'] >= getLimiteMes(getMesMostrarCorte()) ) ){
+        $dias_trabajados = 0;
     }
 
     if( $dias_trabajados < 0 ){
