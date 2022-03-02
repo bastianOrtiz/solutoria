@@ -271,6 +271,14 @@ td.total{
                             <?php
                             $topeAfc = topeAfc($remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $trabajador['tipocontrato_id'],$dias_trabajados );
 
+
+                            $trabajadores_excepcion = [108,33];
+
+                            if( getAnoMostrarCorte() == 2022 && getMesMostrarCorte() == 2 && in_array($trabajador_id, $trabajadores_excepcion)){
+                                $topeAfc = $total_imponible;
+                            }
+
+
                             if( tipoTrabajador('afc',$trabajador_id) ):
                             ?>
                             <tr>
