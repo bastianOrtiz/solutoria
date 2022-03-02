@@ -59,7 +59,7 @@ function getTag($tag, $id){
             case 'trabajador.nacionalidad':
                 $db->where('id',$id); 
                 $pais_id = $db->getValue ('m_trabajador', 'idNacionalidad');
-                $nacionalidad = $db->getValue ('m_pais', 'gentilicio');
+                $nacionalidad = $db->getValue ('m_pais', 'nombre');
                 $value = $nacionalidad;
             break;
 
@@ -80,7 +80,7 @@ function getTag($tag, $id){
 
             case 'trabajador.salud':
                 $db->where('trabajador_id',$id); 
-                $es_fonasa = $db->getValue ('t_prevision', 'fonasa');
+                $es_fonasa = $db->getValue ('t_prevision', 'fonosa');
                 if( $es_fonasa == 1){
                     $value = 'Fonasa';
                 } else {
