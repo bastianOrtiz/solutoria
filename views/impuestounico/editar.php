@@ -20,7 +20,7 @@
                 
         <section class="content">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <!-- general form elements -->
               <div class="box box-primary">                
                 <div class="box-header">
@@ -35,19 +35,23 @@
                         <div class="col-md-6">
                             <div class="form-group">
                               <label for="desdeImpuestounico">Desde</label>
-                              <input type="text" class="form-control required" value="" id="desdeImpuestounico" name="desdeImpuestounico" placeholder="Valor DESDE" />
+                              <input type="text" class="form-control required" value="<?php echo $impuestounico['desde'] ?>" id="desdeImpuestounico" name="desdeImpuestounico" placeholder="Valor DESDE" />
                             </div>
                             <div class="form-group">
                               <label for="hastaImpuestounico">Hasta</label>
-                              <input type="text" class="form-control required" value="" id="hastaImpuestounico" name="hastaImpuestounico" placeholder="Valor HASTA" />
+                              <input type="text" class="form-control required" value="<?php echo $impuestounico['hasta'] ?>" id="hastaImpuestounico" name="hastaImpuestounico" placeholder="Valor HASTA" />
                             </div>
                         </div>
                         
                         <div class="col-md-6">
                             <div class="form-group">
                               <label for="factorImpuestounico">Factor</label>
-                              <input type="text" class="form-control required" value="" id="factorImpuestounico" name="factorImpuestounico" placeholder="Factor" />
-                            </div>                        
+                              <input type="text" class="form-control required" value="<?php echo $impuestounico['factor'] ?>" id="factorImpuestounico" name="factorImpuestounico" placeholder="Factor" />
+                            </div>  
+                            <div class="form-group">
+                              <label for="rebajarImpuestounico">Cantidad a Rebajar</label>
+                              <input type="text" class="form-control required" value="<?php echo $impuestounico['rebajar'] ?>" id="rebajarImpuestounico" name="rebajarImpuestounico" placeholder="Factor" />
+                            </div>                       
                             <div class="form-group">
                               <label for="periodoImpuestounico">Periodos</label>
                               <select class="form-control required" id="periodoImpuestounico" name="periodoImpuestounico">
@@ -57,6 +61,7 @@
                                 <option value="Q">Quincenal</option>
                                 <option value="M">Mensual</option>
                               </select>
+                              <script>$("#periodoImpuestounico").val('<?php echo $impuestounico['periodo'] ?>')</script>
                             </div>                                         
                         </div>
                         

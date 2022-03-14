@@ -10,9 +10,11 @@ if( $_POST ){
         
         $tipo = $impuestounicoTipo[0];
         $data = Array (
-            "nombre" => $nombreImpuestounico,            
-            "tipo" => $tipo,
-            "cuenta_id" => $_SESSION[PREFIX.'login_cid']
+            "desde" => $desdeImpuestounico,            
+            "hasta" => $hastaImpuestounico,
+            "factor" => $factorImpuestounico,
+            "rebajar" => $rebajarImpuestounico,
+            "periodo" => $periodoImpuestounico
         );
 
         if( editarImpuestounico($impuestounico_id, $data) ){
