@@ -319,11 +319,29 @@ if( $_POST ){
         }
             
     }
+
+
+    if( $action == 'liquidar_batch'){
+        
+        $liquidacion_return = liquidarBatch($_POST['trabajador_id']);
+
+        $json = [
+            'data' => $_POST
+        ];
+
+        echo json_encode($json);
+        exit();
+
+    }
+
+
         
 }
 
 
+
 if( isset($parametros[1]) ){
+
             
     $trabajador_id = $parametros[1];
     $total_descuento_atrasos = obtenerTotalDescuentoXAtrasos($trabajador_id);
@@ -714,6 +732,38 @@ if( isset($parametros[1]) ){
         $liquidacion_id = null;
     }
      
+}
+
+
+if($parametros[0] == 'batch'){
+
+
+    if(!$_GET['depto']){
+        $departamentos = $db->orderBy('nombre','ASC')
+        ->get('m_departamento');
+    } else {
+        $nombre_depto = getNombre($_GET['depto'],'m_departamento', false);
+
+        $trabajadores_liquidar = $db->where('empresa_id',$_SESSION[PREFIX.'login_eid'])
+        ->where('tipocontrato_id',array(3,4),'NOT IN')
+        ->where('departamento_id',$_GET['depto'])
+        ->get('m_trabajador',null,['apellidoPaterno','apellidoMaterno','nombres','id','departamento_id']);
+
+        if(count($trabajadores_liquidar) == 0){
+            goBack('No hay trabajadores en el Departamento seleccionado');
+            exit();
+        }
+
+        $trabajadores_ids_todos = [];
+        $trabajadores_nombres = [];
+
+        foreach ($trabajadores_liquidar as $key => $value) {
+            $trabajadores_ids_todos[] = $value['id'];
+            $trabajadores_nombres[$value['id']] = $value['apellidoPaterno'] . ' ' . $value['apellidoMaterno'] . ' ' . $value['nombres'];
+        }
+
+    }
+
 }
 
 

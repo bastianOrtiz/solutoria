@@ -1978,6 +1978,11 @@ function mainMenu(){
                 'entidad' => 'liquidacion',
                 'accion' => 'editar_sis_sces',
                 'label' => 'Editar SIS y SCES'
+            ),
+            array(
+                'entidad' => 'liquidacion',
+                'accion' => 'batch',
+                'label' => 'Liquidar masivamente'
             )
         )
     );
@@ -2810,8 +2815,7 @@ function getMesMostrarCorte(){
         if($mesMostrar == 00){
             $mesMostrar = 12;
         }  
-    }        
-        
+    }
     
     return $mesMostrar;
 }

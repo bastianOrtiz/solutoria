@@ -1801,4 +1801,9 @@ function obtenerHoraExtraTrabajador($id_trabajador){
     return  $arr_horas_extras;
 }
 
+
+include ROOT . '/models/liquidacion.batch.php';
+
+
+
 ?>
