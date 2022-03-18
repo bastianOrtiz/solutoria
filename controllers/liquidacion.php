@@ -323,10 +323,11 @@ if( $_POST ){
 
     if( $action == 'liquidar_batch'){
         
-        $liquidacion_return = liquidarBatch($_POST['trabajador_id']);
+        $liquidacion_id = liquidarBatch($_POST['trabajador_id']);
 
         $json = [
-            'data' => $_POST
+            'data' => $_POST,
+            'liquidacion_id' => $liquidacion_id
         ];
 
         echo json_encode($json);
@@ -762,6 +763,7 @@ if($parametros[0] == 'batch'){
             $trabajadores_nombres[$value['id']] = $value['apellidoPaterno'] . ' ' . $value['apellidoMaterno'] . ' ' . $value['nombres'];
         }
 
+
     }
 
 }
@@ -1021,4 +1023,6 @@ if( isset($parametros[0]) ){
 include ROOT . '/views/comun/footer.php';
 
 ?>
+
+<?php exit(); ?>
 

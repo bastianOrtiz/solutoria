@@ -195,7 +195,7 @@ function recursively_ajax(){
         },
         success: function(json){
             error = 0;
-            ids_ok += json_trabajadores_id[trabajador_count] + ',';
+            ids_ok += json.liquidacion_id + ',';
 
             $('.log #log_' + json_trabajadores_id[trabajador_count] + ' span').html('<span class="text-success">[OK]</span>');
             
@@ -215,10 +215,15 @@ function recursively_ajax(){
                     buttons: ["No", "Si"],
                 })
                 .then( (value) => {
+                    
                     $(".overlayer").hide();
                     $(".progress").css('opacity',0);
+
                     if(value){
-                        window.location.href = '<?php echo BASE_URL; ?>/private/pdfgen_batch.php?ids=' + ids_ok
+                        let a= document.createElement('a');
+                        a.target= '_blank';
+                        a.href= '<?php echo BASE_URL; ?>/private/pdfgen_batch.php?ids=' + ids_ok;
+                        a.click();
                     }
                 })
 

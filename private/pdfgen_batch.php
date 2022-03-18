@@ -1,5 +1,6 @@
 <?php
 
+
 @session_start();
 include '../libs/config.php';
 include '../libs/constantes.php';
@@ -22,6 +23,34 @@ if(!$_GET['ids']){
 $ids = trim($_GET['ids'],',');
 $liquidaciones_ids = explode(',', $ids);
 $liquidaciones_html = '';
+
+
+$content_common = '
+<style type="text/css">
+<!--
+    table{ font-size: 12px; }
+    table.table_header{ width: 100%; }
+    table.table_header td{ width: 50%; }
+    table.table_header td.left{ text-align:left; }
+    table.table_header td.right{ text-align:right; }
+
+    table.page_header { width: 100%; border: 1px solid #333; border-collapse:collapse; }
+    table.page_header td{ border-bottom: 1px solid #333; padding: 2px 10px}
+
+    table.page_header td table.no-border td{ border-bottom: 0;}
+
+    table.page_header td.first{ width: 40% }
+    table.page_header td.last{ width: 20%; text-align: right; }
+    table.subtable{ border: 0px }
+    table.subtable td{padding: 0 10mm; border-top: 0px; border-bottom: 0px; border-left: 0px; border-right: 0px}
+    table#table_descuentos td{ padding:0px 0 0 40px; }
+
+    table.table_footer{ width: 100%; }
+    table.table_footer td{ width: 50%; }
+    table.table_footer td.left{ text-align:left; }
+    table.table_footer td.right{ text-align:right; }
+-->
+</style>';
 
 
 foreach($liquidaciones_ids as $liquidacion_id){
@@ -134,31 +163,6 @@ foreach($liquidaciones_ids as $liquidacion_id){
     }
 
     $content = '
-    <style type="text/css">
-    <!--
-        table{ font-size: 12px; }
-        table.table_header{ width: 100%; }
-        table.table_header td{ width: 50%; }
-        table.table_header td.left{ text-align:left; }
-        table.table_header td.right{ text-align:right; }
-
-    	table.page_header { width: 100%; border: 1px solid #333; border-collapse:collapse; }
-        table.page_header td{ border-bottom: 1px solid #333; padding: 2px 10px}
-
-        table.page_header td table.no-border td{ border-bottom: 0;}
-
-        table.page_header td.first{ width: 40% }
-        table.page_header td.last{ width: 20%; text-align: right; }
-        table.subtable{ border: 0px }
-        table.subtable td{padding: 0 10mm; border-top: 0px; border-bottom: 0px; border-left: 0px; border-right: 0px}
-        table#table_descuentos td{ padding:0px 0 0 40px; }
-
-        table.table_footer{ width: 100%; }
-        table.table_footer td{ width: 50%; }
-        table.table_footer td.left{ text-align:left; }
-        table.table_footer td.right{ text-align:right; }
-    -->
-    </style>
     <page backtop="1mm" backbottom="0mm" backleft="10mm" backright="10mm" style="font-size: 10pt">
     <table width="100%" style="width: 100%">
         <tbody>
@@ -627,9 +631,11 @@ foreach($liquidaciones_ids as $liquidacion_id){
 
 }
 
+$output = $content_common . $liquidaciones_html;
+
 require_once('../libs/html2pdf/html2pdf.class.php');
 $html2pdf = new HTML2PDF('P','LETTER','es');
-$html2pdf->WriteHTML($liquidaciones_html);
+$html2pdf->WriteHTML($output);
 $html2pdf->Output('liquidaciones.pdf');
 
 
