@@ -385,8 +385,14 @@ function liquidarBatch($trabajador_id){
         $total_afc = 0;
     endif;
 
-    $afpPorcentaje = $afp_trabajador['valor'];
-    $total_afp = ( ( $total_imponible * $afp_trabajador['valor'] ) / 100 );
+
+    if( tipoTrabajador('afp',$trabajador_id) ):
+        $afpPorcentaje = $afp_trabajador['valor'];
+        $total_afp = ( ( $total_imponible * $afp_trabajador['valor'] ) / 100 );
+    else:
+        $afpPorcentaje = 0;
+        $total_afp = 0;
+    endif;
 
 
     $total_haberes_no_imponibles = 0;
@@ -439,10 +445,10 @@ function liquidarBatch($trabajador_id){
     }
 
     // Impuestos
-    $info_impuesto = calcularImpuesto($total_tributable);
     $total_rebaja_impuesto = obtenerTotalRebajaImpuesto( round($total_afp),round($total_salud_legal),round($total_salud),round($total_afc),round($total_apv_B));
     $total_rebaja_impuesto = $total_rebaja_impuesto;
     $total_tributable = ( $remuneracion_tributable - $total_rebaja_impuesto );
+    $info_impuesto = calcularImpuesto($total_tributable);
 
     $impuesto_agricola = 0;
     if( $trabajador['agricola'] != 0 ){
