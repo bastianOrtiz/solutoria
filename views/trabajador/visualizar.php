@@ -19,7 +19,7 @@
             <?php } ?> 
         </section>
         <section class="content">
-            <div class="overlayer" style="display: block;"><i class="fa fa-refresh fa-spin"></i></div>
+            <a href="<?php echo BASE_URL; ?>/trabajador/visualizar" class="btn btn-sm btn-primary" style="margin-bottom: 15px;"><i class="fa fa-angle-left"></i> &nbsp; VOLVER</a>
             <ul class="nav nav-tabs">
                 <li class="active"><a  onclick="javascript: return void(0);" href="#tab_1" data-toggle="tab">Información Personal</a></li>
                 <li><a href="#tab_6" onclick="javascript: return void(0);" data-toggle="tab">Documentación</a></li>
