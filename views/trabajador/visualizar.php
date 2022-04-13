@@ -352,7 +352,7 @@
 <script>
 $(document).ready(function(){
 
-    $(".btn-ver").on('click', function (e) {
+    $(document).on('click','.btn-ver', function(e){
         e.preventDefault();
         url = $(this).attr('href');
         $(".overlayer").show();
