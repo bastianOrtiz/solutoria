@@ -1708,6 +1708,11 @@ function mainMenu(){
                 'entidad' => 'trabajador',
                 'accion' => 'documentos_pendientes',
                 'label' => 'Documentos Pendientes'
+            ),
+            array(
+                'entidad' => 'trabajador',
+                'accion' => 'visualizar',
+                'label' => 'Consultar Ficha'
             )
         )
     );
