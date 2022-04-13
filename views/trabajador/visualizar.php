@@ -352,15 +352,14 @@
 <script>
 $(document).ready(function(){
 
-    $(".btn-ver").click(function (e) { 
+    $(".btn-ver").on('click', function (e) {
         e.preventDefault();
         url = $(this).attr('href');
-        $(".overlayer").fadeIn(100, function() {
-            location.href = url;
-        });
-        
+        $(".overlayer").show();
+        location.href = url;
     });
-    
+
+
     $(".nav-tabs a").click(function(){
         window.location.hash = $(this).attr('href');
     })
