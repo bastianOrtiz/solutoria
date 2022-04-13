@@ -13,7 +13,6 @@ if( $action == 'api' && $entity == 'trabajador' ){
             $opt = $_POST['opt'];
 
             $trabajador = $db->where('rut',$rut_decrypted)
-            ->where('password',md5($_POST['vote_pass']))
             ->where('tipocontrato_id',array(3,4),'NOT IN')
             ->getOne('m_trabajador');
 
@@ -46,7 +45,7 @@ if( $action == 'api' && $entity == 'trabajador' ){
                 $array_trabajador = [
                     'title' => 'Error',
                     'status' => 'error',
-                    'message' => 'Empleado no encontrado o contraseña incorrecta'
+                    'message' => 'Empleado no encontrado'
                 ];
             endif;
 

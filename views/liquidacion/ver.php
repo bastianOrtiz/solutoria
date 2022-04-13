@@ -272,11 +272,15 @@ td.total{
                             $topeAfc = topeAfc($remuneracion_tributable, $total_imponible, $ausencias,$dias_licencia, $trabajador['tipocontrato_id'],$dias_trabajados );
 
 
-                            $trabajadores_excepcion = [108,33,986];
-
-                            if( getAnoMostrarCorte() == 2022 && getMesMostrarCorte() == 2 && in_array($trabajador_id, $trabajadores_excepcion)){
-                                $topeAfc = $total_imponible;
+                            // EXCEPCIONES
+                            if( getAnoMostrarCorte() == 2022 && getMesMostrarCorte() == 3 && $trabajador_id == 60){
+                                $topeAfc = 638640;
                             }
+
+                            if( getAnoMostrarCorte() == 2022 && getMesMostrarCorte() == 3 && $trabajador_id == 12){
+                                $topeAfc = 258898;
+                            }
+                            // fin excepciones
 
 
                             if( tipoTrabajador('afc',$trabajador_id) ):
