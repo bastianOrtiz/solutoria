@@ -355,8 +355,10 @@ $(document).ready(function(){
     $(".btn-ver").click(function (e) { 
         e.preventDefault();
         url = $(this).attr('href');
-        $(".overlayer").show();
-        location.href = url;
+        $(".overlayer").show( "fast", function() {
+            location.href = url;
+        });
+        
     });
     
     $(".nav-tabs a").click(function(){
