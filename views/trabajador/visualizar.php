@@ -355,7 +355,7 @@ $(document).ready(function(){
     $(".btn-ver").click(function (e) { 
         e.preventDefault();
         url = $(this).attr('href');
-        $(".overlayer").show( "fast", function() {
+        $(".overlayer").fadeIn(100, function() {
             location.href = url;
         });
         
