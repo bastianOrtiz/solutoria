@@ -1650,10 +1650,9 @@ if( $parametros[0] == 'imposiciones' ){
     TA.fecha_fin
     FROM t_ausencia TA, m_trabajador T
     where TA.ausencia_id IN ( SELECT id FROM m_ausencia M WHERE M.licencia = 1 ) 
-    AND T.empresa_id = 2
+    AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
     AND T.id = TA.trabajador_id
     AND TA.fecha_fin > '$un_ano_atras'
-    AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
     ";
     $all_licencias = $db->rawQuery( $sql ); 
 
