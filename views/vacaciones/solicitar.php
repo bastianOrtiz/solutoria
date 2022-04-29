@@ -171,10 +171,10 @@
                                                 <span class="tip success" style="background-color: #b9e1b9" title="En espera de confirmación por RRHH" data-toggle="tooltip"><i class="fa fa-flag"></i></span>
                                                 <?php endif; ?>
 
-                                                <?php if(!$ant['confirmada']): ?>
+
                                                 &nbsp;  &nbsp;
                                                 <a href="#" class="btn-reenviar-form" data-vacaciones_id="<?php echo $ant['id']; ?>" title="Reenviar Formulario de Vacaciones por correo" data-toggle="tooltip"><span class="tip" style="background-color: #fff; background-color: #dd2f2f;"><i class="fa fa-envelope"></i></span></a>
-                                                <?php endif; ?>
+
                                             </td>
                                         </tr>
                                     <?php } ?>
