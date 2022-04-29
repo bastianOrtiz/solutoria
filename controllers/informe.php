@@ -1653,6 +1653,7 @@ if( $parametros[0] == 'imposiciones' ){
     AND T.empresa_id = 2
     AND T.id = TA.trabajador_id
     AND TA.fecha_fin > '$un_ano_atras'
+    AND T.empresa_id = ". $_SESSION[PREFIX.'login_eid'] ."
     ";
     $all_licencias = $db->rawQuery( $sql ); 
 
