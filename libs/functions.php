@@ -2,10 +2,6 @@
 @session_start();
 
 
-
-
-
-
 /** 
  * Obtiene los descuentos del trabajador
  *  
@@ -55,7 +51,7 @@ function ingresaDescuentoCreditoSolidario($trabajador_id, $total_tributable){
     ->where('descuento_id',56)
     ->where('mesInicio',$mes)
     ->where('anoInicio',$year)
-    ->where('activo',1)
+
     ->get('t_descuento');
     
     // Ingresa el descuento por "Credito SOlidario del estado" si la persona esta seleccionada como tal
