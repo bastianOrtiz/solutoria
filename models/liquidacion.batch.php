@@ -321,53 +321,6 @@ function liquidarBatch($trabajador_id){
         }
         
     }
-     
-     /*   
-    $db->where("trabajador_id", $parametros[1]);
-    $db->where("activo", 1);
-    $db->where("descuento_id", ID_ANTICIPO, "<>");
-    $db->orderBy('mesInicio','DESC');
-    $debes_trabajador = $db->get("t_descuento");        
-    */
-    $query_desc = "
-        SELECT * FROM t_descuento 
-        WHERE trabajador_id=$trabajador_id 
-        AND activo = 1 
-        AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
-        OR
-            (
-            activo = 0 and fechaFinalizacion = '". leadZero($mes) ."-$year' 
-            AND trabajador_id = $trabajador_id 
-            AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
-            )  
-        ORDER BY mesInicio DESC ";
-    $debes_trabajador = $db->rawQuery( $query_desc );
-
-    
-    
-    /* ANTICIPO ******************************
-    $db->where("trabajador_id", $parametros[1]);
-    $db->where("activo", 1);
-    $db->where("descuento_id", ID_ANTICIPO);
-    $db->orderBy('mesInicio','DESC');        
-    $anticipo = $db->getValue("t_descuento",'valor'); 
-    */   
-    
-    $anticipo = 0;
-    $sql_anticipo = "
-    SELECT * FROM `t_descuento` 
-    WHERE trabajador_id = $trabajador_id 
-    AND activo = 1 
-    AND descuento_id IN (select id from m_descuento where mostrarAbajo = 1)
-    OR ((activo = 0 and fechaFinalizacion = '".leadZero($mes)."-$year') and trabajador_id = $trabajador_id AND descuento_id IN (select id from m_descuento where mostrarAbajo = 1) ) 
-    ORDER BY id DESC";                
-    $anticipos = $db->rawQuery( $sql_anticipo );
-    
-    if( $anticipos ){
-        foreach( $anticipos as $a ){
-            $anticipo += $a['valor'];    
-        }            
-    } 
     
     
     
@@ -457,7 +410,45 @@ function liquidarBatch($trabajador_id){
 
 
 
-    // Descuentos
+    /*************************************************************
+    * DESCUENTOS *
+    **************************************************************/
+
+    ingresaDescuentoCreditoSolidario($trabajador_id,$total_tributable);
+
+    $query_desc = "
+        SELECT * FROM t_descuento 
+        WHERE trabajador_id=$trabajador_id 
+        AND activo = 1 
+        AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
+        OR
+            (
+            activo = 0 and fechaFinalizacion = '". leadZero($mes) ."-$year' 
+            AND trabajador_id = $trabajador_id 
+            AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
+            )  
+        ORDER BY mesInicio DESC ";
+    $debes_trabajador = $db->rawQuery( $query_desc );
+    
+
+    /* ANTICIPO ******************************/
+    $anticipo = 0;
+    $sql_anticipo = "
+    SELECT * FROM `t_descuento` 
+    WHERE trabajador_id = $trabajador_id 
+    AND activo = 1 
+    AND descuento_id IN (select id from m_descuento where mostrarAbajo = 1)
+    OR ((activo = 0 and fechaFinalizacion = '".leadZero($mes)."-$year') and trabajador_id = $trabajador_id AND descuento_id IN (select id from m_descuento where mostrarAbajo = 1) ) 
+    ORDER BY id DESC";                
+    $anticipos = $db->rawQuery( $sql_anticipo );
+    
+    if( $anticipos ){
+        foreach( $anticipos as $a ){
+            $anticipo += $a['valor'];    
+        }            
+    } 
+
+
     $total_descuentos_previsionales = round($total_afp) + round($total_salud) + round($total_afc) + round($total_apv) + round($cuenta2['monto']);
 
     $total_otros_descuentos = 0;
