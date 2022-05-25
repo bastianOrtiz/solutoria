@@ -359,7 +359,13 @@ td.total{
                                 <td class="total"> <strong><?php echo "$ " . number_format($total_descuentos_previsionales,0,',','.'); ?></strong> </td>
                             </tr>
 
-                            <?php $total_tributable = ( $remuneracion_tributable - $total_rebaja_impuesto ); ?>
+                            <?php 
+                            $total_tributable = ( $remuneracion_tributable - $total_rebaja_impuesto ); 
+                            
+                            //Ingresa automaticamente un descuento por concepto del "Credito SOlidario del Estado"
+                            ingresaDescuentoCreditoSolidario($trabajador_id, $total_tributable);
+                            
+                            ?>
 
                             <!-- Si NO es trabajador agricola -->
                             <?php
@@ -444,6 +450,7 @@ td.total{
                                 <td>
                                     <strong>Descuentos</strong> <br />
                                     <?php
+                                    $debes_trabajador = getDescuentosTrabajador($trabajador_id);
                                     $total_otros_descuentos = 0;
                                     if( ( $debes_trabajador ) || ( $total_apv_A > 0 ) ){
                                     ?>

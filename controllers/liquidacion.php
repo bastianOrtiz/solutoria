@@ -674,19 +674,7 @@ if( isset($parametros[1]) ){
     $db->orderBy('mesInicio','DESC');
     $debes_trabajador = $db->get("t_descuento");        
     */
-    $query_desc = "
-        SELECT * FROM t_descuento 
-        WHERE trabajador_id=$trabajador_id 
-        AND activo = 1 
-        AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
-        OR
-            (
-            activo = 0 and fechaFinalizacion = '". leadZero($mes) ."-$year' 
-            AND trabajador_id = $trabajador_id 
-            AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
-            )  
-        ORDER BY mesInicio DESC ";
-    $debes_trabajador = $db->rawQuery( $query_desc );
+    
 
     
     

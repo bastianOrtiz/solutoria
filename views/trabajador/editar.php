@@ -672,6 +672,19 @@
                                                     <script> $("#crea_evento").prop('checked',true); </script>
                                                     <?php } ?>
                                                 </div>
+
+                                                <div class="col-lg-12">
+                                                    <!-- Rounded switch -->
+                                                    <p>&nbsp;</p>
+                                                    <label class="switch">
+                                                    <input type="checkbox" name="creditoSolidario" id="creditoSolidario">
+                                                    <span class="slider round"></span>
+                                                    </label>
+                                                    &nbsp; <strong>Paga Crédito Solidario</strong>
+                                                    <?php if($trabajador['creditoSolidario'] == 1){ ?>
+                                                    <script> $("#creditoSolidario").prop('checked',true); </script>
+                                                    <?php } ?>
+                                                </div>
                                                 
                                             </div>
 

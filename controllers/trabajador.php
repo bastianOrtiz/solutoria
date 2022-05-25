@@ -338,6 +338,12 @@ if( $_POST ){
             $data['creaEvento'] = 0;
         }
         
+        if( $_POST['creditoSolidario'] ){
+            $data['creditoSolidario'] = 1;
+        } else {
+            $data['creditoSolidario'] = 0;
+        }
+        
         if( $saludTrabajador == 'fonasa' ){
             $data_prev = array(
                 'trabajador_id' => $idTrabajador,
@@ -387,6 +393,8 @@ if( $_POST ){
                 $db->insert('t_documentotrabajador', $insertData);
             }       
         }
+
+
         
         $edit_trabajador = editarTrabajador($idTrabajador, $data);
 
@@ -462,6 +470,14 @@ if( $_POST ){
         } else {
             $data['creaEvento'] = 0;
         }
+
+        if( $_POST['creditoSolidario'] ){
+            $data['creditoSolidario'] = 1;
+        } else {
+            $data['creditoSolidario'] = 0;
+        }
+
+        
 
         $data = array(
             'empresa_id' => $_SESSION[ PREFIX . 'login_eid'],
@@ -689,7 +705,7 @@ if( $parametros ){
             AND trabajador_id = $parametros[1]
             )  
         ORDER BY mesInicio DESC ";
-        $debes_trabajador = $db->rawQuery( $query_desc );     
+        $debes_trabajador = $db->rawQuery( $query_desc ); 
         
         
         /*

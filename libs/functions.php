@@ -1,6 +1,100 @@
 <?php
 @session_start();
 
+
+
+
+
+
+/** 
+ * Obtiene los descuentos del trabajador
+ *  
+ * @param (integer) $trabajador_id ID del trabajador 
+ * @return (array) $debes_trabajador Coleccion de los descuentos
+ */ 
+function getDescuentosTrabajador($trabajador_id ){
+    global $db; 
+
+    $mes = getMesMostrarCorte();
+    $year = getAnoMostrarCorte();
+
+    $query_desc = "
+        SELECT * FROM t_descuento 
+        WHERE trabajador_id=$trabajador_id 
+        AND activo = 1 
+        AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
+        OR
+            (
+            activo = 0 and fechaFinalizacion = '". leadZero($mes) ."-$year' 
+            AND trabajador_id = $trabajador_id 
+            AND descuento_id NOT IN (select id from m_descuento where mostrarAbajo = 1)
+            )  
+        ORDER BY mesInicio DESC ";
+    $debes_trabajador = $db->rawQuery( $query_desc );
+
+    return $debes_trabajador;
+}
+
+
+
+/** 
+ * Ingresa automaticamente un descuento por concepto del "Credito SOlidario del Estado"
+ *  
+ * @param (integer) $trabajador_id ID del trabajador a ingresarle el descuento
+ * @param (float) $total_tributable Total Tributable
+ * @return (int) $last_id ID del insert o false en caso de error 
+ */ 
+function ingresaDescuentoCreditoSolidario($trabajador_id, $total_tributable){
+    global $db; 
+
+    $mes = getMesMostrarCorte();
+    $year = getAnoMostrarCorte();
+
+    //Check que no tenga el descuento previamente
+    $exist_descuento = $db->where('trabajador_id',$trabajador_id)
+    ->where('descuento_id',56)
+    ->where('mesInicio',$mes)
+    ->where('anoInicio',$year)
+    ->where('activo',1)
+    ->get('t_descuento');
+    
+    // Ingresa el descuento por "Credito SOlidario del estado" si la persona esta seleccionada como tal
+    $paga_credito_solidario = $db->where('id',$trabajador_id)->getValue('m_trabajador','creditoSolidario');
+    if($paga_credito_solidario && !$exist_descuento){
+
+        $valor_3percent_tributable = ($total_tributable * 0.03);
+
+        $data = Array (
+            "mesInicio" => $mes,
+            "anoInicio" => $year,
+            "fechaInicio" => $year.'-'.$mes.'-01',
+            "cuotaActual" => '1',
+            "cuotaTotal" => '1',
+            "valor" => $valor_3percent_tributable,
+            "descuento_id" => '56',
+            "trabajador_id" => $trabajador_id ,
+            "tipomoneda_id" => '1',
+            "glosa" => '',
+            "activo" => '1'
+        );
+        
+        $last_id = $db->insert('t_descuento' , $data);
+
+        return $last_id;
+        
+    } else {
+        return false;
+    }
+
+    //Fin debe Credito SOlidario
+}
+
+
+
+
+
+
+
 /** 
  * Convierte un tag en su valor
  * Recive el parametro en el formato tabla.Campo
