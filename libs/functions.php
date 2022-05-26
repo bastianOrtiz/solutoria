@@ -51,12 +51,12 @@ function ingresaDescuentoCreditoSolidario($trabajador_id, $total_tributable){
     ->where('descuento_id',56)
     ->where('mesInicio',$mes)
     ->where('anoInicio',$year)
+    ->delete('t_descuento');
 
-    ->get('t_descuento');
     
     // Ingresa el descuento por "Credito SOlidario del estado" si la persona esta seleccionada como tal
     $paga_credito_solidario = $db->where('id',$trabajador_id)->getValue('m_trabajador','creditoSolidario');
-    if($paga_credito_solidario && !$exist_descuento){
+    if($paga_credito_solidario){
 
         $valor_3percent_tributable = ($total_tributable * 0.03);
 
