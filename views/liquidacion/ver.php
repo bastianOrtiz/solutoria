@@ -280,6 +280,9 @@ td.total{
                             if( getAnoMostrarCorte() == 2022 && getMesMostrarCorte() == 3 && $trabajador_id == 12){
                                 $topeAfc = 258898;
                             }
+                            if( getAnoMostrarCorte() == 2022 && getMesMostrarCorte() == 5 && $trabajador_id == 64){
+                                $topeAfc = 3071659;
+                            }
                             // fin excepciones
 
 
