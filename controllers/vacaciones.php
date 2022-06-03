@@ -199,6 +199,10 @@ if( $_POST ){
             $response = encrypt("status=error&mensaje=No puede solicitar mas de $diasVacacionesTrabajador días hábiles legales&id=");    
         } else{
 
+            if($_POST['vacaciones_mediodia'])
+                $diasHabiles = 0.5;
+
+                
             if( $cargo == 'progresivas' && $diasHabiles > $diasVacacionesProgresivasTrabajador ){
                 $response = encrypt('status=error&mensaje=No puedes pedir mas de ' . $diasVacacionesProgresivasTrabajador . ' días de vacaciones progresivas&id=');
             } else {
