@@ -29,6 +29,8 @@ $codigos_documentos = [
     '020' => 'Cert. Vacaciones progresivas'
 ];
 
+$total_documentos = count($codigos_documentos);
+
 
 /** MAX ID RELOJ CONTROL **/
 //(Si en tabla 'm_cuenta' en el campo 'comparteRelojControl' = 1 o true)
@@ -1248,6 +1250,7 @@ if( $parametros ){
         header("Pragma: no-cache"); 
         header("Expires: 0");
 
+
         $db->where ("empresa_id", $_SESSION[ PREFIX . 'login_eid']);
         $db->orderBy("apellidoPaterno","ASC");
         $db->where ("deleted_at", NULL, 'IS');
@@ -1258,7 +1261,27 @@ if( $parametros ){
         <table border="1" style="border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th colspan="2"></th>
+                    <th colspan="2" style="text-align: left;">
+                    <strong>Leyenda: </strong><br>
+                        <table>
+                            <tr>
+                                <td style="background-color: #b7ff9a; text-align: center;">✓</td>
+                                <td>Documento listo</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #ffbbbb; text-align: center;">x</td>
+                                <td>Documento Incompleto</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #b0edfb; text-align: center;">-</td>
+                                <td>Documento Pendiente</td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #f4f4f4; text-align: center;">n/c</td>
+                                <td>Documento No Corresponde o No Aplica</td>
+                            </tr>
+                        </table>
+                    </th>
                     <th colspan="<?php $total_documentos ?>">Documentos del Trabajador    </th>
                 </tr>
                 <tr>
@@ -1270,22 +1293,42 @@ if( $parametros ){
                 </tr>
             </thead>
             <tbody>
-            <?php foreach( $lista_trabajadores as $person ){ ?>
+            <?php 
+            foreach( $lista_trabajadores as $person ){ 
+            $documentos_requeridos = json_decode($person['documentos_requeridos']);
+            $documentos_pendientes = json_decode($person['documentos_pendientes']);
+            ?>
                 <tr>
                     <td> <?php echo $person['id']?> </td>
                     <td style="white-space: nowrap;"> <?php echo $person['apellidoPaterno'] ?> <?php echo $person['apellidoMaterno'] ?> <?php echo $person['nombres'] ?> </td>
                     <?php 
                     $documentos_x_trabajador = getDocumentosPorTrabajador($person['id']);
-                    foreach($codigos_documentos as $cod){
+                    foreach($codigos_documentos as $cod => $nombre_doc){
                         if( in_array($cod,$documentos_x_trabajador) ){
                         ?>
-                        <td style="background-color:#b7ff9a" style="text-align: center;"></td>
+                        <td style="background-color:#b7ff9a; text-align: center;" class="text-center">✓</i></td>
                         <?php 
                         } else { 
-                        ?>
-                        <td style="background-color:#ffbbbb" style="text-align: center;"></td>
-                        <?php 
+
+                            if(in_array($cod,$documentos_requeridos)){
+                                ?>
+                                <td style="background-color:#ffbbbb; text-align: center;" >x</td>
+                                <?php 
+                            } else {
+                                if(in_array($cod,$documentos_pendientes)){
+                                ?>
+                                    <td style="background-color:#b0edfb; text-align: center;" >-</td>
+                                <?php
+                                } else {
+                                ?>
+                                    <td style="background-color:#f5f5f5; text-align: center;" >n/c</td>
+                                <?php 
+                                }
+                            }
+
                         }
+
+
                     }
                     ?>
                 </tr>

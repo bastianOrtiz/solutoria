@@ -27,7 +27,7 @@
                         <thead>
                             <tr>
                                 <th colspan="2"></th>
-                                <th colspan="<?php echo $total_documentos; ?>" style="white-space: nowrap;">Documentos del Trabajador    </th>
+                                <th colspan="<?php echo ($total_documentos + 1); // Se agrega +1 por la columna del boton descargar ?>" style="white-space: nowrap;">Documentos del Trabajador    </th>
                             </tr>
                             <tr>
                                 <th> ID </th>
