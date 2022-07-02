@@ -10,18 +10,23 @@
     <meta name="author" content="">
 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.min.js" integrity="sha512-8EbzTdONoihxrKJqQUk1W6Z++PXPHexYlmSfizYg7eUqz8NgScujWLqqSdni6SRxx8wS4Z9CQu0eakmPLtq0HA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.19/sweetalert2.all.js" integrity="sha512-/vz9zuhaRh2nY4tgFy//B52ghWGt9+iOCYKr1OOmjYpCb68khSixntYopw1vgEdO3620Pmq3gi4WmwTQhv7Zrg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
 
     <!-- Bootstrap core JavaScript-->
 
@@ -56,7 +61,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Solutoria</div>
             </a>
 
             <!-- Divider -->
@@ -122,7 +127,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
+                    <!-- Topbar Search 
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
@@ -134,7 +139,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form>-->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -165,12 +170,6 @@
 
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
                             <!-- Dropdown - Alerts -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
@@ -216,12 +215,6 @@
 
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="messagesDropdown">
@@ -286,7 +279,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Bastian Ortiz</span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -324,13 +317,12 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Lista de Unidades</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <button id="actualizarUF" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Actualizar Datos UF</button>
                     </div>
 
                     <!-- Content Row -->
                     
-                    <table class="table">
+                    <table class="table" id="tablaUnidades">
                       <thead>
                         <tr>
                           <th scope="col">#</th>
@@ -350,7 +342,10 @@
                             <td><?=$unidad['nombre'];?></td>
                             <td><?=Carbon\Carbon::parse($unidad['fecha'])->format('d-m-Y');?></td>
                             <td><?=$unidad['valor'];?></td>
-                            <td><button data-id="<?=$unidad['id'];?>" class="unidadEliminar btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button></td>
+                            <td>
+                                <button data-id="<?=$unidad['id'];?>" type="button" class="unidadEditar btn btn-warning btn-sm"><i class="fa-solid fa-edit"></i></button>
+                                <button data-id="<?=$unidad['id'];?>" class="unidadEliminar btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></button>
+                            </td>
                         </tr>
                         <?php endforeach;?>
                         
@@ -358,7 +353,43 @@
                     </table>
 
                     <!-- Content Row -->
-
+                    <div class="modal" id="SuspendModal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <form id="formModalEditar">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Edición de Unidad</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>Codigo</label>
+                                            <input type="text" disabled class="form-control" id="codigo">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Nombre</label>
+                                            <input type="text" disabled class="form-control" id="nombre">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Fecha</label>
+                                            <input type="text" disabled class="form-control" id="fecha">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Valor</label>
+                                            <input type="number" class="form-control" name="valor" id="valor" step=".01">
+                                            <input type="hidden" name="id" id="id">
+                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Content Row -->
                     
 
@@ -388,32 +419,19 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Bootstrap core JavaScript-->
 
 </body>
 
 <script>
+
+    $(document).ready( function () {
+        $('#tablaUnidades').DataTable();
+    } );
+
     $(document).on('click',".unidadEliminar",function(){
         var id =$(this).data("id");
         $.ajax(
@@ -430,6 +448,78 @@
             }
         );
 
+    })
+
+    $(document).on('click',".unidadEditar",function(){
+        var id =$(this).data("id");
+        $.ajax(
+            {
+                type: 'GET',
+                url: 'http://localhost/solutoria/CrudSolutoria/public/unidades/getOne',
+                data: 'id='+id,
+                datatype: 'json',
+                success: function(data){
+                    data=JSON.parse(data);
+                    console.log(data);
+                    $("#id").val(data.id);
+                    $("#codigo").val(data.codigo);
+                    $("#nombre").val(data.nombre);
+                    $("#fecha").val(data.fecha);
+                    $("#valor").val(data.valor);
+                }
+
+            }
+        )
+        $("#SuspendModal").modal("show");
+    });
+
+    $(document).on('submit',"#formModalEditar",function(event){
+        event.preventDefault();
+        var data = $('#formModalEditar').serialize();
+
+        $.ajax(
+            {
+                type: 'POST',
+                url: 'http://localhost/solutoria/CrudSolutoria/public/unidades/editar',
+                data: data,
+                datatype: 'json',
+                success: function(data) {
+                    $("#SuspendModal").modal("hide");
+                    setTimeout(function(){
+                        location.reload();
+                    },1700)
+                }
+            }
+        )
+    })
+
+    $(document).on('click', "#actualizarUF",function(){
+        Swal.fire({
+            title: 'Espere unos segundos',
+            icon: 'info',
+            allowOutsideClick: false,
+            text: 'Descargando datos actuales de UF'
+        });
+        Swal.showLoading();
+
+        $.ajax(
+            {
+                type: 'GET',
+                url: 'http://localhost/solutoria/CrudSolutoria/public/unidades/insertar',
+                datatype: 'json',
+                success: function(){
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Registros actualizados',
+                      showConfirmButton: false,
+                      timer: 1500
+                    })
+                    setTimeout(function(){
+                        location.reload();
+                    },1700)
+                }
+            }
+        )
     })
 </script>
 

@@ -38,6 +38,9 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 $routes->get('unidades', 'crudUnidades::index');
 $routes->get('unidades/deleted', 'crudUnidades::eliminar');
+$routes->get('unidades/getOne', 'crudUnidades::getOne');
+$routes->post('unidades/editar', 'crudUnidades::editar');
+$routes->get('unidades/insertar', 'crudUnidades::insertar');
 
 /*
  * --------------------------------------------------------------------

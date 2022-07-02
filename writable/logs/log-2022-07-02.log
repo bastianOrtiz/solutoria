@@ -1,0 +1,48 @@
+CRITICAL - 2022-07-02 16:31:12 --> file_get_contents(https://mindicador.cl/api/uf): Failed to open stream: HTTP request failed!
+in APPPATH\Controllers\Home.php on line 61.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'file_get_contents(https://mindicador.cl/api/uf): Failed to open stream: HTTP request failed!', 'APPPATH\\Controllers\\Home.php', 61)
+ 2 APPPATH\Controllers\Home.php(61): file_get_contents('https://mindicador.cl/api/uf')
+ 3 APPPATH\Controllers\Home.php(29): App\Controllers\Home::getUrl('https://mindicador.cl/api/uf')
+ 4 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\Home->index()
+ 5 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-07-02 16:45:25 --> Unclosed '{' on line 33 does not match ')'
+in APPPATH\Controllers\crudUnidades.php on line 38.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(261): CodeIgniter\Autoloader\Autoloader->includeFile('APPPATH\\Controllers\\crudUnidades.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(239): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\crudUnidades')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\crudUnidades')
+ 4 SYSTEMPATH\CodeIgniter.php(846): class_exists('\\App\\Controllers\\crudUnidades', true)
+ 5 SYSTEMPATH\CodeIgniter.php(453): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-07-02 16:45:33 --> Undefined variable $dataDBunidad
+in APPPATH\Controllers\crudUnidades.php on line 38.
+ 1 APPPATH\Controllers\crudUnidades.php(38): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $dataDBunidad', 'APPPATH\\Controllers\\crudUnidades.php', 38)
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\crudUnidades->getOne()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\crudUnidades))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-07-02 17:49:07 --> syntax error, unexpected token ":"
+in APPPATH\Controllers\crudUnidades.php on line 55.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(261): CodeIgniter\Autoloader\Autoloader->includeFile('APPPATH\\Controllers\\crudUnidades.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(239): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\crudUnidades')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\crudUnidades')
+ 4 SYSTEMPATH\CodeIgniter.php(846): class_exists('\\App\\Controllers\\crudUnidades', true)
+ 5 SYSTEMPATH\CodeIgniter.php(453): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-07-02 18:00:21 --> Unknown column 'uf' in 'where clause'
+in APPPATH\Controllers\crudUnidades.php on line 64.
+ 1 APPPATH\Controllers\crudUnidades.php(64): mysqli->query('select * from unidad where codigo=uf and fecha=2022-07-09')
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\crudUnidades->insertar()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\crudUnidades))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2022-07-02 18:02:42 --> Unknown column 'uf' in 'where clause'
+in APPPATH\Controllers\crudUnidades.php on line 64.
+ 1 APPPATH\Controllers\crudUnidades.php(64): mysqli->query('select * from unidad where codigo=uf and fecha=2022-07-09')
+ 2 SYSTEMPATH\CodeIgniter.php(896): App\Controllers\crudUnidades->insertar()
+ 3 SYSTEMPATH\CodeIgniter.php(466): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\crudUnidades))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(55): CodeIgniter\CodeIgniter->run()
