@@ -336,7 +336,7 @@
                             </div>
                             <div class="col-3">
                                 <label>Año</label>
-                                <input type="number" oninput="maxLengthCheck(this)" name="ano" class="form-control" maxLength="4">
+                                <input type="number" oninput="maxLengthCheck(this)" name="ano" class="form-control" maxLength="4" id="anoUnidad">
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
@@ -562,6 +562,16 @@
 
       $('#rangofecha').on('cancel.daterangepicker', function(ev, picker) {
           $(this).val('');
+      });
+
+
+      $("#anoUnidad").keyup(function(){
+        var largo = $(this).val().length;
+        if (largo==0) {
+            $("#rangofecha").prop( "disabled", false );    
+        }else{
+           $("#rangofecha").prop( "disabled", true ); 
+        }
       });
     </script>
 
