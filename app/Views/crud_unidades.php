@@ -434,20 +434,38 @@
 
     $(document).on('click',".unidadEliminar",function(){
         var id =$(this).data("id");
-        $.ajax(
-            {
-                type: 'GET',
-                url: '<?= base_url(); ?>/unidades/deleted',
-                data: 'id='+id,
-                datatype: 'json',
-                success: function(data){
-                    setTimeout(function(){
-                        location.reload();
-                    },2000)
-                }
-            }
-        );
 
+        Swal.fire({
+          title: 'Estas seguro?',
+          text: "Se eliminara completamente el registro",
+          icon: 'warning',
+          showCancelButton: true,
+          cancelButtonText: "No",
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $.ajax(
+            {
+                    type: 'GET',
+                    url: '<?= base_url(); ?>/unidades/deleted',
+                    data: 'id='+id,
+                    datatype: 'json',
+                    success: function(data){
+                        Swal.fire(
+                          'Registro Eliminado',
+                          'Su registro ha sido eliminado correctamente',
+                          'success'
+                        )
+                        setTimeout(function(){
+                            location.reload();
+                        },2000)
+                    }
+                }
+            );
+          }
+        })
     })
 
     $(document).on('click',".unidadEditar",function(){
