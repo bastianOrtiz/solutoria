@@ -21,8 +21,6 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
-
-    const BASE_URL ='http://localhost/solutoria/CrudSolutoria/public';
     /**
      * Instance of the main Request object.
      *
